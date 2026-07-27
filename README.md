@@ -39,10 +39,18 @@ not a substitute for recitation from a qārī. Layout conventions follow bible.c
 and sunnah.com for familiarity; all code, styling and audio here are original.
 Cross-references are **machine-suggested** and carry sunnah.com's own numbering.
 
-## Deploy
+## Deploy (Vercel)
 
-Push to `main`; the Pages workflow publishes `public/`. The custom domain is set
-in `public/CNAME`.
+Static site, no build step. `vercel.json` sets the output directory to `public/`.
+
+1. Push this repo to GitHub.
+2. In Vercel: **Add New → Project → import this repo**. Framework preset
+   **Other**, Build Command empty, Output Directory `public` (already in
+   `vercel.json`).
+3. In the project's **Domains**, add `audio.maltiquran.com`. Because
+   `maltiquran.com` is already on Vercel, the DNS record is created for you.
+   If the domain's DNS lives at the registrar instead, add a CNAME:
+   `audio` → `cname.vercel-dns.com`.
 
 ## Licence
 
