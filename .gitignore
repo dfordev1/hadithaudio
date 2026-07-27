@@ -7,11 +7,13 @@ OmniVoice-Studio/
 # Data-generation repo has its own remote (dfordev1/hadithusx)
 hadithusx/
 
-# Large build inputs, fetched on demand, not needed at runtime
-ara-bukhari.json
-ara-muslim.json
-eng-nawawi.json
-nawawi.json
+# Large build inputs, fetched on demand, not needed at runtime.
+# Anchored to repo root so they don't also match published sidecars like
+# public/refs/nawawi.json (an unanchored "nawawi.json" matches at any depth).
+/ara-bukhari.json
+/ara-muslim.json
+/eng-nawawi.json
+/nawawi.json
 
 # OmniVoice A/B artifacts and the first prototype — production is ElevenLabs-only
 public/omnivoice/
