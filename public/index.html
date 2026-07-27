@@ -1,111 +1,90 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>An-Nawawi's Forty Hadith — Read &amp; Listen</title>
-<meta name="description" content="The Forty Hadith of an-Nawawi with synced Arabic recitation, word-level highlighting, and English translation.">
-<!-- Inter (SIL OFL) for the English/UI, matching bible.com's reader; Scheherazade
-     New (SIL OFL) naskh for Arabic. Layout follows bible.com / sunnah.com
-     conventions; all CSS, markup and audio are original. -->
+<meta name="description" content="The complete Forty Hadith of an-Nawawi with synced Arabic recitation, word-level highlighting, and English translation.">
+<!-- Inter (SIL OFL) for UI/English; Scheherazade New (SIL OFL) naskh for Arabic.
+     Reference layout follows sunnah.com; all CSS, markup and audio are original. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#ffffff; --ink:#121212; --muted:#6a6a6a; --faint:#9b9b9b;
-    --line:#ececec; --accent:#121212; --hl-bg:#fff3cf; --hl-ink:#8a6d1f;
+    --line:#ececec; --hl-bg:#fff3cf; --hl-ink:#8a6d1f;
     --ar-font:"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif;
     --ui-font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     --ar-size:1.85rem; --en-size:1.125rem; --en-lh:2;
   }
-  :root[data-theme="dark"] {
-    --bg:#0f0f0f; --ink:#ececec; --muted:#9a9a9a; --faint:#6a6a6a;
-    --line:#262626; --accent:#ececec; --hl-bg:#3a3320; --hl-ink:#e6c766;
-  }
-  :root[data-theme="sepia"] {
-    --bg:#f4ecd8; --ink:#3d3222; --muted:#7c6a4c; --faint:#a2926f;
-    --line:#e3d6ba; --accent:#3d3222; --hl-bg:#efe0b4; --hl-ink:#7a5a12;
-  }
+  :root[data-theme="dark"] { --bg:#0f0f0f; --ink:#ececec; --muted:#9a9a9a; --faint:#6a6a6a; --line:#262626; --hl-bg:#3a3320; --hl-ink:#e6c766; }
+  :root[data-theme="sepia"] { --bg:#f4ecd8; --ink:#3d3222; --muted:#7c6a4c; --faint:#a2926f; --line:#e3d6ba; --hl-bg:#efe0b4; --hl-ink:#7a5a12; }
   * { box-sizing:border-box; margin:0; }
   body { background:var(--bg); color:var(--ink); font-family:var(--ui-font); line-height:1.5; -webkit-font-smoothing:antialiased; transition:background .2s,color .2s; }
   a { color:inherit; }
 
-  /* Top bar — minimal, white, thin rule, like bible.com */
   header { border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); z-index:30; }
-  header .in { max-width:940px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:14px 20px; }
+  header .in { max-width:940px; margin:0 auto; display:flex; align-items:center; gap:14px; padding:14px 20px; }
   header .logo { font-weight:700; font-size:1.05rem; letter-spacing:-.01em; }
   header .logo span { color:var(--faint); font-weight:500; }
   header .sp { flex:1; }
-  .iconbtn { width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer; font-size:.82rem; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
+  .iconbtn { min-width:38px; height:38px; padding:0 12px; border-radius:999px; border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer; font-size:.82rem; font-weight:600; display:inline-flex; align-items:center; justify-content:center; gap:6px; }
   .iconbtn:hover { background:var(--line); }
   .iconbtn.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .jump { appearance:none; background:transparent; border:1px solid var(--line); border-radius:999px; color:var(--ink); font-family:var(--ui-font); font-size:.82rem; font-weight:500; padding:8px 14px; cursor:pointer; }
 
-  /* Reader control row — chapter picker + parallel/audio toggles */
-  .ctrls { max-width:940px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 20px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
-  .picker { position:relative; }
-  .picker select { appearance:none; background:transparent; border:0; border-bottom:1.5px solid var(--ink); color:var(--ink); font-family:var(--ui-font); font-size:.95rem; font-weight:600; padding:4px 26px 4px 2px; cursor:pointer; }
-  .picker::after { content:"▾"; position:absolute; right:6px; top:5px; color:var(--muted); pointer-events:none; }
-  .ctrls .sp { flex:1; }
-
-  /* Settings popover */
-  .settings { max-width:940px; margin:0 auto; overflow:hidden; max-height:0; transition:max-height .2s; border-bottom:1px solid transparent; }
-  .settings.open { max-height:130px; border-bottom-color:var(--line); }
-  .settings .in { display:flex; gap:28px; flex-wrap:wrap; padding:16px 20px; align-items:center; font-size:.85rem; color:var(--muted); }
+  .settings { max-width:940px; margin:0 auto; overflow:hidden; max-height:0; transition:max-height .2s; }
+  .settings.open { max-height:130px; }
+  .settings .in { display:flex; gap:28px; flex-wrap:wrap; padding:14px 20px; align-items:center; font-size:.85rem; color:var(--muted); border-top:1px solid var(--line); }
   .settings .grp { display:flex; gap:10px; align-items:center; }
   .settings .s { width:32px; height:32px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer; font-size:1rem; }
   .settings .theme b { cursor:pointer; padding:5px 12px; border:1px solid var(--line); border-radius:20px; margin-left:6px; font-weight:500; }
   .settings .theme b.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
 
-  /* Reading stage */
-  .stage { position:relative; max-width:940px; margin:0 auto; padding:0 20px; }
-  .title { text-align:center; font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.95rem; color:var(--ink); padding:34px 0 6px; }
-  .subtitle { text-align:center; direction:rtl; font-family:var(--ar-font); font-size:1.6rem; color:var(--muted); margin-bottom:30px; }
+  .collhead { max-width:940px; margin:0 auto; text-align:center; padding:40px 20px 26px; border-bottom:1px solid var(--line); }
+  .collhead .ar { direction:rtl; font-family:var(--ar-font); font-size:2.4rem; }
+  .collhead .en { color:var(--muted); font-size:1rem; margin-top:4px; letter-spacing:.02em; }
+  .collhead .count { color:var(--faint); font-size:.8rem; margin-top:10px; text-transform:uppercase; letter-spacing:.1em; }
 
-  .arrow { position:fixed; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--muted); font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; }
-  .arrow:hover:not(:disabled) { color:var(--ink); box-shadow:0 2px 10px rgba(0,0,0,.08); }
-  .arrow:disabled { opacity:0; pointer-events:none; }
-  .arrow.prev { left:calc(50% - 520px); } .arrow.next { right:calc(50% - 520px); }
-  /* Below the width where arrows would overlap the text, hide them — the picker
-     and keyboard/swipe still navigate. */
-  @media (max-width:1120px){ .arrow{ display:none; } }
+  .list { max-width:940px; margin:0 auto; padding:0 20px; }
+  section.h { padding:38px 0; border-bottom:1px solid var(--line); scroll-margin-top:72px; }
+  .hnum { font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.82rem; color:var(--ink); margin-bottom:18px; }
 
-  /* Custom minimal player — the native <audio> widget breaks the aesthetic. */
-  .player { display:flex; gap:14px; align-items:center; background:transparent; border:1px solid var(--line); border-radius:999px; padding:8px 10px 8px 8px; margin:0 auto 30px; max-width:540px; }
-  .player audio { display:none; }
-  .play { flex:none; width:42px; height:42px; border-radius:50%; border:0; background:var(--ink); color:var(--bg); cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; }
+  .player { display:flex; gap:12px; align-items:center; background:transparent; border:1px solid var(--line); border-radius:999px; padding:7px 10px 7px 7px; margin-bottom:24px; max-width:520px; }
+  .play { flex:none; width:38px; height:38px; border-radius:50%; border:0; background:var(--ink); color:var(--bg); cursor:pointer; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
   .play:hover { opacity:.85; }
   .track { flex:1; height:5px; background:var(--line); border-radius:3px; cursor:pointer; position:relative; }
   .track .fill { position:absolute; left:0; top:0; bottom:0; width:0; background:var(--ink); border-radius:3px; }
-  .time { flex:none; font-size:.76rem; color:var(--muted); font-variant-numeric:tabular-nums; min-width:82px; text-align:right; }
-  .player .rate { flex:none; background:var(--bg); border:1px solid var(--line); color:var(--ink); border-radius:999px; padding:5px 11px; font-size:.75rem; cursor:pointer; }
+  .time { flex:none; font-size:.74rem; color:var(--muted); font-variant-numeric:tabular-nums; min-width:80px; text-align:right; }
+  .rate { flex:none; background:var(--bg); border:1px solid var(--line); color:var(--ink); border-radius:999px; padding:5px 10px; font-size:.72rem; cursor:pointer; }
 
-  .reading { max-width:660px; margin:0 auto; }
   .parallel { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
-  .parallel.single { grid-template-columns:1fr; max-width:600px; margin:0 auto; }
-  .parallel.single .en-col { display:none; }
-  .col-label { font-size:.68rem; text-transform:uppercase; letter-spacing:.1em; color:var(--faint); margin-bottom:14px; }
-  .english { font-size:var(--en-size); line-height:var(--en-lh); color:var(--ink); }
-  .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:2.5; color:var(--ink); }
-  .arabic span { cursor:pointer; border-radius:5px; padding:0 3px; transition:background .1s,color .1s; }
-  .arabic span.active { background:var(--hl-bg); color:var(--hl-ink); }
-  @media (max-width:680px){ .parallel{ grid-template-columns:1fr; gap:22px; } .arrow{ display:none; } }
+  .parallel.single { grid-template-columns:1fr; } .parallel.single .en-col { display:none; }
+  .col-label { font-size:.66rem; text-transform:uppercase; letter-spacing:.1em; color:var(--faint); margin-bottom:12px; }
+  .english { font-size:var(--en-size); line-height:var(--en-lh); }
+  .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:2.5; }
+  .arabic span.w { cursor:pointer; border-radius:5px; padding:0 3px; transition:background .1s,color .1s; }
+  .arabic span.w.active { background:var(--hl-bg); color:var(--hl-ink); }
+  @media (max-width:680px){ .parallel{ grid-template-columns:1fr; gap:20px; } }
 
-  .refblock { max-width:660px; margin:40px auto 0; border-top:1px solid var(--line); padding-top:18px; font-size:.9rem; }
-  .refrow { display:flex; gap:12px; padding:6px 0; align-items:baseline; flex-wrap:wrap; }
-  .refrow .lbl { color:var(--faint); min-width:120px; font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; }
+  .refblock { margin-top:22px; font-size:.88rem; }
+  .refrow { display:flex; gap:12px; padding:5px 0; align-items:baseline; flex-wrap:wrap; }
+  .refrow .lbl { color:var(--faint); min-width:110px; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
   .refrow a { font-weight:600; text-decoration:none; border-bottom:1px solid transparent; }
   .refrow a:hover { border-bottom-color:var(--ink); }
-  .refrow .badge { font-size:.64rem; color:var(--faint); border:1px solid var(--line); border-radius:10px; padding:1px 7px; margin-left:6px; }
+  .refrow .badge { font-size:.62rem; color:var(--faint); border:1px solid var(--line); border-radius:10px; padding:1px 7px; margin-left:6px; }
   .refrow.low a { color:var(--muted); }
-  .share { display:block; margin:28px auto 0; background:none; border:1px solid var(--line); color:var(--muted); border-radius:999px; padding:8px 18px; font-size:.82rem; cursor:pointer; }
-  .share:hover { color:var(--ink); border-color:var(--ink); }
+  .copy { background:none; border:0; color:var(--faint); cursor:pointer; font-size:.76rem; margin-top:8px; padding:2px 0; }
+  .copy:hover { color:var(--ink); }
 
-  .disc { max-width:660px; margin:44px auto 60px; color:var(--faint); font-size:.74rem; line-height:1.7; text-align:center; }
+  .disc { max-width:700px; margin:36px auto 70px; color:var(--faint); font-size:.74rem; line-height:1.7; text-align:center; padding:0 20px; }
+  .loading { text-align:center; color:var(--faint); padding:60px 20px; }
 </style>
 
 <header>
   <div class="in">
     <div class="logo">Nawawi&nbsp;40 <span>· read &amp; listen</span></div>
     <div class="sp"></div>
-    <button class="iconbtn" id="parallelBtn" title="Parallel / single column">۩</button>
+    <select class="jump" id="jump" title="Jump to hadith"><option value="">Jump to…</option></select>
+    <button class="iconbtn" id="parallelBtn" title="Parallel / single column">⇄</button>
     <button class="iconbtn" id="gear" title="Display settings">AA</button>
   </div>
   <div class="settings" id="settings">
@@ -116,50 +95,26 @@
   </div>
 </header>
 
-<div class="ctrls">
-  <div class="picker"><select id="pick"></select></div>
-  <div class="sp"></div>
+<div class="collhead">
+  <div class="ar">الأربعون النووية</div>
+  <div class="en">The Forty Hadith of an-Nawawi</div>
+  <div class="count">42 hadith · read &amp; listen</div>
 </div>
 
-<div class="stage">
-  <button class="arrow prev" id="prev" aria-label="Previous">‹</button>
-  <button class="arrow next" id="next" aria-label="Next">›</button>
+<div class="list" id="list"><div class="loading">Loading the collection…</div></div>
 
-  <div class="title" id="title">Hadith 1</div>
-  <div class="subtitle">الأربعون النووية</div>
-
-  <div class="player">
-    <audio id="player" preload="metadata"></audio>
-    <button class="play" id="play" aria-label="Play">▶</button>
-    <div class="track" id="track"><div class="fill" id="fill"></div></div>
-    <span class="time" id="time">0:00 / 0:00</span>
-    <button class="rate" id="rate">1×</button>
-  </div>
-
-  <div class="reading">
-    <div class="parallel" id="parallel">
-      <div class="en-col"><div class="col-label">English</div><div class="english" id="english"></div></div>
-      <div><div class="col-label" style="text-align:right">العربية</div><div class="arabic" id="arabic"></div></div>
-    </div>
-    <div class="refblock" id="refblock"></div>
-    <button class="share" id="share">Copy link to this hadith</button>
-  </div>
-
-  <div class="disc">
-    Recitation is synthesised (ElevenLabs); word timing from its alignment API — not a substitute for a qārī.
-    Layout follows bible.com / sunnah.com conventions; code, styling and audio are original.
-    Cross-references are machine-suggested, in sunnah.com's numbering.
-  </div>
+<div class="disc">
+  Recitation is synthesised (ElevenLabs) with word timing from its alignment API — not a substitute for a qārī.
+  Reference layout follows sunnah.com; code, styling and audio are original. Cross-references are
+  machine-suggested and carry sunnah.com's own numbering.
 </div>
 
 <script>
 const N = 42;
-const player = document.getElementById("player");
-const pick = document.getElementById("pick");
-let tokens = [], spans = [], activeIdx = -1;
-pick.innerHTML = Array.from({length:N},(_,i)=>`<option value="${i+1}">Hadith ${i+1}</option>`).join("");
-
 const store = { get:(k,d)=>{try{return JSON.parse(localStorage.getItem("nw40:"+k))??d}catch{return d}}, set:(k,v)=>localStorage.setItem("nw40:"+k,JSON.stringify(v)) };
+const j = async(u)=>(await fetch(u,{cache:"no-cache"})).json();
+
+// ---- display settings ----
 let fontStep = store.get("font",0);
 function applyFont(){ document.documentElement.style.setProperty("--ar-size",(1.85+fontStep*0.14)+"rem"); document.documentElement.style.setProperty("--en-size",(1.125+fontStep*0.08)+"rem"); store.set("font",fontStep); }
 document.getElementById("fPlus").onclick=()=>{fontStep=Math.min(fontStep+1,6);applyFont();};
@@ -167,76 +122,87 @@ document.getElementById("fMinus").onclick=()=>{fontStep=Math.max(fontStep-1,-2);
 function applyTheme(t){ document.documentElement.dataset.theme=t; store.set("theme",t); document.querySelectorAll(".theme b").forEach(b=>b.classList.toggle("on",b.dataset.t===t)); }
 document.querySelectorAll(".theme b").forEach(b=>b.onclick=()=>applyTheme(b.dataset.t));
 document.getElementById("gear").onclick=()=>document.getElementById("settings").classList.toggle("open");
+let single = store.get("single",false);
+function applyParallel(){ document.querySelectorAll(".parallel").forEach(p=>p.classList.toggle("single",single)); document.getElementById("parallelBtn").classList.toggle("on",!single); store.set("single",single); }
+document.getElementById("parallelBtn").onclick=()=>{single=!single;applyParallel();};
 applyFont(); applyTheme(store.get("theme","light"));
 
-// parallel / single-column toggle
-let single = store.get("single",false);
-function applyParallel(){ document.getElementById("parallel").classList.toggle("single",single); document.getElementById("parallelBtn").classList.toggle("on",!single); store.set("single",single); }
-document.getElementById("parallelBtn").onclick=()=>{single=!single;applyParallel();};
-applyParallel();
+const fmt=s=>isNaN(s)?"0:00":`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+let nowPlaying=null;   // only one hadith plays at a time
 
-let EN=null, SUNNAH=null;
-const j = async(u)=>(await fetch(u,{cache:"no-cache"})).json();
-async function translations(){ return EN ??= await j("translation/en.json"); }
-async function sunnah(){ return SUNNAH ??= await j("sunnah/nawawi.json"); }
+// ---- build one hadith section ----
+function buildSection(n, rec, en, entry){
+  const sec=document.createElement("section"); sec.className="h"; sec.id=`nawawi40-${n}`; sec.dataset.n=n; sec.style.scrollMarginTop="72px";
+  sec.innerHTML=`<div class="hnum">Hadith ${n}</div>`;
 
-async function load(n, pushHash=true){
-  n = Math.min(Math.max(1,Number(n)||1),N);
-  const stem = `nawawi-arbain.${String(n).padStart(3,"0")}`;
-  const d = await j(`recitation/${stem}.json`);
-  const witness = d.witness; pick.value=n;
-  document.getElementById("title").textContent = `Hadith ${n}`;
-  document.getElementById("prev").disabled = n<=1;
-  document.getElementById("next").disabled = n>=N;
+  // player
+  const audio=new Audio(); audio.preload="none"; audio.src=`recitation/nawawi-arbain.${String(n).padStart(3,"0")}.mp3`;
+  const pl=document.createElement("div"); pl.className="player";
+  pl.innerHTML=`<button class="play">▶</button><div class="track"><div class="fill"></div></div><span class="time">0:00 / 0:00</span><button class="rate">1×</button>`;
+  const playBtn=pl.querySelector(".play"), track=pl.querySelector(".track"), fill=pl.querySelector(".fill"), timeEl=pl.querySelector(".time"), rateBtn=pl.querySelector(".rate");
+  sec.appendChild(pl);
 
-  const en = (await translations()).translations.find(t=>t.witness===witness);
-  document.getElementById("english").textContent = en?en.matn:"";
+  // parallel text
+  const par=document.createElement("div"); par.className="parallel"+(single?" single":"");
+  const enCol=document.createElement("div"); enCol.className="en-col"; enCol.innerHTML=`<div class="col-label">English</div>`;
+  const enDiv=document.createElement("div"); enDiv.className="english"; enDiv.textContent=en?en.matn:""; enCol.appendChild(enDiv);
+  const arCol=document.createElement("div"); arCol.innerHTML=`<div class="col-label" style="text-align:right">العربية</div>`;
+  const arDiv=document.createElement("div"); arDiv.className="arabic";
+  const spans=rec.tokens.map(t=>{ const s=document.createElement("span"); s.className="w"; s.textContent=t.text; s.onclick=()=>{ audio.currentTime=t.start; audio.play(); }; arDiv.append(s,document.createTextNode(" ")); return s; });
+  arCol.appendChild(arDiv); par.append(enCol,arCol); sec.appendChild(par);
 
-  const entry = (await sunnah()).entries.find(e=>e.witness===witness);
-  const rb = document.getElementById("refblock"); rb.innerHTML="";
-  const row=(label,ref,url,conf)=>{const div=document.createElement("div");div.className="refrow"+(conf==="low"?" low":"");div.innerHTML=`<span class="lbl">${label}</span>`;const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener";a.textContent=ref;div.appendChild(a);if(conf){const b=document.createElement("span");b.className="badge";b.textContent=conf;div.appendChild(b);}rb.appendChild(div);};
+  // references
+  const rb=document.createElement("div"); rb.className="refblock";
+  const row=(label,ref,url,conf)=>{ const div=document.createElement("div"); div.className="refrow"+(conf==="low"?" low":""); div.innerHTML=`<span class="lbl">${label}</span>`; const a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener"; a.textContent=ref; div.appendChild(a); if(conf){const b=document.createElement("span");b.className="badge";b.textContent=conf;div.appendChild(b);} rb.appendChild(div); };
   row("Reference",entry.sunnah.reference,entry.sunnah.url,null);
-  if(en&&en.takhrij.length){const t=document.createElement("div");t.className="refrow";t.innerHTML=`<span class="lbl">Grade</span><span style="font-style:italic;color:var(--muted)">${en.takhrij.join(" · ")}</span>`;rb.appendChild(t);}
+  if(en&&en.takhrij.length){ const t=document.createElement("div"); t.className="refrow"; t.innerHTML=`<span class="lbl">Grade</span><span style="font-style:italic;color:var(--muted)">${en.takhrij.join(" · ")}</span>`; rb.appendChild(t); }
   for(const r of entry.crossReferences) row("Also in",r.sunnahRef,r.url,r.confidence);
+  const copy=document.createElement("button"); copy.className="copy"; copy.textContent="🔗 Copy link";
+  copy.onclick=async()=>{ const url=location.href.split("#")[0]+`#nawawi40:${n}`; try{await navigator.clipboard.writeText(url);copy.textContent="✓ Copied";setTimeout(()=>copy.textContent="🔗 Copy link",1400);}catch{prompt("Copy link:",url);} };
+  rb.appendChild(copy); sec.appendChild(rb);
 
-  tokens=d.tokens; activeIdx=-1;
-  const ar=document.getElementById("arabic"); ar.innerHTML="";
-  spans=tokens.map((t,i)=>{const s=document.createElement("span");s.textContent=t.text;s.onclick=()=>{player.currentTime=t.start;player.play();};ar.append(s,document.createTextNode(" "));return s;});
-  player.src=`recitation/${stem}.mp3`;
-  if(pushHash) history.replaceState(null,"",`#nawawi40:${n}`);
-  document.title=`Hadith ${n} — An-Nawawi's Forty`;
+  // wiring
+  let active=-1;
+  playBtn.onclick=()=>audio.paused?audio.play():audio.pause();
+  audio.addEventListener("play",()=>{ if(nowPlaying&&nowPlaying!==audio)nowPlaying.pause(); nowPlaying=audio; playBtn.textContent="❚❚"; });
+  audio.addEventListener("pause",()=>playBtn.textContent="▶");
+  audio.addEventListener("ended",()=>playBtn.textContent="▶");
+  audio.addEventListener("loadedmetadata",()=>timeEl.textContent=`0:00 / ${fmt(audio.duration)}`);
+  track.onclick=e=>{ const r=track.getBoundingClientRect(); if(audio.duration)audio.currentTime=(e.clientX-r.left)/r.width*audio.duration; };
+  const rates=[1,1.25,1.5,0.75]; let ri=0; rateBtn.onclick=()=>{ ri=(ri+1)%rates.length; audio.playbackRate=rates[ri]; rateBtn.textContent=rates[ri]+"×"; };
+  audio.addEventListener("timeupdate",()=>{
+    const t=audio.currentTime;
+    if(audio.duration){ fill.style.width=(t/audio.duration*100)+"%"; timeEl.textContent=`${fmt(t)} / ${fmt(audio.duration)}`; }
+    let idx=-1; for(let i=0;i<rec.tokens.length;i++){ if(t>=rec.tokens[i].start)idx=i; else break; }
+    if(idx===active)return; active=idx;
+    spans.forEach((s,i)=>s.classList.toggle("active",i===idx&&t<=rec.tokens[i].end+0.15));
+    if(idx>=0&&!audio.paused){ const r=spans[idx].getBoundingClientRect(); if(r.top<120||r.bottom>innerHeight-80)spans[idx].scrollIntoView({block:"center",behavior:"smooth"}); }
+  });
+  return sec;
 }
 
-// ---- custom player wiring ----
-const playBtn=document.getElementById("play"), fill=document.getElementById("fill"),
-      timeEl=document.getElementById("time"), track=document.getElementById("track");
-const fmt=s=>isNaN(s)?"0:00":`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
-playBtn.onclick=()=>player.paused?player.play():player.pause();
-player.addEventListener("play",()=>playBtn.textContent="❚❚");
-player.addEventListener("pause",()=>playBtn.textContent="▶");
-player.addEventListener("ended",()=>playBtn.textContent="▶");
-track.onclick=e=>{const r=track.getBoundingClientRect();if(player.duration)player.currentTime=(e.clientX-r.left)/r.width*player.duration;};
+// ---- load everything and render the full collection ----
+(async ()=>{
+  const [trans, sun, ...recs] = await Promise.all([
+    j("translation/en.json"), j("sunnah/nawawi.json"),
+    ...Array.from({length:N},(_,i)=>j(`recitation/nawawi-arbain.${String(i+1).padStart(3,"0")}.json`))
+  ]);
+  const list=document.getElementById("list"); list.innerHTML="";
+  const jump=document.getElementById("jump");
+  for(let n=1;n<=N;n++){
+    const rec=recs[n-1];
+    const en=trans.translations.find(t=>t.witness===rec.witness);
+    const entry=sun.entries.find(e=>e.witness===rec.witness);
+    list.appendChild(buildSection(n,rec,en,entry));
+    jump.insertAdjacentHTML("beforeend",`<option value="nawawi40-${n}">Hadith ${n}</option>`);
+  }
+  applyParallel();
+  jump.onchange=()=>{ if(jump.value){ document.getElementById(jump.value).scrollIntoView({behavior:"smooth"}); jump.value=""; } };
 
-player.addEventListener("timeupdate",()=>{
-  const t=player.currentTime;
-  if(player.duration){fill.style.width=(t/player.duration*100)+"%";timeEl.textContent=`${fmt(t)} / ${fmt(player.duration)}`;}
-  let idx=-1;
-  for(let i=0;i<tokens.length;i++){if(t>=tokens[i].start)idx=i;else break;}
-  if(idx===activeIdx)return; activeIdx=idx;
-  spans.forEach((s,i)=>s.classList.toggle("active",i===idx&&t<=tokens[i].end+0.15));
-  if(idx>=0&&!player.paused){const r=spans[idx].getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-80)spans[idx].scrollIntoView({block:"center",behavior:"smooth"});}
-});
-player.addEventListener("loadedmetadata",()=>{timeEl.textContent=`0:00 / ${fmt(player.duration)}`;fill.style.width="0%";});
-const rates=[1,1.25,1.5,0.75];let ri=0;
-document.getElementById("rate").onclick=()=>{ri=(ri+1)%rates.length;player.playbackRate=rates[ri];document.getElementById("rate").textContent=rates[ri]+"×";};
-
-pick.onchange=()=>load(pick.value);
-document.getElementById("prev").onclick=()=>load(Number(pick.value)-1);
-document.getElementById("next").onclick=()=>load(Number(pick.value)+1);
-document.getElementById("share").onclick=async()=>{const url=location.href.split("#")[0]+`#nawawi40:${pick.value}`;try{await navigator.clipboard.writeText(url);document.getElementById("share").textContent="✓ Link copied";setTimeout(()=>document.getElementById("share").textContent="Copy link to this hadith",1500);}catch{prompt("Copy link:",url);}};
-addEventListener("hashchange",()=>{const m=location.hash.match(/nawawi40:(\d+)/);if(m)load(m[1],false);});
-document.addEventListener("keydown",e=>{if(e.target.tagName==="SELECT")return;if(e.key==="ArrowRight")load(Number(pick.value)+1);if(e.key==="ArrowLeft")load(Number(pick.value)-1);});
-
-const start=(location.hash.match(/nawawi40:(\d+)/)||[])[1]||1;
-load(start,false);
+  // deep-link + scroll-spy for the hash
+  const goto=()=>{ const m=location.hash.match(/nawawi40:(\d+)/); if(m){ const el=document.getElementById(`nawawi40-${m[1]}`); if(el)el.scrollIntoView(); } };
+  goto(); addEventListener("hashchange",goto);
+  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ const n=e.target.dataset.n; history.replaceState(null,"",`#nawawi40:${n}`); document.title=`Hadith ${n} — An-Nawawi's Forty`; } }); },{rootMargin:"-40% 0px -55% 0px"});
+  document.querySelectorAll("section.h").forEach(s=>io.observe(s));
+})();
 </script>
