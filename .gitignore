@@ -1,0 +1,33 @@
+# Secrets — never commit
+.env
+
+# Heavy local TTS install (3.3 GB: model weights, venv) — not part of the site
+OmniVoice-Studio/
+
+# Data-generation repo has its own remote (dfordev1/hadithusx)
+hadithusx/
+
+# Large build inputs, fetched on demand, not needed at runtime
+ara-bukhari.json
+ara-muslim.json
+eng-nawawi.json
+nawawi.json
+
+# OmniVoice A/B artifacts and the first prototype — production is ElevenLabs-only
+public/omnivoice/
+public/audio/
+
+# Scratch / local test scripts
+omni-test.py
+omni-langs.py
+pe-imports.py
+check-boundaries.py
+check-recitation.mjs
+check-boundaries.mjs
+inspect.mjs
+probe-en.mjs
+
+# OS / tooling
+node_modules/
+*.log
+.DS_Store

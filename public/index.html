@@ -1,0 +1,220 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>An-Nawawi's Forty Hadith — Read &amp; Listen</title>
+<meta name="description" content="The Forty Hadith of an-Nawawi with synced Arabic recitation, word-level highlighting, and English translation.">
+<!-- Scheherazade New (SIL OFL): the redistributable naskh in sunnah.com's own
+     Arabic fallback stack. Layout patterns follow bible.com / sunnah.com for
+     familiarity; all CSS, markup and audio are original. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f4f3ee; --page:#ffffff; --ink:#2c2c2c; --muted:#6b7168;
+    --green:#38683f; --green-soft:#eef3ee; --line:#e2e0d8; --amber:#b9892f;
+    --hl-bg:#fdf3d6;
+    --ar-font:"KFGQPC Uthman Taha Naskh","KFGQPC Uthmanic Script HAFS","Scheherazade New",Scheherazade,"Traditional Arabic",serif;
+    --en-font:Helvetica,Arial,"Akzidenz Roman",sans-serif;
+    --ar-size:1.9rem; --en-size:1.05rem;
+  }
+  :root[data-theme="dark"] {
+    --bg:#14161a; --page:#1c1f24; --ink:#e6e6e2; --muted:#9aa0a6;
+    --green:#4d8a58; --green-soft:#22282a; --line:#333a3f; --amber:#e0b552;
+    --hl-bg:#3a3320;
+  }
+  :root[data-theme="sepia"] {
+    --bg:#efe6d3; --page:#f8f1e0; --ink:#4a3f2f; --muted:#8a7a5f;
+    --green:#5a6a3a; --green-soft:#eae0c8; --line:#ddd0b3; --amber:#9a6f22; --hl-bg:#f2e4bf;
+  }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--en-font); line-height:1.5; padding:0 16px 60px; transition:background .2s,color .2s; }
+  a { color:var(--green); }
+
+  header.top { background:var(--green); color:#fff; margin:0 -16px; padding:12px 20px; position:sticky; top:0; z-index:20; }
+  header.top .bar { max-width:860px; margin:0 auto; display:flex; align-items:center; gap:12px; }
+  header.top .brand { font-size:1rem; font-weight:600; flex:1; }
+  header.top .brand small { font-weight:400; opacity:.85; font-size:.78rem; display:block; }
+  header.top button { background:rgba(255,255,255,.15); color:#fff; border:0; border-radius:6px; padding:6px 10px; font-size:.85rem; cursor:pointer; }
+  header.top button:hover { background:rgba(255,255,255,.28); }
+
+  .settings { max-width:860px; margin:0 auto; overflow:hidden; max-height:0; transition:max-height .2s; }
+  .settings.open { max-height:120px; }
+  .settings .inner { display:flex; gap:22px; flex-wrap:wrap; padding:14px 2px; align-items:center; font-size:.85rem; color:var(--muted); }
+  .settings .grp { display:flex; gap:8px; align-items:center; }
+  .settings button.s { background:var(--green-soft); color:var(--ink); border:1px solid var(--line); border-radius:6px; width:30px; height:30px; cursor:pointer; font-size:1rem; }
+  .settings .theme b { cursor:pointer; padding:4px 9px; border:1px solid var(--line); border-radius:6px; margin-left:5px; font-weight:400; }
+  .settings .theme b.on { border-color:var(--green); color:var(--green); }
+
+  .wrap { max-width:860px; margin:0 auto; }
+  .crumb { font-size:.82rem; color:var(--muted); padding:14px 2px; }
+  .crumb a { text-decoration:none; } .crumb b { color:var(--ink); }
+
+  .collhead { text-align:center; padding:6px 0 16px; border-bottom:1px solid var(--line); margin-bottom:16px; }
+  .collhead .ar { font-family:var(--ar-font); font-size:2rem; color:var(--green); direction:rtl; }
+  .collhead .en { color:var(--muted); font-size:.95rem; margin-top:2px; }
+
+  .nav { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .nav button { background:var(--page); border:1px solid var(--line); color:var(--ink); border-radius:7px; padding:8px 14px; cursor:pointer; font-size:.9rem; }
+  .nav button:hover:not(:disabled) { border-color:var(--green); color:var(--green); }
+  .nav button:disabled { opacity:.4; cursor:default; }
+  .nav select { flex:1; border:1px solid var(--line); background:var(--page); color:var(--ink); border-radius:7px; padding:8px 10px; font-size:.9rem; }
+
+  .hadith { background:var(--page); border:1px solid var(--line); border-radius:8px; padding:24px 26px; box-shadow:0 1px 3px rgba(0,0,0,.05); }
+
+  .player { display:flex; gap:12px; align-items:center; flex-wrap:wrap; background:var(--green-soft); border:1px solid var(--line); border-radius:8px; padding:11px 13px; margin-bottom:20px; position:sticky; top:56px; z-index:10; }
+  .player audio { flex:1; min-width:200px; height:36px; }
+  .player .lead { font-size:.76rem; color:var(--muted); width:100%; }
+  .player .rate { background:var(--page); border:1px solid var(--line); color:var(--ink); border-radius:6px; padding:6px 9px; font-size:.8rem; cursor:pointer; min-width:44px; }
+
+  .parallel { display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start; }
+  .col-label { font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:10px; border-bottom:1px solid var(--line); padding-bottom:6px; }
+  .english { font-family:var(--en-font); font-size:var(--en-size); line-height:1.75; }
+  .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:2.4; }
+  .arabic span { cursor:pointer; border-radius:5px; padding:0 3px; transition:background .1s,color .1s; }
+  .arabic span.active { background:var(--hl-bg); color:var(--amber); }
+  .arabic span.wasl { border-bottom:2px solid rgba(185,137,47,.4); }
+  @media (max-width:640px) { .parallel { grid-template-columns:1fr; gap:18px; } }
+
+  .refblock { border-top:1px solid var(--line); margin-top:22px; padding-top:14px; font-size:.9rem; }
+  .refrow { display:flex; gap:10px; padding:5px 0; align-items:baseline; flex-wrap:wrap; }
+  .refrow .lbl { color:var(--muted); min-width:130px; font-size:.85rem; }
+  .refrow a { text-decoration:none; font-weight:600; }
+  .refrow a:hover { text-decoration:underline; }
+  .refrow .badge { font-size:.66rem; color:var(--muted); border:1px solid var(--line); border-radius:10px; padding:0 7px; margin-left:6px; }
+  .refrow.low a { color:var(--muted); }
+  .share { background:none; border:1px solid var(--line); color:var(--muted); border-radius:6px; padding:4px 10px; font-size:.8rem; cursor:pointer; margin-top:10px; }
+
+  .disc { color:var(--muted); font-size:.75rem; margin-top:22px; line-height:1.6; text-align:center; }
+</style>
+
+<header class="top">
+  <div class="bar">
+    <div class="brand">An-Nawawi's Forty Hadith <small>read &amp; listen — synced recitation over the husx corpus</small></div>
+    <button id="gear" title="Reading settings">Aa ⚙</button>
+  </div>
+  <div class="settings" id="settings">
+    <div class="inner">
+      <div class="grp">Text size <button class="s" id="fMinus">−</button><button class="s" id="fPlus">+</button></div>
+      <div class="grp theme">Theme
+        <b data-t="light" class="on">Light</b><b data-t="sepia">Sepia</b><b data-t="dark">Dark</b>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb"><a href="#">Home</a> » Collections of Forty » <b>Forty Hadith of an-Nawawi</b> » <b id="crumbN">Hadith 1</b></div>
+
+  <div class="collhead">
+    <div class="ar">الأربعون النووية</div>
+    <div class="en">Forty Hadith of an-Nawawi</div>
+  </div>
+
+  <div class="nav">
+    <button id="prev">‹ Prev</button>
+    <select id="pick"></select>
+    <button id="next">Next ›</button>
+  </div>
+
+  <div class="hadith">
+    <div class="player">
+      <div class="lead">🔊 Recitation — the text follows the audio; click any Arabic word to jump.</div>
+      <audio id="player" controls preload="none"></audio>
+      <button class="rate" id="rate">1×</button>
+    </div>
+
+    <div class="parallel">
+      <div><div class="col-label">English</div><div class="english" id="english"></div></div>
+      <div><div class="col-label" style="text-align:right">العربية</div><div class="arabic" id="arabic"></div></div>
+    </div>
+
+    <div class="refblock" id="refblock"></div>
+    <button class="share" id="share">🔗 Copy link to this hadith</button>
+  </div>
+
+  <div class="disc">
+    Recitation generated with ElevenLabs; word timing from the ElevenLabs alignment API. Layout follows
+    bible.com / sunnah.com conventions; code, styling and audio are original. Cross-references are
+    machine-suggested and carry sunnah.com's own numbering.
+  </div>
+</div>
+
+<script>
+const N = 42;
+const player = document.getElementById("player");
+const pick = document.getElementById("pick");
+let tokens = [], spans = [], activeIdx = -1;
+
+pick.innerHTML = Array.from({length:N},(_, i)=>`<option value="${i+1}">Hadith ${i+1}</option>`).join("");
+
+// ---- reader settings, persisted ----
+const store = { get:(k,d)=>{try{return JSON.parse(localStorage.getItem("nw40:"+k))??d}catch{return d}}, set:(k,v)=>localStorage.setItem("nw40:"+k,JSON.stringify(v)) };
+let fontStep = store.get("font", 0);
+function applyFont(){ document.documentElement.style.setProperty("--ar-size",(1.9+fontStep*0.15)+"rem"); document.documentElement.style.setProperty("--en-size",(1.05+fontStep*0.08)+"rem"); store.set("font",fontStep); }
+document.getElementById("fPlus").onclick = ()=>{ fontStep=Math.min(fontStep+1,6); applyFont(); };
+document.getElementById("fMinus").onclick = ()=>{ fontStep=Math.max(fontStep-1,-2); applyFont(); };
+function applyTheme(t){ document.documentElement.dataset.theme=t; store.set("theme",t); document.querySelectorAll(".theme b").forEach(b=>b.classList.toggle("on",b.dataset.t===t)); }
+document.querySelectorAll(".theme b").forEach(b=>b.onclick=()=>applyTheme(b.dataset.t));
+document.getElementById("gear").onclick = ()=>document.getElementById("settings").classList.toggle("open");
+applyFont(); applyTheme(store.get("theme","light"));
+
+// ---- data sidecars ----
+let EN=null, SUNNAH=null;
+const j = async (u)=> (await fetch(u,{cache:"no-cache"})).json();
+async function translations(){ return EN ??= await j("translation/en.json"); }
+async function sunnah(){ return SUNNAH ??= await j("sunnah/nawawi.json"); }
+
+async function load(n, push=true){
+  n = Math.min(Math.max(1, Number(n)||1), N);
+  const stem = `nawawi-arbain.${String(n).padStart(3,"0")}`;
+  const d = await j(`recitation/${stem}.json`);
+  const witness = d.witness;
+  pick.value = n;
+  document.getElementById("crumbN").textContent = `Hadith ${n}`;
+  document.getElementById("prev").disabled = n<=1;
+  document.getElementById("next").disabled = n>=N;
+
+  const en = (await translations()).translations.find(t=>t.witness===witness);
+  document.getElementById("english").textContent = en ? en.matn : "";
+
+  const entry = (await sunnah()).entries.find(e=>e.witness===witness);
+  const rb = document.getElementById("refblock"); rb.innerHTML="";
+  const row = (label, ref, url, conf)=>{ const div=document.createElement("div"); div.className="refrow"+(conf==="low"?" low":""); div.innerHTML=`<span class="lbl">${label}</span>`; const a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener"; a.textContent=ref; div.appendChild(a); if(conf){const b=document.createElement("span");b.className="badge";b.textContent=conf;div.appendChild(b);} rb.appendChild(div); };
+  row("Reference", entry.sunnah.reference, entry.sunnah.url, null);
+  if(en && en.takhrij.length){ const t=document.createElement("div"); t.className="refrow"; t.innerHTML=`<span class="lbl">Grade / takhrīj</span><span style="font-style:italic;color:var(--muted)">${en.takhrij.join(" · ")}</span>`; rb.appendChild(t); }
+  for(const r of entry.crossReferences) row("Also in", r.sunnahRef, r.url, r.confidence);
+
+  tokens = d.tokens; activeIdx = -1;
+  const ar = document.getElementById("arabic"); ar.innerHTML="";
+  spans = tokens.map((t,i)=>{ const s=document.createElement("span"); s.textContent=t.text; if(i && t.start-tokens[i-1].end<0.05) s.classList.add("wasl"); s.onclick=()=>{ player.currentTime=t.start; player.play(); }; ar.append(s,document.createTextNode(" ")); return s; });
+  player.src = `recitation/${stem}.mp3`;
+  if(push) history.replaceState(null,"",`#nawawi40:${n}`);
+  document.title = `Hadith ${n} — An-Nawawi's Forty`;
+}
+
+// ---- listen-along: highlight + autoscroll ----
+player.addEventListener("timeupdate", ()=>{
+  const t = player.currentTime;
+  let idx = -1;
+  for(let i=0;i<tokens.length;i++){ if(t>=tokens[i].start) idx=i; else break; }
+  if(idx===activeIdx) return;
+  activeIdx = idx;
+  spans.forEach((s,i)=>s.classList.toggle("active", i===idx && t<=tokens[i].end+0.15));
+  if(idx>=0 && !player.paused){ const r=spans[idx].getBoundingClientRect(); if(r.top<90||r.bottom>innerHeight-60) spans[idx].scrollIntoView({block:"center",behavior:"smooth"}); }
+});
+
+// ---- playback rate cycle ----
+const rates=[1,1.25,1.5,0.75]; let ri=0;
+document.getElementById("rate").onclick = ()=>{ ri=(ri+1)%rates.length; player.playbackRate=rates[ri]; document.getElementById("rate").textContent=rates[ri]+"×"; };
+
+// ---- navigation + deep links ----
+pick.onchange = ()=>load(pick.value);
+document.getElementById("prev").onclick = ()=>load(Number(pick.value)-1);
+document.getElementById("next").onclick = ()=>load(Number(pick.value)+1);
+document.getElementById("share").onclick = async ()=>{ const url=location.href.split("#")[0]+`#nawawi40:${pick.value}`; try{ await navigator.clipboard.writeText(url); document.getElementById("share").textContent="✓ Link copied"; setTimeout(()=>document.getElementById("share").textContent="🔗 Copy link to this hadith",1500);}catch{ prompt("Copy link:",url);} };
+addEventListener("hashchange", ()=>{ const m=location.hash.match(/nawawi40:(\d+)/); if(m) load(m[1],false); });
+document.addEventListener("keydown", e=>{ if(e.target.tagName==="SELECT")return; if(e.key==="ArrowRight")load(Number(pick.value)+1); if(e.key==="ArrowLeft")load(Number(pick.value)-1); });
+
+const start = (location.hash.match(/nawawi40:(\d+)/)||[])[1] || 1;
+load(start, false);
+</script>
