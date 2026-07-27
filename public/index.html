@@ -62,11 +62,20 @@
   .arrow { position:fixed; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--muted); font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; }
   .arrow:hover:not(:disabled) { color:var(--ink); box-shadow:0 2px 10px rgba(0,0,0,.08); }
   .arrow:disabled { opacity:0; pointer-events:none; }
-  .arrow.prev { left:max(14px,calc(50% - 520px)); } .arrow.next { right:max(14px,calc(50% - 520px)); }
+  .arrow.prev { left:calc(50% - 520px); } .arrow.next { right:calc(50% - 520px); }
+  /* Below the width where arrows would overlap the text, hide them — the picker
+     and keyboard/swipe still navigate. */
+  @media (max-width:1120px){ .arrow{ display:none; } }
 
-  .player { display:flex; gap:12px; align-items:center; flex-wrap:wrap; background:transparent; border:1px solid var(--line); border-radius:999px; padding:8px 12px; margin:0 auto 30px; max-width:620px; }
-  .player audio { flex:1; min-width:180px; height:34px; }
-  .player .rate { background:var(--bg); border:1px solid var(--line); color:var(--ink); border-radius:999px; padding:5px 11px; font-size:.78rem; cursor:pointer; }
+  /* Custom minimal player — the native <audio> widget breaks the aesthetic. */
+  .player { display:flex; gap:14px; align-items:center; background:transparent; border:1px solid var(--line); border-radius:999px; padding:8px 10px 8px 8px; margin:0 auto 30px; max-width:540px; }
+  .player audio { display:none; }
+  .play { flex:none; width:42px; height:42px; border-radius:50%; border:0; background:var(--ink); color:var(--bg); cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; }
+  .play:hover { opacity:.85; }
+  .track { flex:1; height:5px; background:var(--line); border-radius:3px; cursor:pointer; position:relative; }
+  .track .fill { position:absolute; left:0; top:0; bottom:0; width:0; background:var(--ink); border-radius:3px; }
+  .time { flex:none; font-size:.76rem; color:var(--muted); font-variant-numeric:tabular-nums; min-width:82px; text-align:right; }
+  .player .rate { flex:none; background:var(--bg); border:1px solid var(--line); color:var(--ink); border-radius:999px; padding:5px 11px; font-size:.75rem; cursor:pointer; }
 
   .reading { max-width:660px; margin:0 auto; }
   .parallel { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
@@ -120,7 +129,10 @@
   <div class="subtitle">الأربعون النووية</div>
 
   <div class="player">
-    <audio id="player" controls preload="none"></audio>
+    <audio id="player" preload="metadata"></audio>
+    <button class="play" id="play" aria-label="Play">▶</button>
+    <div class="track" id="track"><div class="fill" id="fill"></div></div>
+    <span class="time" id="time">0:00 / 0:00</span>
     <button class="rate" id="rate">1×</button>
   </div>
 
@@ -195,13 +207,26 @@ async function load(n, pushHash=true){
   document.title=`Hadith ${n} — An-Nawawi's Forty`;
 }
 
+// ---- custom player wiring ----
+const playBtn=document.getElementById("play"), fill=document.getElementById("fill"),
+      timeEl=document.getElementById("time"), track=document.getElementById("track");
+const fmt=s=>isNaN(s)?"0:00":`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+playBtn.onclick=()=>player.paused?player.play():player.pause();
+player.addEventListener("play",()=>playBtn.textContent="❚❚");
+player.addEventListener("pause",()=>playBtn.textContent="▶");
+player.addEventListener("ended",()=>playBtn.textContent="▶");
+track.onclick=e=>{const r=track.getBoundingClientRect();if(player.duration)player.currentTime=(e.clientX-r.left)/r.width*player.duration;};
+
 player.addEventListener("timeupdate",()=>{
-  const t=player.currentTime; let idx=-1;
+  const t=player.currentTime;
+  if(player.duration){fill.style.width=(t/player.duration*100)+"%";timeEl.textContent=`${fmt(t)} / ${fmt(player.duration)}`;}
+  let idx=-1;
   for(let i=0;i<tokens.length;i++){if(t>=tokens[i].start)idx=i;else break;}
   if(idx===activeIdx)return; activeIdx=idx;
   spans.forEach((s,i)=>s.classList.toggle("active",i===idx&&t<=tokens[i].end+0.15));
   if(idx>=0&&!player.paused){const r=spans[idx].getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-80)spans[idx].scrollIntoView({block:"center",behavior:"smooth"});}
 });
+player.addEventListener("loadedmetadata",()=>{timeEl.textContent=`0:00 / ${fmt(player.duration)}`;fill.style.width="0%";});
 const rates=[1,1.25,1.5,0.75];let ri=0;
 document.getElementById("rate").onclick=()=>{ri=(ri+1)%rates.length;player.playbackRate=rates[ri];document.getElementById("rate").textContent=rates[ri]+"×";};
 
