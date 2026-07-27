@@ -18,14 +18,25 @@ const VOICE = "xvhpbk8otnNHtT3fjCpr";        // Omar - Premium Arabic Voice
 const MODEL = "eleven_turbo_v2_5";           // 0.5 credits/char
 const OUT = "public/recitation";
 
-const corpus = JSON.parse(readFileSync("hadithusx/data/nawawi-arbain.json", "utf8"));
+// First arg is the collection key (husx corpus basename); the rest are report
+// numbers or --all.
+//   node generate-recitation.mjs qudsi-arbain --all
+//   node generate-recitation.mjs nawawi-arbain 1 2 3
 const args = process.argv.slice(2);
-const wanted = args.includes("--all")
+const COLLECTION = args[0];
+const KNOWN = new Set(["nawawi-arbain", "qudsi-arbain", "shahwaliullah-arbain"]);
+if (!COLLECTION || !KNOWN.has(COLLECTION)) {
+  console.error(`usage: node generate-recitation.mjs <${[...KNOWN].join("|")}> <report numbers | --all>`);
+  process.exit(1);
+}
+const rest = args.slice(1);
+const corpus = JSON.parse(readFileSync(`hadithusx/data/${COLLECTION}.json`, "utf8"));
+const wanted = rest.includes("--all")
   ? corpus.witnesses.map((w) => w.structuredLocator.reportNumber)
-  : args.map(Number).filter((n) => Number.isInteger(n));
+  : rest.map(Number).filter((n) => Number.isInteger(n));
 
 if (!wanted.length) {
-  console.error("usage: node generate-recitation.mjs <report numbers> | --all");
+  console.error("no report numbers given (pass numbers or --all)");
   process.exit(1);
 }
 mkdirSync(OUT, { recursive: true });
@@ -49,25 +60,42 @@ let spent = 0;
 for (const n of wanted) {
   const witness = corpus.witnesses.find((w) => w.structuredLocator.reportNumber === n);
   if (!witness) { console.error(`report ${n}: no such witness`); continue; }
-  const stem = `nawawi-arbain.${String(n).padStart(3, "0")}`;
+  const stem = `${COLLECTION}.${String(n).padStart(3, "0")}`;
   if (existsSync(`${OUT}/${stem}.mp3`) && existsSync(`${OUT}/${stem}.json`)) {
     console.log(`${stem}: already generated, skipped`);
     continue;
   }
 
   const text = witness.matn.diplomatic;
-  const res = await fetch(
-    `https://api.elevenlabs.io/v1/text-to-speech/${VOICE}/with-timestamps?output_format=mp3_44100_128`,
-    {
-      method: "POST",
-      headers: { "xi-api-key": API_KEY, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text,
-        model_id: MODEL,
-        voice_settings: { stability: 0.6, similarity_boost: 0.8, speed: 0.9 }
-      })
+  // A trailing full stop gives the model a clean sentence-close (verified by the
+  // qusx-audio A/B tests: trailing "." helps, leading "." hurts). This is a
+  // generation-only tweak — the stored husx matn and its tokens are untouched;
+  // the period sits after the last token, so the timestamp mapping still lines up.
+  const sendText = /[.!?؟۔]$/u.test(text) ? text : text + ".";
+  // Retry transient network failures (connect timeouts) so one blip doesn't kill
+  // a long batch. A non-ok HTTP status still stops the run (real API error).
+  let res;
+  for (let attempt = 1; ; attempt++) {
+    try {
+      res = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${VOICE}/with-timestamps?output_format=mp3_44100_128`,
+        {
+          method: "POST",
+          headers: { "xi-api-key": API_KEY, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: sendText,
+            model_id: MODEL,
+            voice_settings: { stability: 0.6, similarity_boost: 0.8, speed: 0.9 }
+          })
+        }
+      );
+      break;
+    } catch (err) {
+      if (attempt >= 4) { console.error(`${stem}: network failed after ${attempt} tries: ${err.message}`); process.exit(1); }
+      console.error(`${stem}: network blip (attempt ${attempt}), retrying…`);
+      await new Promise((r) => setTimeout(r, 2000 * attempt));
     }
-  );
+  }
   if (!res.ok) {
     console.error(`${stem}: API ${res.status} ${(await res.text()).slice(0, 200)}`);
     break;                       // stop rather than burn credits on a broken run
@@ -76,11 +104,13 @@ for (const n of wanted) {
   const { characters, character_start_times_seconds: starts, character_end_times_seconds: ends } = data.alignment;
 
   // If ElevenLabs altered the text, character offsets no longer address our
-  // tokens. Refuse to write a mapping that would be silently wrong.
+  // tokens. Compare against what we sent (matn + trailing "."). Token spans are
+  // found within `text`, which is a prefix of sendText, so their offsets are
+  // identical in both — the appended period only adds one trailing char we ignore.
   const returned = characters.join("");
-  if (returned !== text) {
-    console.error(`${stem}: MISMATCH - model returned ${returned.length} chars, sent ${text.length}; skipping mapping`);
-    writeFileSync(`${OUT}/${stem}.mismatch.txt`, `sent:\n${text}\n\nreturned:\n${returned}\n`);
+  if (returned !== sendText) {
+    console.error(`${stem}: MISMATCH - model returned ${returned.length} chars, sent ${sendText.length}; skipping mapping`);
+    writeFileSync(`${OUT}/${stem}.mismatch.txt`, `sent:\n${sendText}\n\nreturned:\n${returned}\n`);
     continue;
   }
 

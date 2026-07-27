@@ -1,9 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>An-Nawawi's Forty Hadith — Read &amp; Listen</title>
-<meta name="description" content="The complete Forty Hadith of an-Nawawi with synced Arabic recitation, word-level highlighting, and English translation.">
-<!-- Inter (SIL OFL) for UI/English; Scheherazade New (SIL OFL) naskh for Arabic.
-     Reference layout follows sunnah.com; all CSS, markup and audio are original. -->
+<title>The Forty Collections — Read &amp; Listen</title>
+<meta name="description" content="The Collections of Forty — Nawawi, Qudsi, and Shah Waliullah — with synced Arabic recitation, word-level highlighting, and English translation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
@@ -19,17 +17,15 @@
   :root[data-theme="sepia"] { --bg:#f4ecd8; --ink:#3d3222; --muted:#7c6a4c; --faint:#a2926f; --line:#e3d6ba; --hl-bg:#efe0b4; --hl-ink:#7a5a12; }
   * { box-sizing:border-box; margin:0; }
   body { background:var(--bg); color:var(--ink); font-family:var(--ui-font); line-height:1.5; -webkit-font-smoothing:antialiased; transition:background .2s,color .2s; }
-  a { color:inherit; }
+  a { color:inherit; text-decoration:none; }
 
   header { border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); z-index:30; }
   header .in { max-width:940px; margin:0 auto; display:flex; align-items:center; gap:14px; padding:14px 20px; }
-  header .logo { font-weight:700; font-size:1.05rem; letter-spacing:-.01em; }
+  header .logo { font-weight:700; font-size:1.05rem; letter-spacing:-.01em; cursor:pointer; }
   header .logo span { color:var(--faint); font-weight:500; }
   header .sp { flex:1; }
-  .iconbtn { min-width:38px; height:38px; padding:0 12px; border-radius:999px; border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer; font-size:.82rem; font-weight:600; display:inline-flex; align-items:center; justify-content:center; gap:6px; }
-  .iconbtn:hover { background:var(--line); }
-  .iconbtn.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-  .jump { appearance:none; background:transparent; border:1px solid var(--line); border-radius:999px; color:var(--ink); font-family:var(--ui-font); font-size:.82rem; font-weight:500; padding:8px 14px; cursor:pointer; }
+  .iconbtn { min-width:38px; height:38px; padding:0 12px; border-radius:999px; border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer; font-size:.82rem; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
+  .iconbtn:hover { background:var(--line); } .iconbtn.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
 
   .settings { max-width:940px; margin:0 auto; overflow:hidden; max-height:0; transition:max-height .2s; }
   .settings.open { max-height:130px; }
@@ -39,23 +35,34 @@
   .settings .theme b { cursor:pointer; padding:5px 12px; border:1px solid var(--line); border-radius:20px; margin-left:6px; font-weight:500; }
   .settings .theme b.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
 
-  .collhead { max-width:940px; margin:0 auto; text-align:center; padding:40px 20px 26px; border-bottom:1px solid var(--line); }
-  .collhead .ar { direction:rtl; font-family:var(--ar-font); font-size:2.4rem; }
-  .collhead .en { color:var(--muted); font-size:1rem; margin-top:4px; letter-spacing:.02em; }
-  .collhead .count { color:var(--faint); font-size:.8rem; margin-top:10px; text-transform:uppercase; letter-spacing:.1em; }
+  /* Landing */
+  .hero { max-width:820px; margin:0 auto; text-align:center; padding:52px 20px 30px; }
+  .hero .ar { direction:rtl; font-family:var(--ar-font); font-size:2.6rem; }
+  .hero .en { color:var(--muted); font-size:1.05rem; margin-top:6px; }
+  .cards { max-width:820px; margin:0 auto 60px; padding:0 20px; display:grid; gap:16px; }
+  .card { border:1px solid var(--line); border-radius:12px; padding:22px 24px; cursor:pointer; display:flex; align-items:center; gap:18px; transition:border-color .15s, box-shadow .15s; }
+  .card:hover { border-color:var(--ink); box-shadow:0 2px 14px rgba(0,0,0,.06); }
+  .card .ar { direction:rtl; font-family:var(--ar-font); font-size:1.7rem; flex:1; }
+  .card .meta { text-align:right; } .card .meta .t { font-weight:600; font-size:.95rem; } .card .meta .c { color:var(--faint); font-size:.8rem; margin-top:3px; }
+
+  /* Reader */
+  .collhead { max-width:940px; margin:0 auto; text-align:center; padding:36px 20px 22px; border-bottom:1px solid var(--line); }
+  .collhead .ar { direction:rtl; font-family:var(--ar-font); font-size:2.3rem; }
+  .collhead .en { color:var(--muted); font-size:.95rem; margin-top:2px; }
+  .collhead .back { display:inline-block; margin-top:12px; font-size:.8rem; color:var(--faint); }
+  .toolbar { max-width:940px; margin:0 auto; display:flex; gap:12px; padding:12px 20px; border-bottom:1px solid var(--line); }
+  .jump { appearance:none; background:transparent; border:1px solid var(--line); border-radius:999px; color:var(--ink); font-family:var(--ui-font); font-size:.82rem; padding:8px 14px; cursor:pointer; }
 
   .list { max-width:940px; margin:0 auto; padding:0 20px; }
-  section.h { padding:38px 0; border-bottom:1px solid var(--line); scroll-margin-top:72px; }
-  .hnum { font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.82rem; color:var(--ink); margin-bottom:18px; }
-
-  .player { display:flex; gap:12px; align-items:center; background:transparent; border:1px solid var(--line); border-radius:999px; padding:7px 10px 7px 7px; margin-bottom:24px; max-width:520px; }
-  .play { flex:none; width:38px; height:38px; border-radius:50%; border:0; background:var(--ink); color:var(--bg); cursor:pointer; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+  section.h { padding:36px 0; border-bottom:1px solid var(--line); scroll-margin-top:70px; }
+  .hnum { font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.8rem; margin-bottom:16px; }
+  .player { display:flex; gap:12px; align-items:center; border:1px solid var(--line); border-radius:999px; padding:7px 10px 7px 7px; margin-bottom:22px; max-width:520px; }
+  .play { flex:none; width:38px; height:38px; border-radius:50%; border:0; background:var(--ink); color:var(--bg); cursor:pointer; font-size:.9rem; }
   .play:hover { opacity:.85; }
   .track { flex:1; height:5px; background:var(--line); border-radius:3px; cursor:pointer; position:relative; }
   .track .fill { position:absolute; left:0; top:0; bottom:0; width:0; background:var(--ink); border-radius:3px; }
   .time { flex:none; font-size:.74rem; color:var(--muted); font-variant-numeric:tabular-nums; min-width:80px; text-align:right; }
   .rate { flex:none; background:var(--bg); border:1px solid var(--line); color:var(--ink); border-radius:999px; padding:5px 10px; font-size:.72rem; cursor:pointer; }
-
   .parallel { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
   .parallel.single { grid-template-columns:1fr; } .parallel.single .en-col { display:none; }
   .col-label { font-size:.66rem; text-transform:uppercase; letter-spacing:.1em; color:var(--faint); margin-bottom:12px; }
@@ -64,26 +71,22 @@
   .arabic span.w { cursor:pointer; border-radius:5px; padding:0 3px; transition:background .1s,color .1s; }
   .arabic span.w.active { background:var(--hl-bg); color:var(--hl-ink); }
   @media (max-width:680px){ .parallel{ grid-template-columns:1fr; gap:20px; } }
-
-  .refblock { margin-top:22px; font-size:.88rem; }
+  .refblock { margin-top:20px; font-size:.88rem; }
   .refrow { display:flex; gap:12px; padding:5px 0; align-items:baseline; flex-wrap:wrap; }
   .refrow .lbl { color:var(--faint); min-width:110px; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
-  .refrow a { font-weight:600; text-decoration:none; border-bottom:1px solid transparent; }
-  .refrow a:hover { border-bottom-color:var(--ink); }
+  .refrow a { font-weight:600; border-bottom:1px solid transparent; } .refrow a:hover { border-bottom-color:var(--ink); }
   .refrow .badge { font-size:.62rem; color:var(--faint); border:1px solid var(--line); border-radius:10px; padding:1px 7px; margin-left:6px; }
   .refrow.low a { color:var(--muted); }
-  .copy { background:none; border:0; color:var(--faint); cursor:pointer; font-size:.76rem; margin-top:8px; padding:2px 0; }
+  .copy { background:none; border:0; color:var(--faint); cursor:pointer; font-size:.76rem; margin-top:8px; }
   .copy:hover { color:var(--ink); }
-
-  .disc { max-width:700px; margin:36px auto 70px; color:var(--faint); font-size:.74rem; line-height:1.7; text-align:center; padding:0 20px; }
-  .loading { text-align:center; color:var(--faint); padding:60px 20px; }
+  .disc { max-width:700px; margin:34px auto 70px; color:var(--faint); font-size:.74rem; line-height:1.7; text-align:center; padding:0 20px; }
+  .hidden { display:none; }
 </style>
 
 <header>
   <div class="in">
-    <div class="logo">Nawawi&nbsp;40 <span>· read &amp; listen</span></div>
+    <div class="logo" id="home">The Forty Collections <span>· read &amp; listen</span></div>
     <div class="sp"></div>
-    <select class="jump" id="jump" title="Jump to hadith"><option value="">Jump to…</option></select>
     <button class="iconbtn" id="parallelBtn" title="Parallel / single column">⇄</button>
     <button class="iconbtn" id="gear" title="Display settings">AA</button>
   </div>
@@ -95,26 +98,40 @@
   </div>
 </header>
 
-<div class="collhead">
-  <div class="ar">الأربعون النووية</div>
-  <div class="en">The Forty Hadith of an-Nawawi</div>
-  <div class="count">42 hadith · read &amp; listen</div>
+<!-- Landing -->
+<div id="landing">
+  <div class="hero"><div class="ar">الأربعينات</div><div class="en">The Collections of Forty — read &amp; listen</div></div>
+  <div class="cards" id="cards"></div>
+  <div class="disc">
+    Recitation is synthesised (ElevenLabs) with word timing from its alignment API — not a substitute for a qārī.
+    Reference layout and numbering follow sunnah.com; code, styling and audio are original. Cross-references are machine-suggested.
+  </div>
 </div>
 
-<div class="list" id="list"><div class="loading">Loading the collection…</div></div>
-
-<div class="disc">
-  Recitation is synthesised (ElevenLabs) with word timing from its alignment API — not a substitute for a qārī.
-  Reference layout follows sunnah.com; code, styling and audio are original. Cross-references are
-  machine-suggested and carry sunnah.com's own numbering.
+<!-- Reader -->
+<div id="reader" class="hidden">
+  <div class="collhead">
+    <div class="ar" id="cAr"></div><div class="en" id="cEn"></div>
+    <a class="back" id="back" href="#">‹ All collections</a>
+  </div>
+  <div class="toolbar"><select class="jump" id="jump"></select></div>
+  <div class="list" id="list"></div>
+  <div class="disc" id="rdisc"></div>
 </div>
 
 <script>
-const N = 42;
-const store = { get:(k,d)=>{try{return JSON.parse(localStorage.getItem("nw40:"+k))??d}catch{return d}}, set:(k,v)=>localStorage.setItem("nw40:"+k,JSON.stringify(v)) };
-const j = async(u)=>(await fetch(u,{cache:"no-cache"})).json();
+const COLLECTIONS = [
+  { slug:"nawawi40",        corpus:"nawawi-arbain",       ar:"الأربعون النووية",        en:"An-Nawawi's Forty Hadith",           count:42 },
+  { slug:"qudsi40",         corpus:"qudsi-arbain",        ar:"الأربعون القدسية",        en:"The Forty Hadith Qudsi",             count:40 },
+  { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40 },
+];
+const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
 
-// ---- display settings ----
+const store = { get:(k,d)=>{try{return JSON.parse(localStorage.getItem("f40:"+k))??d}catch{return d}}, set:(k,v)=>localStorage.setItem("f40:"+k,JSON.stringify(v)) };
+const j = async(u)=>(await fetch(u,{cache:"no-cache"})).json();
+const fmt=s=>isNaN(s)?"0:00":`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+
+// settings
 let fontStep = store.get("font",0);
 function applyFont(){ document.documentElement.style.setProperty("--ar-size",(1.85+fontStep*0.14)+"rem"); document.documentElement.style.setProperty("--en-size",(1.125+fontStep*0.08)+"rem"); store.set("font",fontStep); }
 document.getElementById("fPlus").onclick=()=>{fontStep=Math.min(fontStep+1,6);applyFont();};
@@ -127,82 +144,103 @@ function applyParallel(){ document.querySelectorAll(".parallel").forEach(p=>p.cl
 document.getElementById("parallelBtn").onclick=()=>{single=!single;applyParallel();};
 applyFont(); applyTheme(store.get("theme","light"));
 
-const fmt=s=>isNaN(s)?"0:00":`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
-let nowPlaying=null;   // only one hadith plays at a time
+// landing
+const cards=document.getElementById("cards");
+for(const c of COLLECTIONS){
+  const a=document.createElement("a"); a.className="card"; a.href=`#${c.slug}`;
+  a.innerHTML=`<div class="ar">${c.ar}</div><div class="meta"><div class="t">${c.en}</div><div class="c">${c.count} hadith · read &amp; listen</div></div>`;
+  cards.appendChild(a);
+}
+document.getElementById("home").onclick=()=>{location.hash="";};
+document.getElementById("back").onclick=(e)=>{e.preventDefault();location.hash="";};
 
-// ---- build one hadith section ----
-function buildSection(n, rec, en, entry){
-  const sec=document.createElement("section"); sec.className="h"; sec.id=`nawawi40-${n}`; sec.dataset.n=n; sec.style.scrollMarginTop="72px";
+let nowPlaying=null, currentSlug=null;
+
+function buildSection(col, n, rec, en, entry){
+  const sec=document.createElement("section"); sec.className="h"; sec.id=`${col.slug}-${n}`; sec.dataset.n=n;
   sec.innerHTML=`<div class="hnum">Hadith ${n}</div>`;
-
-  // player
-  const audio=new Audio(); audio.preload="none"; audio.src=`recitation/nawawi-arbain.${String(n).padStart(3,"0")}.mp3`;
+  const audio=new Audio(); audio.preload="none"; audio.src=`recitation/${col.corpus}.${String(n).padStart(3,"0")}.mp3`;
   const pl=document.createElement("div"); pl.className="player";
   pl.innerHTML=`<button class="play">▶</button><div class="track"><div class="fill"></div></div><span class="time">0:00 / 0:00</span><button class="rate">1×</button>`;
-  const playBtn=pl.querySelector(".play"), track=pl.querySelector(".track"), fill=pl.querySelector(".fill"), timeEl=pl.querySelector(".time"), rateBtn=pl.querySelector(".rate");
+  const playBtn=pl.querySelector(".play"),track=pl.querySelector(".track"),fill=pl.querySelector(".fill"),timeEl=pl.querySelector(".time"),rateBtn=pl.querySelector(".rate");
   sec.appendChild(pl);
-
-  // parallel text
   const par=document.createElement("div"); par.className="parallel"+(single?" single":"");
   const enCol=document.createElement("div"); enCol.className="en-col"; enCol.innerHTML=`<div class="col-label">English</div>`;
   const enDiv=document.createElement("div"); enDiv.className="english"; enDiv.textContent=en?en.matn:""; enCol.appendChild(enDiv);
   const arCol=document.createElement("div"); arCol.innerHTML=`<div class="col-label" style="text-align:right">العربية</div>`;
   const arDiv=document.createElement("div"); arDiv.className="arabic";
-  const spans=rec.tokens.map(t=>{ const s=document.createElement("span"); s.className="w"; s.textContent=t.text; s.onclick=()=>{ audio.currentTime=t.start; audio.play(); }; arDiv.append(s,document.createTextNode(" ")); return s; });
+  const spans=rec.tokens.map(t=>{const s=document.createElement("span");s.className="w";s.textContent=t.text;s.onclick=()=>{audio.currentTime=t.start;audio.play();};arDiv.append(s,document.createTextNode(" "));return s;});
   arCol.appendChild(arDiv); par.append(enCol,arCol); sec.appendChild(par);
-
-  // references
   const rb=document.createElement("div"); rb.className="refblock";
-  const row=(label,ref,url,conf)=>{ const div=document.createElement("div"); div.className="refrow"+(conf==="low"?" low":""); div.innerHTML=`<span class="lbl">${label}</span>`; const a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener"; a.textContent=ref; div.appendChild(a); if(conf){const b=document.createElement("span");b.className="badge";b.textContent=conf;div.appendChild(b);} rb.appendChild(div); };
-  row("Reference",entry.sunnah.reference,entry.sunnah.url,null);
-  if(en&&en.takhrij.length){ const t=document.createElement("div"); t.className="refrow"; t.innerHTML=`<span class="lbl">Grade</span><span style="font-style:italic;color:var(--muted)">${en.takhrij.join(" · ")}</span>`; rb.appendChild(t); }
-  for(const r of entry.crossReferences) row("Also in",r.sunnahRef,r.url,r.confidence);
+  const row=(label,ref,url,conf)=>{const div=document.createElement("div");div.className="refrow"+(conf==="low"?" low":"");div.innerHTML=`<span class="lbl">${label}</span>`;const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener";a.textContent=ref;div.appendChild(a);if(conf){const b=document.createElement("span");b.className="badge";b.textContent=conf;div.appendChild(b);}rb.appendChild(div);};
+  if(entry){ row("Reference",entry.sunnah.reference,entry.sunnah.url,null);
+    if(en&&en.takhrij&&en.takhrij.length){const t=document.createElement("div");t.className="refrow";t.innerHTML=`<span class="lbl">Grade</span><span style="font-style:italic;color:var(--muted)">${en.takhrij.join(" · ")}</span>`;rb.appendChild(t);}
+    for(const r of entry.crossReferences) row("Also in",r.sunnahRef,r.url,r.confidence);
+  }
   const copy=document.createElement("button"); copy.className="copy"; copy.textContent="🔗 Copy link";
-  copy.onclick=async()=>{ const url=location.href.split("#")[0]+`#nawawi40:${n}`; try{await navigator.clipboard.writeText(url);copy.textContent="✓ Copied";setTimeout(()=>copy.textContent="🔗 Copy link",1400);}catch{prompt("Copy link:",url);} };
+  copy.onclick=async()=>{const url=location.href.split("#")[0]+`#${col.slug}:${n}`;try{await navigator.clipboard.writeText(url);copy.textContent="✓ Copied";setTimeout(()=>copy.textContent="🔗 Copy link",1400);}catch{prompt("Copy link:",url);}};
   rb.appendChild(copy); sec.appendChild(rb);
-
-  // wiring
   let active=-1;
   playBtn.onclick=()=>audio.paused?audio.play():audio.pause();
-  audio.addEventListener("play",()=>{ if(nowPlaying&&nowPlaying!==audio)nowPlaying.pause(); nowPlaying=audio; playBtn.textContent="❚❚"; });
+  audio.addEventListener("play",()=>{if(nowPlaying&&nowPlaying!==audio)nowPlaying.pause();nowPlaying=audio;playBtn.textContent="❚❚";});
   audio.addEventListener("pause",()=>playBtn.textContent="▶");
   audio.addEventListener("ended",()=>playBtn.textContent="▶");
   audio.addEventListener("loadedmetadata",()=>timeEl.textContent=`0:00 / ${fmt(audio.duration)}`);
-  track.onclick=e=>{ const r=track.getBoundingClientRect(); if(audio.duration)audio.currentTime=(e.clientX-r.left)/r.width*audio.duration; };
-  const rates=[1,1.25,1.5,0.75]; let ri=0; rateBtn.onclick=()=>{ ri=(ri+1)%rates.length; audio.playbackRate=rates[ri]; rateBtn.textContent=rates[ri]+"×"; };
+  track.onclick=e=>{const r=track.getBoundingClientRect();if(audio.duration)audio.currentTime=(e.clientX-r.left)/r.width*audio.duration;};
+  const rates=[1,1.25,1.5,0.75];let ri=0;rateBtn.onclick=()=>{ri=(ri+1)%rates.length;audio.playbackRate=rates[ri];rateBtn.textContent=rates[ri]+"×";};
   audio.addEventListener("timeupdate",()=>{
     const t=audio.currentTime;
-    if(audio.duration){ fill.style.width=(t/audio.duration*100)+"%"; timeEl.textContent=`${fmt(t)} / ${fmt(audio.duration)}`; }
-    let idx=-1; for(let i=0;i<rec.tokens.length;i++){ if(t>=rec.tokens[i].start)idx=i; else break; }
-    if(idx===active)return; active=idx;
+    if(audio.duration){fill.style.width=(t/audio.duration*100)+"%";timeEl.textContent=`${fmt(t)} / ${fmt(audio.duration)}`;}
+    let idx=-1;for(let i=0;i<rec.tokens.length;i++){if(t>=rec.tokens[i].start)idx=i;else break;}
+    if(idx===active)return;active=idx;
     spans.forEach((s,i)=>s.classList.toggle("active",i===idx&&t<=rec.tokens[i].end+0.15));
-    if(idx>=0&&!audio.paused){ const r=spans[idx].getBoundingClientRect(); if(r.top<120||r.bottom>innerHeight-80)spans[idx].scrollIntoView({block:"center",behavior:"smooth"}); }
+    if(idx>=0&&!audio.paused){const r=spans[idx].getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-80)spans[idx].scrollIntoView({block:"center",behavior:"smooth"});}
   });
   return sec;
 }
 
-// ---- load everything and render the full collection ----
-(async ()=>{
-  const [trans, sun, ...recs] = await Promise.all([
-    j("translation/en.json"), j("sunnah/nawawi.json"),
-    ...Array.from({length:N},(_,i)=>j(`recitation/nawawi-arbain.${String(i+1).padStart(3,"0")}.json`))
-  ]);
-  const list=document.getElementById("list"); list.innerHTML="";
-  const jump=document.getElementById("jump");
-  for(let n=1;n<=N;n++){
-    const rec=recs[n-1];
-    const en=trans.translations.find(t=>t.witness===rec.witness);
-    const entry=sun.entries.find(e=>e.witness===rec.witness);
-    list.appendChild(buildSection(n,rec,en,entry));
-    jump.insertAdjacentHTML("beforeend",`<option value="nawawi40-${n}">Hadith ${n}</option>`);
+async function openCollection(slug, scrollTo){
+  const col=bySlug[slug]; if(!col){ showLanding(); return; }
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("reader").classList.remove("hidden");
+  if(currentSlug!==slug){
+    currentSlug=slug; nowPlaying=null;
+    document.getElementById("cAr").textContent=col.ar;
+    document.getElementById("cEn").textContent=col.en;
+    document.getElementById("rdisc").textContent="Recitation is synthesised (ElevenLabs); word timing from its alignment API — not a substitute for a qārī. Cross-references are machine-suggested, in sunnah.com's numbering.";
+    document.title=`${col.en} — Read & Listen`;
+    const list=document.getElementById("list"); list.innerHTML="<div class='disc'>Loading…</div>";
+    const jump=document.getElementById("jump"); jump.innerHTML="";
+    const [trans,sun,...recs]=await Promise.all([
+      j(`translation/${slug}.json`), j(`sunnah/${slug}.json`),
+      ...Array.from({length:col.count},(_,i)=>j(`recitation/${col.corpus}.${String(i+1).padStart(3,"0")}.json`))
+    ]);
+    list.innerHTML="";
+    for(let n=1;n<=col.count;n++){
+      const rec=recs[n-1];
+      const en=trans.translations.find(t=>t.witness===rec.witness);
+      const entry=sun.entries.find(e=>e.witness===rec.witness);
+      list.appendChild(buildSection(col,n,rec,en,entry));
+      jump.insertAdjacentHTML("beforeend",`<option value="${slug}-${n}">Hadith ${n}</option>`);
+    }
+    applyParallel();
+    jump.onchange=()=>{ const el=document.getElementById(jump.value); if(el)el.scrollIntoView({behavior:"smooth"}); };
+    if(!io){ io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){history.replaceState(null,"",`#${currentSlug}:${e.target.dataset.n}`);}});},{rootMargin:"-40% 0px -55% 0px"}); }
+    document.querySelectorAll("section.h").forEach(s=>io.observe(s));
   }
-  applyParallel();
-  jump.onchange=()=>{ if(jump.value){ document.getElementById(jump.value).scrollIntoView({behavior:"smooth"}); jump.value=""; } };
+  scrollTo=Number(scrollTo);
+  if(scrollTo){ const el=document.getElementById(`${slug}-${scrollTo}`); if(el)el.scrollIntoView(); }
+  else scrollTo0();
+}
+let io=null;
+function scrollTo0(){ scrollTo(0,0); }
+function showLanding(){ currentSlug=null; if(nowPlaying)nowPlaying.pause(); document.getElementById("reader").classList.add("hidden"); document.getElementById("landing").classList.remove("hidden"); document.title="The Forty Collections — Read & Listen"; scrollTo(0,0); }
 
-  // deep-link + scroll-spy for the hash
-  const goto=()=>{ const m=location.hash.match(/nawawi40:(\d+)/); if(m){ const el=document.getElementById(`nawawi40-${m[1]}`); if(el)el.scrollIntoView(); } };
-  goto(); addEventListener("hashchange",goto);
-  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ const n=e.target.dataset.n; history.replaceState(null,"",`#nawawi40:${n}`); document.title=`Hadith ${n} — An-Nawawi's Forty`; } }); },{rootMargin:"-40% 0px -55% 0px"});
-  document.querySelectorAll("section.h").forEach(s=>io.observe(s));
-})();
+function route(){
+  const m=location.hash.match(/^#([a-z0-9]+)(?::(\d+))?/i);
+  if(m && bySlug[m[1]]) openCollection(m[1], m[2]);
+  else showLanding();
+}
+addEventListener("hashchange", route);
+route();
 </script>
