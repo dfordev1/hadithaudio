@@ -4,7 +4,7 @@
 <meta name="description" content="The Collections of Forty — Nawawi, Qudsi, and Shah Waliullah — with synced Arabic recitation, word-level highlighting, and English translation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#ffffff; --ink:#121212; --muted:#6a6a6a; --faint:#9b9b9b;
@@ -69,7 +69,21 @@
   .english { font-size:var(--en-size); line-height:var(--en-lh); }
   .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:2.5; }
   .arabic span.w { cursor:pointer; border-radius:5px; padding:0 3px; transition:background .1s,color .1s; }
+  .arabic span.w .t { font-family:var(--ar-font); }
   .arabic span.w.active { background:var(--hl-bg); color:var(--hl-ink); }
+  /* glosses hidden by default (flowing reading) */
+  .arabic span.w .g-en, .arabic span.w .g-ur { display:none; }
+  /* word-by-word modes: each word becomes a centred column with its glosses */
+  body[data-wbw="en"] .arabic, body[data-wbw="ur"] .arabic, body[data-wbw="both"] .arabic {
+    display:flex; flex-wrap:wrap; gap:6px 3px; line-height:1.7; }
+  body[data-wbw="en"] .arabic span.w, body[data-wbw="ur"] .arabic span.w, body[data-wbw="both"] .arabic span.w {
+    display:inline-flex; flex-direction:column; align-items:center; padding:6px 7px 8px; }
+  body[data-wbw="en"] .arabic span.w.active, body[data-wbw="ur"] .arabic span.w.active, body[data-wbw="both"] .arabic span.w.active { background:var(--hl-bg); border-radius:9px; }
+  .arabic span.w .g-en { font-family:var(--ui-font); font-size:.7rem; color:var(--muted); direction:ltr; margin-top:4px; text-align:center; max-width:130px; line-height:1.35; }
+  .arabic span.w .g-ur { font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:.8rem; color:var(--muted); direction:rtl; margin-top:5px; text-align:center; max-width:140px; line-height:1.9; }
+  body[data-wbw="en"] .arabic span.w .g-en, body[data-wbw="both"] .arabic span.w .g-en { display:block; }
+  body[data-wbw="ur"] .arabic span.w .g-ur, body[data-wbw="both"] .arabic span.w .g-ur { display:block; }
+  .wbwbtn.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
   @media (max-width:680px){ .parallel{ grid-template-columns:1fr; gap:20px; } }
   .refblock { margin-top:20px; font-size:.88rem; }
   .refrow { display:flex; gap:12px; padding:5px 0; align-items:baseline; flex-wrap:wrap; }
@@ -87,6 +101,7 @@
   <div class="in">
     <div class="logo" id="home">The Forty Collections <span>· read &amp; listen</span></div>
     <div class="sp"></div>
+    <button class="iconbtn wbwbtn" id="wbwBtn" title="Word-by-word: off / EN / UR / both">أ‑a</button>
     <button class="iconbtn" id="parallelBtn" title="Parallel / single column">⇄</button>
     <button class="iconbtn" id="gear" title="Display settings">AA</button>
   </div>
@@ -142,6 +157,12 @@ document.getElementById("gear").onclick=()=>document.getElementById("settings").
 let single = store.get("single",false);
 function applyParallel(){ document.querySelectorAll(".parallel").forEach(p=>p.classList.toggle("single",single)); document.getElementById("parallelBtn").classList.toggle("on",!single); store.set("single",single); }
 document.getElementById("parallelBtn").onclick=()=>{single=!single;applyParallel();};
+// Word-by-word view: cycle off -> en -> ur -> both
+const WBW=["off","en","ur","both"], WBWLBL={off:"أ‑a",en:"EN",ur:"اردو",both:"EN·اردو"};
+let wbw=store.get("wbw","off");
+function applyWbw(){ document.body.dataset.wbw=wbw; const b=document.getElementById("wbwBtn"); b.textContent=WBWLBL[wbw]; b.classList.toggle("on",wbw!=="off"); store.set("wbw",wbw); }
+document.getElementById("wbwBtn").onclick=()=>{ wbw=WBW[(WBW.indexOf(wbw)+1)%WBW.length]; applyWbw(); };
+applyWbw();
 applyFont(); applyTheme(store.get("theme","light"));
 
 // landing
@@ -156,7 +177,7 @@ document.getElementById("back").onclick=(e)=>{e.preventDefault();location.hash="
 
 let nowPlaying=null, currentSlug=null;
 
-function buildSection(col, n, rec, en, entry){
+function buildSection(col, n, rec, en, entry, gloss){
   const sec=document.createElement("section"); sec.className="h"; sec.id=`${col.slug}-${n}`; sec.dataset.n=n;
   sec.innerHTML=`<div class="hnum">Hadith ${n}</div>`;
   const audio=new Audio(); audio.preload="none"; audio.src=`recitation/${col.corpus}.${String(n).padStart(3,"0")}.mp3`;
@@ -169,7 +190,19 @@ function buildSection(col, n, rec, en, entry){
   const enDiv=document.createElement("div"); enDiv.className="english"; enDiv.textContent=en?en.matn:""; enCol.appendChild(enDiv);
   const arCol=document.createElement("div"); arCol.innerHTML=`<div class="col-label" style="text-align:right">العربية</div>`;
   const arDiv=document.createElement("div"); arDiv.className="arabic";
-  const spans=rec.tokens.map(t=>{const s=document.createElement("span");s.className="w";s.textContent=t.text;s.onclick=()=>{audio.currentTime=t.start;audio.play();};arDiv.append(s,document.createTextNode(" "));return s;});
+  const G=gloss&&gloss.glosses?gloss.glosses:{};
+  const spans=rec.tokens.map(t=>{
+    const s=document.createElement("span"); s.className="w";
+    const g=G[t.id]||{};
+    s.innerHTML=`<span class="t"></span><span class="g-en"></span><span class="g-ur"></span>`;
+    s.querySelector(".t").textContent=t.text;
+    s.querySelector(".g-en").textContent=g.en||"";
+    s.querySelector(".g-ur").textContent=g.ur||"";
+    // Click a word: play from that word and keep going (seek + play).
+    s.onclick=()=>{ audio.currentTime=t.start; audio.play(); };
+    arDiv.append(s,document.createTextNode(" "));
+    return s;
+  });
   arCol.appendChild(arDiv); par.append(enCol,arCol); sec.appendChild(par);
   const rb=document.createElement("div"); rb.className="refblock";
   const row=(label,ref,url,conf)=>{const div=document.createElement("div");div.className="refrow"+(conf==="low"?" low":"");div.innerHTML=`<span class="lbl">${label}</span>`;const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener";a.textContent=ref;div.appendChild(a);if(conf){const b=document.createElement("span");b.className="badge";b.textContent=conf;div.appendChild(b);}rb.appendChild(div);};
@@ -211,16 +244,18 @@ async function openCollection(slug, scrollTo){
     document.title=`${col.en} — Read & Listen`;
     const list=document.getElementById("list"); list.innerHTML="<div class='disc'>Loading…</div>";
     const jump=document.getElementById("jump"); jump.innerHTML="";
-    const [trans,sun,...recs]=await Promise.all([
+    const gj=async(u)=>{try{return await j(u);}catch{return null;}}; // gloss may be absent
+    const [trans,sun,recs,glosses]=await Promise.all([
       j(`translation/${slug}.json`), j(`sunnah/${slug}.json`),
-      ...Array.from({length:col.count},(_,i)=>j(`recitation/${col.corpus}.${String(i+1).padStart(3,"0")}.json`))
+      Promise.all(Array.from({length:col.count},(_,i)=>j(`recitation/${col.corpus}.${String(i+1).padStart(3,"0")}.json`))),
+      Promise.all(Array.from({length:col.count},(_,i)=>gj(`gloss/${slug}-${i+1}.json`)))
     ]);
     list.innerHTML="";
     for(let n=1;n<=col.count;n++){
       const rec=recs[n-1];
       const en=trans.translations.find(t=>t.witness===rec.witness);
       const entry=sun.entries.find(e=>e.witness===rec.witness);
-      list.appendChild(buildSection(col,n,rec,en,entry));
+      list.appendChild(buildSection(col,n,rec,en,entry,glosses[n-1]));
       jump.insertAdjacentHTML("beforeend",`<option value="${slug}-${n}">Hadith ${n}</option>`);
     }
     applyParallel();
