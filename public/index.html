@@ -288,8 +288,8 @@
     box-shadow:var(--shadow); backdrop-filter:blur(12px);
   }
   .dock-meta {
-    grid-column:1 / -1; display:flex; align-items:baseline; gap:10px;
-    padding:0 4px 2px; min-width:0;
+    grid-column:1 / -1; display:flex; align-items:center; gap:10px;
+    padding:0 4px 2px; min-width:0; flex-wrap:wrap;
   }
   .dock-label {
     font-size:.82rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
@@ -297,6 +297,14 @@
   .dock-draft {
     font-size:.68rem; color:var(--faint); font-weight:500; white-space:nowrap;
   }
+  .dock-modes { margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; }
+  .mode {
+    border:1px solid var(--line); background:var(--bg); color:var(--muted);
+    border-radius:999px; padding:3px 9px; font-size:.68rem; cursor:pointer; font-weight:600;
+  }
+  .mode.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .mode:hover { border-color:var(--ink); color:var(--ink); }
+  .mode.on:hover { color:var(--bg); }
   .skip {
     flex:none; width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
     background:var(--bg); color:var(--ink); cursor:pointer;
@@ -448,6 +456,10 @@
       <div class="dock-meta">
         <span class="dock-label" id="dockLabel">Hadith</span>
         <span class="dock-draft">Draft audio</span>
+        <div class="dock-modes">
+          <button type="button" class="mode" id="autoplayBtn" aria-pressed="true" title="Play the next hadith when this one ends">Autoplay</button>
+          <button type="button" class="mode" id="repeatBtn" aria-pressed="false" title="Loop this hadith">Repeat</button>
+        </div>
       </div>
       <button type="button" class="skip" id="skipBack" aria-label="Back 10 seconds">−10</button>
       <button class="play" id="playBtn" aria-label="Play">
@@ -640,9 +652,48 @@ document.getElementById("skipFwd").onclick = () => {
 function updateDockLabel(col, n){
   document.getElementById("dockLabel").textContent = `${shortCollectionName(col)} · ${n}`;
 }
+
+/* Listen modes: Repeat one wins over Autoplay next when both are on */
+let autoplayNext = store.get("autoplay", true);
+let repeatOne = store.get("repeat", false);
+let continuePlayAfterLoad = false;
+const autoplayBtn = document.getElementById("autoplayBtn");
+const repeatBtn = document.getElementById("repeatBtn");
+function syncListenModesUI(){
+  autoplayBtn.classList.toggle("on", autoplayNext);
+  autoplayBtn.setAttribute("aria-pressed", autoplayNext ? "true" : "false");
+  repeatBtn.classList.toggle("on", repeatOne);
+  repeatBtn.setAttribute("aria-pressed", repeatOne ? "true" : "false");
+}
+syncListenModesUI();
+autoplayBtn.onclick = () => {
+  autoplayNext = !autoplayNext;
+  store.set("autoplay", autoplayNext);
+  syncListenModesUI();
+};
+repeatBtn.onclick = () => {
+  repeatOne = !repeatOne;
+  store.set("repeat", repeatOne);
+  syncListenModesUI();
+};
+
 audio.addEventListener("play", () => setPlayingUI(true));
 audio.addEventListener("pause", () => setPlayingUI(false));
-audio.addEventListener("ended", () => setPlayingUI(false));
+audio.addEventListener("ended", () => {
+  setPlayingUI(false);
+  if (repeatOne) {
+    audio.currentTime = 0;
+    syncWordHighlight(0);
+    fill.style.width = "0%";
+    audio.play().catch(() => {});
+    return;
+  }
+  if (!autoplayNext || !state.slug || !bySlug[state.slug]?.audio) return;
+  const next = neighborReport(state.seq, state.n, 1);
+  if (next == null) return;
+  continuePlayAfterLoad = true;
+  setHash(state.slug, next);
+});
 audio.addEventListener("loadedmetadata", () => { timeEl.textContent = `0:00 / ${fmt(audio.duration)}`; });
 track.onclick = e => {
   const r = track.getBoundingClientRect();
@@ -896,6 +947,8 @@ async function openForty(col, n){
   updateDockLabel(col, n);
   await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`);
   currentTokens = rec.tokens;
+  const shouldContinue = continuePlayAfterLoad;
+  continuePlayAfterLoad = false;
 
   const wrap = document.createElement("div");
   wrap.innerHTML = `
@@ -936,6 +989,11 @@ async function openForty(col, n){
   applyParallel();
   document.title = `${col.en} ${n} — Hadith WBW`;
   scrollTo(0, 0);
+  if (shouldContinue) {
+    audio.currentTime = 0;
+    syncWordHighlight(0);
+    audio.play().catch(() => {});
+  }
 }
 
 async function openMalik(n){
