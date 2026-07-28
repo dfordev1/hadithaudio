@@ -80,7 +80,7 @@
     display:inline-flex; flex-direction:column; align-items:center; padding:6px 7px 8px; }
   body[data-wbw="en"] .arabic span.w.active, body[data-wbw="ur"] .arabic span.w.active, body[data-wbw="both"] .arabic span.w.active { background:var(--hl-bg); border-radius:9px; }
   .arabic span.w .g-en { font-family:var(--ui-font); font-size:.7rem; color:var(--muted); direction:ltr; margin-top:4px; text-align:center; max-width:130px; line-height:1.35; }
-  .arabic span.w .g-ur { font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:.8rem; color:var(--muted); direction:rtl; margin-top:5px; text-align:center; max-width:140px; line-height:1.9; }
+  .arabic span.w .g-ur { font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-size,.8rem); color:var(--muted); direction:rtl; margin-top:5px; text-align:center; max-width:140px; line-height:1.9; }
   body[data-wbw="en"] .arabic span.w .g-en, body[data-wbw="both"] .arabic span.w .g-en { display:block; }
   body[data-wbw="ur"] .arabic span.w .g-ur, body[data-wbw="both"] .arabic span.w .g-ur { display:block; }
   .wbwbtn.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
@@ -108,6 +108,8 @@
   <div class="settings" id="settings">
     <div class="in">
       <div class="grp">Text size <button class="s" id="fMinus">−</button><button class="s" id="fPlus">+</button></div>
+      <div class="grp">Arabic <button class="s" id="arMinus">−</button><button class="s" id="arPlus">+</button></div>
+      <div class="grp">Urdu <button class="s" id="urMinus">−</button><button class="s" id="urPlus">+</button></div>
       <div class="grp theme">Theme <b data-t="light" class="on">Light</b><b data-t="sepia">Sepia</b><b data-t="dark">Dark</b></div>
     </div>
   </div>
@@ -147,10 +149,19 @@ const j = async(u)=>(await fetch(u,{cache:"no-cache"})).json();
 const fmt=s=>isNaN(s)?"0:00":`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 
 // settings
-let fontStep = store.get("font",0);
-function applyFont(){ document.documentElement.style.setProperty("--ar-size",(1.85+fontStep*0.14)+"rem"); document.documentElement.style.setProperty("--en-size",(1.125+fontStep*0.08)+"rem"); store.set("font",fontStep); }
+let fontStep = store.get("font",0), arSz = store.get("arsz",1.9), urSz = store.get("ursz",0.8);
+function applyFont(){
+  document.documentElement.style.setProperty("--en-size",(1.125+fontStep*0.08)+"rem");
+  document.documentElement.style.setProperty("--ar-size",arSz+"rem");
+  document.documentElement.style.setProperty("--ur-size",urSz+"rem");
+  store.set("font",fontStep); store.set("arsz",arSz); store.set("ursz",urSz);
+}
 document.getElementById("fPlus").onclick=()=>{fontStep=Math.min(fontStep+1,6);applyFont();};
 document.getElementById("fMinus").onclick=()=>{fontStep=Math.max(fontStep-1,-2);applyFont();};
+document.getElementById("arPlus").onclick=()=>{arSz=Math.min(arSz+0.15,3.4);applyFont();};
+document.getElementById("arMinus").onclick=()=>{arSz=Math.max(arSz-0.15,1.1);applyFont();};
+document.getElementById("urPlus").onclick=()=>{urSz=Math.min(urSz+0.1,1.6);applyFont();};
+document.getElementById("urMinus").onclick=()=>{urSz=Math.max(urSz-0.1,0.6);applyFont();};
 function applyTheme(t){ document.documentElement.dataset.theme=t; store.set("theme",t); document.querySelectorAll(".theme b").forEach(b=>b.classList.toggle("on",b.dataset.t===t)); }
 document.querySelectorAll(".theme b").forEach(b=>b.onclick=()=>applyTheme(b.dataset.t));
 document.getElementById("gear").onclick=()=>document.getElementById("settings").classList.toggle("open");
