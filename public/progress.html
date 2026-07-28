@@ -1,0 +1,78 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gloss + review progress</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0d0f11; --panel:#15181c; --ink:#e8ecef; --muted:#8b949e; --line:#242a30;
+    --miss:#20262c; --gloss:#c99a2e; --review:#2ea043; --ui:Inter,-apple-system,sans-serif; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--ui); padding:22px 20px 70px; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1120px; margin:0 auto; }
+  h1 { font-size:1.15rem; font-weight:700; }
+  .sub { color:var(--muted); font-size:.85rem; margin-top:3px; }
+  .overall { margin:20px 0 8px; }
+  .bar { height:14px; background:var(--miss); border-radius:8px; overflow:hidden; display:flex; }
+  .bar .g { background:var(--gloss); } .bar .r { background:var(--review); }
+  .obl { display:flex; justify-content:space-between; font-size:.82rem; color:var(--muted); margin-top:7px; }
+  .legend { display:flex; gap:16px; font-size:.78rem; color:var(--muted); margin:14px 0 4px; }
+  .legend i { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:5px; vertical-align:-1px; }
+  .coll { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-top:16px; }
+  .chead { display:flex; align-items:baseline; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+  .chead .t { font-weight:600; } .chead .c { color:var(--muted); font-size:.82rem; }
+  .chead .pct { margin-left:auto; font-size:.82rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .grid { display:grid; gap:2px; }
+  .cell { width:100%; aspect-ratio:1; border-radius:2px; background:var(--miss); }
+  .cell.s1 { background:var(--gloss); } .cell.s2 { background:var(--review); }
+  .stamp { color:var(--muted); font-size:.75rem; margin-top:22px; text-align:center; }
+  .dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--review); margin-right:6px; animation:pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+</style>
+
+<div class="wrap">
+  <h1>Word-by-word gloss + review — live progress</h1>
+  <div class="sub"><span class="dot"></span>auto-refreshing · grey = pending · amber = glossed · green = reviewed</div>
+
+  <div class="overall">
+    <div class="bar"><div class="r" id="obR"></div><div class="g" id="obG"></div></div>
+    <div class="obl"><span id="obTxt">loading…</span><span id="obPct"></span></div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--review)"></i>reviewed</span>
+    <span><i style="background:var(--gloss)"></i>glossed</span>
+    <span><i style="background:var(--miss)"></i>pending</span>
+  </div>
+
+  <div id="colls"></div>
+  <div class="stamp" id="stamp"></div>
+</div>
+
+<script>
+async function tick(){
+  let data; try { data = await (await fetch("progress.json?_="+Date.now())).json(); } catch { return; }
+  const T = data.total;
+  const rp = (T.r/T.n*100), gp = ((T.g-T.r)/T.n*100);
+  document.getElementById("obR").style.width = rp+"%";
+  document.getElementById("obG").style.width = gp+"%";
+  document.getElementById("obTxt").textContent = `${T.g}/${T.n} glossed · ${T.r}/${T.n} reviewed`;
+  document.getElementById("obPct").textContent = `${(T.g/T.n*100).toFixed(1)}% glossed`;
+
+  const box = document.getElementById("colls"); box.innerHTML = "";
+  for (const c of data.collections) {
+    const div = document.createElement("div"); div.className = "coll";
+    const cols = c.count > 200 ? 46 : c.count > 45 ? 20 : 14;
+    div.innerHTML = `<div class="chead"><span class="t">${c.label}</span><span class="c">${c.count} hadith</span>`
+      + `<span class="pct">${c.glossed}/${c.count} glossed · ${c.reviewed} reviewed</span></div>`;
+    const grid = document.createElement("div"); grid.className = "grid";
+    grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    for (const [n, s] of c.cells) {
+      const cell = document.createElement("div"); cell.className = "cell s"+s;
+      cell.title = `#${n} — ${s===2?"reviewed":s===1?"glossed":"pending"}`;
+      grid.appendChild(cell);
+    }
+    div.appendChild(grid); box.appendChild(div);
+  }
+  document.getElementById("stamp").textContent = "snapshot " + new Date(data.generatedAt).toLocaleTimeString();
+}
+tick(); setInterval(tick, 6000);
+</script>

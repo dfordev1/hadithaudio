@@ -362,12 +362,12 @@
       "ur": "اسے پلایا۔"
     },
     "uh:token:qudsi-arbain.018:0089": {
-      "en": "did not [know]",
-      "ur": "کیا نہیں [جانا]"
+      "en": "verily,",
+      "ur": "یقیناً،"
     },
     "uh:token:qudsi-arbain.018:0090": {
-      "en": "that indeed you,",
-      "ur": "کہ بے شک تو،"
+      "en": "indeed you,",
+      "ur": "بے شک تو،"
     },
     "uh:token:qudsi-arbain.018:0091": {
       "en": "if",
@@ -389,5 +389,41 @@
       "en": "with Me",
       "ur": "میرے پاس"
     }
+  },
+  "review": {
+    "checkedBy": "uh:agent:gloss-reviewer",
+    "method": "independent review anchored to en translation + Arabic",
+    "tokensChecked": 95,
+    "tokensChanged": 4,
+    "changes": [
+      {
+        "token": "0089",
+        "field": "en",
+        "from": "did not [know]",
+        "to": "verily,",
+        "why": "Token is أَمَا (tanbih particle 'verily/but'), not أَمَا عَلِمْتَ; third repetition has no عَلِمْتَ so 'know' was wrongly imported"
+      },
+      {
+        "token": "0089",
+        "field": "ur",
+        "from": "کیا نہیں [جانا]",
+        "to": "یقیناً،",
+        "why": "Same: أَمَا here is an alerting particle, not 'did you not know'"
+      },
+      {
+        "token": "0090",
+        "field": "en",
+        "from": "that indeed you,",
+        "to": "indeed you,",
+        "why": "إِنَّكَ after tanbih أَمَا; no preceding verb requires 'that'"
+      },
+      {
+        "token": "0090",
+        "field": "ur",
+        "from": "کہ بے شک تو،",
+        "to": "بے شک تو،",
+        "why": "Removed stray 'کہ' carried over from عَلِمْتَ pattern"
+      }
+    ]
   }
 }
