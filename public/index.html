@@ -11,7 +11,7 @@
     --line:#ececec; --hl-bg:#fff3cf; --hl-ink:#8a6d1f;
     --ar-font:"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif;
     --ui-font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    --ar-size:1.85rem; --en-size:1.125rem; --en-lh:2;
+    --ar-size:1.85rem; --en-size:1.125rem; --en-lh:2; --wbw-gap:18px;
   }
   :root[data-theme="dark"] { --bg:#0f0f0f; --ink:#ececec; --muted:#9a9a9a; --faint:#6a6a6a; --line:#262626; --hl-bg:#3a3320; --hl-ink:#e6c766; }
   :root[data-theme="sepia"] { --bg:#f4ecd8; --ink:#3d3222; --muted:#7c6a4c; --faint:#a2926f; --line:#e3d6ba; --hl-bg:#efe0b4; --hl-ink:#7a5a12; }
@@ -75,7 +75,7 @@
   .arabic span.w .g-en, .arabic span.w .g-ur { display:none; }
   /* word-by-word modes: each word becomes a centred column with its glosses */
   body[data-wbw="en"] .arabic, body[data-wbw="ur"] .arabic, body[data-wbw="both"] .arabic {
-    display:flex; flex-wrap:wrap; gap:6px 3px; line-height:1.7; }
+    display:flex; flex-wrap:wrap; gap:var(--wbw-gap) 4px; line-height:1.7; }
   body[data-wbw="en"] .arabic span.w, body[data-wbw="ur"] .arabic span.w, body[data-wbw="both"] .arabic span.w {
     display:inline-flex; flex-direction:column; align-items:center; padding:6px 7px 8px; }
   body[data-wbw="en"] .arabic span.w.active, body[data-wbw="ur"] .arabic span.w.active, body[data-wbw="both"] .arabic span.w.active { background:var(--hl-bg); border-radius:9px; }
@@ -110,6 +110,7 @@
       <div class="grp">Text size <button class="s" id="fMinus">−</button><button class="s" id="fPlus">+</button></div>
       <div class="grp">Arabic <button class="s" id="arMinus">−</button><button class="s" id="arPlus">+</button></div>
       <div class="grp">Urdu <button class="s" id="urMinus">−</button><button class="s" id="urPlus">+</button></div>
+      <div class="grp">Spacing <button class="s" id="spMinus">−</button><button class="s" id="spPlus">+</button></div>
       <div class="grp theme">Theme <b data-t="light" class="on">Light</b><b data-t="sepia">Sepia</b><b data-t="dark">Dark</b></div>
     </div>
   </div>
@@ -149,12 +150,13 @@ const j = async(u)=>(await fetch(u,{cache:"no-cache"})).json();
 const fmt=s=>isNaN(s)?"0:00":`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 
 // settings
-let fontStep = store.get("font",0), arSz = store.get("arsz",1.9), urSz = store.get("ursz",0.8);
+let fontStep = store.get("font",0), arSz = store.get("arsz",1.9), urSz = store.get("ursz",0.8), spSz = store.get("spsz",18);
 function applyFont(){
   document.documentElement.style.setProperty("--en-size",(1.125+fontStep*0.08)+"rem");
   document.documentElement.style.setProperty("--ar-size",arSz+"rem");
   document.documentElement.style.setProperty("--ur-size",urSz+"rem");
-  store.set("font",fontStep); store.set("arsz",arSz); store.set("ursz",urSz);
+  document.documentElement.style.setProperty("--wbw-gap",spSz+"px");
+  store.set("font",fontStep); store.set("arsz",arSz); store.set("ursz",urSz); store.set("spsz",spSz);
 }
 document.getElementById("fPlus").onclick=()=>{fontStep=Math.min(fontStep+1,6);applyFont();};
 document.getElementById("fMinus").onclick=()=>{fontStep=Math.max(fontStep-1,-2);applyFont();};
@@ -162,6 +164,8 @@ document.getElementById("arPlus").onclick=()=>{arSz=Math.min(arSz+0.15,3.4);appl
 document.getElementById("arMinus").onclick=()=>{arSz=Math.max(arSz-0.15,1.1);applyFont();};
 document.getElementById("urPlus").onclick=()=>{urSz=Math.min(urSz+0.1,1.6);applyFont();};
 document.getElementById("urMinus").onclick=()=>{urSz=Math.max(urSz-0.1,0.6);applyFont();};
+document.getElementById("spPlus").onclick=()=>{spSz=Math.min(spSz+6,60);applyFont();};
+document.getElementById("spMinus").onclick=()=>{spSz=Math.max(spSz-6,6);applyFont();};
 function applyTheme(t){ document.documentElement.dataset.theme=t; store.set("theme",t); document.querySelectorAll(".theme b").forEach(b=>b.classList.toggle("on",b.dataset.t===t)); }
 document.querySelectorAll(".theme b").forEach(b=>b.onclick=()=>applyTheme(b.dataset.t));
 document.getElementById("gear").onclick=()=>document.getElementById("settings").classList.toggle("open");

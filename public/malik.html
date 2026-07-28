@@ -6,7 +6,7 @@
 <style>
   :root { --bg:#fff; --ink:#121212; --muted:#6a6a6a; --faint:#9b9b9b; --line:#ececec; --hl:#fff3cf;
     --ar:"KFGQPC Uthman Taha Naskh","Scheherazade New",serif; --ui:Inter,-apple-system,sans-serif; --ur:"Noto Nastaliq Urdu",serif;
-    --ar-size:1.7rem; --ur-size:.8rem; }
+    --ar-size:1.7rem; --ur-size:.8rem; --wbw-gap:20px; }
   @media (prefers-color-scheme: dark){ :root{ --bg:#0f0f0f; --ink:#ececec; --muted:#9a9a9a; --faint:#6a6a6a; --line:#262626; --hl:#3a3320; } }
   * { box-sizing:border-box; margin:0; }
   body { background:var(--bg); color:var(--ink); font-family:var(--ui); padding:0 16px 80px; -webkit-font-smoothing:antialiased; }
@@ -23,7 +23,7 @@
   section { padding:22px 0; border-bottom:1px solid var(--line); }
   .hn { font-weight:700; text-transform:uppercase; letter-spacing:.1em; font-size:.72rem; }
   .isnad { color:var(--faint); font-size:.72rem; margin:5px 0 14px; direction:rtl; font-family:var(--ar); }
-  .wbw { direction:rtl; display:flex; flex-wrap:wrap; gap:6px 3px; }
+  .wbw { direction:rtl; display:flex; flex-wrap:wrap; gap:var(--wbw-gap) 4px; }
   .w { display:inline-flex; flex-direction:column; align-items:center; padding:5px 6px 7px; border-radius:8px; } .w:hover{ background:var(--hl); }
   .w .t { font-family:var(--ar); font-size:var(--ar-size); line-height:1.85; }
   .w .en { font-family:var(--ui); font-size:.68rem; color:var(--muted); direction:ltr; margin-top:4px; text-align:center; max-width:120px; line-height:1.3; }
@@ -39,6 +39,7 @@
   <select id="book" title="Book"></select>
   <span class="stepper"><b>ع</b><button id="arMinus">−</button><button id="arPlus">+</button></span>
   <span class="stepper"><b>اردو</b><button id="urMinus">−</button><button id="urPlus">+</button></span>
+  <span class="stepper"><b>Spacing</b><button id="spMinus">−</button><button id="spPlus">+</button></span>
   <span class="tog"><b data-l="en" class="on">EN</b><b data-l="ur" class="on">UR</b></span>
 </div></header>
 
@@ -46,10 +47,11 @@
 
 <script>
 const store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem("mk:"+k))??d}catch{return d}},set:(k,v)=>localStorage.setItem("mk:"+k,JSON.stringify(v))};
-let arS=store.get("ar",1.7), urS=store.get("ur",0.8);
-function applyFonts(){document.documentElement.style.setProperty("--ar-size",arS+"rem");document.documentElement.style.setProperty("--ur-size",urS+"rem");store.set("ar",arS);store.set("ur",urS);}
+let arS=store.get("ar",1.7), urS=store.get("ur",0.8), spS=store.get("sp",20);
+function applyFonts(){document.documentElement.style.setProperty("--ar-size",arS+"rem");document.documentElement.style.setProperty("--ur-size",urS+"rem");document.documentElement.style.setProperty("--wbw-gap",spS+"px");store.set("ar",arS);store.set("ur",urS);store.set("sp",spS);}
 arPlus.onclick=()=>{arS=Math.min(arS+0.15,3.2);applyFonts();};arMinus.onclick=()=>{arS=Math.max(arS-0.15,1.1);applyFonts();};
 urPlus.onclick=()=>{urS=Math.min(urS+0.1,1.6);applyFonts();};urMinus.onclick=()=>{urS=Math.max(urS-0.1,0.6);applyFonts();};
+spPlus.onclick=()=>{spS=Math.min(spS+6,60);applyFonts();};spMinus.onclick=()=>{spS=Math.max(spS-6,6);applyFonts();};
 document.querySelectorAll(".tog b").forEach(b=>b.onclick=()=>{b.classList.toggle("on");document.body.classList.toggle("hide-"+b.dataset.l,!b.classList.contains("on"));});
 applyFonts();
 
