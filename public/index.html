@@ -190,6 +190,16 @@ function buildSection(col, n, rec, en, entry, gloss){
   const enDiv=document.createElement("div"); enDiv.className="english"; enDiv.textContent=en?en.matn:""; enCol.appendChild(enDiv);
   const arCol=document.createElement("div"); arCol.innerHTML=`<div class="col-label" style="text-align:right">العربية</div>`;
   const arDiv=document.createElement("div"); arDiv.className="arabic";
+  // Seek + play from a given time. With preload="none" the media has no metadata
+  // on the first click, so a seek would be dropped (playback starts at 0) — wait
+  // for metadata before seeking in that case.
+  const playFrom=(time)=>{
+    if(audio.readyState>=1){ audio.currentTime=time; audio.play(); }
+    else {
+      audio.addEventListener("loadedmetadata",()=>{ audio.currentTime=time; audio.play(); },{once:true});
+      audio.load();
+    }
+  };
   const G=gloss&&gloss.glosses?gloss.glosses:{};
   const spans=rec.tokens.map(t=>{
     const s=document.createElement("span"); s.className="w";
@@ -198,8 +208,8 @@ function buildSection(col, n, rec, en, entry, gloss){
     s.querySelector(".t").textContent=t.text;
     s.querySelector(".g-en").textContent=g.en||"";
     s.querySelector(".g-ur").textContent=g.ur||"";
-    // Click a word: play from that word and keep going (seek + play).
-    s.onclick=()=>{ audio.currentTime=t.start; audio.play(); };
+    // Click a word: play from that word and keep going.
+    s.onclick=()=>playFrom(t.start);
     arDiv.append(s,document.createTextNode(" "));
     return s;
   });
