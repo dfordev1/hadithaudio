@@ -302,12 +302,12 @@
       "ur": "میں نے دیکھا"
     },
     "uh:token:malik.0494:0074": {
-      "en": "thirty-odd",
-      "ur": "تیس سے کچھ زیادہ"
+      "en": "some/odd (3-9)",
+      "ur": "کچھ (تین سے نو)"
     },
     "uh:token:malik.0494:0075": {
       "en": "and thirty",
-      "ur": "(فرشتے)"
+      "ur": "اور تیس"
     },
     "uh:token:malik.0494:0076": {
       "en": "angel[s]",
@@ -329,5 +329,34 @@
       "en": "first",
       "ur": "پہلے"
     }
+  },
+  "review": {
+    "checkedBy": "uh:agent:gloss-reviewer",
+    "method": "independent second-pass machine review anchored to eng-malik + Arabic",
+    "tokensChecked": 80,
+    "tokensChanged": 3,
+    "changes": [
+      {
+        "token": "uh:token:malik.0494:0074",
+        "field": "en",
+        "from": "thirty-odd",
+        "to": "some/odd (3-9)",
+        "why": "بضعة = a few/odd (3-9); the thirty is the next token وثلاثين"
+      },
+      {
+        "token": "uh:token:malik.0494:0074",
+        "field": "ur",
+        "from": "تیس سے کچھ زیادہ",
+        "to": "کچھ (تین سے نو)",
+        "why": "بضعة = a few, not thirty-odd"
+      },
+      {
+        "token": "uh:token:malik.0494:0075",
+        "field": "ur",
+        "from": "(فرشتے)",
+        "to": "اور تیس",
+        "why": "وثلاثين means \"and thirty\"; Urdu wrongly said \"angels\" (duplicate of next token ملکا)"
+      }
+    ]
   }
 }

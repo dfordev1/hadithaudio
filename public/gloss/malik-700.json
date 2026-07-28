@@ -174,7 +174,7 @@
       "ur": "رات"
     },
     "uh:token:malik.0700:0042": {
-      "en": "three",
+      "en": "twenty-[three]",
       "ur": "تئیس"
     },
     "uh:token:malik.0700:0043": {
@@ -189,5 +189,20 @@
       "en": "Ramadan",
       "ur": "رمضان"
     }
+  },
+  "review": {
+    "checkedBy": "uh:agent:gloss-reviewer",
+    "method": "independent second-pass machine review anchored to eng-malik + Arabic",
+    "tokensChecked": 45,
+    "tokensChanged": 1,
+    "changes": [
+      {
+        "token": "uh:token:malik.0700:0042",
+        "field": "en",
+        "from": "three",
+        "to": "twenty-[three]",
+        "why": "Compound number; token ur is تئیس (23) so en must match the 21-style decomposition used in 697 (إحدى=twenty-[one]); eng-truth says twenty-third"
+      }
+    ]
   }
 }

@@ -50,16 +50,52 @@
       "ur": "رمضان"
     },
     "uh:token:malik.0250:0011": {
-      "en": "with twenty-",
-      "ur": "تئیس"
+      "en": "with three",
+      "ur": "تین"
     },
     "uh:token:malik.0250:0012": {
-      "en": "three",
-      "ur": "رکعتیں"
+      "en": "and twenty",
+      "ur": "اور بیس"
     },
     "uh:token:malik.0250:0013": {
       "en": "a raka",
       "ur": "ایک رکعت"
     }
+  },
+  "review": {
+    "checkedBy": "uh:agent:gloss-reviewer",
+    "method": "independent second-pass machine review anchored to eng-malik + Arabic",
+    "tokensChecked": 13,
+    "tokensChanged": 4,
+    "changes": [
+      {
+        "token": "uh:token:malik.0250:0011",
+        "field": "en",
+        "from": "with twenty-",
+        "to": "with three",
+        "why": "token is ثلاث (three); en carried the wrong part of the compound 23"
+      },
+      {
+        "token": "uh:token:malik.0250:0011",
+        "field": "ur",
+        "from": "تئیس",
+        "to": "تین",
+        "why": "Urdu gave 23 (the whole compound) on the word meaning 'three'"
+      },
+      {
+        "token": "uh:token:malik.0250:0012",
+        "field": "en",
+        "from": "three",
+        "to": "and twenty",
+        "why": "token is وعشرين (and twenty); en had 'three' from prior token"
+      },
+      {
+        "token": "uh:token:malik.0250:0012",
+        "field": "ur",
+        "from": "رکعتیں",
+        "to": "اور بیس",
+        "why": "Urdu said 'rakas' on the word meaning 'and twenty'"
+      }
+    ]
   }
 }

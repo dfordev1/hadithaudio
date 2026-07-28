@@ -90,7 +90,7 @@
       "ur": "اس کے کہ"
     },
     "uh:token:malik.0368:0021": {
-      "en": "the imam says takbir",
+      "en": "says the opening takbir",
       "ur": "تکبیر تحریمہ کہے"
     },
     "uh:token:malik.0368:0022": {
@@ -133,5 +133,20 @@
       "en": "the rows",
       "ur": "صفوں کے"
     }
+  },
+  "review": {
+    "checkedBy": "uh:agent:gloss-reviewer",
+    "method": "independent second-pass machine review anchored to eng-malik + Arabic",
+    "tokensChecked": 31,
+    "tokensChanged": 1,
+    "changes": [
+      {
+        "token": "uh:token:malik.0368:0021",
+        "field": "en",
+        "from": "the imam says takbir",
+        "to": "says the opening takbir",
+        "why": "off-by-one: subject 'imam' belongs to next token 0022 (الإمام); verb يُحْرِمَ alone is the opening takbir"
+      }
+    ]
   }
 }

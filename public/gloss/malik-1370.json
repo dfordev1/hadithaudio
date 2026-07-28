@@ -1259,7 +1259,7 @@
     },
     "uh:token:malik.1370:0313": {
       "en": "ten [teen]",
-      "ur": "دینار"
+      "ur": "دس"
     },
     "uh:token:malik.1370:0314": {
       "en": "dinars",
@@ -1295,11 +1295,33 @@
     },
     "uh:token:malik.1370:0322": {
       "en": "is the deception",
-      "ur": "دخل"
+      "ur": "دھوکہ"
     },
     "uh:token:malik.1370:0323": {
       "en": "and the fraud",
       "ur": "اور فریب ہے"
     }
+  },
+  "review": {
+    "checkedBy": "uh:agent:gloss-reviewer",
+    "method": "independent second-pass machine review anchored to eng-malik + Arabic",
+    "tokensChecked": 323,
+    "tokensChanged": 2,
+    "changes": [
+      {
+        "token": "uh:token:malik.1370:0313",
+        "field": "ur",
+        "from": "دینار",
+        "to": "دس",
+        "why": "عشر means the -teen (ten) part of fifteen; ur wrongly carried over دینار from the following token (off-by-one), en says ten [teen]"
+      },
+      {
+        "token": "uh:token:malik.1370:0322",
+        "field": "ur",
+        "from": "دخل",
+        "to": "دھوکہ",
+        "why": "الدخلة means deception/hidden fault; bare دخل reads as income/interference and does not match en=is the deception"
+      }
+    ]
   }
 }

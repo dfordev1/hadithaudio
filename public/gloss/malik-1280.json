@@ -62,8 +62,8 @@
       "ur": "اُن کو جن کو"
     },
     "uh:token:malik.1280:0014": {
-      "en": "her sisters suckled",
-      "ur": "اس کی بہنوں نے دودھ پلایا"
+      "en": "she suckled him",
+      "ur": "اس نے اسے دودھ پلایا"
     },
     "uh:token:malik.1280:0015": {
       "en": "[namely] her sisters",
@@ -105,5 +105,27 @@
       "en": "her brothers",
       "ur": "اس کے بھائیوں کی"
     }
+  },
+  "review": {
+    "checkedBy": "uh:agent:gloss-reviewer",
+    "method": "independent second-pass machine review anchored to eng-malik + Arabic",
+    "tokensChecked": 24,
+    "tokensChanged": 1,
+    "changes": [
+      {
+        "token": "uh:token:malik.1280:0014",
+        "field": "en",
+        "from": "her sisters suckled",
+        "to": "she suckled him",
+        "why": "Token اَرْضَعَتْهُ is the verb only; subject اَخَوَاتُهَا is the next token 0015, so \"her sisters\" was duplicated across two adjacent tokens (off-by-one on the postposed VSO subject)."
+      },
+      {
+        "token": "uh:token:malik.1280:0014",
+        "field": "ur",
+        "from": "اس کی بہنوں نے دودھ پلایا",
+        "to": "اس نے اسے دودھ پلایا",
+        "why": "Match en fix: verb token should not carry the subject \"her sisters\" that belongs to token 0015."
+      }
+    ]
   }
 }
