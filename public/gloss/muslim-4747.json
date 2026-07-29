@@ -10,12 +10,12 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.4747:0002": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.4747:0003": {
@@ -294,12 +294,12 @@
    }
   },
   "uh:token:muslim.4747:0031": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.4747:0034": {
@@ -329,13 +329,16 @@
    }
   },
   "uh:token:muslim.4747:0036": {
-   "en": "and not",
+   "en": "and did not",
    "ur": "اور نہیں",
    "transliteration": "wa-lam",
    "root": null,
-   "lemma": "لم",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.4747:0037": {
    "en": "he mentions",
@@ -420,72 +423,68 @@
   "uh:token:muslim.4747:0026": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.4747:0027": {
    "en": "Harb",
    "ur": "حرب",
-   "transliteration": "ḥarb",
-   "root": "ح-ر-ب",
-   "lemma": "حرب",
+   "transliteration": "Ḥarb",
+   "root": null,
+   "lemma": "حَرْب",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:muslim.4747:0029": {
    "en": "son of",
    "ur": "بیٹا",
    "transliteration": "ibn",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "acc"
    }
   },
   "uh:token:muslim.4747:0030": {
-   "en": "Uyaynah",
+   "en": "Uyayna",
    "ur": "عیینہ",
-   "transliteration": "ʿuyaynah",
-   "root": "ع-ي-ن",
-   "lemma": "عيينة",
+   "transliteration": "ʿUyayna",
+   "root": null,
+   "lemma": "عُيَيْنَة",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:muslim.4747:0032": {
-   "en": "father of (oblique/genitive)",
-   "ur": "باپ",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
    "transliteration": "abī",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "GEN"
+    "case": "gen"
    }
   },
   "uh:token:muslim.4747:0033": {
-   "en": "al-Zinad (epithet, 'the fire-striker')",
+   "en": "az-Zinad",
    "ur": "زناد",
    "transliteration": "az-Zinād",
-   "root": "ز-ن-د",
-   "lemma": "الزِّنَاد",
+   "root": null,
+   "lemma": "زِنَاد",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen",
+    "definite": true
    }
   }
  }

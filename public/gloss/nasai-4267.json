@@ -26,40 +26,36 @@
    }
   },
   "uh:token:nasai.4267:0002": {
-   "en": "O (vocative particle)",
+   "en": "O (vocative)",
    "ur": "اے",
    "transliteration": "yā",
    "root": null,
    "lemma": "يَا",
-   "pos": "VOC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:nasai.4267:0003": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
+   "root": "ر س ل",
+   "lemma": "رَسُول",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:nasai.4267:0004": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:nasai.4267:0005": {
@@ -93,12 +89,12 @@
    }
   },
   "uh:token:nasai.4267:0009": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.4267:0011": {
@@ -118,13 +114,15 @@
    }
   },
   "uh:token:nasai.4267:0013": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:nasai.4267:0014": {
    "en": "she sent",
@@ -278,12 +276,12 @@
    }
   },
   "uh:token:nasai.4267:0033": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:nasai.4267:0034": {
@@ -310,12 +308,12 @@
    }
   },
   "uh:token:nasai.4267:0037": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.4267:0038": {
@@ -381,13 +379,15 @@
    }
   },
   "uh:token:nasai.4267:0048": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:nasai.4267:0050": {
    "en": "so eat",
@@ -445,13 +445,16 @@
    }
   },
   "uh:token:nasai.4267:0054": {
-   "en": "and not / so do not",
-   "ur": "پس نہیں / پس نہ",
+   "en": "then not / so do not",
+   "ur": "پس نہیں",
    "transliteration": "fa-lā",
    "root": null,
-   "lemma": "ف + لا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "negation"
+   }
   },
   "uh:token:nasai.4267:0055": {
    "en": "she/it eats",

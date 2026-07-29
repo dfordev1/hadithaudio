@@ -30,13 +30,10 @@
    "ur": "انس",
    "transliteration": "Anas",
    "root": null,
-   "lemma": "أنس",
+   "lemma": "أَنَس",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.5046:0003": {
@@ -79,28 +76,29 @@
    }
   },
   "uh:token:bukhari.5046:0009": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.5046:0011": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.5046:0012": {
@@ -120,13 +118,15 @@
    }
   },
   "uh:token:bukhari.5046:0014": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:bukhari.5046:0015": {
    "en": "he recited; he read",
@@ -169,82 +169,79 @@
   },
   "uh:token:bukhari.5046:0018": {
    "en": "the Most Merciful",
-   "ur": "رحمان",
-   "transliteration": "al-raḥmān",
-   "root": "ر-ح-م",
-   "lemma": "رحمن",
+   "ur": "رحمٰن",
+   "transliteration": "ar-Raḥmān",
+   "root": "ر ح م",
+   "lemma": "رَحْمَان",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.5046:0006": {
    "en": "the Prophet",
    "ur": "نبی",
-   "transliteration": "al-nabī",
-   "root": "ن-ب-أ",
-   "lemma": "نبي",
+   "transliteration": "an-nabī",
+   "root": "ن ب ا",
+   "lemma": "نَبِيّ",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "definite"
+    "case": "nom",
+    "definite": true
    }
   },
   "uh:token:bukhari.5046:0007": {
-   "en": "he prayed / blessed (as in 'sallallahu')",
-   "ur": "اس نے دعا کی",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
    "transliteration": "ṣallā",
-   "root": "ص-ل-و",
-   "lemma": "صلى",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
    "pos": "V",
    "features": {
-    "tense": "PERF",
-    "person": "3",
-    "gender": "M",
-    "number": "SG"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:bukhari.5046:0008": {
-   "en": "Allah / God",
+   "en": "Allah",
    "ur": "اللہ",
-   "transliteration": "allāh",
-   "root": null,
-   "lemma": "الله",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.5046:0010": {
-   "en": "and gave peace/blessed (as in 'sallallahu alayhi wasallam')",
+   "en": "and he granted peace",
    "ur": "اور سلامتی بھیجی",
-   "transliteration": "wa-sallama",
-   "root": "س-ل-م",
-   "lemma": "سلم",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
    "pos": "V",
    "features": {
-    "tense": "PERF",
-    "person": "3",
-    "gender": "M",
-    "number": "SG",
-    "conjunction": "wa"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:bukhari.5046:0022": {
-   "en": "Allah / God",
+   "en": "Allah",
    "ur": "اللہ",
-   "transliteration": "allāh",
-   "root": null,
-   "lemma": "الله",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.5046:0020": {

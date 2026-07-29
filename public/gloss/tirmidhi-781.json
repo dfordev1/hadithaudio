@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:tirmidhi.0781:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:tirmidhi.0781:0003": {
    "en": "he was called / summoned",
@@ -36,29 +38,28 @@
   },
   "uh:token:tirmidhi.0781:0004": {
    "en": "one of you",
-   "ur": "تم میں سے ایک",
+   "ur": "تم میں سے کوئی",
    "transliteration": "aḥadukum",
-   "root": "أ-ح-د",
-   "lemma": "أحد",
+   "root": "ا ح د",
+   "lemma": "أَحَد",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "suffix": "2mp"
    }
   },
   "uh:token:tirmidhi.0781:0005": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:tirmidhi.0781:0006": {
@@ -92,15 +93,15 @@
    }
   },
   "uh:token:tirmidhi.0781:0008": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:tirmidhi.0781:0009": {
@@ -134,32 +135,24 @@
    }
   },
   "uh:token:tirmidhi.0781:0013": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
    "root": "ا ب و",
-   "lemma": "أَبُو",
-   "pos": "PN",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0781:0014": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
-   "root": "ا ب و",
-   "lemma": "أَبُو",
+   "en": "Isa (Jesus)",
+   "ur": "عیسیٰ",
+   "transliteration": "ʿĪsā",
+   "root": null,
+   "lemma": "عِيسَى",
    "pos": "PN",
-   "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "features": {}
   },
   "uh:token:tirmidhi.0781:0015": {
    "en": "and both/each",
@@ -211,87 +204,68 @@
    }
   },
   "uh:token:tirmidhi.0781:0019": {
-   "en": "in this chapter, from",
-   "ur": "اس باب میں، سے",
-   "transliteration": "al-bāb ʿan",
+   "en": "the door / the chapter",
+   "ur": "دروازہ / باب",
+   "transliteration": "al-bāb",
    "root": "ب و ب",
    "lemma": "بَاب",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.0781:0020": {
-   "en": "in this chapter, from",
-   "ur": "اس باب میں، سے",
-   "transliteration": "al-bāb ʿan",
-   "root": "ب و ب",
-   "lemma": "بَاب",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
+   "root": null,
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:tirmidhi.0781:0021": {
-   "en": "Abu Hurairah",
-   "ur": "ابو ہریرہ",
-   "transliteration": "Abī Hurayrah",
-   "root": null,
-   "lemma": "أبو هريرة",
-   "pos": "PN",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0781:0022": {
-   "en": "Abu Hurairah",
-   "ur": "ابو ہریرہ",
-   "transliteration": "Abī Hurayrah",
+   "en": "Hurayra",
+   "ur": "ہریرہ",
+   "transliteration": "Hurayra",
    "root": null,
-   "lemma": "أبو هريرة",
+   "lemma": "هُرَيْرَة",
    "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.0781:0023": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
    "lemma": "حَسَن",
-   "pos": "ADJ",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0781:0024": {
-   "en": "authentic/correct",
+   "en": "sound / authentic",
    "ur": "صحیح",
    "transliteration": "ṣaḥīḥ",
    "root": "ص ح ح",
    "lemma": "صَحِيح",
    "pos": "ADJ",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   }
  }

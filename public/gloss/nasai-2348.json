@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.2348:0002": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.2348:0003": {
    "en": "most knowing / know best",
@@ -61,40 +63,57 @@
    }
   },
   "uh:token:nasai.2348:0006": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:nasai.2348:0007": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:nasai.2348:0008": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:nasai.2348:0009": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
+   "features": {
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:nasai.2348:0010": {
    "en": "he recited; he read",
@@ -164,13 +183,16 @@
    }
   },
   "uh:token:nasai.2348:0015": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:nasai.2348:0016": {
    "en": "he stood up",
@@ -203,12 +225,12 @@
    }
   },
   "uh:token:nasai.2348:0018": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.2348:0019": {
@@ -226,13 +248,16 @@
    }
   },
   "uh:token:nasai.2348:0020": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:nasai.2348:0021": {
    "en": "he fasted",
@@ -289,16 +314,13 @@
   },
   "uh:token:nasai.2348:0025": {
    "en": "other than / not",
-   "ur": "کے علاوہ / غیر",
+   "ur": "غیر / کے سوا",
    "transliteration": "ghayr",
-   "root": "غ-ي-ر",
-   "lemma": "غير",
+   "root": "غ ي ر",
+   "lemma": "غَيْر",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:nasai.2348:0026": {

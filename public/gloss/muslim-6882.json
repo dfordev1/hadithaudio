@@ -10,31 +10,26 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.6882:0001": {
-   "en": "and Ishaq ibn (son of)",
-   "ur": "اور اسحاق بن",
-   "transliteration": "wa-Isḥāqu bnu",
+   "en": "and Ishaq (Isaac)",
+   "ur": "اور اسحاق",
+   "transliteration": "wa-Isḥāq",
    "root": null,
    "lemma": "إِسْحَاق",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "case": "nom"
    }
   },
   "uh:token:muslim.6882:0002": {
-   "en": "and Ishaq ibn (son of)",
-   "ur": "اور اسحاق بن",
-   "transliteration": "wa-Isḥāqu bnu",
-   "root": null,
-   "lemma": "إِسْحَاق",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.6882:0005": {
@@ -82,17 +77,14 @@
    }
   },
   "uh:token:muslim.6882:0009": {
-   "en": "Ishaq",
+   "en": "Ishaq (Isaac)",
    "ur": "اسحاق",
    "transliteration": "Isḥāq",
    "root": null,
-   "lemma": "إسحاق",
+   "lemma": "إِسْحَاق",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.6882:0010": {
@@ -116,12 +108,10 @@
    "ur": "عثمان",
    "transliteration": "ʿUthmān",
    "root": null,
-   "lemma": "عثمان",
+   "lemma": "عُثْمَان",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.6882:0013": {
@@ -141,31 +131,33 @@
    }
   },
   "uh:token:muslim.6882:0015": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.6882:0017": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.6882:0018": {
-   "en": "Sa'd",
+   "en": "Sad",
    "ur": "سعد",
    "transliteration": "Saʿd",
    "root": null,
-   "lemma": "سعد",
+   "lemma": "سَعْد",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "gen"
+   }
   },
   "uh:token:muslim.6882:0021": {
    "en": "he narrated to me",
@@ -207,68 +199,79 @@
    "features": {}
   },
   "uh:token:muslim.6882:0026": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
+   "root": "ر س ل",
+   "lemma": "رَسُول",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.6882:0027": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.6882:0028": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:muslim.6882:0029": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:muslim.6882:0030": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:muslim.6882:0031": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
+   "features": {
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:muslim.6882:0032": {
    "en": "he said",
@@ -287,13 +290,15 @@
    }
   },
   "uh:token:muslim.6882:0034": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:muslim.6882:0035": {
    "en": "I took / she took",
@@ -356,13 +361,15 @@
    }
   },
   "uh:token:muslim.6882:0040": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:muslim.6882:0041": {
    "en": "he lay down",
@@ -380,12 +387,12 @@
    }
   },
   "uh:token:muslim.6882:0042": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.6882:0044": {
@@ -403,13 +410,15 @@
    }
   },
   "uh:token:muslim.6882:0045": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:muslim.6882:0046": {
    "en": "say",
@@ -430,22 +439,24 @@
   "uh:token:muslim.6882:0047": {
    "en": "O Allah",
    "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
-   "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
+   "pos": "N",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:muslim.6882:0048": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:muslim.6882:0049": {
@@ -619,13 +630,15 @@
    }
   },
   "uh:token:muslim.6882:0061": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:muslim.6882:0062": {
    "en": "a refuge/shelter",
@@ -642,13 +655,16 @@
    }
   },
   "uh:token:muslim.6882:0063": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.6882:0064": {
    "en": "refuge/escape",
@@ -674,13 +690,15 @@
    "features": {}
   },
   "uh:token:muslim.6882:0066": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:muslim.6882:0067": {
    "en": "to you",
@@ -796,12 +814,12 @@
    }
   },
   "uh:token:muslim.6882:0076": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.6882:0077": {
@@ -819,13 +837,16 @@
    }
   },
   "uh:token:muslim.6882:0079": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:muslim.6882:0080": {
    "en": "die! (imperative)",
@@ -844,12 +865,12 @@
    }
   },
   "uh:token:muslim.6882:0081": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.6882:0083": {
@@ -882,12 +903,12 @@
    }
   },
   "uh:token:muslim.6882:0085": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.6882:0086": {
@@ -1057,14 +1078,14 @@
    }
   },
   "uh:token:muslim.6882:0003": {
-   "en": "Ibrahim",
+   "en": "Ibrahim (Abraham)",
    "ur": "ابراہیم",
-   "transliteration": "ibrāhīm",
+   "transliteration": "Ibrāhīm",
    "root": null,
-   "lemma": "إبراهيم",
+   "lemma": "إِبْرَاهِيم",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "nom"
    }
   },
   "uh:token:muslim.6882:0011": {
@@ -1106,48 +1127,46 @@
   "uh:token:muslim.6882:0019": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.6882:0020": {
-   "en": "Ubaydah",
+   "en": "Ubayda",
    "ur": "عبیدہ",
-   "transliteration": "ʿUbaydah",
-   "root": "ع-ب-د",
+   "transliteration": "ʿUbayda",
+   "root": null,
    "lemma": "عُبَيْدَة",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:muslim.6882:0023": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.6882:0024": {
-   "en": "Azib (proper name)",
+   "en": "Azib",
    "ur": "عازب",
    "transliteration": "ʿĀzib",
    "root": null,
    "lemma": "عَازِب",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "gen"
+   }
   },
   "uh:token:muslim.6882:0036": {
    "en": "your sleeping place, your bed",
@@ -1193,6 +1212,28 @@
    "lemma": "حِلَاب",
    "pos": "N",
    "features": {}
+  },
+  "uh:token:muslim.6882:0004": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:muslim.6882:0007": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
   }
  }
 }

@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.6701:0002": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:bukhari.6701:0003": {
    "en": "Allah",
@@ -47,12 +49,12 @@
    }
   },
   "uh:token:bukhari.6701:0005": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6701:0007": {
@@ -114,13 +116,16 @@
    }
   },
   "uh:token:bukhari.6701:0012": {
-   "en": "between",
-   "ur": "کے درمیان",
+   "en": "between / among",
+   "ur": "درمیان",
    "transliteration": "bayna",
-   "root": null,
-   "lemma": "بين",
-   "pos": "P",
-   "features": {}
+   "root": "ب ي ن",
+   "lemma": "بَيْن",
+   "pos": "N",
+   "features": {
+    "case": "acc",
+    "type": "adverb"
+   }
   },
   "uh:token:bukhari.6701:0014": {
    "en": "and he said",
@@ -153,26 +158,23 @@
    }
   },
   "uh:token:bukhari.6701:0016": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6701:0017": {
-   "en": "Humaid",
+   "en": "Humayd",
    "ur": "حمید",
    "transliteration": "Ḥumayd",
    "root": null,
-   "lemma": "حميد",
+   "lemma": "حُمَيْد",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.6701:0018": {
@@ -195,23 +197,20 @@
    "en": "Thabit",
    "ur": "ثابت",
    "transliteration": "Thābit",
-   "root": "ث-ب-ت",
-   "lemma": "ثابت",
+   "root": null,
+   "lemma": "ثَابِت",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.6701:0020": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6701:0021": {
@@ -219,13 +218,10 @@
    "ur": "انس",
    "transliteration": "Anas",
    "root": null,
-   "lemma": "أنس",
+   "lemma": "أَنَس",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.6701:0006": {

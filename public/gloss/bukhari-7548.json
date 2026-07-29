@@ -44,31 +44,25 @@
    "features": {}
   },
   "uh:token:bukhari.7548:0004": {
-   "en": "Abu Sa'id",
-   "ur": "ابو سعید",
-   "transliteration": "Abā Saʿīd",
-   "root": null,
-   "lemma": "أبو سعيد",
-   "pos": "COMPOUND",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abā",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.7548:0005": {
-   "en": "Abu Sa'id",
-   "ur": "ابو سعید",
-   "transliteration": "Abā Saʿīd",
+   "en": "Said",
+   "ur": "سعید",
+   "transliteration": "Saʿīd",
    "root": null,
-   "lemma": "أبو سعيد",
-   "pos": "COMPOUND",
+   "lemma": "سَعِيد",
+   "pos": "PN",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.7548:0006": {
@@ -86,35 +80,28 @@
    }
   },
   "uh:token:bukhari.7548:0008": {
-   "en": "may Allah be pleased",
-   "ur": "رضی اللہ",
-   "transliteration": "raḍiya Allāh",
-   "root": "ر-ض-و",
-   "lemma": "رَضِيَ اللَّهُ",
-   "pos": "COMPOUND",
+   "en": "he was pleased",
+   "ur": "راضی ہوا",
+   "transliteration": "raḍiya",
+   "root": "ر ض و",
+   "lemma": "رَضِيَ",
+   "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.7548:0009": {
-   "en": "may Allah be pleased",
-   "ur": "رضی اللہ",
-   "transliteration": "raḍiya Allāh",
-   "root": "ر-ض-و",
-   "lemma": "رَضِيَ اللَّهُ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:bukhari.7548:0010": {
@@ -143,24 +130,26 @@
    }
   },
   "uh:token:bukhari.7548:0013": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.7548:0015": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:bukhari.7548:0016": {
@@ -321,13 +310,15 @@
    "features": {}
   },
   "uh:token:bukhari.7548:0032": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.7548:0033": {
    "en": "he hears",
@@ -388,31 +379,39 @@
    }
   },
   "uh:token:bukhari.7548:0038": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.7548:0040": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.7548:0042": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:bukhari.7548:0043": {
    "en": "he witnessed",
@@ -431,26 +430,25 @@
    }
   },
   "uh:token:bukhari.7548:0044": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.7548:0045": {
-   "en": "day",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
-   "root": "ي-و-م",
-   "lemma": "يوم",
+   "root": "ي و م",
+   "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.7548:0046": {
@@ -484,22 +482,26 @@
    }
   },
   "uh:token:bukhari.7548:0049": {
-   "en": "Abu Sa'id",
-   "ur": "ابو سعید",
-   "transliteration": "Abū Saʿīd",
-   "root": null,
-   "lemma": "أبو سعيد",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:bukhari.7548:0050": {
-   "en": "Abu Sa'id",
-   "ur": "ابو سعید",
-   "transliteration": "Abū Saʿīd",
+   "en": "Said",
+   "ur": "سعید",
+   "transliteration": "Saʿīd",
    "root": null,
-   "lemma": "أبو سعيد",
-   "pos": "COMPOUND",
-   "features": {}
+   "lemma": "سَعِيد",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:bukhari.7548:0051": {
    "en": "I heard him/it",
@@ -518,82 +520,72 @@
    }
   },
   "uh:token:bukhari.7548:0052": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.7548:0053": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
+   "root": "ر س ل",
+   "lemma": "رَسُول",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.7548:0054": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.7548:0055": {
-   "en": "God bless (him)",
-   "ur": "اللہ درود بھیجے",
-   "transliteration": "ṣallā allāhu",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
    "root": "ص ل و",
    "lemma": "صَلَّى",
    "pos": "V",
    "features": {
-    "aspect": "perfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masc",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
     "number": "sg",
-    "mood": null
+    "form": "II"
    }
   },
   "uh:token:bukhari.7548:0056": {
-   "en": "God bless (him)",
-   "ur": "اللہ درود بھیجے",
-   "transliteration": "ṣallā allāhu",
-   "root": "ص ل و",
-   "lemma": "صَلَّى",
-   "pos": "V",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "perfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masc",
-    "number": "sg",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:bukhari.7548:0057": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.7548:0041": {
    "en": "a thing, something",
@@ -608,18 +600,19 @@
    }
   },
   "uh:token:bukhari.7548:0058": {
-   "en": "and gave peace/blessed (as in 'sallallahu alayhi wasallam')",
+   "en": "and he granted peace",
    "ur": "اور سلامتی بھیجی",
-   "transliteration": "wa-sallama",
-   "root": "س-ل-م",
-   "lemma": "سلم",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
    "pos": "V",
    "features": {
-    "tense": "PERF",
-    "person": "3",
-    "gender": "M",
-    "number": "SG",
-    "conjunction": "wa"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:bukhari.7548:0037": {

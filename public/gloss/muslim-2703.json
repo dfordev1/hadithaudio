@@ -10,35 +10,28 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.2703:0002": {
-   "en": "may Allah be pleased",
-   "ur": "رضی اللہ",
-   "transliteration": "raḍiya Allāh",
-   "root": "ر-ض-و",
-   "lemma": "رَضِيَ اللَّهُ",
-   "pos": "COMPOUND",
+   "en": "he was pleased",
+   "ur": "راضی ہوا",
+   "transliteration": "raḍiya",
+   "root": "ر ض و",
+   "lemma": "رَضِيَ",
+   "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.2703:0003": {
-   "en": "may Allah be pleased",
-   "ur": "رضی اللہ",
-   "transliteration": "raḍiya Allāh",
-   "root": "ر-ض-و",
-   "lemma": "رَضِيَ اللَّهُ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:muslim.2703:0004": {
@@ -81,13 +74,15 @@
    }
   },
   "uh:token:muslim.2703:0009": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:muslim.2703:0010": {
    "en": "he became / woke up in the morning",
@@ -107,16 +102,14 @@
   },
   "uh:token:muslim.2703:0011": {
    "en": "one of you",
-   "ur": "تم میں سے ایک",
+   "ur": "تم میں سے کوئی",
    "transliteration": "aḥadukum",
-   "root": "أ-ح-د",
-   "lemma": "أحد",
+   "root": "ا ح د",
+   "lemma": "أَحَد",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "suffix": "2mp"
    }
   },
   "uh:token:muslim.2703:0012": {
@@ -148,13 +141,16 @@
    }
   },
   "uh:token:muslim.2703:0014": {
-   "en": "and not / so do not",
-   "ur": "پس نہیں / پس نہ",
+   "en": "then not / so do not",
+   "ur": "پس نہیں",
    "transliteration": "fa-lā",
    "root": null,
-   "lemma": "ف + لا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.2703:0015": {
    "en": "he engages in obscene talk/marital relations (during ihram)",
@@ -173,22 +169,28 @@
    }
   },
   "uh:token:muslim.2703:0016": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.2703:0018": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:muslim.2703:0019": {
    "en": "a man/person",
@@ -230,15 +232,15 @@
    }
   },
   "uh:token:muslim.2703:0024": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:muslim.2703:0025": {
@@ -256,15 +258,15 @@
    }
   },
   "uh:token:muslim.2703:0026": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:muslim.2703:0027": {
@@ -319,6 +321,28 @@
     "person": "3",
     "number": "sg",
     "gender": "m"
+   }
+  },
+  "uh:token:muslim.2703:0001": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:muslim.2703:0005": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

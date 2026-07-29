@@ -51,40 +51,36 @@
    }
   },
   "uh:token:abudawud.1277:0004": {
-   "en": "O (vocative particle)",
+   "en": "O (vocative)",
    "ur": "اے",
    "transliteration": "yā",
    "root": null,
    "lemma": "يَا",
-   "pos": "VOC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:abudawud.1277:0005": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
+   "root": "ر س ل",
+   "lemma": "رَسُول",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.1277:0006": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.1277:0007": {
@@ -199,12 +195,12 @@
    }
   },
   "uh:token:abudawud.1277:0016": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:abudawud.1277:0017": {
@@ -224,26 +220,27 @@
    }
   },
   "uh:token:abudawud.1277:0018": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.1277:0019": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "al-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.1277:0021": {
@@ -261,12 +258,12 @@
    }
   },
   "uh:token:abudawud.1277:0022": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1277:0023": {
@@ -300,13 +297,15 @@
    }
   },
   "uh:token:abudawud.1277:0025": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:abudawud.1277:0026": {
    "en": "shorter",
@@ -323,12 +322,12 @@
    }
   },
   "uh:token:abudawud.1277:0027": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1277:0028": {
@@ -366,13 +365,10 @@
    "ur": "قیس",
    "transliteration": "Qays",
    "root": null,
-   "lemma": "قيس",
+   "lemma": "قَيْس",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.1277:0032": {
@@ -428,13 +424,16 @@
    }
   },
   "uh:token:abudawud.1277:0037": {
-   "en": "between",
-   "ur": "کے درمیان",
+   "en": "between / among",
+   "ur": "درمیان",
    "transliteration": "bayna",
-   "root": null,
-   "lemma": "بين",
-   "pos": "P",
-   "features": {}
+   "root": "ب ي ن",
+   "lemma": "بَيْن",
+   "pos": "N",
+   "features": {
+    "case": "acc",
+    "type": "adverb"
+   }
   },
   "uh:token:abudawud.1277:0038": {
    "en": "my generation/era",
@@ -504,13 +503,15 @@
    }
   },
   "uh:token:abudawud.1277:0043": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:abudawud.1277:0044": {
    "en": "pray!",
@@ -529,12 +530,12 @@
    }
   },
   "uh:token:abudawud.1277:0045": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:abudawud.1277:0046": {
@@ -554,26 +555,27 @@
    }
   },
   "uh:token:abudawud.1277:0047": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.1277:0048": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "al-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.1277:0050": {
@@ -591,12 +593,12 @@
    }
   },
   "uh:token:abudawud.1277:0051": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1277:0052": {
@@ -630,13 +632,15 @@
    }
   },
   "uh:token:abudawud.1277:0055": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:abudawud.1277:0056": {
    "en": "shorter",
@@ -653,13 +657,16 @@
    }
   },
   "uh:token:abudawud.1277:0057": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.1277:0058": {
    "en": "Hell",
@@ -729,12 +736,12 @@
    }
   },
   "uh:token:abudawud.1277:0066": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:abudawud.1277:0067": {
@@ -754,35 +761,36 @@
    }
   },
   "uh:token:abudawud.1277:0068": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.1277:0069": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "al-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.1277:0071": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1277:0072": {
@@ -816,13 +824,15 @@
    }
   },
   "uh:token:abudawud.1277:0074": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:abudawud.1277:0075": {
    "en": "shorter",
@@ -839,12 +849,12 @@
    }
   },
   "uh:token:abudawud.1277:0076": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1277:0077": {
@@ -907,13 +917,16 @@
    }
   },
   "uh:token:abudawud.1277:0081": {
-   "en": "between",
-   "ur": "کے درمیان",
+   "en": "between / among",
+   "ur": "درمیان",
    "transliteration": "bayna",
-   "root": null,
-   "lemma": "بين",
-   "pos": "P",
-   "features": {}
+   "root": "ب ي ن",
+   "lemma": "بَيْن",
+   "pos": "N",
+   "features": {
+    "case": "acc",
+    "type": "adverb"
+   }
   },
   "uh:token:abudawud.1277:0082": {
    "en": "my generation/era",
@@ -1080,50 +1093,46 @@
    }
   },
   "uh:token:abudawud.1277:0098": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1277:0099": {
-   "en": "Abu Umamah",
-   "ur": "ابو امامہ",
-   "transliteration": "Abī Umāmah",
-   "root": null,
-   "lemma": "أَبُو أُمَامَةَ",
-   "pos": "PN",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.1277:0100": {
-   "en": "Abu Umamah",
-   "ur": "ابو امامہ",
-   "transliteration": "Abī Umāmah",
+   "en": "Umama",
+   "ur": "امامہ",
+   "transliteration": "Umāma",
    "root": null,
-   "lemma": "أَبُو أُمَامَةَ",
+   "lemma": "أُمَامَة",
    "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.1277:0101": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:abudawud.1277:0102": {
    "en": "that",
@@ -1149,13 +1158,15 @@
    }
   },
   "uh:token:abudawud.1277:0105": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.1277:0108": {
    "en": "Allah",
@@ -1201,27 +1212,25 @@
    }
   },
   "uh:token:abudawud.1277:0096": {
-   "en": "Abu (father of, name-element)",
-   "ur": "ابو / باپ",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
    "transliteration": "abū",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "NOM"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.1277:0097": {
-   "en": "Salam (name; also 'peace')",
+   "en": "Sallam / peace",
    "ur": "سلام",
-   "transliteration": "Salām",
-   "root": "س-ل-م",
+   "transliteration": "Sallām",
+   "root": "س ل م",
    "lemma": "سَلَام",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.1277:0020": {

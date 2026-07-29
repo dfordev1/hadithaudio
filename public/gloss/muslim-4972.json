@@ -26,52 +26,48 @@
    }
   },
   "uh:token:muslim.4972:0002": {
-   "en": "O (vocative particle)",
+   "en": "O (vocative)",
    "ur": "اے",
    "transliteration": "yā",
    "root": null,
    "lemma": "يَا",
-   "pos": "VOC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:muslim.4972:0003": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
+   "root": "ر س ل",
+   "lemma": "رَسُول",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.4972:0004": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.4972:0005": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:muslim.4972:0006": {
@@ -119,12 +115,12 @@
    }
   },
   "uh:token:muslim.4972:0010": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.4972:0012": {
@@ -156,38 +152,41 @@
    }
   },
   "uh:token:muslim.4972:0014": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:muslim.4972:0015": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.4972:0017": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:muslim.4972:0018": {
    "en": "she sent",
@@ -278,13 +277,15 @@
    }
   },
   "uh:token:muslim.4972:0024": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:muslim.4972:0025": {
    "en": "so eat",
@@ -383,12 +384,12 @@
    }
   },
   "uh:token:muslim.4972:0035": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:muslim.4972:0036": {
@@ -418,16 +419,15 @@
    "en": "is not",
    "ur": "نہیں ہے",
    "transliteration": "laysa",
-   "root": "ل-ي-س",
-   "lemma": "ليس",
+   "root": "ل ي س",
+   "lemma": "لَيْسَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "type": "negation"
    }
   },
   "uh:token:muslim.4972:0040": {
@@ -460,13 +460,15 @@
    }
   },
   "uh:token:muslim.4972:0044": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:muslim.4972:0045": {
    "en": "for indeed I",
@@ -526,29 +528,30 @@
    }
   },
   "uh:token:muslim.4972:0050": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.4972:0052": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:muslim.4972:0053": {
    "en": "I threw / I cast (arrows)",
@@ -622,13 +625,16 @@
    }
   },
   "uh:token:muslim.4972:0060": {
-   "en": "and not / so do not",
-   "ur": "پس نہیں / پس نہ",
+   "en": "then not / so do not",
+   "ur": "پس نہیں",
    "transliteration": "fa-lā",
    "root": null,
-   "lemma": "ف + لا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.4972:0047": {
    "en": "with the mi'rad (a blunt/pointed throwing stick used in hunting)",

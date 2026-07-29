@@ -39,13 +39,10 @@
    "ur": "جابر",
    "transliteration": "Jābir",
    "root": null,
-   "lemma": "جابر",
+   "lemma": "جَابِر",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.5251:0007": {
@@ -104,13 +101,15 @@
    }
   },
   "uh:token:muslim.5251:0012": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:muslim.5251:0013": {
    "en": "that he",
@@ -122,13 +121,15 @@
    "features": {}
   },
   "uh:token:muslim.5251:0014": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:muslim.5251:0015": {
    "en": "he says",
@@ -175,73 +176,65 @@
    }
   },
   "uh:token:muslim.5251:0020": {
-   "en": "mighty and majestic (of Allah)",
-   "ur": "عزوجل",
-   "transliteration": "ʿazza wa-jall",
-   "root": null,
-   "lemma": "عز وجل",
-   "pos": "COMPOUND",
+   "en": "He is Mighty (ʿazza)",
+   "ur": "وہ غالب ہے",
+   "transliteration": "ʿazza",
+   "root": "ع ز ز",
+   "lemma": "عَزَّ",
+   "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.5251:0021": {
-   "en": "mighty and majestic (of Allah)",
-   "ur": "عزوجل",
-   "transliteration": "ʿazza wa-jall",
-   "root": null,
-   "lemma": "عز وجل",
-   "pos": "COMPOUND",
+   "en": "and He is Majestic",
+   "ur": "اور بزرگ ہے",
+   "transliteration": "wa-jalla",
+   "root": "ج ل ل",
+   "lemma": "جَلَّ",
+   "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.5251:0004": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.5251:0005": {
-   "en": "servant of",
+   "en": "servant (of)",
    "ur": "بندہ",
    "transliteration": "ʿabd",
-   "root": "ع-ب-د",
-   "lemma": "عبد",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "gen"
    }
   },
   "uh:token:muslim.5251:0006": {
-   "en": "Allah / God",
+   "en": "Allah",
    "ur": "اللہ",
-   "transliteration": "allāh",
-   "root": null,
-   "lemma": "الله",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:muslim.5251:0011": {

@@ -10,19 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.7497:0001": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.7497:0003": {
@@ -86,12 +85,10 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.7497:0008": {
@@ -136,12 +133,10 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.7497:0012": {
@@ -159,12 +154,12 @@
    }
   },
   "uh:token:bukhari.7497:0014": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.7497:0015": {
@@ -210,12 +205,12 @@
    }
   },
   "uh:token:bukhari.7497:0019": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.7497:0020": {
@@ -233,13 +228,15 @@
    }
   },
   "uh:token:bukhari.7497:0021": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.7497:0022": {
    "en": "clamor/noise",
@@ -260,22 +257,23 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.7497:0024": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.7497:0025": {
    "en": "he set up, erected",

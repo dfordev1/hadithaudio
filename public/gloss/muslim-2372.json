@@ -24,13 +24,16 @@
    }
   },
   "uh:token:muslim.2372:0003": {
-   "en": "and Abd (start of a compound name)",
-   "ur": "اور عبد (نام کا حصہ)",
-   "transliteration": "wa-ʿAbd",
-   "root": null,
-   "lemma": "عبد",
-   "pos": "PN",
-   "features": {}
+   "en": "and servant (of)",
+   "ur": "اور بندہ",
+   "transliteration": "wa-ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
+   "features": {
+    "prefix": "wa",
+    "case": "nom"
+   }
   },
   "uh:token:muslim.2372:0006": {
    "en": "they said",
@@ -65,70 +68,61 @@
    }
   },
   "uh:token:muslim.2372:0010": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.2372:0011": {
-   "en": "Ibn Ibrahim",
-   "ur": "ابن ابراہیم",
-   "transliteration": "Ibn Ibrāhīm",
-   "root": null,
-   "lemma": "ابن إبراهيم",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "ibn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.2372:0012": {
-   "en": "Ibn Ibrahim",
-   "ur": "ابن ابراہیم",
-   "transliteration": "Ibn Ibrāhīm",
+   "en": "Ibrahim (Abraham)",
+   "ur": "ابراہیم",
+   "transliteration": "Ibrāhīm",
    "root": null,
-   "lemma": "ابن إبراهيم",
+   "lemma": "إِبْرَاهِيم",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2372:0013": {
-   "en": "bin Sa'd",
-   "ur": "بن سعد",
-   "transliteration": "bin Saʿd",
-   "root": null,
-   "lemma": "بن سعد",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.2372:0014": {
-   "en": "bin Sa'd",
-   "ur": "بن سعد",
-   "transliteration": "bin Saʿd",
+   "en": "Sad",
+   "ur": "سعد",
+   "transliteration": "Saʿd",
    "root": null,
-   "lemma": "بن سعد",
-   "pos": "COMPOUND",
+   "lemma": "سَعْد",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.2372:0016": {
@@ -148,12 +142,12 @@
    }
   },
   "uh:token:muslim.2372:0018": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.2372:0020": {
@@ -198,13 +192,16 @@
    }
   },
   "uh:token:muslim.2372:0027": {
-   "en": "al-Razzaq (part of narrator name 'Abd al-Razzaq) or 'the Provider'",
-   "ur": "الرزاق (عبدالرزاق کا حصہ) یا 'رزق دینے والا'",
-   "transliteration": "al-Razzāq",
+   "en": "ar-Razzaq / the Provider",
+   "ur": "رزاق",
+   "transliteration": "ar-Razzāq",
    "root": "ر ز ق",
-   "lemma": "الرزاق",
+   "lemma": "رَزَّاق",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "gen",
+    "definite": true
+   }
   },
   "uh:token:muslim.2372:0028": {
    "en": "he informed us",
@@ -223,32 +220,25 @@
    }
   },
   "uh:token:muslim.2372:0030": {
-   "en": "both of them, from",
-   "ur": "دونوں نے، سے",
-   "transliteration": "kilāhumā ʿan",
+   "en": "both of them",
+   "ur": "وہ دونوں",
+   "transliteration": "kilāhumā",
    "root": null,
-   "lemma": "كلاهما عن",
-   "pos": "COMPOUND",
+   "lemma": "كِلَا",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "DUAL"
+    "number": "dual",
+    "suffix": "3md"
    }
   },
   "uh:token:muslim.2372:0031": {
-   "en": "both of them, from",
-   "ur": "دونوں نے، سے",
-   "transliteration": "kilāhumā ʿan",
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
    "root": null,
-   "lemma": "كلاهما عن",
-   "pos": "COMPOUND",
-   "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "DUAL"
-   }
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:muslim.2372:0033": {
    "en": "with a chain of narration",
@@ -265,17 +255,14 @@
    }
   },
   "uh:token:muslim.2372:0034": {
-   "en": "Yunus",
+   "en": "Yunus (Jonah)",
    "ur": "یونس",
    "transliteration": "Yūnus",
    "root": null,
-   "lemma": "يونس",
+   "lemma": "يُونُس",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2372:0035": {
@@ -320,25 +307,23 @@
   "uh:token:muslim.2372:0004": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.2372:0005": {
    "en": "Humayd",
    "ur": "حمید",
-   "transliteration": "ḥumayd",
-   "root": "ح-م-د",
-   "lemma": "حميد",
+   "transliteration": "Ḥumayd",
+   "root": null,
+   "lemma": "حُمَيْد",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2372:0008": {
@@ -351,77 +336,69 @@
    "features": {}
   },
   "uh:token:muslim.2372:0017": {
-   "en": "father of (oblique/genitive)",
-   "ur": "باپ",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
    "transliteration": "abī",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "GEN"
+    "case": "gen"
    }
   },
   "uh:token:muslim.2372:0019": {
    "en": "Salih",
    "ur": "صالح",
-   "transliteration": "ṣāliḥ",
-   "root": "ص-ل-ح",
-   "lemma": "صالح",
+   "transliteration": "Ṣāliḥ",
+   "root": null,
+   "lemma": "صَالِح",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:muslim.2372:0022": {
-   "en": "servant of",
+   "en": "servant (of)",
    "ur": "بندہ",
    "transliteration": "ʿabd",
-   "root": "ع-ب-د",
-   "lemma": "عبد",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "gen"
    }
   },
   "uh:token:muslim.2372:0023": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.2372:0024": {
    "en": "Humayd",
    "ur": "حمید",
-   "transliteration": "ḥumayd",
-   "root": "ح-م-د",
-   "lemma": "حميد",
+   "transliteration": "Ḥumayd",
+   "root": null,
+   "lemma": "حُمَيْد",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2372:0026": {
-   "en": "servant of",
+   "en": "servant (of)",
    "ur": "بندہ",
    "transliteration": "ʿabd",
-   "root": "ع-ب-د",
-   "lemma": "عبد",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "gen"
    }
   },
   "uh:token:muslim.2372:0029": {
@@ -444,6 +421,28 @@
    "pos": "PN",
    "features": {
     "gender": "M"
+   }
+  },
+  "uh:token:muslim.2372:0009": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:muslim.2372:0015": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

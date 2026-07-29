@@ -10,21 +10,24 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.1957:0001": {
-   "en": "and Abd (start of a compound name)",
-   "ur": "اور عبد (نام کا حصہ)",
-   "transliteration": "wa-ʿAbd",
-   "root": null,
-   "lemma": "عبد",
-   "pos": "PN",
-   "features": {}
+   "en": "and servant (of)",
+   "ur": "اور بندہ",
+   "transliteration": "wa-ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
+   "features": {
+    "prefix": "wa",
+    "case": "nom"
+   }
   },
   "uh:token:ibnmajah.1957:0003": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.1957:0005": {
@@ -87,13 +90,15 @@
    }
   },
   "uh:token:ibnmajah.1957:0010": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:ibnmajah.1957:0011": {
    "en": "she/it became",
@@ -111,40 +116,57 @@
    }
   },
   "uh:token:ibnmajah.1957:0015": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:ibnmajah.1957:0016": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:ibnmajah.1957:0017": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:ibnmajah.1957:0018": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
+   "features": {
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:ibnmajah.1957:0020": {
    "en": "after",
@@ -236,84 +258,74 @@
    }
   },
   "uh:token:ibnmajah.1957:0028": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:ibnmajah.1957:0029": {
-   "en": "Abd al-Aziz",
-   "ur": "عبد العزیز",
-   "transliteration": "ʿAbd al-ʿAzīz",
-   "root": null,
-   "lemma": "عبد العزيز",
-   "pos": "COMPOUND",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.1957:0030": {
-   "en": "Abd al-Aziz",
-   "ur": "عبد العزیز",
-   "transliteration": "ʿAbd al-ʿAzīz",
-   "root": null,
-   "lemma": "عبد العزيز",
-   "pos": "COMPOUND",
+   "en": "the Almighty / al-Aziz",
+   "ur": "العزیز / غالب",
+   "transliteration": "al-ʿAzīz",
+   "root": "ع ز ز",
+   "lemma": "عَزِيز",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.1957:0032": {
-   "en": "O (vocative particle)",
+   "en": "O (vocative)",
    "ur": "اے",
    "transliteration": "yā",
    "root": null,
    "lemma": "يَا",
-   "pos": "VOC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:ibnmajah.1957:0033": {
-   "en": "Abu Muhammad",
-   "ur": "ابو محمد",
-   "transliteration": "Abā Muḥammad",
-   "root": null,
-   "lemma": "أَبُو مُحَمَّد",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abā",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "accusative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc"
    }
   },
   "uh:token:ibnmajah.1957:0034": {
-   "en": "Abu Muhammad",
-   "ur": "ابو محمد",
-   "transliteration": "Abā Muḥammad",
+   "en": "Muhammad",
+   "ur": "محمد",
+   "transliteration": "Muḥammad",
    "root": null,
-   "lemma": "أَبُو مُحَمَّد",
+   "lemma": "مُحَمَّد",
    "pos": "PN",
    "features": {
-    "case": "accusative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.1957:0035": {
@@ -360,12 +372,12 @@
    }
   },
   "uh:token:ibnmajah.1957:0038": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:ibnmajah.1957:0040": {
@@ -399,50 +411,49 @@
    }
   },
   "uh:token:ibnmajah.1957:0002": {
-   "en": "al-Aziz (the Mighty)",
-   "ur": "عزیز",
+   "en": "the Almighty / al-Aziz",
+   "ur": "العزیز / غالب",
    "transliteration": "al-ʿAzīz",
-   "root": "ع-ز-ز",
-   "lemma": "الْعَزِيز",
-   "pos": "PN",
+   "root": "ع ز ز",
+   "lemma": "عَزِيز",
+   "pos": "N",
    "features": {
-    "gender": "M"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.1957:0004": {
    "en": "Anas",
    "ur": "انس",
-   "transliteration": "anas",
+   "transliteration": "Anas",
    "root": null,
-   "lemma": "أنس",
+   "lemma": "أَنَس",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.1957:0012": {
-   "en": "surely, the messenger",
-   "ur": "بے شک رسول",
-   "transliteration": "la-rasūlu",
-   "root": "ر-س-ل",
+   "en": "to the messenger of",
+   "ur": "رسول کے لیے",
+   "transliteration": "li-rasūl",
+   "root": "ر س ل",
    "lemma": "رَسُول",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "particle": "la- (emphatic)"
+    "prefix": "li",
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.1957:0013": {
-   "en": "Allah / God",
+   "en": "Allah",
    "ur": "اللہ",
-   "transliteration": "allāh",
-   "root": null,
-   "lemma": "الله",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.1957:0023": {

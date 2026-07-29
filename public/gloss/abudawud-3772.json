@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.3772:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:abudawud.3772:0003": {
    "en": "he ate / eating",
@@ -36,16 +38,14 @@
   },
   "uh:token:abudawud.3772:0004": {
    "en": "one of you",
-   "ur": "تم میں سے ایک",
+   "ur": "تم میں سے کوئی",
    "transliteration": "aḥadukum",
-   "root": "أ-ح-د",
-   "lemma": "أحد",
+   "root": "ا ح د",
+   "lemma": "أَحَد",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "suffix": "2mp"
    }
   },
   "uh:token:abudawud.3772:0005": {
@@ -63,13 +63,16 @@
    }
   },
   "uh:token:abudawud.3772:0006": {
-   "en": "and not / so do not",
-   "ur": "پس نہیں / پس نہ",
+   "en": "then not / so do not",
+   "ur": "پس نہیں",
    "transliteration": "fa-lā",
    "root": null,
-   "lemma": "ف + لا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.3772:0007": {
    "en": "he eats",
@@ -88,12 +91,12 @@
    }
   },
   "uh:token:abudawud.3772:0008": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3772:0009": {
@@ -134,12 +137,12 @@
    "features": {}
   },
   "uh:token:abudawud.3772:0013": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3772:0014": {
@@ -157,13 +160,16 @@
    }
   },
   "uh:token:abudawud.3772:0015": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.3772:0016": {
    "en": "the blessing",
@@ -196,12 +202,12 @@
    }
   },
   "uh:token:abudawud.3772:0018": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3772:0019": {

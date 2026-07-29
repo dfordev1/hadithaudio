@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:tirmidhi.3497:0002": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:tirmidhi.3497:0003": {
    "en": "he says",
@@ -36,26 +38,26 @@
   },
   "uh:token:tirmidhi.3497:0004": {
    "en": "one of you",
-   "ur": "تم میں سے ایک",
+   "ur": "تم میں سے کوئی",
    "transliteration": "aḥadukum",
-   "root": "أ-ح-د",
-   "lemma": "أحد",
+   "root": "ا ح د",
+   "lemma": "أَحَد",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "suffix": "2mp"
    }
   },
   "uh:token:tirmidhi.3497:0005": {
    "en": "O Allah",
    "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
-   "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
+   "pos": "N",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:tirmidhi.3497:0006": {
    "en": "forgive",
@@ -87,13 +89,15 @@
    }
   },
   "uh:token:tirmidhi.3497:0008": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:tirmidhi.3497:0009": {
    "en": "you wished / you wanted",
@@ -114,11 +118,13 @@
   "uh:token:tirmidhi.3497:0010": {
    "en": "O Allah",
    "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
-   "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
+   "pos": "N",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:tirmidhi.3497:0011": {
    "en": "have mercy on me",
@@ -137,13 +143,15 @@
    }
   },
   "uh:token:tirmidhi.3497:0012": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:tirmidhi.3497:0013": {
    "en": "you wished / you wanted",
@@ -185,22 +193,26 @@
    "features": {}
   },
   "uh:token:tirmidhi.3497:0017": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:tirmidhi.3497:0019": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:tirmidhi.3497:0022": {
    "en": "he said",
@@ -231,45 +243,36 @@
    }
   },
   "uh:token:tirmidhi.3497:0024": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.3497:0025": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
    "lemma": "حَسَن",
-   "pos": "ADJ",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.3497:0026": {
-   "en": "authentic/correct",
+   "en": "sound / authentic",
    "ur": "صحیح",
    "transliteration": "ṣaḥīḥ",
    "root": "ص ح ح",
    "lemma": "صَحِيح",
    "pos": "ADJ",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.3497:0014": {

@@ -10,12 +10,12 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.2503:0002": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.2503:0003": {
@@ -49,13 +49,15 @@
    }
   },
   "uh:token:bukhari.2503:0005": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.2503:0006": {
    "en": "in",
@@ -97,13 +99,15 @@
    }
   },
   "uh:token:bukhari.2503:0009": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.2503:0010": {
    "en": "that",
@@ -131,38 +135,40 @@
    }
   },
   "uh:token:bukhari.2503:0013": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:bukhari.2503:0014": {
-   "en": "he/it was",
-   "ur": "تھا",
+   "en": "he was",
+   "ur": "وہ تھا",
    "transliteration": "kāna",
-   "root": "ك-و-ن",
+   "root": "ك و ن",
    "lemma": "كَانَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.2503:0015": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.2503:0016": {
    "en": "wealth / property",
@@ -251,17 +257,14 @@
    }
   },
   "uh:token:bukhari.2503:0026": {
-   "en": "way, path",
+   "en": "path / way",
    "ur": "راستہ",
    "transliteration": "sabīl",
    "root": "س ب ل",
    "lemma": "سَبِيل",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.2503:0012": {

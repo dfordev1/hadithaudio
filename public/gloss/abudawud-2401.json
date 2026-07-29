@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.2401:0001": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:abudawud.2401:0002": {
    "en": "illness, sickness",
@@ -35,15 +37,13 @@
   "uh:token:abudawud.2401:0003": {
    "en": "the man",
    "ur": "آدمی",
-   "transliteration": "al-rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "transliteration": "ar-rajul",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.2401:0004": {
@@ -70,13 +70,15 @@
    }
   },
   "uh:token:abudawud.2401:0006": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:abudawud.2401:0007": {
    "en": "he died",
@@ -95,13 +97,16 @@
    }
   },
   "uh:token:abudawud.2401:0008": {
-   "en": "and not",
+   "en": "and did not",
    "ur": "اور نہیں",
    "transliteration": "wa-lam",
    "root": null,
-   "lemma": "لم",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.2401:0009": {
    "en": "let him fast / he fasts (jussive)",
@@ -145,13 +150,16 @@
    "features": {}
   },
   "uh:token:abudawud.2401:0012": {
-   "en": "and not",
+   "en": "and did not",
    "ur": "اور نہیں",
    "transliteration": "wa-lam",
    "root": null,
-   "lemma": "لم",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.2401:0013": {
    "en": "was / be (jussive)",
@@ -170,13 +178,15 @@
    }
   },
   "uh:token:abudawud.2401:0014": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.2401:0015": {
    "en": "judgment / decree / making up (a missed obligation)",
@@ -202,29 +212,29 @@
    "features": {}
   },
   "uh:token:abudawud.2401:0017": {
-   "en": "he/it was",
-   "ur": "تھا",
+   "en": "he was",
+   "ur": "وہ تھا",
    "transliteration": "kāna",
-   "root": "ك-و-ن",
+   "root": "ك و ن",
    "lemma": "كَانَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.2401:0018": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.2401:0019": {
    "en": "vow",

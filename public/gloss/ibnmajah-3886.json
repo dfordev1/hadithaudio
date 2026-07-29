@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.3886:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:ibnmajah.3886:0003": {
    "en": "he went out",
@@ -37,24 +39,22 @@
   "uh:token:ibnmajah.3886:0004": {
    "en": "the man",
    "ur": "آدمی",
-   "transliteration": "al-rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "transliteration": "ar-rajul",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.3886:0005": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.3886:0006": {
@@ -95,12 +95,12 @@
    "features": {}
   },
   "uh:token:ibnmajah.3886:0010": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.3886:0011": {
@@ -132,19 +132,17 @@
    }
   },
   "uh:token:ibnmajah.3886:0014": {
-   "en": "he/it was",
-   "ur": "تھا",
+   "en": "he was",
+   "ur": "وہ تھا",
    "transliteration": "kāna",
-   "root": "ك-و-ن",
+   "root": "ك و ن",
    "lemma": "كَانَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:ibnmajah.3886:0015": {
@@ -171,16 +169,14 @@
    }
   },
   "uh:token:ibnmajah.3886:0018": {
-   "en": "with/by it (him)",
-   "ur": "اس کے ساتھ / اس سے",
+   "en": "by it / with it",
+   "ur": "اس کے ساتھ",
    "transliteration": "bihi",
    "root": null,
-   "lemma": "به",
-   "pos": "P",
+   "lemma": "بِ",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:ibnmajah.3886:0019": {
@@ -232,19 +228,17 @@
    }
   },
   "uh:token:ibnmajah.3886:0024": {
-   "en": "the two of them said",
+   "en": "they both said",
    "ur": "ان دونوں نے کہا",
    "transliteration": "qālā",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "DUAL",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "dual"
    }
   },
   "uh:token:ibnmajah.3886:0025": {
@@ -289,13 +283,15 @@
    }
   },
   "uh:token:ibnmajah.3886:0029": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:ibnmajah.3886:0030": {
    "en": "around / a year",
@@ -312,13 +308,16 @@
    }
   },
   "uh:token:ibnmajah.3886:0031": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:ibnmajah.3886:0032": {
    "en": "strength",
@@ -335,13 +334,15 @@
    }
   },
   "uh:token:ibnmajah.3886:0033": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:ibnmajah.3886:0034": {
    "en": "by Allah",
@@ -358,19 +359,17 @@
    }
   },
   "uh:token:ibnmajah.3886:0036": {
-   "en": "the two of them said",
+   "en": "they both said",
    "ur": "ان دونوں نے کہا",
    "transliteration": "qālā",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "DUAL",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "dual"
    }
   },
   "uh:token:ibnmajah.3886:0039": {
@@ -414,12 +413,12 @@
    }
   },
   "uh:token:ibnmajah.3886:0042": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.3886:0043": {
@@ -437,19 +436,17 @@
    }
   },
   "uh:token:ibnmajah.3886:0044": {
-   "en": "the two of them said",
+   "en": "they both said",
    "ur": "ان دونوں نے کہا",
    "transliteration": "qālā",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "DUAL",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "dual"
    }
   },
   "uh:token:ibnmajah.3886:0046": {
@@ -494,35 +491,32 @@
    "features": {}
   },
   "uh:token:ibnmajah.3886:0052": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.3886:0053": {
    "en": "a man",
    "ur": "ایک آدمی",
    "transliteration": "rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.3886:0054": {
    "en": "indeed / already",
-   "ur": "بےشک / پہلے سے",
+   "ur": "بے شک / یقیناً",
    "transliteration": "qad",
    "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
+   "lemma": "قَدْ",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:ibnmajah.3886:0037": {
@@ -560,6 +554,28 @@
    "lemma": "هُدِيَ",
    "pos": "V",
    "features": {}
+  },
+  "uh:token:ibnmajah.3886:0008": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:ibnmajah.3886:0013": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
   }
  }
 }

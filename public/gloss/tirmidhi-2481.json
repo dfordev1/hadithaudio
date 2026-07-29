@@ -10,12 +10,12 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:tirmidhi.2481:0002": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.2481:0003": {
@@ -49,16 +49,17 @@
    }
   },
   "uh:token:tirmidhi.2481:0007": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:tirmidhi.2481:0008": {
@@ -78,13 +79,15 @@
    }
   },
   "uh:token:tirmidhi.2481:0009": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:tirmidhi.2481:0010": {
    "en": "he called him",
@@ -116,17 +119,14 @@
    }
   },
   "uh:token:tirmidhi.2481:0012": {
-   "en": "day",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
-   "root": "ي-و-م",
-   "lemma": "يوم",
+   "root": "ي و م",
+   "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2481:0013": {
@@ -144,12 +144,12 @@
    }
   },
   "uh:token:tirmidhi.2481:0014": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.2481:0015": {
@@ -181,21 +181,21 @@
    }
   },
   "uh:token:tirmidhi.2481:0017": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.2481:0019": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.2481:0020": {
@@ -264,31 +264,25 @@
    }
   },
   "uh:token:tirmidhi.2481:0028": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.2481:0029": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
    "lemma": "حَسَن",
-   "pos": "ADJ",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.2481:0031": {
@@ -364,12 +358,12 @@
    }
   },
   "uh:token:tirmidhi.2481:0039": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:tirmidhi.2481:0040": {
@@ -389,17 +383,14 @@
    }
   },
   "uh:token:tirmidhi.2481:0041": {
-   "en": "people (of) / family (of)",
-   "ur": "اہل / گھر والے",
+   "en": "people of / family of",
+   "ur": "اہل / خاندان",
    "transliteration": "ahl",
-   "root": "أ-ه-ل",
-   "lemma": "أهل",
+   "root": "ا ه ل",
+   "lemma": "أَهْل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2481:0042": {
@@ -417,12 +408,12 @@
    }
   },
   "uh:token:tirmidhi.2481:0043": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.2481:0044": {
@@ -440,17 +431,15 @@
    }
   },
   "uh:token:tirmidhi.2481:0045": {
-   "en": "Paradise",
+   "en": "Paradise / the Garden",
    "ur": "جنت",
-   "transliteration": "al-jannah",
-   "root": "ج-ن-ن",
-   "lemma": "جنة",
+   "transliteration": "al-janna",
+   "root": "ج ن ن",
+   "lemma": "جَنَّة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.2481:0024": {

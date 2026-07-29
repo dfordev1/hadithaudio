@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:tirmidhi.0006:0002": {
-   "en": "O Allah",
-   "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:tirmidhi.0006:0003": {
    "en": "indeed I / verily I",
@@ -47,16 +49,17 @@
    }
   },
   "uh:token:tirmidhi.0006:0005": {
-   "en": "with/in you",
-   "ur": "تجھ سے",
-   "transliteration": "bika",
-   "root": null,
-   "lemma": "ب",
-   "pos": "P",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "person": "2",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:tirmidhi.0006:0006": {
@@ -69,34 +72,24 @@
    "features": {}
   },
   "uh:token:tirmidhi.0006:0007": {
-   "en": "impurity/filth",
-   "ur": "نجاست/گندگی",
-   "transliteration": "al-khabath",
-   "root": "خ ب ث",
-   "lemma": "خَبَث",
+   "en": "O Allah",
+   "ur": "اے اللہ",
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
    "pos": "N",
    "features": {
-    "case": "Nominative",
-    "state": "Definite",
-    "gender": "Masculine",
-    "number": "Singular"
+    "type": "vocative"
    }
   },
   "uh:token:tirmidhi.0006:0011": {
-   "en": "he said",
-   "ur": "اس نے کہا",
-   "transliteration": "qāla",
-   "root": "ق-و-ل",
-   "lemma": "قَالَ",
-   "pos": "V",
-   "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:tirmidhi.0006:0012": {
    "en": "Abu Isa (kunya of al-Tirmidhi)",
@@ -153,31 +146,28 @@
    }
   },
   "uh:token:tirmidhi.0006:0016": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
-   "lemma": "حَسَن",
-   "pos": "ADJ",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:tirmidhi.0006:0017": {
-   "en": "authentic/correct",
-   "ur": "صحیح",
-   "transliteration": "ṣaḥīḥ",
-   "root": "ص ح ح",
-   "lemma": "صَحِيح",
-   "pos": "ADJ",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0006:0001": {
@@ -195,61 +185,58 @@
    }
   },
   "uh:token:tirmidhi.0006:0018": {
-   "en": "Isa",
+   "en": "Isa (Jesus)",
    "ur": "عیسیٰ",
-   "transliteration": "ʿīsā",
+   "transliteration": "ʿĪsā",
    "root": null,
-   "lemma": "عيسى",
+   "lemma": "عِيسَى",
    "pos": "PN",
-   "features": {
-    "gender": "M"
-   }
+   "features": {}
   },
   "uh:token:tirmidhi.0006:0019": {
    "en": "this",
    "ur": "یہ",
    "transliteration": "hādhā",
    "root": null,
-   "lemma": "هذا",
-   "pos": "DEM",
+   "lemma": "هَذَا",
+   "pos": "PRON",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "type": "demonstrative",
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:tirmidhi.0006:0020": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0006:0021": {
-   "en": "Hasan",
-   "ur": "حسن",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
-   "lemma": "حسن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
+   "lemma": "حَسَن",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0006:0022": {
-   "en": "sound / authentic (hadith grading)",
+   "en": "sound / authentic",
    "ur": "صحیح",
    "transliteration": "ṣaḥīḥ",
-   "root": "ص-ح-ح",
-   "lemma": "صحيح",
+   "root": "ص ح ح",
+   "lemma": "صَحِيح",
    "pos": "ADJ",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0006:0008": {

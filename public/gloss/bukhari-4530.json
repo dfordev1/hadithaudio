@@ -10,31 +10,26 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.4530:0001": {
-   "en": "Ibn al-Zubayr",
-   "ur": "ابن الزبیر",
-   "transliteration": "Ibn al-Zubayr",
-   "root": null,
-   "lemma": "ابن الزبير",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "ibn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.4530:0002": {
-   "en": "Ibn al-Zubayr",
-   "ur": "ابن الزبیر",
-   "transliteration": "Ibn al-Zubayr",
+   "en": "az-Zubayr",
+   "ur": "زبیر",
+   "transliteration": "az-Zubayr",
    "root": null,
-   "lemma": "ابن الزبير",
+   "lemma": "زُبَيْر",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.4530:0003": {
@@ -68,31 +63,25 @@
    }
   },
   "uh:token:bukhari.4530:0005": {
-   "en": "ibn Affan",
-   "ur": "بن عفان",
-   "transliteration": "ibn ʿAffān",
-   "root": null,
-   "lemma": "بن عفان",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.4530:0006": {
-   "en": "ibn Affan",
-   "ur": "بن عفان",
-   "transliteration": "ibn ʿAffān",
+   "en": "Affan",
+   "ur": "عفان",
+   "transliteration": "ʿAffān",
    "root": null,
-   "lemma": "بن عفان",
-   "pos": "COMPOUND",
+   "lemma": "عَفَّان",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.4530:0007": {
@@ -138,11 +127,11 @@
   },
   "uh:token:bukhari.4530:0013": {
    "en": "indeed / already",
-   "ur": "بےشک / پہلے سے",
+   "ur": "بے شک / یقیناً",
    "transliteration": "qad",
    "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
+   "lemma": "قَدْ",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.4530:0014": {
@@ -238,22 +227,26 @@
    }
   },
   "uh:token:bukhari.4530:0022": {
-   "en": "O (vocative particle)",
+   "en": "O (vocative)",
    "ur": "اے",
    "transliteration": "yā",
    "root": null,
    "lemma": "يَا",
-   "pos": "VOC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:bukhari.4530:0025": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.4530:0026": {
    "en": "more jealous/protective",
@@ -297,36 +290,35 @@
    }
   },
   "uh:token:bukhari.4530:0029": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.4530:0023": {
    "en": "son of",
    "ur": "بیٹا",
    "transliteration": "ibn",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.4530:0024": {
-   "en": "my brother",
+   "en": "my brother / brother of",
    "ur": "میرا بھائی",
    "transliteration": "akhī",
-   "root": "أ-خ-و",
-   "lemma": "أخ",
+   "root": "ا خ و",
+   "lemma": "أَخ",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "possessive": "1SG"
+    "case": "gen",
+    "suffix": "1s"
    }
   },
   "uh:token:bukhari.4530:0008": {

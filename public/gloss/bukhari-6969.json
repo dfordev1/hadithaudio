@@ -10,12 +10,12 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.6969:0001": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6969:0002": {
@@ -33,16 +33,14 @@
    }
   },
   "uh:token:bukhari.6969:0003": {
-   "en": "Ja'far",
+   "en": "Jafar",
    "ur": "جعفر",
    "transliteration": "Jaʿfar",
    "root": null,
-   "lemma": "جعفر",
+   "lemma": "جَعْفَر",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.6969:0005": {
@@ -98,21 +96,21 @@
    }
   },
   "uh:token:bukhari.6969:0011": {
-   "en": "to/towards",
+   "en": "to / towards",
    "ur": "کی طرف",
    "transliteration": "ilā",
    "root": null,
    "lemma": "إِلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6969:0013": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6969:0014": {
@@ -130,31 +128,26 @@
    }
   },
   "uh:token:bukhari.6969:0015": {
-   "en": "Abd al-Rahman",
-   "ur": "عبدالرحمٰن",
-   "transliteration": "ʿAbd al-Raḥmān",
-   "root": null,
-   "lemma": "عبد الرحمن",
-   "pos": "COMPOUND",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.6969:0016": {
-   "en": "Abd al-Rahman",
-   "ur": "عبدالرحمٰن",
-   "transliteration": "ʿAbd al-Raḥmān",
-   "root": null,
-   "lemma": "عبد الرحمن",
-   "pos": "COMPOUND",
+   "en": "the Most Merciful",
+   "ur": "رحمٰن",
+   "transliteration": "ar-Raḥmān",
+   "root": "ر ح م",
+   "lemma": "رَحْمَان",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.6969:0018": {
@@ -186,38 +179,42 @@
    }
   },
   "uh:token:bukhari.6969:0020": {
-   "en": "the two of them said",
+   "en": "they both said",
    "ur": "ان دونوں نے کہا",
    "transliteration": "qālā",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "DUAL",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "dual"
    }
   },
   "uh:token:bukhari.6969:0021": {
-   "en": "and not / so do not",
-   "ur": "پس نہیں / پس نہ",
+   "en": "then not / so do not",
+   "ur": "پس نہیں",
    "transliteration": "fa-lā",
    "root": null,
-   "lemma": "ف + لا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.6969:0023": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:bukhari.6969:0025": {
    "en": "daughter of",
@@ -275,73 +272,68 @@
    }
   },
   "uh:token:bukhari.6969:0032": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "the Prophet",
+   "ur": "نبی",
+   "transliteration": "an-nabī",
+   "root": "ن ب ا",
+   "lemma": "نَبِيّ",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "definite": true
    }
   },
   "uh:token:bukhari.6969:0033": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:bukhari.6969:0034": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.6969:0035": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.6969:0036": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:bukhari.6969:0038": {
@@ -365,13 +357,10 @@
    "ur": "سفیان",
    "transliteration": "Sufyān",
    "root": null,
-   "lemma": "سفيان",
+   "lemma": "سُفْيَان",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.6969:0040": {
@@ -384,31 +373,26 @@
    "features": {}
   },
   "uh:token:bukhari.6969:0041": {
-   "en": "Abd al-Rahman",
-   "ur": "عبدالرحمٰن",
-   "transliteration": "ʿAbd al-Raḥmān",
-   "root": null,
-   "lemma": "عبد الرحمن",
-   "pos": "COMPOUND",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.6969:0042": {
-   "en": "Abd al-Rahman",
-   "ur": "عبدالرحمٰن",
-   "transliteration": "ʿAbd al-Raḥmān",
-   "root": null,
-   "lemma": "عبد الرحمن",
-   "pos": "COMPOUND",
+   "en": "the Most Merciful",
+   "ur": "رحمٰن",
+   "transliteration": "ar-Raḥmān",
+   "root": "ر ح م",
+   "lemma": "رَحْمَان",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.6969:0043": {
@@ -444,12 +428,12 @@
    }
   },
   "uh:token:bukhari.6969:0045": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6969:0046": {
@@ -467,13 +451,15 @@
    }
   },
   "uh:token:bukhari.6969:0047": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:bukhari.6969:0037": {
    "en": "that",

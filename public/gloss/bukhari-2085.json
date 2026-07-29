@@ -10,12 +10,12 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.2085:0002": {
-   "en": "to/towards",
+   "en": "to / towards",
    "ur": "کی طرف",
    "transliteration": "ilā",
    "root": null,
    "lemma": "إِلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.2085:0003": {
@@ -49,12 +49,12 @@
    }
   },
   "uh:token:bukhari.2085:0006": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.2085:0007": {
@@ -74,12 +74,12 @@
    }
   },
   "uh:token:bukhari.2085:0008": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.2085:0009": {
@@ -97,12 +97,12 @@
    }
   },
   "uh:token:bukhari.2085:0010": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.2085:0011": {
@@ -124,26 +124,21 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.2085:0013": {
    "en": "a man",
    "ur": "ایک آدمی",
    "transliteration": "rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.2085:0015": {
@@ -187,24 +182,24 @@
    "en": "a man",
    "ur": "ایک آدمی",
    "transliteration": "rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.2085:0019": {
-   "en": "between",
-   "ur": "کے درمیان",
+   "en": "between / among",
+   "ur": "درمیان",
    "transliteration": "bayna",
-   "root": null,
-   "lemma": "بين",
-   "pos": "P",
-   "features": {}
+   "root": "ب ي ن",
+   "lemma": "بَيْن",
+   "pos": "N",
+   "features": {
+    "case": "acc",
+    "type": "adverb"
+   }
   },
   "uh:token:bukhari.2085:0020": {
    "en": "his two hands",
@@ -239,15 +234,13 @@
   "uh:token:bukhari.2085:0023": {
    "en": "the man",
    "ur": "آدمی",
-   "transliteration": "al-rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "transliteration": "ar-rajul",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.2085:0024": {
@@ -313,15 +306,13 @@
   "uh:token:bukhari.2085:0029": {
    "en": "the man",
    "ur": "آدمی",
-   "transliteration": "al-rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "transliteration": "ar-rajul",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.2085:0030": {
@@ -368,15 +359,13 @@
   "uh:token:bukhari.2085:0033": {
    "en": "the man",
    "ur": "آدمی",
-   "transliteration": "al-rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "transliteration": "ar-rajul",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.2085:0034": {
@@ -407,12 +396,10 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.2085:0037": {
@@ -527,12 +514,10 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.2085:0048": {
@@ -577,12 +562,12 @@
    }
   },
   "uh:token:bukhari.2085:0052": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.2085:0053": {
@@ -598,19 +583,18 @@
    }
   },
   "uh:token:bukhari.2085:0054": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.2085:0055": {

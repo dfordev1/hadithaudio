@@ -10,35 +10,37 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.3877:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:ibnmajah.3877:0002": {
-   "en": "the Prophet",
-   "ur": "نبی",
-   "transliteration": "al-nabī",
-   "root": "ن-ب-أ",
-   "lemma": "نَبِيّ",
-   "pos": "N",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
+   "root": null,
+   "lemma": "إِذَا",
+   "pos": "SUB",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "conditional"
    }
   },
   "uh:token:ibnmajah.3877:0004": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
+   "en": "to / towards",
+   "ur": "کی طرف",
+   "transliteration": "ilā",
    "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "lemma": "إِلَى",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.3877:0005": {
@@ -94,18 +96,14 @@
    "features": {}
   },
   "uh:token:ibnmajah.3877:0011": {
-   "en": "he took shelter/sheltered",
-   "ur": "اس نے پناہ لی",
-   "transliteration": "awā",
-   "root": "أ و ي",
-   "lemma": "أَوَى",
-   "pos": "V",
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
    "features": {
-    "aspect": "perfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masculine",
-    "number": "singular"
+    "type": "punctuation"
    }
   },
   "uh:token:ibnmajah.3877:0012": {
@@ -132,49 +130,39 @@
    }
   },
   "uh:token:ibnmajah.3877:0014": {
-   "en": "he placed / put down",
-   "ur": "اس نے رکھا",
-   "transliteration": "waḍaʿa",
-   "root": "و-ض-ع",
-   "lemma": "وضع",
-   "pos": "V",
+   "en": "then / afterwards",
+   "ur": "پھر",
+   "transliteration": "thumma",
+   "root": null,
+   "lemma": "ثُمَّ",
+   "pos": "PART",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "type": "conjunction"
    }
   },
   "uh:token:ibnmajah.3877:0015": {
-   "en": "his hand",
-   "ur": "اس کا ہاتھ",
-   "transliteration": "yadahu",
-   "root": "ي-د-ي",
-   "lemma": "يد",
-   "pos": "N",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "FEM",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:ibnmajah.3877:0017": {
-   "en": "meaning / that is to say",
-   "ur": "یعنی",
-   "transliteration": "yaʿnī",
-   "root": "ع-ن-ي",
-   "lemma": "عنى",
-   "pos": "V",
+   "en": "O Allah",
+   "ur": "اے اللہ",
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
+   "pos": "N",
    "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
+    "type": "vocative"
    }
   },
   "uh:token:ibnmajah.3877:0018": {
@@ -192,13 +180,15 @@
    }
   },
   "uh:token:ibnmajah.3877:0020": {
-   "en": "under",
-   "ur": "نیچے",
-   "transliteration": "taḥta",
-   "root": null,
-   "lemma": "تحت",
-   "pos": "P",
-   "features": {}
+   "en": "day / on the day",
+   "ur": "دن",
+   "transliteration": "yawm",
+   "root": "ي و م",
+   "lemma": "يَوْم",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:ibnmajah.3877:0021": {
    "en": "his cheek",
@@ -215,38 +205,37 @@
    }
   },
   "uh:token:ibnmajah.3877:0022": {
-   "en": "then",
-   "ur": "پھر",
-   "transliteration": "thumma",
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
    "root": null,
-   "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
   },
   "uh:token:ibnmajah.3877:0023": {
-   "en": "he said",
-   "ur": "اس نے کہا",
-   "transliteration": "qāla",
-   "root": "ق-و-ل",
-   "lemma": "قَالَ",
-   "pos": "V",
+   "en": "or",
+   "ur": "یا",
+   "transliteration": "aw",
+   "root": null,
+   "lemma": "أَوْ",
+   "pos": "PART",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "type": "conjunction"
    }
   },
   "uh:token:ibnmajah.3877:0025": {
-   "en": "O Allah",
-   "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
    "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
   },
   "uh:token:ibnmajah.3877:0028": {
    "en": "day",
@@ -353,6 +342,17 @@
     "gender": "masc",
     "number": "plural",
     "possessive": "2ms"
+   }
+  },
+  "uh:token:ibnmajah.3877:0008": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

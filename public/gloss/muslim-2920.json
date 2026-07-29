@@ -10,35 +10,28 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.2920:0002": {
-   "en": "may Allah be pleased",
-   "ur": "رضی اللہ",
-   "transliteration": "raḍiya Allāh",
-   "root": "ر-ض-و",
-   "lemma": "رَضِيَ اللَّهُ",
-   "pos": "COMPOUND",
+   "en": "he was pleased",
+   "ur": "راضی ہوا",
+   "transliteration": "raḍiya",
+   "root": "ر ض و",
+   "lemma": "رَضِيَ",
+   "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.2920:0003": {
-   "en": "may Allah be pleased",
-   "ur": "رضی اللہ",
-   "transliteration": "raḍiya Allāh",
-   "root": "ر-ض-و",
-   "lemma": "رَضِيَ اللَّهُ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:muslim.2920:0004": {
@@ -85,22 +78,24 @@
    }
   },
   "uh:token:muslim.2920:0009": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.2920:0010": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:muslim.2920:0011": {
    "en": "we were",
@@ -164,77 +159,88 @@
    }
   },
   "uh:token:muslim.2920:0015": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.2920:0016": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
+   "root": "ر س ل",
+   "lemma": "رَسُول",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.2920:0017": {
-   "en": "the Messenger of Allah",
-   "ur": "رسول اللہ",
-   "transliteration": "rasūl Allāh",
-   "root": "ر-س-ل",
-   "lemma": "رَسُولُ اللَّهِ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2920:0018": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:muslim.2920:0019": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:muslim.2920:0020": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:muslim.2920:0021": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
+   "features": {
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:muslim.2920:0022": {
    "en": "and I",
@@ -281,17 +287,15 @@
    }
   },
   "uh:token:muslim.2920:0026": {
-   "en": "the hadith",
+   "en": "the hadith / the report",
    "ur": "حدیث",
    "transliteration": "al-ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:muslim.2920:0027": {
@@ -309,17 +313,14 @@
    }
   },
   "uh:token:muslim.2920:0028": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2920:0029": {
@@ -338,16 +339,13 @@
   },
   "uh:token:muslim.2920:0031": {
    "en": "other than / not",
-   "ur": "کے علاوہ / غیر",
+   "ur": "غیر / کے سوا",
    "transliteration": "ghayr",
-   "root": "غ-ي-ر",
-   "lemma": "غير",
+   "root": "غ ي ر",
+   "lemma": "غَيْر",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2920:0032": {
@@ -363,16 +361,15 @@
    "en": "is not",
    "ur": "نہیں ہے",
    "transliteration": "laysa",
-   "root": "ل-ي-س",
-   "lemma": "ليس",
+   "root": "ل ي س",
+   "lemma": "لَيْسَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "type": "negation"
    }
   },
   "uh:token:muslim.2920:0035": {
@@ -438,87 +435,80 @@
    "features": {}
   },
   "uh:token:muslim.2920:0040": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "the Prophet",
+   "ur": "نبی",
+   "transliteration": "an-nabī",
+   "root": "ن ب ا",
+   "lemma": "نَبِيّ",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "definite": true
    }
   },
   "uh:token:muslim.2920:0041": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:muslim.2920:0042": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.2920:0043": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:muslim.2920:0044": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:muslim.2920:0045": {
-   "en": "and my father / and Abi (name element)",
-   "ur": "اور میرے والد / اور ابی",
+   "en": "and my father / and Abi",
+   "ur": "اور میرے باپ",
    "transliteration": "wa-abī",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "case": "gen"
    }
   },
   "uh:token:muslim.2920:0046": {
@@ -526,12 +516,10 @@
    "ur": "بکر",
    "transliteration": "Bakr",
    "root": null,
-   "lemma": "بكر",
+   "lemma": "بَكْر",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.2920:0047": {
@@ -549,13 +537,15 @@
    }
   },
   "uh:token:muslim.2920:0050": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:muslim.2920:0051": {
    "en": "they entered ihram (raised the talbiyah)",
@@ -604,13 +594,16 @@
    }
   },
   "uh:token:muslim.2920:0054": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.2920:0055": {
    "en": "her saying/statement",
@@ -731,6 +724,28 @@
    "pos": "N",
    "features": {
     "case": "gen"
+   }
+  },
+  "uh:token:muslim.2920:0001": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:muslim.2920:0005": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

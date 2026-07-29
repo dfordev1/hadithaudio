@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.0162:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:bukhari.0162:0003": {
    "en": "he performed ablution",
@@ -36,16 +38,14 @@
   },
   "uh:token:bukhari.0162:0004": {
    "en": "one of you",
-   "ur": "تم میں سے ایک",
+   "ur": "تم میں سے کوئی",
    "transliteration": "aḥadukum",
-   "root": "أ-ح-د",
-   "lemma": "أحد",
+   "root": "ا ح د",
+   "lemma": "أَحَد",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "suffix": "2mp"
    }
   },
   "uh:token:bukhari.0162:0006": {
@@ -72,13 +72,15 @@
    }
   },
   "uh:token:bukhari.0162:0008": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:bukhari.0162:0010": {
    "en": "and whoever/and from",
@@ -132,25 +134,23 @@
   },
   "uh:token:bukhari.0162:0015": {
    "en": "one of you",
-   "ur": "تم میں سے ایک",
+   "ur": "تم میں سے کوئی",
    "transliteration": "aḥadukum",
-   "root": "أ-ح-د",
-   "lemma": "أحد",
+   "root": "ا ح د",
+   "lemma": "أَحَد",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "suffix": "2mp"
    }
   },
   "uh:token:bukhari.0162:0016": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.0162:0017": {
@@ -185,14 +185,12 @@
    "en": "before",
    "ur": "پہلے",
    "transliteration": "qabla",
-   "root": "ق-ب-ل",
-   "lemma": "قبل",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:bukhari.0162:0021": {
@@ -230,36 +228,39 @@
    "features": {}
   },
   "uh:token:bukhari.0162:0025": {
-   "en": "and indeed / for indeed",
-   "ur": "پس بےشک",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
    "transliteration": "fa-inna",
    "root": null,
-   "lemma": "إن",
-   "pos": "ACC",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:bukhari.0162:0026": {
    "en": "one of you",
-   "ur": "تم میں سے ایک",
+   "ur": "تم میں سے کوئی",
    "transliteration": "aḥadukum",
-   "root": "أ-ح-د",
-   "lemma": "أحد",
+   "root": "ا ح د",
+   "lemma": "أَحَد",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "suffix": "2mp"
    }
   },
   "uh:token:bukhari.0162:0027": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.0162:0028": {
    "en": "he knows",

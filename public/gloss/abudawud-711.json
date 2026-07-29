@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.0711:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.0711:0002": {
    "en": "the Messenger of Allah, peace be upon him",
@@ -47,18 +52,13 @@
    }
   },
   "uh:token:abudawud.0711:0004": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.0711:0005": {
    "en": "the Messenger of Allah, peace be upon him",
@@ -158,18 +158,13 @@
    "features": {}
   },
   "uh:token:abudawud.0711:0012": {
-   "en": "the night",
-   "ur": "رات",
-   "transliteration": "al-layl",
-   "root": "ل-ي-ل",
-   "lemma": "ليل",
-   "pos": "N",
-   "features": {
-    "case": "ACC",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "upon / on",
+   "ur": "پر",
+   "transliteration": "ʿalā",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.0711:0013": {
    "en": "and she/it",
@@ -212,27 +207,24 @@
    }
   },
   "uh:token:abudawud.0711:0016": {
-   "en": "and between",
-   "ur": "اور کے درمیان",
-   "transliteration": "wa-bayna",
-   "root": "ب-ي-ن",
-   "lemma": "بين",
-   "pos": "P",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.0711:0017": {
-   "en": "the qibla (prayer direction)",
-   "ur": "قبلہ",
-   "transliteration": "al-qibla",
-   "root": "ق-ب-ل",
-   "lemma": "قبلة",
-   "pos": "N",
-   "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
-   }
+   "en": "until / so that",
+   "ur": "یہاں تک کہ",
+   "transliteration": "ḥattā",
+   "root": null,
+   "lemma": "حَتَّى",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.0711:0019": {
    "en": "on/upon",
@@ -244,18 +236,13 @@
    "features": {}
   },
   "uh:token:abudawud.0711:0020": {
-   "en": "the bed",
-   "ur": "بستر",
-   "transliteration": "al-firāsh",
-   "root": "ف ر ش",
-   "lemma": "فراش",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masc",
-    "number": "singular"
-   }
+   "en": "that",
+   "ur": "کہ",
+   "transliteration": "anna",
+   "root": null,
+   "lemma": "أَنَّ",
+   "pos": "SUB",
+   "features": {}
   },
   "uh:token:abudawud.0711:0021": {
    "en": "who / which (relative pronoun)",
@@ -353,13 +340,15 @@
    }
   },
   "uh:token:abudawud.0711:0018": {
-   "en": "then / in that case",
-   "ur": "تو / اس صورت میں",
-   "transliteration": "idhan",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "إِذًا",
-   "pos": "PART",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   }
  }
 }

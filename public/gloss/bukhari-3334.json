@@ -51,31 +51,26 @@
    }
   },
   "uh:token:bukhari.3334:0007": {
-   "en": "people (of) / family (of)",
-   "ur": "اہل / گھر والے",
+   "en": "people of / family of",
+   "ur": "اہل / خاندان",
    "transliteration": "ahl",
-   "root": "أ-ه-ل",
-   "lemma": "أهل",
+   "root": "ا ه ل",
+   "lemma": "أَهْل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.3334:0008": {
-   "en": "the fire (Hellfire)",
-   "ur": "آگ (جہنم)",
-   "transliteration": "al-nār",
-   "root": "ن-و-ر",
-   "lemma": "نار",
+   "en": "the Fire / Hell",
+   "ur": "آگ / جہنم",
+   "transliteration": "an-nār",
+   "root": "ن و ر",
+   "lemma": "نَار",
    "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.3334:0009": {
@@ -124,12 +119,12 @@
    }
   },
   "uh:token:bukhari.3334:0013": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.3334:0014": {
@@ -156,12 +151,12 @@
    }
   },
   "uh:token:bukhari.3334:0016": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.3334:0017": {
@@ -195,16 +190,14 @@
    }
   },
   "uh:token:bukhari.3334:0020": {
-   "en": "with/by it (him)",
-   "ur": "اس کے ساتھ / اس سے",
+   "en": "by it / with it",
+   "ur": "اس کے ساتھ",
    "transliteration": "bihi",
    "root": null,
-   "lemma": "به",
-   "pos": "P",
+   "lemma": "بِ",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:bukhari.3334:0021": {
@@ -270,12 +263,12 @@
    }
   },
   "uh:token:bukhari.3334:0026": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.3334:0027": {
@@ -283,12 +276,12 @@
    "ur": "وہ",
    "transliteration": "huwa",
    "root": null,
-   "lemma": "هو",
+   "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.3334:0028": {
@@ -306,12 +299,12 @@
    }
   },
   "uh:token:bukhari.3334:0029": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.3334:0030": {
@@ -353,13 +346,10 @@
    "ur": "آدم",
    "transliteration": "Ādam",
    "root": null,
-   "lemma": "آدم",
+   "lemma": "آدَم",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.3334:0035": {
@@ -372,13 +362,15 @@
    "features": {}
   },
   "uh:token:bukhari.3334:0036": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.3334:0037": {
    "en": "you associate partners (with Allah)",
@@ -413,13 +405,15 @@
    }
   },
   "uh:token:bukhari.3334:0040": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:bukhari.3334:0041": {
    "en": "polytheism (associating partners with God)",
@@ -436,15 +430,14 @@
    }
   },
   "uh:token:bukhari.3334:0004": {
-   "en": "Allah / God",
+   "en": "Allah",
    "ur": "اللہ",
-   "transliteration": "allāh",
-   "root": null,
-   "lemma": "الله",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.3334:0022": {

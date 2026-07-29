@@ -10,12 +10,12 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:tirmidhi.1940:0002": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.1940:0005": {
@@ -33,16 +33,14 @@
    }
   },
   "uh:token:tirmidhi.1940:0006": {
-   "en": "with/by it (him)",
-   "ur": "اس کے ساتھ / اس سے",
+   "en": "by it / with it",
+   "ur": "اس کے ساتھ",
    "transliteration": "bihi",
    "root": null,
-   "lemma": "به",
-   "pos": "P",
+   "lemma": "بِ",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:tirmidhi.1940:0007": {
@@ -69,13 +67,15 @@
    }
   },
   "uh:token:tirmidhi.1940:0011": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:tirmidhi.1940:0014": {
    "en": "he said",
@@ -94,32 +94,24 @@
    }
   },
   "uh:token:tirmidhi.1940:0015": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
    "root": "ا ب و",
-   "lemma": "أَبُو",
-   "pos": "PN",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1940:0016": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
-   "root": "ا ب و",
-   "lemma": "أَبُو",
+   "en": "Isa (Jesus)",
+   "ur": "عیسیٰ",
+   "transliteration": "ʿĪsā",
+   "root": null,
+   "lemma": "عِيسَى",
    "pos": "PN",
-   "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "features": {}
   },
   "uh:token:tirmidhi.1940:0017": {
    "en": "this",
@@ -134,45 +126,36 @@
    }
   },
   "uh:token:tirmidhi.1940:0018": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1940:0019": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
    "lemma": "حَسَن",
-   "pos": "ADJ",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.1940:0020": {
-   "en": "gharib (rare/uncommon narration)",
-   "ur": "غریب (نادر روایت)",
+   "en": "strange / rare",
+   "ur": "غریب / نادر",
    "transliteration": "gharīb",
    "root": "غ ر ب",
    "lemma": "غَرِيب",
    "pos": "ADJ",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1940:0022": {
@@ -180,64 +163,53 @@
    "ur": "اور میں",
    "transliteration": "wa-fī",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
-   "features": {}
+   "lemma": "فِي",
+   "pos": "PREP",
+   "features": {
+    "prefix": "wa"
+   }
   },
   "uh:token:tirmidhi.1940:0023": {
-   "en": "in this chapter, from",
-   "ur": "اس باب میں، سے",
-   "transliteration": "al-bāb ʿan",
+   "en": "the door / the chapter",
+   "ur": "دروازہ / باب",
+   "transliteration": "al-bāb",
    "root": "ب و ب",
    "lemma": "بَاب",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.1940:0024": {
-   "en": "in this chapter, from",
-   "ur": "اس باب میں، سے",
-   "transliteration": "al-bāb ʿan",
-   "root": "ب و ب",
-   "lemma": "بَاب",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
+   "root": null,
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:tirmidhi.1940:0025": {
-   "en": "Abu Bakr",
-   "ur": "ابی بکر",
-   "transliteration": "Abī Bakr",
-   "root": null,
-   "lemma": "أبو بكر",
-   "pos": "COMPOUND",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.1940:0026": {
-   "en": "Abu Bakr",
-   "ur": "ابی بکر",
-   "transliteration": "Abī Bakr",
+   "en": "Bakr",
+   "ur": "بکر",
+   "transliteration": "Bakr",
    "root": null,
-   "lemma": "أبو بكر",
-   "pos": "COMPOUND",
+   "lemma": "بَكْر",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.1940:0003": {

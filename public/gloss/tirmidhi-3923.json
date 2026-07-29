@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:tirmidhi.3923:0002": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:tirmidhi.3923:0003": {
    "en": "Allah",
@@ -49,12 +51,12 @@
    }
   },
   "uh:token:tirmidhi.3923:0005": {
-   "en": "to/towards",
+   "en": "to / towards",
    "ur": "کی طرف",
    "transliteration": "ilā",
    "root": null,
    "lemma": "إِلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.3923:0006": {
@@ -194,41 +196,37 @@
    }
   },
   "uh:token:tirmidhi.3923:0021": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.3923:0022": {
-   "en": "gharib (rare/uncommon narration)",
-   "ur": "غریب (نادر روایت)",
+   "en": "strange / rare",
+   "ur": "غریب / نادر",
    "transliteration": "gharīb",
    "root": "غ ر ب",
    "lemma": "غَرِيب",
    "pos": "ADJ",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.3923:0023": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:tirmidhi.3923:0024": {
    "en": "we know it",
@@ -247,78 +245,67 @@
    }
   },
   "uh:token:tirmidhi.3923:0025": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:tirmidhi.3923:0026": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.3923:0027": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.3923:0028": {
    "en": "al-Fadl",
    "ur": "فضل",
    "transliteration": "al-Faḍl",
-   "root": "ف-ض-ل",
-   "lemma": "الفضل",
+   "root": "ف ض ل",
+   "lemma": "فَضْل",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.3923:0029": {
-   "en": "bin Musa",
-   "ur": "بن موسیٰ",
-   "transliteration": "bin Mūsā",
-   "root": null,
-   "lemma": "بن موسى",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.3923:0030": {
-   "en": "bin Musa",
-   "ur": "بن موسیٰ",
-   "transliteration": "bin Mūsā",
+   "en": "Musa (Moses)",
+   "ur": "موسیٰ",
+   "transliteration": "Mūsā",
    "root": null,
-   "lemma": "بن موسى",
-   "pos": "COMPOUND",
-   "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "lemma": "مُوسَى",
+   "pos": "PN",
+   "features": {}
   },
   "uh:token:tirmidhi.3923:0031": {
    "en": "he alone transmitted it (was unique in narrating)",
@@ -337,44 +324,36 @@
    }
   },
   "uh:token:tirmidhi.3923:0032": {
-   "en": "with/by it (him)",
-   "ur": "اس کے ساتھ / اس سے",
+   "en": "by it / with it",
+   "ur": "اس کے ساتھ",
    "transliteration": "bihi",
    "root": null,
-   "lemma": "به",
-   "pos": "P",
+   "lemma": "بِ",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:tirmidhi.3923:0033": {
-   "en": "Abu Amir",
-   "ur": "ابو عامر",
-   "transliteration": "Abū ʿĀmir",
-   "root": null,
-   "lemma": "أبو عامر",
-   "pos": "COMPOUND",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.3923:0034": {
-   "en": "Abu Amir",
-   "ur": "ابو عامر",
-   "transliteration": "Abū ʿĀmir",
+   "en": "Amir",
+   "ur": "عامر",
+   "transliteration": "ʿĀmir",
    "root": null,
-   "lemma": "أبو عامر",
-   "pos": "COMPOUND",
+   "lemma": "عَامِر",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   }
  }

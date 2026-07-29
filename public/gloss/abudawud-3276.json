@@ -10,15 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.3276:0003": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:abudawud.3276:0004": {
@@ -36,13 +36,15 @@
    }
   },
   "uh:token:abudawud.3276:0005": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.3276:0006": {
    "en": "willed",
@@ -75,13 +77,15 @@
    }
   },
   "uh:token:abudawud.3276:0008": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.3276:0009": {
    "en": "I swear",
@@ -100,12 +104,12 @@
    }
   },
   "uh:token:abudawud.3276:0010": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3276:0011": {
@@ -176,21 +180,23 @@
    "features": {}
   },
   "uh:token:abudawud.3276:0016": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:abudawud.3276:0018": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3276:0020": {
@@ -226,26 +232,23 @@
    "ur": "وہ",
    "transliteration": "huwa",
    "root": null,
-   "lemma": "هو",
+   "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.3276:0023": {
-   "en": "good/best",
-   "ur": "بھلائی / بہتر",
+   "en": "good / better",
+   "ur": "بہتر / خیر",
    "transliteration": "khayr",
-   "root": "خ-ي-ر",
-   "lemma": "خير",
-   "pos": "ADJ",
+   "root": "خ ي ر",
+   "lemma": "خَيْر",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.3276:0026": {
@@ -274,13 +277,15 @@
    }
   },
   "uh:token:abudawud.3276:0030": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:abudawud.3276:0031": {
    "en": "I came",
@@ -315,26 +320,23 @@
    "ur": "وہ",
    "transliteration": "huwa",
    "root": null,
-   "lemma": "هو",
+   "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.3276:0034": {
-   "en": "good/best",
-   "ur": "بھلائی / بہتر",
+   "en": "good / better",
+   "ur": "بہتر / خیر",
    "transliteration": "khayr",
-   "root": "خ-ي-ر",
-   "lemma": "خير",
-   "pos": "ADJ",
+   "root": "خ ي ر",
+   "lemma": "خَيْر",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.3276:0036": {

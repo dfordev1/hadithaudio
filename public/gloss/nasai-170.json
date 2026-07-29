@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.0170:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:nasai.0170:0002": {
    "en": "the Prophet, may Allah bless him and grant him peace",
@@ -61,17 +66,14 @@
    }
   },
   "uh:token:nasai.0170:0005": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "then / afterwards",
+   "ur": "پھر",
+   "transliteration": "thumma",
+   "root": null,
+   "lemma": "ثُمَّ",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "conjunction"
    }
   },
   "uh:token:nasai.0170:0006": {
@@ -89,19 +91,15 @@
    }
   },
   "uh:token:nasai.0170:0007": {
-   "en": "he/it was",
-   "ur": "تھا",
-   "transliteration": "kāna",
-   "root": "ك-و-ن",
-   "lemma": "كَانَ",
-   "pos": "V",
+   "en": "and not / nor",
+   "ur": "اور نہیں",
+   "transliteration": "wa-lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "wa",
+    "type": "negation"
    }
   },
   "uh:token:nasai.0170:0008": {
@@ -135,111 +133,102 @@
    }
   },
   "uh:token:nasai.0170:0010": {
-   "en": "his wives",
-   "ur": "اس کی بیویاں",
-   "transliteration": "azwājuhu",
-   "root": "زوج",
-   "lemma": "زَوْج",
-   "pos": "N",
-   "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "PL"
-   }
-  },
-  "uh:token:nasai.0170:0011": {
-   "en": "then",
-   "ur": "پھر",
-   "transliteration": "thumma",
-   "root": null,
-   "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
-  },
-  "uh:token:nasai.0170:0012": {
-   "en": "he prays",
-   "ur": "وہ نماز پڑھتا ہے",
-   "transliteration": "yuṣallī",
-   "root": "ص-ل-و",
-   "lemma": "صلى",
-   "pos": "V",
-   "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
-   }
-  },
-  "uh:token:nasai.0170:0013": {
-   "en": "and not/nor",
-   "ur": "اور نہیں",
-   "transliteration": "wa-lā",
-   "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
-  },
-  "uh:token:nasai.0170:0014": {
-   "en": "he performs ablution",
-   "ur": "وہ وضو کرتا ہے",
-   "transliteration": "yatawaḍḍaʾu",
-   "root": "و-ض-أ",
-   "lemma": "توضأ",
-   "pos": "V",
-   "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
-   }
-  },
-  "uh:token:nasai.0170:0016": {
    "en": "he said",
    "ur": "اس نے کہا",
    "transliteration": "qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
+  },
+  "uh:token:nasai.0170:0011": {
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
+   "features": {
+    "case": "nom"
+   }
+  },
+  "uh:token:nasai.0170:0012": {
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
+   "features": {
+    "case": "gen"
+   }
+  },
+  "uh:token:nasai.0170:0013": {
+   "en": "the Most Merciful",
+   "ur": "رحمٰن",
+   "transliteration": "ar-Raḥmān",
+   "root": "ر ح م",
+   "lemma": "رَحْمَان",
+   "pos": "N",
+   "features": {
+    "case": "gen",
+    "definite": true
+   }
+  },
+  "uh:token:nasai.0170:0014": {
+   "en": "is not",
+   "ur": "نہیں ہے",
+   "transliteration": "laysa",
+   "root": "ل ي س",
+   "lemma": "لَيْسَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "type": "negation"
+   }
+  },
+  "uh:token:nasai.0170:0016": {
+   "en": "this",
+   "ur": "یہ",
+   "transliteration": "hādhā",
+   "root": null,
+   "lemma": "هَذَا",
+   "pos": "PRON",
+   "features": {
+    "type": "demonstrative",
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.0170:0017": {
-   "en": "Abu Abd al-Rahman",
-   "ur": "ابو عبد الرحمٰن",
-   "transliteration": "Abū ʿAbd al-Raḥmān",
-   "root": "ع ب د / ر ح م",
-   "lemma": "أَبُو عَبْد الرَّحْمَٰن",
-   "pos": "PN",
+   "en": "the door / the chapter",
+   "ur": "دروازہ / باب",
+   "transliteration": "al-bāb",
+   "root": "ب و ب",
+   "lemma": "بَاب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "definite": true
    }
   },
   "uh:token:nasai.0170:0018": {
-   "en": "Abu Abd al-Rahman",
-   "ur": "ابو عبد الرحمٰن",
-   "transliteration": "Abū ʿAbd al-Raḥmān",
-   "root": "ع ب د / ر ح م",
-   "lemma": "أَبُو عَبْد الرَّحْمَٰن",
-   "pos": "PN",
+   "en": "a hadith / report",
+   "ur": "حدیث",
+   "transliteration": "ḥadīth",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:nasai.0170:0019": {
@@ -257,40 +246,37 @@
    }
   },
   "uh:token:nasai.0170:0020": {
-   "en": "is not",
-   "ur": "نہیں ہے",
-   "transliteration": "laysa",
-   "root": "ل-ي-س",
-   "lemma": "ليس",
-   "pos": "V",
-   "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
-   }
-  },
-  "uh:token:nasai.0170:0021": {
-   "en": "in",
-   "ur": "میں",
-   "transliteration": "fī",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "فِي",
-   "pos": "P",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
-  "uh:token:nasai.0170:0022": {
+  "uh:token:nasai.0170:0021": {
    "en": "this",
    "ur": "یہ",
    "transliteration": "hādhā",
    "root": null,
    "lemma": "هَذَا",
-   "pos": "DEM",
+   "pos": "PRON",
    "features": {
-    "gender": "MASC",
-    "number": "SING"
+    "type": "demonstrative",
+    "gender": "m",
+    "number": "sg"
+   }
+  },
+  "uh:token:nasai.0170:0022": {
+   "en": "the hadith / the report",
+   "ur": "حدیث",
+   "transliteration": "al-ḥadīth",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
+   "pos": "N",
+   "features": {
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:nasai.0170:0023": {
@@ -308,17 +294,17 @@
    }
   },
   "uh:token:nasai.0170:0024": {
-   "en": "hadith / narration",
-   "ur": "حدیث",
-   "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
-   "pos": "N",
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.0170:0025": {
@@ -336,48 +322,54 @@
    }
   },
   "uh:token:nasai.0170:0026": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "and indeed",
+   "ur": "اور بے شک",
+   "transliteration": "wa-qad",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
-   "features": {}
+   "lemma": "قَدْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa"
+   }
   },
   "uh:token:nasai.0170:0027": {
+   "en": "he narrated",
+   "ur": "اس نے روایت کیا",
+   "transliteration": "rawā",
+   "root": "ر و ي",
+   "lemma": "رَوَى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
+  },
+  "uh:token:nasai.0170:0028": {
    "en": "this",
    "ur": "یہ",
    "transliteration": "hādhā",
    "root": null,
    "lemma": "هَذَا",
-   "pos": "DEM",
+   "pos": "PRON",
    "features": {
-    "gender": "MASC",
-    "number": "SING"
-   }
-  },
-  "uh:token:nasai.0170:0028": {
-   "en": "the hadith",
-   "ur": "حدیث",
-   "transliteration": "al-ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
-   "pos": "N",
-   "features": {
-    "case": "ACC",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "demonstrative",
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.0170:0029": {
-   "en": "and if / even if",
-   "ur": "اور اگر",
-   "transliteration": "wa-in",
-   "root": null,
-   "lemma": "و + إن",
-   "pos": "SUB",
-   "features": {}
+   "en": "the hadith / the report",
+   "ur": "حدیث",
+   "transliteration": "al-ḥadīth",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
+   "pos": "N",
+   "features": {
+    "case": "gen",
+    "definite": true
+   }
   },
   "uh:token:nasai.0170:0030": {
    "en": "he/it was",
@@ -396,106 +388,86 @@
    }
   },
   "uh:token:nasai.0170:0031": {
-   "en": "as a mursal narration (chain missing the Companion)",
-   "ur": "مرسل (منقطع سند کے ساتھ)",
-   "transliteration": "mursalan",
-   "root": "ر س ل",
-   "lemma": "مُرْسَل",
-   "pos": "ADJ",
-   "features": {
-    "case": "accusative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
-   }
-  },
-  "uh:token:nasai.0170:0032": {
-   "en": "and indeed/and already",
-   "ur": "اور بےشک / اور پہلے سے",
-   "transliteration": "wa-qad",
-   "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
-   "features": {}
-  },
-  "uh:token:nasai.0170:0033": {
-   "en": "he narrated",
-   "ur": "اس نے روایت کی",
-   "transliteration": "rawā",
-   "root": "ر و ي",
-   "lemma": "رَوَى",
-   "pos": "V",
-   "features": {
-    "aspect": "perfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masc",
-    "number": "singular",
-    "mood": null
-   }
-  },
-  "uh:token:nasai.0170:0034": {
-   "en": "this",
-   "ur": "یہ",
-   "transliteration": "hādhā",
-   "root": null,
-   "lemma": "هَذَا",
-   "pos": "DEM",
-   "features": {
-    "gender": "MASC",
-    "number": "SING"
-   }
-  },
-  "uh:token:nasai.0170:0035": {
-   "en": "the hadith",
-   "ur": "حدیث",
-   "transliteration": "al-ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
-   "pos": "N",
-   "features": {
-    "case": "ACC",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
-  },
-  "uh:token:nasai.0170:0036": {
-   "en": "al-A'mash",
-   "ur": "الاعمش",
-   "transliteration": "al-Aʿmash",
-   "root": null,
-   "lemma": "الأعمش",
-   "pos": "PN",
-   "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
-  },
-  "uh:token:nasai.0170:0037": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
-  "uh:token:nasai.0170:0038": {
-   "en": "Habib (narrator name)",
+  "uh:token:nasai.0170:0032": {
+   "en": "Habib",
    "ur": "حبیب",
    "transliteration": "Ḥabīb",
    "root": null,
-   "lemma": "حبيب",
+   "lemma": "حَبِيب",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
+  },
+  "uh:token:nasai.0170:0033": {
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
+  },
+  "uh:token:nasai.0170:0034": {
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
+   "features": {
+    "case": "gen"
+   }
+  },
+  "uh:token:nasai.0170:0035": {
+   "en": "Thabit",
+   "ur": "ثابت",
+   "transliteration": "Thābit",
+   "root": null,
+   "lemma": "ثَابِت",
+   "pos": "PN",
+   "features": {
+    "case": "gen"
+   }
+  },
+  "uh:token:nasai.0170:0036": {
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
+   "root": null,
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
+  },
+  "uh:token:nasai.0170:0037": {
+   "en": "Urwa",
+   "ur": "عروہ",
+   "transliteration": "ʿUrwa",
+   "root": null,
+   "lemma": "عُرْوَة",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
+  },
+  "uh:token:nasai.0170:0038": {
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
+   "root": null,
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:nasai.0170:0039": {
    "en": "Ibn Abi Thabit",
@@ -526,26 +498,26 @@
    }
   },
   "uh:token:nasai.0170:0041": {
-   "en": "Ibn Abi Thabit",
-   "ur": "ابن ابی ثابت",
-   "transliteration": "Ibn Abī Thābit",
-   "root": null,
-   "lemma": "ابن أبي ثابت",
-   "pos": "PN",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.0170:0042": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
-   "transliteration": "ʿan",
+   "en": "Yahya (John)",
+   "ur": "یحییٰ",
+   "transliteration": "Yaḥyā",
    "root": null,
-   "lemma": "عَنْ",
-   "pos": "P",
+   "lemma": "يَحْيَى",
+   "pos": "PN",
    "features": {}
   },
   "uh:token:nasai.0170:0043": {
@@ -563,57 +535,46 @@
    }
   },
   "uh:token:nasai.0170:0044": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
-   "transliteration": "ʿan",
-   "root": null,
-   "lemma": "عَنْ",
-   "pos": "P",
-   "features": {}
+   "en": "a hadith / report",
+   "ur": "حدیث",
+   "transliteration": "ḥadīth",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
+   "pos": "N",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:nasai.0170:0045": {
-   "en": "Aisha",
-   "ur": "عائشہ",
-   "transliteration": "ʿĀʾishah",
-   "root": "ع-و-ش",
-   "lemma": "عَائِشَة",
+   "en": "Habib",
+   "ur": "حبیب",
+   "transliteration": "Ḥabīb",
+   "root": null,
+   "lemma": "حَبِيب",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:nasai.0170:0047": {
-   "en": "he said",
-   "ur": "اس نے کہا",
-   "transliteration": "qāla",
-   "root": "ق-و-ل",
-   "lemma": "قَالَ",
-   "pos": "V",
+   "en": "Urwa",
+   "ur": "عروہ",
+   "transliteration": "ʿUrwa",
+   "root": null,
+   "lemma": "عُرْوَة",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:nasai.0170:0048": {
-   "en": "Yahya",
-   "ur": "یحییٰ",
-   "transliteration": "Yaḥyā",
-   "root": "ح-ي-ي",
-   "lemma": "يَحْيَى",
-   "pos": "PN",
-   "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
+   "root": null,
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:nasai.0170:0049": {
    "en": "al-Qattan (narrator epithet)",
@@ -630,17 +591,16 @@
    }
   },
   "uh:token:nasai.0170:0050": {
-   "en": "hadith / narration",
-   "ur": "حدیث",
-   "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
-   "pos": "N",
+   "en": "this",
+   "ur": "یہ",
+   "transliteration": "hādhā",
+   "root": null,
+   "lemma": "هَذَا",
+   "pos": "PRON",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "demonstrative",
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.0170:0051": {
@@ -658,50 +618,44 @@
    }
   },
   "uh:token:nasai.0170:0052": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
-   "transliteration": "ʿan",
+   "en": "Habib",
+   "ur": "حبیب",
+   "transliteration": "Ḥabīb",
    "root": null,
-   "lemma": "عَنْ",
-   "pos": "P",
-   "features": {}
+   "lemma": "حَبِيب",
+   "pos": "PN",
+   "features": {
+    "case": "gen"
+   }
   },
   "uh:token:nasai.0170:0053": {
-   "en": "Urwah",
-   "ur": "عروہ",
-   "transliteration": "ʿUrwah",
-   "root": null,
-   "lemma": "عروة",
-   "pos": "PN",
-   "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
-  },
-  "uh:token:nasai.0170:0054": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
-  "uh:token:nasai.0170:0055": {
-   "en": "Aisha",
-   "ur": "عائشہ",
-   "transliteration": "ʿĀʾishah",
-   "root": "ع-و-ش",
-   "lemma": "عَائِشَة",
+  "uh:token:nasai.0170:0054": {
+   "en": "Urwa",
+   "ur": "عروہ",
+   "transliteration": "ʿUrwa",
+   "root": null,
+   "lemma": "عُرْوَة",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "nom"
    }
+  },
+  "uh:token:nasai.0170:0055": {
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
+   "root": null,
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:nasai.0170:0056": {
    "en": "this",
@@ -767,12 +721,12 @@
    }
   },
   "uh:token:nasai.0170:0061": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
-   "transliteration": "ʿan",
-   "root": null,
-   "lemma": "عَنْ",
-   "pos": "P",
+   "en": "upon / on",
+   "ur": "پر",
+   "transliteration": "ʿalā",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.0170:0062": {
@@ -790,19 +744,14 @@
    }
   },
   "uh:token:nasai.0170:0063": {
-   "en": "she prays / you (m.) pray",
-   "ur": "وہ نماز پڑھتی ہے / تم نماز پڑھتے ہو",
-   "transliteration": "tuṣallī",
-   "root": "ص-ل-و",
-   "lemma": "صلى",
-   "pos": "V",
+   "en": "no / not",
+   "ur": "نہیں",
+   "transliteration": "lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "FEM",
-    "number": "SING",
-    "mood": "IND"
+    "type": "negation"
    }
   },
   "uh:token:nasai.0170:0064": {
@@ -881,16 +830,16 @@
    "ur": "میں",
    "transliteration": "fī",
    "root": null,
-   "lemma": "في",
+   "lemma": "فِي",
    "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.0170:0046": {
    "en": "from / on the authority of",
-   "ur": "سے / کی طرف سے",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
-   "lemma": "عن",
+   "lemma": "عَنْ",
    "pos": "PREP",
    "features": {}
   }

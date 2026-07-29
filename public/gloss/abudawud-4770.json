@@ -10,28 +10,28 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.4770:0002": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.4770:0003": {
-   "en": "he/it was",
-   "ur": "تھا",
+   "en": "he was",
+   "ur": "وہ تھا",
    "transliteration": "kāna",
-   "root": "ك-و-ن",
+   "root": "ك و ن",
    "lemma": "كَانَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.4770:0004": {
@@ -200,23 +200,22 @@
    "ur": "علی",
    "transliteration": "ʿAlī",
    "root": null,
-   "lemma": "علي",
+   "lemma": "عَلِيّ",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.4770:0021": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.4770:0022": {
    "en": "the peace/greeting",
@@ -256,13 +255,15 @@
    }
   },
   "uh:token:abudawud.4770:0025": {
-   "en": "and indeed/and already",
-   "ur": "اور بےشک / اور پہلے سے",
+   "en": "and indeed",
+   "ur": "اور بے شک",
    "transliteration": "wa-qad",
    "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
-   "features": {}
+   "lemma": "قَدْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa"
+   }
   },
   "uh:token:abudawud.4770:0028": {
    "en": "to me / for me",
@@ -434,12 +435,12 @@
    }
   },
   "uh:token:abudawud.4770:0046": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.4770:0047": {
@@ -513,13 +514,15 @@
    }
   },
   "uh:token:abudawud.4770:0052": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.4770:0054": {
    "en": "like/similar to",
@@ -552,56 +555,51 @@
    }
   },
   "uh:token:abudawud.4770:0059": {
-   "en": "Abu Dawud",
-   "ur": "ابو داؤد",
-   "transliteration": "Abū Dāwūd",
-   "root": null,
-   "lemma": "أبو داود",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.4770:0060": {
-   "en": "Abu Dawud",
-   "ur": "ابو داؤد",
-   "transliteration": "Abū Dāwūd",
+   "en": "Dawud (David)",
+   "ur": "داؤد",
+   "transliteration": "Dāwūd",
    "root": null,
-   "lemma": "أبو داود",
+   "lemma": "دَاوُد",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.4770:0062": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.4770:0063": {
    "en": "with / at / near",
    "ur": "کے پاس",
    "transliteration": "ʿinda",
-   "root": "ع-ن-د",
-   "lemma": "عند",
+   "root": "ع ن د",
+   "lemma": "عِنْدَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:abudawud.4770:0064": {
@@ -633,16 +631,14 @@
    }
   },
   "uh:token:abudawud.4770:0031": {
-   "en": "Abu (father of, name-element)",
-   "ur": "ابو / باپ",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
    "transliteration": "abū",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "NOM"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.4770:0032": {

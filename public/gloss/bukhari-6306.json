@@ -37,11 +37,13 @@
   "uh:token:bukhari.6306:0003": {
    "en": "O Allah",
    "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
-   "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
+   "pos": "N",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:bukhari.6306:0004": {
    "en": "you",
@@ -57,40 +59,36 @@
    }
   },
   "uh:token:bukhari.6306:0006": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.6306:0007": {
-   "en": "no god but (part of the shahadah formula)",
-   "ur": "کوئی معبود نہیں سوائے",
-   "transliteration": "ilāha illā",
-   "root": "أله",
-   "lemma": "إله",
+   "en": "god / deity",
+   "ur": "معبود",
+   "transliteration": "ilāh",
+   "root": "ا ل ه",
+   "lemma": "إِلَه",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.6306:0008": {
-   "en": "no god but (part of the shahadah formula)",
-   "ur": "کوئی معبود نہیں سوائے",
-   "transliteration": "ilāha illā",
-   "root": "أله",
-   "lemma": "إله",
-   "pos": "N",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
+   "transliteration": "illā",
+   "root": null,
+   "lemma": "إِلَّا",
+   "pos": "PART",
    "features": {
-    "case": "ACC",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "exception"
    }
   },
   "uh:token:bukhari.6306:0011": {
@@ -118,12 +116,12 @@
    }
   },
   "uh:token:bukhari.6306:0014": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0016": {
@@ -142,12 +140,12 @@
    }
   },
   "uh:token:bukhari.6306:0017": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.6306:0019": {
@@ -180,12 +178,12 @@
    }
   },
   "uh:token:bukhari.6306:0021": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0022": {
@@ -203,12 +201,12 @@
    }
   },
   "uh:token:bukhari.6306:0023": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.6306:0026": {
@@ -225,12 +223,12 @@
    }
   },
   "uh:token:bukhari.6306:0028": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0030": {
@@ -272,13 +270,15 @@
    "features": {}
   },
   "uh:token:bukhari.6306:0035": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.6306:0036": {
    "en": "he forgives",
@@ -311,13 +311,15 @@
    }
   },
   "uh:token:bukhari.6306:0038": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:bukhari.6306:0039": {
    "en": "you",
@@ -374,12 +376,12 @@
    }
   },
   "uh:token:bukhari.6306:0045": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0046": {
@@ -413,12 +415,12 @@
    }
   },
   "uh:token:bukhari.6306:0050": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0051": {
@@ -439,14 +441,12 @@
    "en": "before",
    "ur": "پہلے",
    "transliteration": "qabla",
-   "root": "ق-ب-ل",
-   "lemma": "قبل",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:bukhari.6306:0053": {
@@ -472,26 +472,23 @@
    }
   },
   "uh:token:bukhari.6306:0056": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0057": {
-   "en": "people (of) / family (of)",
-   "ur": "اہل / گھر والے",
+   "en": "people of / family of",
+   "ur": "اہل / خاندان",
    "transliteration": "ahl",
-   "root": "أ-ه-ل",
-   "lemma": "أهل",
+   "root": "ا ه ل",
+   "lemma": "أَهْل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.6306:0059": {
@@ -520,12 +517,12 @@
    }
   },
   "uh:token:bukhari.6306:0061": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0062": {
@@ -543,16 +540,17 @@
    }
   },
   "uh:token:bukhari.6306:0063": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.6306:0066": {
@@ -575,14 +573,12 @@
    "en": "before",
    "ur": "پہلے",
    "transliteration": "qabla",
-   "root": "ق-ب-ل",
-   "lemma": "قبل",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:bukhari.6306:0068": {
@@ -608,40 +604,35 @@
    }
   },
   "uh:token:bukhari.6306:0071": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.6306:0072": {
-   "en": "people (of) / family (of)",
-   "ur": "اہل / گھر والے",
+   "en": "people of / family of",
+   "ur": "اہل / خاندان",
    "transliteration": "ahl",
-   "root": "أ-ه-ل",
-   "lemma": "أهل",
+   "root": "ا ه ل",
+   "lemma": "أَهْل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.6306:0073": {
-   "en": "Paradise",
+   "en": "Paradise / the Garden",
    "ur": "جنت",
-   "transliteration": "al-jannah",
-   "root": "ج-ن-ن",
-   "lemma": "جنة",
+   "transliteration": "al-janna",
+   "root": "ج ن ن",
+   "lemma": "جَنَّة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.6306:0009": {
@@ -683,15 +674,14 @@
    }
   },
   "uh:token:bukhari.6306:0058": {
-   "en": "Paradise, the Garden",
+   "en": "Paradise / the Garden",
    "ur": "جنت",
-   "transliteration": "al-jannah",
-   "root": "ج-ن-ن",
+   "transliteration": "al-janna",
+   "root": "ج ن ن",
    "lemma": "جَنَّة",
    "pos": "N",
    "features": {
-    "gender": "F",
-    "number": "SG",
+    "case": "gen",
     "definite": true
    }
   },

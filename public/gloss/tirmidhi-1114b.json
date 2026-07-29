@@ -30,41 +30,33 @@
    "ur": "عمر",
    "transliteration": "ʿUmar",
    "root": null,
-   "lemma": "عمر",
+   "lemma": "عُمَر",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.1114b:0003": {
-   "en": "bin al-Khattab",
-   "ur": "بن الخطاب",
-   "transliteration": "bin al-Khaṭṭāb",
-   "root": null,
-   "lemma": "بن الخطاب",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.1114b:0004": {
-   "en": "bin al-Khattab",
-   "ur": "بن الخطاب",
-   "transliteration": "bin al-Khaṭṭāb",
+   "en": "al-Khattab",
+   "ur": "خطاب",
+   "transliteration": "al-Khaṭṭāb",
    "root": null,
-   "lemma": "بن الخطاب",
-   "pos": "COMPOUND",
+   "lemma": "خَطَّاب",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.1114b:0005": {
@@ -77,13 +69,15 @@
    "features": {}
   },
   "uh:token:tirmidhi.1114b:0006": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:tirmidhi.1114b:0008": {
    "en": "charity",
@@ -187,14 +181,12 @@
    "en": "with / at / near",
    "ur": "کے پاس",
    "transliteration": "ʿinda",
-   "root": "ع-ن-د",
-   "lemma": "عند",
+   "root": "ع ن د",
+   "lemma": "عِنْدَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:tirmidhi.1114b:0019": {
@@ -270,48 +262,65 @@
    }
   },
   "uh:token:tirmidhi.1114b:0025": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:tirmidhi.1114b:0026": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:tirmidhi.1114b:0027": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:tirmidhi.1114b:0028": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
+   "features": {
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:tirmidhi.1114b:0029": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:tirmidhi.1114b:0030": {
@@ -331,87 +340,78 @@
    }
   },
   "uh:token:tirmidhi.1114b:0031": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
    "root": "ر س ل",
    "lemma": "رَسُول",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.1114b:0032": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1114b:0033": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:tirmidhi.1114b:0034": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1114b:0035": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "suffix": "3ms"
    }
   },
   "uh:token:tirmidhi.1114b:0036": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:tirmidhi.1114b:0037": {
@@ -444,12 +444,12 @@
    }
   },
   "uh:token:tirmidhi.1114b:0039": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.1114b:0040": {
@@ -467,13 +467,16 @@
    }
   },
   "uh:token:tirmidhi.1114b:0041": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:tirmidhi.1114b:0042": {
    "en": "give in marriage",
@@ -506,21 +509,21 @@
    }
   },
   "uh:token:tirmidhi.1114b:0044": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.1114b:0046": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.1114b:0047": {
@@ -538,12 +541,12 @@
    }
   },
   "uh:token:tirmidhi.1114b:0048": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.1114b:0049": {
@@ -605,32 +608,24 @@
    }
   },
   "uh:token:tirmidhi.1114b:0054": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
    "root": "ا ب و",
-   "lemma": "أَبُو",
-   "pos": "PN",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1114b:0055": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
-   "root": "ا ب و",
-   "lemma": "أَبُو",
+   "en": "Isa (Jesus)",
+   "ur": "عیسیٰ",
+   "transliteration": "ʿĪsā",
+   "root": null,
+   "lemma": "عِيسَى",
    "pos": "PN",
-   "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "features": {}
   },
   "uh:token:tirmidhi.1114b:0056": {
    "en": "this",
@@ -645,45 +640,36 @@
    }
   },
   "uh:token:tirmidhi.1114b:0057": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1114b:0058": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
    "lemma": "حَسَن",
-   "pos": "ADJ",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.1114b:0059": {
-   "en": "authentic/correct",
+   "en": "sound / authentic",
    "ur": "صحیح",
    "transliteration": "ṣaḥīḥ",
    "root": "ص ح ح",
    "lemma": "صَحِيح",
    "pos": "ADJ",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1114b:0063": {
@@ -718,28 +704,23 @@
    "en": "with / at / near",
    "ur": "کے پاس",
    "transliteration": "ʿinda",
-   "root": "ع-ن-د",
-   "lemma": "عند",
+   "root": "ع ن د",
+   "lemma": "عِنْدَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:tirmidhi.1114b:0069": {
-   "en": "people (of) / family (of)",
-   "ur": "اہل / گھر والے",
+   "en": "people of / family of",
+   "ur": "اہل / خاندان",
    "transliteration": "ahl",
-   "root": "أ-ه-ل",
-   "lemma": "أهل",
+   "root": "ا ه ل",
+   "lemma": "أَهْل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.1114b:0070": {
@@ -841,17 +822,15 @@
    }
   },
   "uh:token:tirmidhi.1114b:0061": {
-   "en": "and Abu (father of, name-element)",
+   "en": "and Abu (father of)",
    "ur": "اور ابو",
    "transliteration": "wa-abū",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "NOM",
-    "conjunction": "wa"
+    "prefix": "wa",
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.1114b:0045": {

@@ -10,38 +10,42 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.0210:0001": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:bukhari.0210:0002": {
-   "en": "he prayed/blessed",
-   "ur": "اس نے نماز پڑھی / درود بھیجا",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
    "transliteration": "ṣallā",
-   "root": "ص-ل-ي",
-   "lemma": "صلى",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:bukhari.0210:0003": {
-   "en": "and not",
+   "en": "and did not",
    "ur": "اور نہیں",
    "transliteration": "wa-lam",
    "root": null,
-   "lemma": "لم",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.0210:0004": {
    "en": "he performs ablution",

@@ -63,22 +63,24 @@
    }
   },
   "uh:token:muslim.3661:0007": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3661:0008": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3661:0010": {
    "en": "that",
@@ -90,31 +92,25 @@
    "features": {}
   },
   "uh:token:muslim.3661:0011": {
-   "en": "Ibn Umar",
-   "ur": "ابن عمر",
-   "transliteration": "Ibn ʿUmar",
-   "root": null,
-   "lemma": "ابن عمر",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "ibn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3661:0012": {
-   "en": "Ibn Umar",
-   "ur": "ابن عمر",
-   "transliteration": "Ibn ʿUmar",
+   "en": "Umar",
+   "ur": "عمر",
+   "transliteration": "ʿUmar",
    "root": null,
-   "lemma": "ابن عمر",
-   "pos": "COMPOUND",
+   "lemma": "عُمَر",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3661:0013": {
@@ -148,17 +144,15 @@
    }
   },
   "uh:token:muslim.3661:0015": {
-   "en": "three times",
+   "en": "three (times)",
    "ur": "تین بار",
    "transliteration": "thalāthan",
-   "root": "ث-ل-ث",
-   "lemma": "ثلاثة",
+   "root": "ث ل ث",
+   "lemma": "ثَلَاث",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "INDEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "acc",
+    "number": "card"
    }
   },
   "uh:token:muslim.3661:0016": {
@@ -246,22 +240,27 @@
    }
   },
   "uh:token:muslim.3661:0022": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3661:0024": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3661:0025": {
    "en": "I know",
@@ -280,26 +279,24 @@
    }
   },
   "uh:token:muslim.3661:0026": {
-   "en": "the hadith",
+   "en": "the hadith / the report",
    "ur": "حدیث",
    "transliteration": "al-ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:muslim.3661:0027": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3661:0028": {
@@ -319,45 +316,36 @@
    }
   },
   "uh:token:muslim.3661:0031": {
-   "en": "Yunus",
+   "en": "Yunus (Jonah)",
    "ur": "یونس",
    "transliteration": "Yūnus",
    "root": null,
-   "lemma": "يونس",
+   "lemma": "يُونُس",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.3661:0032": {
-   "en": "bin Jubair",
-   "ur": "بن جبیر",
-   "transliteration": "bin Jubayr",
-   "root": null,
-   "lemma": "ابن جبير",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3661:0033": {
-   "en": "bin Jubair",
-   "ur": "بن جبیر",
-   "transliteration": "bin Jubayr",
+   "en": "Jubayr",
+   "ur": "جبیر",
+   "transliteration": "Jubayr",
    "root": null,
-   "lemma": "ابن جبير",
+   "lemma": "جُبَيْر",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.3661:0034": {
@@ -461,31 +449,25 @@
    }
   },
   "uh:token:muslim.3661:0042": {
-   "en": "Ibn Umar",
-   "ur": "ابن عمر",
-   "transliteration": "Ibn ʿUmar",
-   "root": null,
-   "lemma": "ابن عمر",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "ibn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3661:0043": {
-   "en": "Ibn Umar",
-   "ur": "ابن عمر",
-   "transliteration": "Ibn ʿUmar",
+   "en": "Umar",
+   "ur": "عمر",
+   "transliteration": "ʿUmar",
    "root": null,
-   "lemma": "ابن عمر",
-   "pos": "COMPOUND",
+   "lemma": "عُمَر",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3661:0044": {
@@ -658,13 +640,15 @@
    }
   },
   "uh:token:muslim.3661:0059": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:muslim.3661:0060": {
    "en": "he said",
@@ -713,16 +697,14 @@
    }
   },
   "uh:token:muslim.3661:0029": {
-   "en": "father of (accusative)",
-   "ur": "باپ",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
    "transliteration": "abā",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "ACC"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3661:0065": {
@@ -775,6 +757,28 @@
    "lemma": "أَوَإِنَّ",
    "pos": "PART",
    "features": {}
+  },
+  "uh:token:muslim.3661:0054": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:muslim.3661:0056": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
   }
  }
 }

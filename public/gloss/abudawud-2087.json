@@ -53,12 +53,12 @@
    }
   },
   "uh:token:abudawud.2087:0005": {
-   "en": "to/towards",
+   "en": "to / towards",
    "ur": "کی طرف",
    "transliteration": "ilā",
    "root": null,
    "lemma": "إِلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2087:0006": {
@@ -78,31 +78,25 @@
    }
   },
   "uh:token:abudawud.2087:0007": {
-   "en": "paternal cousin",
-   "ur": "چچازاد بھائی",
-   "transliteration": "ibn ʿamm",
-   "root": "عمم",
-   "lemma": "ابن عم",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "ibn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2087:0008": {
-   "en": "paternal cousin",
-   "ur": "چچازاد بھائی",
-   "transliteration": "ibn ʿamm",
-   "root": "عمم",
-   "lemma": "ابن عم",
+   "en": "paternal uncle (of)",
+   "ur": "چچا",
+   "transliteration": "ʿamm",
+   "root": "ع م م",
+   "lemma": "عَمّ",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2087:0009": {
@@ -133,13 +127,15 @@
    }
   },
   "uh:token:abudawud.2087:0012": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:abudawud.2087:0013": {
    "en": "he divorced her",
@@ -177,22 +173,26 @@
    }
   },
   "uh:token:abudawud.2087:0015": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.2087:0017": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:abudawud.2087:0018": {
    "en": "he left/abandoned her/it",
@@ -212,12 +212,12 @@
    }
   },
   "uh:token:abudawud.2087:0019": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2087:0020": {
@@ -259,12 +259,12 @@
    "features": {}
   },
   "uh:token:abudawud.2087:0024": {
-   "en": "to/towards",
+   "en": "to / towards",
    "ur": "کی طرف",
    "transliteration": "ilā",
    "root": null,
    "lemma": "إِلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2087:0025": {
@@ -300,13 +300,15 @@
    }
   },
   "uh:token:abudawud.2087:0028": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.2087:0029": {
    "en": "by Allah",
@@ -323,13 +325,15 @@
    }
   },
   "uh:token:abudawud.2087:0030": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.2087:0032": {
    "en": "ever / forever",
@@ -438,13 +442,16 @@
    }
   },
   "uh:token:abudawud.2087:0045": {
-   "en": "and not / so do not",
-   "ur": "پس نہیں / پس نہ",
+   "en": "then not / so do not",
+   "ur": "پس نہیں",
    "transliteration": "fa-lā",
    "root": null,
-   "lemma": "ف + لا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.2087:0047": {
    "en": "that",
@@ -501,12 +508,12 @@
    }
   },
   "uh:token:abudawud.2087:0055": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2087:0056": {

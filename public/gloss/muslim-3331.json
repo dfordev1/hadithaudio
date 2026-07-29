@@ -24,21 +24,21 @@
    }
   },
   "uh:token:muslim.3331:0002": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3331:0004": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3331:0006": {
@@ -82,13 +82,16 @@
    }
   },
   "uh:token:muslim.3331:0010": {
-   "en": "and not",
+   "en": "and did not",
    "ur": "اور نہیں",
    "transliteration": "wa-lam",
    "root": null,
-   "lemma": "لم",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3331:0011": {
    "en": "he did not say (jussive of yaqul, usu. after 'lam')",
@@ -107,17 +110,14 @@
    }
   },
   "uh:token:muslim.3331:0013": {
-   "en": "day",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
-   "root": "ي-و-م",
-   "lemma": "يوم",
+   "root": "ي و م",
+   "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3331:0014": {
@@ -354,13 +354,15 @@
    }
   },
   "uh:token:muslim.3331:0033": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3331:0034": {
    "en": "he kisses / he accepts",
@@ -392,17 +394,14 @@
    }
   },
   "uh:token:muslim.3331:0036": {
-   "en": "day",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
-   "root": "ي-و-م",
-   "lemma": "يوم",
+   "root": "ي و م",
+   "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3331:0037": {
@@ -434,13 +433,16 @@
    }
   },
   "uh:token:muslim.3331:0039": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3331:0040": {
    "en": "he turned away / dismissed",
@@ -460,12 +462,12 @@
   "uh:token:muslim.3331:0003": {
    "en": "Sufyan",
    "ur": "سفیان",
-   "transliteration": "sufyān",
+   "transliteration": "Sufyān",
    "root": null,
-   "lemma": "سفيان",
+   "lemma": "سُفْيَان",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3331:0005": {

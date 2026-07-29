@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.3598:0002": {
-   "en": "and whoever/and from",
-   "ur": "اور جو / اور سے",
-   "transliteration": "wa-man",
-   "root": null,
-   "lemma": "من",
-   "pos": "REL",
-   "features": {}
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.3598:0004": {
    "en": "on/upon",
@@ -74,58 +79,46 @@
    }
   },
   "uh:token:abudawud.3598:0012": {
-   "en": "mighty and majestic (of Allah)",
-   "ur": "عزوجل",
-   "transliteration": "ʿazza wa-jall",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "عز وجل",
-   "pos": "COMPOUND",
-   "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
-   }
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.3598:0013": {
-   "en": "mighty and majestic (of Allah)",
-   "ur": "عزوجل",
-   "transliteration": "ʿazza wa-jall",
-   "root": null,
-   "lemma": "عز وجل",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:abudawud.3598:0006": {
-   "en": "on / upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
-   "lemma": "على",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
    "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3598:0014": {
-   "en": "he is mighty (as in 'azza wa jall')",
-   "ur": "وہ عزت والا ہے",
+   "en": "He is Mighty (ʿazza)",
+   "ur": "وہ غالب ہے",
    "transliteration": "ʿazza",
-   "root": "ع-ز-ز",
-   "lemma": "عز",
+   "root": "ع ز ز",
+   "lemma": "عَزَّ",
    "pos": "V",
    "features": {
-    "tense": "PERF",
-    "person": "3",
-    "gender": "M",
-    "number": "SG"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.3598:0001": {
@@ -161,14 +154,18 @@
    }
   },
   "uh:token:abudawud.3598:0015": {
-   "en": "and He is Exalted (in 'azza wa-jalla')",
-   "ur": "اور وہ بلند ہے",
+   "en": "and He is Majestic",
+   "ur": "اور بزرگ ہے",
    "transliteration": "wa-jalla",
-   "root": "ج-ل-ل",
+   "root": "ج ل ل",
    "lemma": "جَلَّ",
    "pos": "V",
    "features": {
-    "aspect": "perf"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   }
  }

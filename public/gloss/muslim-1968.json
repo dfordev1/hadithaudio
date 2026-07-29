@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.1968:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:muslim.1968:0003": {
    "en": "I said",
@@ -51,17 +53,14 @@
    }
   },
   "uh:token:muslim.1968:0007": {
-   "en": "day",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
-   "root": "ي-و-م",
-   "lemma": "يوم",
+   "root": "ي و م",
+   "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.1968:0008": {
@@ -134,31 +133,26 @@
    }
   },
   "uh:token:muslim.1968:0016": {
-   "en": "Abu al-Zinad",
-   "ur": "ابو الزناد",
-   "transliteration": "Abū al-Zinād",
-   "root": null,
-   "lemma": "أَبُو الزِّنَاد",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masc",
-    "number": "sing"
+    "case": "nom"
    }
   },
   "uh:token:muslim.1968:0017": {
-   "en": "Abu al-Zinad",
-   "ur": "ابو الزناد",
-   "transliteration": "Abū al-Zinād",
+   "en": "az-Zinad",
+   "ur": "زناد",
+   "transliteration": "az-Zinād",
    "root": null,
-   "lemma": "أَبُو الزِّنَاد",
+   "lemma": "زِنَاد",
    "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masc",
-    "number": "sing"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:muslim.1968:0018": {
@@ -175,31 +169,25 @@
    }
   },
   "uh:token:muslim.1968:0020": {
-   "en": "Abu Hurairah",
-   "ur": "ابو ہریرہ",
-   "transliteration": "Abī Hurayrah",
-   "root": null,
-   "lemma": "أبو هريرة",
-   "pos": "PN",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.1968:0021": {
-   "en": "Abu Hurairah",
-   "ur": "ابو ہریرہ",
-   "transliteration": "Abī Hurayrah",
+   "en": "Hurayra",
+   "ur": "ہریرہ",
+   "transliteration": "Hurayra",
    "root": null,
-   "lemma": "أبو هريرة",
+   "lemma": "هُرَيْرَة",
    "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.1968:0022": {
@@ -216,12 +204,12 @@
    "ur": "وہ",
    "transliteration": "huwa",
    "root": null,
-   "lemma": "هو",
+   "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.1968:0024": {

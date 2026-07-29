@@ -26,21 +26,21 @@
    }
   },
   "uh:token:bukhari.4893:0003": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.4893:0005": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.4893:0008": {
@@ -83,13 +83,16 @@
    }
   },
   "uh:token:bukhari.4893:0011": {
-   "en": "and not",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.4893:0013": {
    "en": "in",
@@ -130,12 +133,12 @@
    "ur": "وہ",
    "transliteration": "huwa",
    "root": null,
-   "lemma": "هو",
+   "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.4893:0018": {
@@ -167,14 +170,15 @@
    }
   },
   "uh:token:bukhari.4893:0002": {
-   "en": "al-Zubayr",
+   "en": "az-Zubayr",
    "ur": "زبیر",
-   "transliteration": "al-zubayr",
-   "root": "ز-ب-ر",
-   "lemma": "الزبير",
+   "transliteration": "az-Zubayr",
+   "root": null,
+   "lemma": "زُبَيْر",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.4893:0004": {
@@ -192,23 +196,22 @@
    "en": "son of",
    "ur": "بیٹا",
    "transliteration": "ibn",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.4893:0007": {
    "en": "Abbas",
    "ur": "عباس",
-   "transliteration": "ʿabbās",
-   "root": "ع-ب-س",
-   "lemma": "عباس",
+   "transliteration": "ʿAbbās",
+   "root": null,
+   "lemma": "عَبَّاس",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.4893:0014": {

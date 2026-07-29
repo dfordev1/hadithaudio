@@ -10,35 +10,32 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.0261:0002": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:ibnmajah.0261:0003": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.0261:0004": {
    "en": "a man",
    "ur": "ایک آدمی",
    "transliteration": "rajul",
-   "root": "ر-ج-ل",
-   "lemma": "رجل",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0005": {
@@ -72,13 +69,15 @@
    }
   },
   "uh:token:ibnmajah.0261:0008": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:ibnmajah.0261:0009": {
    "en": "he was brought / it was brought",
@@ -97,30 +96,25 @@
    }
   },
   "uh:token:ibnmajah.0261:0010": {
-   "en": "with/by it (him)",
-   "ur": "اس کے ساتھ / اس سے",
+   "en": "by it / with it",
+   "ur": "اس کے ساتھ",
    "transliteration": "bihi",
    "root": null,
-   "lemma": "به",
-   "pos": "P",
+   "lemma": "بِ",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:ibnmajah.0261:0011": {
-   "en": "day",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
-   "root": "ي-و-م",
-   "lemma": "يوم",
+   "root": "ي و م",
+   "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:ibnmajah.0261:0012": {
@@ -138,26 +132,24 @@
    }
   },
   "uh:token:ibnmajah.0261:0015": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.0261:0016": {
-   "en": "the fire (Hellfire)",
-   "ur": "آگ (جہنم)",
-   "transliteration": "al-nār",
-   "root": "ن-و-ر",
-   "lemma": "نار",
+   "en": "the Fire / Hell",
+   "ur": "آگ / جہنم",
+   "transliteration": "an-nār",
+   "root": "ن و ر",
+   "lemma": "نَار",
    "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.0261:0019": {
@@ -177,31 +169,26 @@
    }
   },
   "uh:token:ibnmajah.0261:0020": {
-   "en": "Abu al-Hasan",
-   "ur": "ابو الحسن",
-   "transliteration": "Abū al-Ḥasan",
-   "root": null,
-   "lemma": "أَبُو الْحَسَن",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0021": {
-   "en": "Abu al-Hasan",
-   "ur": "ابو الحسن",
-   "transliteration": "Abū al-Ḥasan",
+   "en": "al-Hasan",
+   "ur": "حسن",
+   "transliteration": "al-Ḥasan",
    "root": null,
-   "lemma": "أَبُو الْحَسَن",
+   "lemma": "حَسَن",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.0261:0023": {
@@ -331,31 +318,26 @@
    }
   },
   "uh:token:ibnmajah.0261:0040": {
-   "en": "Abu al-Hasan",
-   "ur": "ابو الحسن",
-   "transliteration": "Abū al-Ḥasan",
-   "root": null,
-   "lemma": "أَبُو الْحَسَن",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0041": {
-   "en": "Abu al-Hasan",
-   "ur": "ابو الحسن",
-   "transliteration": "Abū al-Ḥasan",
+   "en": "al-Hasan",
+   "ur": "حسن",
+   "transliteration": "al-Ḥasan",
    "root": null,
-   "lemma": "أَبُو الْحَسَن",
+   "lemma": "حَسَن",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.0261:0042": {
@@ -389,17 +371,14 @@
    }
   },
   "uh:token:ibnmajah.0261:0044": {
-   "en": "Ibrahim",
+   "en": "Ibrahim (Abraham)",
    "ur": "ابراہیم",
    "transliteration": "Ibrāhīm",
    "root": null,
-   "lemma": "إبراهيم",
+   "lemma": "إِبْرَاهِيم",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0047": {
@@ -506,16 +485,14 @@
    }
   },
   "uh:token:ibnmajah.0261:0027": {
-   "en": "Abu (father of, name-element)",
-   "ur": "ابو / باپ",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
    "transliteration": "abū",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "NOM"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0028": {
@@ -530,53 +507,48 @@
    }
   },
   "uh:token:ibnmajah.0261:0030": {
-   "en": "Abu (father of, name-element)",
-   "ur": "ابو / باپ",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
    "transliteration": "abū",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "NOM"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0031": {
    "en": "al-Walid",
    "ur": "ولید",
    "transliteration": "al-Walīd",
-   "root": "و-ل-د",
-   "lemma": "الْوَلِيد",
+   "root": null,
+   "lemma": "وَلِيد",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "nom",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.0261:0034": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:ibnmajah.0261:0045": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:ibnmajah.0261:0046": {
@@ -589,29 +561,25 @@
    "features": {}
   },
   "uh:token:ibnmajah.0261:0049": {
-   "en": "Abu (father of, name-element)",
-   "ur": "ابو / باپ",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
    "transliteration": "abū",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "NOM"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0054": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:ibnmajah.0261:0014": {
@@ -638,14 +606,14 @@
    }
   },
   "uh:token:ibnmajah.0261:0050": {
-   "en": "Nu'aym (name)",
-   "ur": "نعیم (نام)",
-   "transliteration": "Nu'aym",
-   "root": "ن-ع-م",
+   "en": "Nuaym",
+   "ur": "نعیم",
+   "transliteration": "Nuʿaym",
+   "root": null,
    "lemma": "نُعَيْم",
    "pos": "PN",
    "features": {
-    "case": "gen"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.0261:0055": {
@@ -671,6 +639,28 @@
     "state": "DEF",
     "gender": "MASC",
     "number": "SING"
+   }
+  },
+  "uh:token:ibnmajah.0261:0022": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:ibnmajah.0261:0025": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

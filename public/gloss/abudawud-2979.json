@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.2979:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
+   "en": "did not",
+   "ur": "نہیں",
+   "transliteration": "lam",
    "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.2979:0002": {
    "en": "the Messenger of Allah, peace be upon him",
@@ -47,17 +49,14 @@
    }
   },
   "uh:token:abudawud.2979:0004": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2979:0005": {
@@ -75,17 +74,15 @@
    }
   },
   "uh:token:abudawud.2979:0006": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "and not / nor",
+   "ur": "اور نہیں",
+   "transliteration": "wa-lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "prefix": "wa",
+    "type": "negation"
    }
   },
   "uh:token:abudawud.2979:0007": {
@@ -112,20 +109,13 @@
    "features": {}
   },
   "uh:token:abudawud.2979:0009": {
-   "en": "he divides / he swears",
-   "ur": "وہ تقسیم کرتا ہے / وہ قسم کھاتا ہے",
-   "transliteration": "yaqsimu",
-   "root": "ق-س-م",
-   "lemma": "قَسَمَ",
-   "pos": "V",
-   "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.2979:0010": {
    "en": "for Banu (tribe of)",
@@ -216,17 +206,15 @@
    "features": {}
   },
   "uh:token:abudawud.2979:0017": {
-   "en": "the fifth / khums",
-   "ur": "خمس (پانچواں حصہ)",
-   "transliteration": "al-khums",
-   "root": "خمس",
-   "lemma": "خُمْس",
-   "pos": "N",
+   "en": "al-Muttalib",
+   "ur": "مطلب",
+   "transliteration": "al-Muṭṭalib",
+   "root": null,
+   "lemma": "مُطَّلِب",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.2979:0018": {
@@ -244,13 +232,18 @@
    }
   },
   "uh:token:abudawud.2979:0019": {
-   "en": "as/just as",
-   "ur": "جیسا کہ",
-   "transliteration": "ka-mā",
-   "root": null,
-   "lemma": "كما",
-   "pos": "SUB",
-   "features": {}
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.2979:0020": {
    "en": "he divided / distributed",
@@ -269,31 +262,25 @@
    }
   },
   "uh:token:abudawud.2979:0021": {
-   "en": "for Banu (tribe of)",
-   "ur": "بنی ... کے لیے",
-   "transliteration": "li-banī",
-   "root": "ب ن ي",
-   "lemma": "بَنُو",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "PL"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2979:0022": {
-   "en": "Hashim",
-   "ur": "ہاشم",
-   "transliteration": "Hāshim",
+   "en": "Bakr",
+   "ur": "بکر",
+   "transliteration": "Bakr",
    "root": null,
-   "lemma": "هاشم",
+   "lemma": "بَكْر",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2979:0023": {
@@ -341,102 +328,89 @@
    }
   },
   "uh:token:abudawud.2979:0027": {
-   "en": "and he was",
-   "ur": "اور وہ تھا",
-   "transliteration": "wa-kāna",
-   "root": "ك-و-ن",
-   "lemma": "كان",
-   "pos": "V",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
+   "root": "ر س ل",
+   "lemma": "رَسُول",
+   "pos": "N",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2979:0028": {
-   "en": "Abu Bakr",
-   "ur": "ابو بکر",
-   "transliteration": "Abū Bakr",
-   "root": "ب-ك-ر",
-   "lemma": "أَبُو بَكْرٍ",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2979:0029": {
-   "en": "Abu Bakr",
-   "ur": "ابو بکر",
-   "transliteration": "Abū Bakr",
-   "root": "ب-ك-ر",
-   "lemma": "أَبُو بَكْرٍ",
-   "pos": "PN",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:abudawud.2979:0030": {
-   "en": "he divides / he swears",
-   "ur": "وہ تقسیم کرتا ہے / وہ قسم کھاتا ہے",
-   "transliteration": "yaqsimu",
-   "root": "ق-س-م",
-   "lemma": "قَسَمَ",
-   "pos": "V",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2979:0031": {
-   "en": "the fifth / khums",
-   "ur": "خمس (پانچواں حصہ)",
-   "transliteration": "al-khums",
-   "root": "خمس",
-   "lemma": "خُمْس",
-   "pos": "N",
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:abudawud.2979:0032": {
-   "en": "about / like (approximately)",
-   "ur": "تقریباً",
-   "transliteration": "naḥwa",
-   "root": "ن-ح-و",
-   "lemma": "نحو",
-   "pos": "P",
-   "features": {}
-  },
-  "uh:token:abudawud.2979:0033": {
-   "en": "he divided / distributed",
-   "ur": "اس نے تقسیم کیا",
-   "transliteration": "qasama",
-   "root": "ق-س-م",
-   "lemma": "قسم",
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
+  },
+  "uh:token:abudawud.2979:0033": {
+   "en": "other than / not",
+   "ur": "غیر / کے سوا",
+   "transliteration": "ghayr",
+   "root": "غ ي ر",
+   "lemma": "غَيْر",
+   "pos": "N",
+   "features": {
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2979:0034": {
@@ -454,17 +428,14 @@
    }
   },
   "uh:token:abudawud.2979:0035": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "did not",
+   "ur": "نہیں",
+   "transliteration": "lam",
+   "root": null,
+   "lemma": "لَمْ",
+   "pos": "PART",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "type": "negation"
    }
   },
   "uh:token:abudawud.2979:0036": {
@@ -510,95 +481,92 @@
    }
   },
   "uh:token:abudawud.2979:0039": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
    "root": "ر س ل",
    "lemma": "رَسُول",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2979:0040": {
-   "en": "other than / not",
-   "ur": "کے علاوہ / غیر",
-   "transliteration": "ghayr",
-   "root": "غ-ي-ر",
-   "lemma": "غير",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2979:0041": {
-   "en": "that he",
-   "ur": "کہ وہ",
-   "transliteration": "annahu",
-   "root": null,
-   "lemma": "أَنَّهُ",
-   "pos": "SUB",
-   "features": {}
-  },
-  "uh:token:abudawud.2979:0042": {
-   "en": "did not",
-   "ur": "نہیں (ماضی نفی)",
-   "transliteration": "lam",
-   "root": null,
-   "lemma": "لَمْ",
-   "pos": "NEG",
-   "features": {}
-  },
-  "uh:token:abudawud.2979:0043": {
-   "en": "was / be (jussive)",
-   "ur": "ہو (نفی کے ساتھ)",
-   "transliteration": "yakun",
-   "root": "ك-و-ن",
-   "lemma": "كان",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
    "pos": "V",
    "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "JUS"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
+  },
+  "uh:token:abudawud.2979:0042": {
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
+  },
+  "uh:token:abudawud.2979:0043": {
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
    }
   },
   "uh:token:abudawud.2979:0044": {
-   "en": "he gives",
-   "ur": "وہ دیتا ہے",
-   "transliteration": "yuʿṭī",
-   "root": "عطو",
-   "lemma": "أَعْطَى",
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
    "pos": "V",
    "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:abudawud.2979:0046": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.2979:0047": {
@@ -616,98 +584,89 @@
    }
   },
   "uh:token:abudawud.2979:0048": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
+   "en": "messenger",
+   "ur": "رسول",
+   "transliteration": "rasūl",
    "root": "ر س ل",
    "lemma": "رَسُول",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2979:0049": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2979:0050": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:abudawud.2979:0051": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2979:0052": {
-   "en": "as/just as",
-   "ur": "جیسا کہ",
-   "transliteration": "ka-mā",
-   "root": null,
-   "lemma": "كما",
-   "pos": "SUB",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.2979:0053": {
-   "en": "he/it was",
-   "ur": "تھا",
-   "transliteration": "kāna",
-   "root": "ك-و-ن",
-   "lemma": "كَانَ",
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:abudawud.2979:0055": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "Umar",
+   "ur": "عمر",
+   "transliteration": "ʿUmar",
+   "root": null,
+   "lemma": "عُمَر",
+   "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2979:0056": {
@@ -739,17 +698,17 @@
    }
   },
   "uh:token:abudawud.2979:0058": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.2979:0059": {

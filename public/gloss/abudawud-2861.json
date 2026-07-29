@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.2861:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:abudawud.2861:0003": {
    "en": "I threw / I cast (arrows)",
@@ -82,14 +84,12 @@
    "en": "three",
    "ur": "تین",
    "transliteration": "thalāth",
-   "root": "ث-ل-ث",
-   "lemma": "ثلاث",
+   "root": "ث ل ث",
+   "lemma": "ثَلَاث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "nom",
+    "number": "card"
    }
   },
   "uh:token:abudawud.2861:0008": {
@@ -111,12 +111,10 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:abudawud.2861:0011": {
@@ -136,12 +134,12 @@
    }
   },
   "uh:token:abudawud.2861:0012": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:abudawud.2861:0013": {

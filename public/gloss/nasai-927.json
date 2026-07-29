@@ -10,31 +10,28 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.0927:0001": {
-   "en": "the imam / leader",
-   "ur": "امام",
-   "transliteration": "al-imām",
-   "root": "أ-م-م",
-   "lemma": "إمام",
-   "pos": "N",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
+   "root": null,
+   "lemma": "إِذَا",
+   "pos": "SUB",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "conditional"
    }
   },
   "uh:token:nasai.0927:0003": {
-   "en": "other than / not",
-   "ur": "کے علاوہ / غیر",
-   "transliteration": "ghayr",
-   "root": "غ-ي-ر",
-   "lemma": "غير",
-   "pos": "N",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.0927:0004": {
@@ -61,13 +58,15 @@
    "features": {}
   },
   "uh:token:nasai.0927:0006": {
-   "en": "and not/nor",
-   "ur": "اور نہیں",
-   "transliteration": "wa-lā",
-   "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "en": "other than / not",
+   "ur": "غیر / کے سوا",
+   "transliteration": "ghayr",
+   "root": "غ ي ر",
+   "lemma": "غَيْر",
+   "pos": "N",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:nasai.0927:0007": {
    "en": "those who go astray (Qur'anic, al-Fatihah)",
@@ -84,19 +83,15 @@
    }
   },
   "uh:token:nasai.0927:0009": {
-   "en": "so say! (you pl.)",
-   "ur": "تو تم کہو",
-   "transliteration": "fa-qūlū",
-   "root": "قول",
-   "lemma": "قال",
-   "pos": "V",
+   "en": "and not / nor",
+   "ur": "اور نہیں",
+   "transliteration": "wa-lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "aspect": "IMPV",
-    "voice": "ACT",
-    "person": 2,
-    "gender": "MASC",
-    "number": "PL",
-    "mood": null
+    "prefix": "wa",
+    "type": "negation"
    }
   },
   "uh:token:nasai.0927:0010": {
@@ -148,13 +143,16 @@
    }
   },
   "uh:token:nasai.0927:0014": {
-   "en": "Amen",
-   "ur": "آمین",
-   "transliteration": "āmīn",
+   "en": "then indeed / for indeed",
+   "ur": "پس بے شک",
+   "transliteration": "fa-inna",
    "root": null,
-   "lemma": "آمِين",
-   "pos": "INL",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "emphasis"
+   }
   },
   "uh:token:nasai.0927:0015": {
    "en": "and if / even if",
@@ -214,19 +212,17 @@
    "features": {}
   },
   "uh:token:nasai.0927:0020": {
-   "en": "he agreed with / coincided",
-   "ur": "اس نے موافقت کی / موافق ہوا",
-   "transliteration": "wāfaqa",
-   "root": "و ف ق",
-   "lemma": "وَافَقَ",
+   "en": "he says",
+   "ur": "وہ کہتا ہے",
+   "transliteration": "yaqūlu",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "perfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masculine",
-    "number": "singular",
-    "mood": "indicative"
+    "aspect": "impf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.0927:0023": {
@@ -294,27 +290,24 @@
    }
   },
   "uh:token:nasai.0927:0028": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "to him / for him",
+   "ur": "اس کے لیے",
+   "transliteration": "lahu",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:nasai.0927:0029": {
-   "en": "his sin",
-   "ur": "اس کا گناہ",
-   "transliteration": "dhanbuhu",
-   "root": "ذنب",
-   "lemma": "ذَنْب",
-   "pos": "N",
-   "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
+   "transliteration": "mā",
+   "root": null,
+   "lemma": "مَا",
+   "pos": "PART",
+   "features": {}
   },
   "uh:token:nasai.0927:0008": {
    "en": "upon them",
@@ -328,11 +321,11 @@
    }
   },
   "uh:token:nasai.0927:0031": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },

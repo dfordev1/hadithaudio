@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.3828:0001": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.3828:0002": {
    "en": "the peace/greeting",
@@ -63,12 +65,12 @@
    }
   },
   "uh:token:abudawud.3828:0005": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3828:0006": {
@@ -88,13 +90,15 @@
    }
   },
   "uh:token:abudawud.3828:0008": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:abudawud.3828:0011": {
    "en": "he said",
@@ -113,29 +117,25 @@
    }
   },
   "uh:token:abudawud.3828:0012": {
-   "en": "Abu Dawud",
-   "ur": "ابو داؤد",
-   "transliteration": "Abū Dāwūd",
-   "root": null,
-   "lemma": "أبو داود",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.3828:0013": {
-   "en": "Abu Dawud",
-   "ur": "ابو داؤد",
-   "transliteration": "Abū Dāwūd",
+   "en": "Dawud (David)",
+   "ur": "داؤد",
+   "transliteration": "Dāwūd",
    "root": null,
-   "lemma": "أبو داود",
+   "lemma": "دَاوُد",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.3828:0014": {
@@ -153,31 +153,25 @@
    }
   },
   "uh:token:abudawud.3828:0015": {
-   "en": "Ibn Hanbal",
-   "ur": "بن حنبل",
-   "transliteration": "ibn Ḥanbal",
-   "root": "ح ن ب ل",
-   "lemma": "اِبْن حَنْبَل",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.3828:0016": {
-   "en": "Ibn Hanbal",
-   "ur": "بن حنبل",
-   "transliteration": "ibn Ḥanbal",
-   "root": "ح ن ب ل",
-   "lemma": "اِبْن حَنْبَل",
+   "en": "Hanbal",
+   "ur": "حنبل",
+   "transliteration": "Ḥanbal",
+   "root": null,
+   "lemma": "حَنْبَل",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.3828:0007": {

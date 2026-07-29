@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.3844:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:ibnmajah.3844:0002": {
    "en": "the Prophet",
@@ -124,17 +129,17 @@
    }
   },
   "uh:token:ibnmajah.3844:0013": {
-   "en": "and stinginess",
-   "ur": "اور بخل",
-   "transliteration": "wa-l-bukhl",
-   "root": "ب خ ل",
-   "lemma": "بُخْل",
-   "pos": "N",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:ibnmajah.3844:0015": {
@@ -152,17 +157,15 @@
    }
   },
   "uh:token:ibnmajah.3844:0016": {
-   "en": "and punishment",
-   "ur": "اور عذاب",
-   "transliteration": "wa-ʿadhāb",
-   "root": "ع ذ ب",
-   "lemma": "عَذَاب",
+   "en": "the man",
+   "ur": "آدمی",
+   "transliteration": "ar-rajul",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.3844:0017": {
@@ -180,18 +183,13 @@
    }
   },
   "uh:token:ibnmajah.3844:0018": {
-   "en": "and trial/tribulation",
-   "ur": "اور فتنہ",
-   "transliteration": "wa-fitnah",
-   "root": "ف ت ن",
-   "lemma": "فِتْنَة",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "fem",
-    "number": "sing"
-   }
+   "en": "upon / on",
+   "ur": "پر",
+   "transliteration": "ʿalā",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:ibnmajah.3844:0019": {
    "en": "the chest",
@@ -224,13 +222,15 @@
    }
   },
   "uh:token:ibnmajah.3844:0022": {
-   "en": "Waki'",
-   "ur": "وکیع",
-   "transliteration": "Wakīʿ",
-   "root": "و-ك-ع",
-   "lemma": "وكيع",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:ibnmajah.3844:0023": {
    "en": "meaning / that is to say",
@@ -351,11 +351,11 @@
    "features": {}
   },
   "uh:token:ibnmajah.3844:0003": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },
@@ -375,7 +375,7 @@
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
-   "lemma": "لا",
+   "lemma": "لَا",
    "pos": "PART",
    "features": {
     "type": "negation"

@@ -10,55 +10,48 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.2923:0001": {
-   "en": "and Abd (start of a compound name)",
-   "ur": "اور عبد (نام کا حصہ)",
-   "transliteration": "wa-ʿAbd",
-   "root": null,
-   "lemma": "عبد",
-   "pos": "PN",
-   "features": {}
+   "en": "and servant (of)",
+   "ur": "اور بندہ",
+   "transliteration": "wa-ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
+   "features": {
+    "prefix": "wa",
+    "case": "nom"
+   }
   },
   "uh:token:abudawud.2923:0002": {
-   "en": "the Mighty (name/attribute of Allah)",
-   "ur": "العزیز، زبردست",
-   "transliteration": "al-ʿazīz",
+   "en": "the Almighty / al-Aziz",
+   "ur": "العزیز / غالب",
+   "transliteration": "al-ʿAzīz",
    "root": "ع ز ز",
    "lemma": "عَزِيز",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masc",
-    "number": "sing"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.2923:0003": {
-   "en": "bin Yahya",
-   "ur": "بن یحییٰ",
-   "transliteration": "bin Yaḥyā",
-   "root": null,
-   "lemma": "بن يحيى",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2923:0004": {
-   "en": "bin Yahya",
-   "ur": "بن یحییٰ",
-   "transliteration": "bin Yaḥyā",
+   "en": "Yahya (John)",
+   "ur": "یحییٰ",
+   "transliteration": "Yaḥyā",
    "root": null,
-   "lemma": "بن يحيى",
-   "pos": "COMPOUND",
-   "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "lemma": "يَحْيَى",
+   "pos": "PN",
+   "features": {}
   },
   "uh:token:abudawud.2923:0007": {
    "en": "he said",
@@ -80,10 +73,12 @@
    "en": "Ahmad",
    "ur": "احمد",
    "transliteration": "Aḥmad",
-   "root": "ح-م-د",
-   "lemma": "أحمد",
+   "root": "ح م د",
+   "lemma": "أَحْمَد",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:abudawud.2923:0010": {
    "en": "he narrated to us",
@@ -116,21 +111,21 @@
    }
   },
   "uh:token:abudawud.2923:0014": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2923:0017": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2923:0018": {
@@ -138,13 +133,10 @@
    "ur": "داؤد",
    "transliteration": "Dāwūd",
    "root": null,
-   "lemma": "داود",
+   "lemma": "دَاوُد",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2923:0021": {
@@ -196,36 +188,35 @@
    }
   },
   "uh:token:abudawud.2923:0024": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2923:0025": {
-   "en": "mother",
-   "ur": "ماں",
-   "transliteration": "umm",
-   "root": "ا-م-م",
-   "lemma": "أم",
-   "pos": "N",
+   "en": "or / mother of",
+   "ur": "یا / ماں",
+   "transliteration": "am",
+   "root": null,
+   "lemma": "أَمْ",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "FEM",
-    "number": "SING"
+    "type": "interrogative"
    }
   },
   "uh:token:abudawud.2923:0026": {
-   "en": "Sa'd",
+   "en": "Sad",
    "ur": "سعد",
    "transliteration": "Saʿd",
    "root": null,
-   "lemma": "سعد",
+   "lemma": "سَعْد",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "gen"
+   }
   },
   "uh:token:abudawud.2923:0027": {
    "en": "daughter of",
@@ -242,17 +233,15 @@
    }
   },
   "uh:token:abudawud.2923:0028": {
-   "en": "al-Rabi' (name, also: spring)",
-   "ur": "الربیع (نام / موسمِ بہار)",
-   "transliteration": "al-Rabīʿ",
-   "root": "ر-ب-ع",
-   "lemma": "ربيع",
+   "en": "ar-Rabi",
+   "ur": "ربیع",
+   "transliteration": "ar-Rabīʿ",
+   "root": null,
+   "lemma": "رَبِيع",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.2923:0029": {
@@ -281,45 +270,36 @@
    "features": {}
   },
   "uh:token:abudawud.2923:0032": {
-   "en": "a stone",
-   "ur": "پتھر",
-   "transliteration": "ḥajar",
-   "root": "ح-ج-ر",
-   "lemma": "حجر",
-   "pos": "N",
+   "en": "Hujr",
+   "ur": "حجر",
+   "transliteration": "Ḥujr",
+   "root": null,
+   "lemma": "حُجْر",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0033": {
-   "en": "Abu Bakr",
-   "ur": "ابی بکر",
-   "transliteration": "Abī Bakr",
-   "root": null,
-   "lemma": "أبو بكر",
-   "pos": "COMPOUND",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0034": {
-   "en": "Abu Bakr",
-   "ur": "ابی بکر",
-   "transliteration": "Abī Bakr",
+   "en": "Bakr",
+   "ur": "بکر",
+   "transliteration": "Bakr",
    "root": null,
-   "lemma": "أبو بكر",
-   "pos": "COMPOUND",
+   "lemma": "بَكْر",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0035": {
@@ -397,13 +377,15 @@
    }
   },
   "uh:token:abudawud.2923:0042": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.2923:0043": {
    "en": "you recite/read",
@@ -533,59 +515,48 @@
    "features": {}
   },
   "uh:token:abudawud.2923:0058": {
-   "en": "Abu Bakr",
-   "ur": "ابی بکر",
-   "transliteration": "Abī Bakr",
-   "root": null,
-   "lemma": "أبو بكر",
-   "pos": "COMPOUND",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0059": {
-   "en": "Abu Bakr",
-   "ur": "ابی بکر",
-   "transliteration": "Abī Bakr",
+   "en": "Bakr",
+   "ur": "بکر",
+   "transliteration": "Bakr",
    "root": null,
-   "lemma": "أبو بكر",
-   "pos": "COMPOUND",
+   "lemma": "بَكْر",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0061": {
-   "en": "Abd al-Rahman",
-   "ur": "عبدالرحمٰن",
-   "transliteration": "ʿAbd al-Raḥmān",
-   "root": null,
-   "lemma": "عبد الرحمن",
-   "pos": "COMPOUND",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0062": {
-   "en": "Abd al-Rahman",
-   "ur": "عبدالرحمٰن",
-   "transliteration": "ʿAbd al-Raḥmān",
-   "root": null,
-   "lemma": "عبد الرحمن",
-   "pos": "COMPOUND",
+   "en": "the Most Merciful",
+   "ur": "رحمٰن",
+   "transliteration": "ar-Raḥmān",
+   "root": "ر ح م",
+   "lemma": "رَحْمَان",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.2923:0063": {
@@ -603,19 +574,14 @@
    }
   },
   "uh:token:abudawud.2923:0064": {
-   "en": "he refused",
-   "ur": "اس نے انکار کیا",
-   "transliteration": "abā",
-   "root": "أ-ب-ي",
-   "lemma": "أَبَى",
-   "pos": "V",
+   "en": "Ubayy",
+   "ur": "ابی",
+   "transliteration": "Ubayy",
+   "root": null,
+   "lemma": "أُبَيّ",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2923:0065": {
@@ -649,31 +615,25 @@
    }
   },
   "uh:token:abudawud.2923:0067": {
-   "en": "Abu Bakr",
-   "ur": "ابو بکر",
-   "transliteration": "Abū Bakr",
-   "root": "ب-ك-ر",
-   "lemma": "أَبُو بَكْرٍ",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2923:0068": {
-   "en": "Abu Bakr",
-   "ur": "ابو بکر",
-   "transliteration": "Abū Bakr",
-   "root": "ب-ك-ر",
-   "lemma": "أَبُو بَكْرٍ",
+   "en": "Bakr",
+   "ur": "بکر",
+   "transliteration": "Bakr",
+   "root": null,
+   "lemma": "بَكْر",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0069": {
@@ -695,19 +655,18 @@
    "features": {}
   },
   "uh:token:abudawud.2923:0072": {
-   "en": "he submitted/became Muslim (or name Aslam)",
-   "ur": "وہ مسلمان ہوا (یا نام اسلم)",
-   "transliteration": "aslama",
-   "root": "س-ل-م",
+   "en": "submit / accept Islam",
+   "ur": "اسلام لے آؤ",
+   "transliteration": "aslim",
+   "root": "س ل م",
    "lemma": "أَسْلَمَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "mood": "imperative",
+    "person": 2,
+    "gender": "m",
+    "number": "sg",
+    "form": "IV"
    }
   },
   "uh:token:abudawud.2923:0073": {
@@ -769,13 +728,15 @@
    }
   },
   "uh:token:abudawud.2923:0077": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.2923:0078": {
    "en": "the peace/greeting",
@@ -831,31 +792,26 @@
    }
   },
   "uh:token:abudawud.2923:0084": {
-   "en": "Abd al-Aziz",
-   "ur": "عبد العزیز",
-   "transliteration": "ʿAbd al-ʿAzīz",
-   "root": null,
-   "lemma": "عبد العزيز",
-   "pos": "COMPOUND",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.2923:0085": {
-   "en": "Abd al-Aziz",
-   "ur": "عبد العزیز",
-   "transliteration": "ʿAbd al-ʿAzīz",
-   "root": null,
-   "lemma": "عبد العزيز",
-   "pos": "COMPOUND",
+   "en": "the Almighty / al-Aziz",
+   "ur": "العزیز / غالب",
+   "transliteration": "al-ʿAzīz",
+   "root": "ع ز ز",
+   "lemma": "عَزِيز",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:abudawud.2923:0086": {
@@ -868,28 +824,27 @@
    "features": {}
   },
   "uh:token:abudawud.2923:0087": {
-   "en": "he submitted/became Muslim (or name Aslam)",
-   "ur": "وہ مسلمان ہوا (یا نام اسلم)",
-   "transliteration": "aslama",
-   "root": "س-ل-م",
+   "en": "submit / accept Islam",
+   "ur": "اسلام لے آؤ",
+   "transliteration": "aslim",
+   "root": "س ل م",
    "lemma": "أَسْلَمَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "mood": "imperative",
+    "person": 2,
+    "gender": "m",
+    "number": "sg",
+    "form": "IV"
    }
   },
   "uh:token:abudawud.2923:0088": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2923:0089": {
@@ -909,12 +864,12 @@
    }
   },
   "uh:token:abudawud.2923:0090": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2923:0091": {
@@ -962,38 +917,34 @@
    }
   },
   "uh:token:abudawud.2923:0095": {
-   "en": "Abu Dawud",
-   "ur": "ابو داؤد",
-   "transliteration": "Abū Dāwūd",
-   "root": null,
-   "lemma": "أبو داود",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2923:0096": {
-   "en": "Abu Dawud",
-   "ur": "ابو داؤد",
-   "transliteration": "Abū Dāwūd",
+   "en": "Dawud (David)",
+   "ur": "داؤد",
+   "transliteration": "Dāwūd",
    "root": null,
-   "lemma": "أبو داود",
+   "lemma": "دَاوُد",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2923:0097": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.2923:0098": {
@@ -1114,91 +1065,80 @@
    }
   },
   "uh:token:abudawud.2923:0112": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.2923:0113": {
    "en": "Talha",
    "ur": "طلحہ",
-   "transliteration": "Ṭalḥah",
-   "root": "ط-ل-ح",
-   "lemma": "طلحة",
+   "transliteration": "Ṭalḥa",
+   "root": null,
+   "lemma": "طَلْحَة",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2923:0012": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2923:0013": {
-   "en": "Salamah",
+   "en": "Salama",
    "ur": "سلمہ",
-   "transliteration": "salamah",
-   "root": "س-ل-م",
-   "lemma": "سلمة",
+   "transliteration": "Salama",
+   "root": null,
+   "lemma": "سَلَمَة",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2923:0015": {
    "en": "son of",
    "ur": "بیٹا",
    "transliteration": "ibn",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2923:0016": {
-   "en": "Ishaq",
+   "en": "Ishaq (Isaac)",
    "ur": "اسحاق",
-   "transliteration": "isḥāq",
+   "transliteration": "Isḥāq",
    "root": null,
-   "lemma": "إسحاق",
+   "lemma": "إِسْحَاق",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2923:0019": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.2923:0080": {
@@ -1283,6 +1223,28 @@
    "lemma": "عَاقَدَ",
    "pos": "V",
    "features": {}
+  },
+  "uh:token:abudawud.2923:0006": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:abudawud.2923:0009": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
   }
  }
 }

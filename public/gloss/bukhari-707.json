@@ -10,15 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.0707:0002": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
+   "en": "indeed I",
+   "ur": "بے شک میں",
    "transliteration": "innī",
    "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:bukhari.0707:0004": {
@@ -33,15 +33,13 @@
   "uh:token:bukhari.0707:0005": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "al-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.0707:0006": {
@@ -158,12 +156,12 @@
    }
   },
   "uh:token:bukhari.0707:0019": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.0707:0020": {
@@ -201,78 +199,65 @@
    "ur": "بشر",
    "transliteration": "Bishr",
    "root": null,
-   "lemma": "بشر",
+   "lemma": "بِشْر",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.0707:0024": {
-   "en": "ibn Bakr",
-   "ur": "بن بکر",
-   "transliteration": "ibn Bakr",
-   "root": null,
-   "lemma": "ابن بكر",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.0707:0025": {
-   "en": "ibn Bakr",
-   "ur": "بن بکر",
-   "transliteration": "ibn Bakr",
+   "en": "Bakr",
+   "ur": "بکر",
+   "transliteration": "Bakr",
    "root": null,
-   "lemma": "ابن بكر",
-   "pos": "COMPOUND",
+   "lemma": "بَكْر",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.0707:0026": {
-   "en": "and Ibn al-Mubarak",
-   "ur": "اور ابن مبارک",
-   "transliteration": "wa-Ibn al-Mubārak",
-   "root": "ب ر ك",
-   "lemma": "اِبْن المبارك",
-   "pos": "PN",
+   "en": "and son of",
+   "ur": "اور بیٹا",
+   "transliteration": "wa-bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "prefix": "wa",
+    "case": "nom"
    }
   },
   "uh:token:bukhari.0707:0027": {
-   "en": "and Ibn al-Mubarak",
-   "ur": "اور ابن مبارک",
-   "transliteration": "wa-Ibn al-Mubārak",
+   "en": "al-Mubarak",
+   "ur": "مبارک",
+   "transliteration": "al-Mubārak",
    "root": "ب ر ك",
-   "lemma": "اِبْن المبارك",
+   "lemma": "مُبَارَك",
    "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.0707:0029": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.0707:0009": {

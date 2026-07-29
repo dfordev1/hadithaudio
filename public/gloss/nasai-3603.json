@@ -10,19 +10,14 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.3603:0001": {
-   "en": "he said",
-   "ur": "اس نے کہا",
-   "transliteration": "qāla",
-   "root": "ق-و-ل",
-   "lemma": "قَالَ",
-   "pos": "V",
+   "en": "indeed / verily",
+   "ur": "بے شک",
+   "transliteration": "inna",
+   "root": null,
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "type": "emphasis"
    }
   },
   "uh:token:nasai.3603:0002": {
@@ -81,13 +76,15 @@
    "features": {}
   },
   "uh:token:nasai.3603:0007": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
+   "en": "did not",
+   "ur": "نہیں",
+   "transliteration": "lam",
    "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.3603:0008": {
    "en": "indeed/if",
@@ -139,17 +136,13 @@
    }
   },
   "uh:token:nasai.3603:0012": {
-   "en": "to me / for me",
-   "ur": "میرے لیے / مجھے",
-   "transliteration": "lī",
+   "en": "to / towards",
+   "ur": "کی طرف",
+   "transliteration": "ilā",
    "root": null,
-   "lemma": "ل",
-   "pos": "P",
-   "features": {
-    "person": "1",
-    "gender": null,
-    "number": "SING"
-   }
+   "lemma": "إِلَى",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:nasai.3603:0013": {
    "en": "in Khaybar",
@@ -166,12 +159,12 @@
    }
   },
   "uh:token:nasai.3603:0014": {
-   "en": "did not",
-   "ur": "نہیں (ماضی نفی)",
-   "transliteration": "lam",
+   "en": "indeed / already",
+   "ur": "بے شک / یقیناً",
+   "transliteration": "qad",
    "root": null,
-   "lemma": "لَمْ",
-   "pos": "NEG",
+   "lemma": "قَدْ",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:nasai.3603:0015": {
@@ -191,18 +184,13 @@
    }
   },
   "uh:token:nasai.3603:0016": {
-   "en": "wealth (accusative)",
-   "ur": "مال (زر)",
-   "transliteration": "mālan",
-   "root": "م-و-ل",
-   "lemma": "مَال",
-   "pos": "N",
-   "features": {
-    "case": "ACC",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "that",
+   "ur": "کہ",
+   "transliteration": "anna",
+   "root": null,
+   "lemma": "أَنَّ",
+   "pos": "SUB",
+   "features": {}
   },
   "uh:token:nasai.3603:0017": {
    "en": "ever, at all (with negation)",
@@ -237,75 +225,83 @@
    "features": {}
   },
   "uh:token:nasai.3603:0020": {
-   "en": "from it/from her",
-   "ur": "اس سے",
-   "transliteration": "minhā",
-   "root": null,
-   "lemma": "من",
-   "pos": "P",
-   "features": {}
-  },
-  "uh:token:nasai.3603:0021": {
-   "en": "indeed / already",
-   "ur": "بےشک / پہلے سے",
-   "transliteration": "qad",
-   "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
-   "features": {}
-  },
-  "uh:token:nasai.3603:0022": {
-   "en": "I wanted/intended",
-   "ur": "میں نے چاہا/ارادہ کیا",
-   "transliteration": "aradtu",
-   "root": "ر-و-د",
-   "lemma": "أراد",
+   "en": "then he said",
+   "ur": "پھر اس نے کہا",
+   "transliteration": "fa-qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "1",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
+  },
+  "uh:token:nasai.3603:0021": {
+   "en": "the Prophet",
+   "ur": "نبی",
+   "transliteration": "an-nabī",
+   "root": "ن ب ا",
+   "lemma": "نَبِيّ",
+   "pos": "N",
+   "features": {
+    "case": "nom",
+    "definite": true
+   }
+  },
+  "uh:token:nasai.3603:0022": {
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:nasai.3603:0023": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:nasai.3603:0024": {
-   "en": "shall I give in charity",
-   "ur": "کیا میں صدقہ کروں",
-   "transliteration": "a-taṣaddaqu",
-   "root": "ص د ق",
-   "lemma": "تَصَدَّقَ",
-   "pos": "V",
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
    "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "1",
-    "gender": "common",
-    "number": "singular",
-    "mood": "indicative"
+    "suffix": "3ms"
    }
   },
   "uh:token:nasai.3603:0025": {
-   "en": "with it / by her",
-   "ur": "اس کے ساتھ / اس سے",
-   "transliteration": "bihā",
-   "root": null,
-   "lemma": "ب + ها",
-   "pos": "P",
+   "en": "and he granted peace",
+   "ur": "اور سلامتی بھیجی",
+   "transliteration": "wa-sallam",
+   "root": "س ل م",
+   "lemma": "سَلَّمَ",
+   "pos": "V",
    "features": {
-    "person": "3",
-    "gender": "FEM",
-    "number": "SING"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
    }
   },
   "uh:token:nasai.3603:0027": {

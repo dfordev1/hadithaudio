@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.2340:0002": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.2340:0003": {
    "en": "fasting",
@@ -84,14 +86,12 @@
    "en": "before",
    "ur": "پہلے",
    "transliteration": "qabla",
-   "root": "ق-ب-ل",
-   "lemma": "قبل",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:nasai.2340:0009": {
@@ -128,41 +128,32 @@
    "ur": "مالک",
    "transliteration": "Mālik",
    "root": null,
-   "lemma": "مالك",
+   "lemma": "مَالِك",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:nasai.2340:0013": {
-   "en": "bin Anas",
-   "ur": "بن انس",
-   "transliteration": "bin Anas",
-   "root": null,
-   "lemma": "بن أنس",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:nasai.2340:0014": {
-   "en": "bin Anas",
-   "ur": "بن انس",
-   "transliteration": "bin Anas",
+   "en": "Anas",
+   "ur": "انس",
+   "transliteration": "Anas",
    "root": null,
-   "lemma": "بن أنس",
-   "pos": "COMPOUND",
+   "lemma": "أَنَس",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:nasai.2340:0001": {

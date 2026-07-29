@@ -10,29 +10,29 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.2168:0001": {
-   "en": "he/it was",
-   "ur": "تھا",
+   "en": "he was",
+   "ur": "وہ تھا",
    "transliteration": "kāna",
-   "root": "ك-و-ن",
+   "root": "ك و ن",
    "lemma": "كَانَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.2168:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:nasai.2168:0003": {
    "en": "he slept",
@@ -54,14 +54,12 @@
    "en": "before",
    "ur": "پہلے",
    "transliteration": "qabla",
-   "root": "ق-ب-ل",
-   "lemma": "قبل",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:nasai.2168:0005": {
@@ -99,13 +97,15 @@
    }
   },
   "uh:token:nasai.2168:0009": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:nasai.2168:0010": {
    "en": "that",
@@ -147,13 +147,16 @@
    }
   },
   "uh:token:nasai.2168:0013": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:nasai.2168:0014": {
    "en": "he drinks",
@@ -186,12 +189,12 @@
    }
   },
   "uh:token:nasai.2168:0017": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.2168:0018": {
@@ -209,12 +212,12 @@
    }
   },
   "uh:token:nasai.2168:0019": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.2168:0020": {
@@ -248,12 +251,12 @@
    }
   },
   "uh:token:nasai.2168:0022": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.2168:0023": {
@@ -331,12 +334,12 @@
    }
   },
   "uh:token:nasai.2168:0030": {
-   "en": "to/towards",
+   "en": "to / towards",
    "ur": "کی طرف",
    "transliteration": "ilā",
    "root": null,
    "lemma": "إِلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.2168:0032": {
@@ -357,14 +360,12 @@
    "en": "al-Aswad",
    "ur": "اسود",
    "transliteration": "al-Aswad",
-   "root": "س-و-د",
-   "lemma": "أسود",
+   "root": "س و د",
+   "lemma": "أَسْوَد",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:nasai.2168:0035": {
@@ -409,57 +410,47 @@
    "features": {}
   },
   "uh:token:nasai.2168:0038": {
-   "en": "Abu Qays (narrator)",
-   "ur": "ابی قیس",
-   "transliteration": "Abī Qays",
-   "root": null,
-   "lemma": "أَبُو قَيْس",
-   "pos": "PN",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "genitive",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen"
    }
   },
   "uh:token:nasai.2168:0039": {
-   "en": "Abu Qays (narrator)",
-   "ur": "ابی قیس",
-   "transliteration": "Abī Qays",
+   "en": "Qays",
+   "ur": "قیس",
+   "transliteration": "Qays",
    "root": null,
-   "lemma": "أَبُو قَيْس",
+   "lemma": "قَيْس",
    "pos": "PN",
    "features": {
-    "case": "genitive",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen"
    }
   },
   "uh:token:nasai.2168:0040": {
-   "en": "bin Amr",
-   "ur": "بن عمرو",
-   "transliteration": "bin ʿAmr",
-   "root": null,
-   "lemma": "بن عمرو",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:nasai.2168:0041": {
-   "en": "bin Amr",
-   "ur": "بن عمرو",
-   "transliteration": "bin ʿAmr",
+   "en": "Amr",
+   "ur": "عمرو",
+   "transliteration": "ʿAmr",
    "root": null,
-   "lemma": "بن عمرو",
-   "pos": "COMPOUND",
+   "lemma": "عَمْرو",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:nasai.2168:0042": {
@@ -493,16 +484,17 @@
    }
   },
   "uh:token:nasai.2168:0044": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.2168:0045": {
@@ -548,19 +540,18 @@
    }
   },
   "uh:token:nasai.2168:0048": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.2168:0049": {
@@ -573,12 +564,12 @@
    "features": {}
   },
   "uh:token:nasai.2168:0050": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.2168:0051": {
@@ -626,12 +617,12 @@
    }
   },
   "uh:token:nasai.2168:0054": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:nasai.2168:0055": {
@@ -884,12 +875,12 @@
    }
   },
   "uh:token:nasai.2168:0078": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:nasai.2168:0079": {
@@ -922,13 +913,15 @@
    }
   },
   "uh:token:nasai.2168:0082": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:nasai.2168:0083": {
    "en": "and that (is because)",
@@ -947,14 +940,12 @@
    "en": "before",
    "ur": "پہلے",
    "transliteration": "qabla",
-   "root": "ق-ب-ل",
-   "lemma": "قبل",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:nasai.2168:0085": {
@@ -1009,35 +1000,30 @@
    }
   },
   "uh:token:nasai.2168:0089": {
-   "en": "so Allah sent down / revealed",
-   "ur": "تو اللہ نے نازل فرمایا",
-   "transliteration": "fa-anzala llāhu",
-   "root": null,
-   "lemma": "أنزل الله",
-   "pos": "COMPOUND",
+   "en": "then he sent down",
+   "ur": "پھر نازل کیا",
+   "transliteration": "fa-anzala",
+   "root": "ن ز ل",
+   "lemma": "أَنْزَلَ",
+   "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "IV"
    }
   },
   "uh:token:nasai.2168:0090": {
-   "en": "so Allah sent down / revealed",
-   "ur": "تو اللہ نے نازل فرمایا",
-   "transliteration": "fa-anzala llāhu",
-   "root": null,
-   "lemma": "أنزل الله",
-   "pos": "COMPOUND",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:nasai.2168:0091": {
@@ -1045,12 +1031,10 @@
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "suffix": "3ms"
    }
   },
   "uh:token:nasai.2168:0076": {

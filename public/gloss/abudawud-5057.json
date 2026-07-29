@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.5057:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.5057:0003": {
    "en": "and he said",
@@ -35,12 +40,12 @@
    }
   },
   "uh:token:abudawud.5057:0005": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
-   "transliteration": "inna",
+   "en": "that",
+   "ur": "کہ",
+   "transliteration": "anna",
    "root": null,
-   "lemma": "إِنَّ",
-   "pos": "EMPH",
+   "lemma": "أَنَّ",
+   "pos": "SUB",
    "features": {}
   },
   "uh:token:abudawud.5057:0006": {
@@ -53,17 +58,18 @@
    "features": {}
   },
   "uh:token:abudawud.5057:0007": {
-   "en": "verse (of the Quran) / sign",
-   "ur": "آیت / نشانی",
-   "transliteration": "āyah",
-   "root": "ء-ي-ي",
-   "lemma": "آية",
-   "pos": "N",
+   "en": "and he said",
+   "ur": "اور اس نے کہا",
+   "transliteration": "wa-qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "case": "NOM",
-    "state": "INDEF",
-    "gender": "FEM",
-    "number": "SING"
+    "prefix": "wa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.5057:0008": {
@@ -81,13 +87,15 @@
    }
   },
   "uh:token:abudawud.5057:0009": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "indeed / verily",
+   "ur": "بے شک",
+   "transliteration": "inna",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:abudawud.5057:0010": {
    "en": "a thousand",
@@ -118,11 +126,11 @@
    }
   },
   "uh:token:abudawud.5057:0013": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },
@@ -142,12 +150,15 @@
   },
   "uh:token:abudawud.5057:0004": {
    "en": "before",
-   "ur": "پہلے / قبل",
-   "transliteration": "qablu",
-   "root": "ق-ب-ل",
-   "lemma": "قَبْل",
-   "pos": "ADV",
-   "features": {}
+   "ur": "پہلے",
+   "transliteration": "qabla",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
+   "pos": "N",
+   "features": {
+    "case": "acc",
+    "type": "adverb"
+   }
   },
   "uh:token:abudawud.5057:0012": {
    "en": "more excellent / the best",

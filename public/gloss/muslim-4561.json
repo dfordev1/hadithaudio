@@ -10,47 +10,40 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.4561:0001": {
-   "en": "and Muhammad son of",
-   "ur": "اور محمد بن",
-   "transliteration": "wa-Muḥammad ibn",
+   "en": "and Muhammad",
+   "ur": "اور محمد",
+   "transliteration": "wa-Muḥammad",
    "root": null,
-   "lemma": "ومحمد بن",
-   "pos": "COMPOUND",
+   "lemma": "مُحَمَّد",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "case": "gen"
    }
   },
   "uh:token:muslim.4561:0002": {
-   "en": "and Muhammad son of",
-   "ur": "اور محمد بن",
-   "transliteration": "wa-Muḥammad ibn",
-   "root": null,
-   "lemma": "ومحمد بن",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:muslim.4561:0004": {
-   "en": "the two of them said",
+   "en": "they both said",
    "ur": "ان دونوں نے کہا",
    "transliteration": "qālā",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "DUAL",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "dual"
    }
   },
   "uh:token:muslim.4561:0005": {
@@ -70,16 +63,17 @@
    }
   },
   "uh:token:muslim.4561:0008": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.4561:0009": {
@@ -97,12 +91,12 @@
    }
   },
   "uh:token:muslim.4561:0011": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.4561:0012": {
@@ -110,13 +104,10 @@
    "ur": "عبید",
    "transliteration": "ʿUbayd",
    "root": null,
-   "lemma": "عبيد",
+   "lemma": "عُبَيْد",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.4561:0014": {
@@ -148,35 +139,54 @@
   "uh:token:muslim.4561:0003": {
    "en": "al-Muthanna",
    "ur": "مثنیٰ",
-   "transliteration": "al-muthannā",
-   "root": "ث-ن-ي",
-   "lemma": "المثنى",
+   "transliteration": "al-Muthannā",
+   "root": null,
+   "lemma": "مُثَنَّى",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "definite": true
    }
   },
   "uh:token:muslim.4561:0006": {
-   "en": "Yahya",
+   "en": "Yahya (John)",
    "ur": "یحییٰ",
-   "transliteration": "yaḥyā",
-   "root": "ح-ي-ي",
-   "lemma": "يحيى",
+   "transliteration": "Yaḥyā",
+   "root": null,
+   "lemma": "يَحْيَى",
    "pos": "PN",
-   "features": {
-    "gender": "M"
-   }
+   "features": {}
   },
   "uh:token:muslim.4561:0013": {
-   "en": "Allah / God",
+   "en": "Allah",
    "ur": "اللہ",
-   "transliteration": "allāh",
-   "root": null,
-   "lemma": "الله",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
+   }
+  },
+  "uh:token:muslim.4561:0007": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:muslim.4561:0010": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

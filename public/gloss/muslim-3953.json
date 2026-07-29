@@ -48,14 +48,14 @@
    }
   },
   "uh:token:muslim.3953:0004": {
-   "en": "Rafi'",
+   "en": "Rafi",
    "ur": "رافع",
    "transliteration": "Rāfiʿ",
-   "root": "ر-ف-ع",
-   "lemma": "رافع",
+   "root": null,
+   "lemma": "رَافِع",
    "pos": "PN",
    "features": {
-    "case": "NOM"
+    "case": "gen"
    }
   },
   "uh:token:muslim.3953:0007": {
@@ -165,12 +165,12 @@
    }
   },
   "uh:token:muslim.3953:0018": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3953:0019": {
@@ -266,13 +266,16 @@
    }
   },
   "uh:token:muslim.3953:0027": {
-   "en": "and not",
+   "en": "and did not",
    "ur": "اور نہیں",
    "transliteration": "wa-lam",
    "root": null,
-   "lemma": "لم",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَمْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3953:0028": {
    "en": "she goes out / it comes out",
@@ -320,12 +323,12 @@
    }
   },
   "uh:token:muslim.3953:0031": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3953:0032": {
@@ -375,25 +378,23 @@
   "uh:token:muslim.3953:0005": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3953:0006": {
-   "en": "Khadij (as in Rafi' ibn Khadij)",
+   "en": "Khadij",
    "ur": "خدیج",
    "transliteration": "Khadīj",
-   "root": "خ-د-ج",
+   "root": null,
    "lemma": "خَدِيج",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:muslim.3953:0016": {
@@ -421,6 +422,28 @@
     "number": "singular",
     "gender": "masculine",
     "object": "1p"
+   }
+  },
+  "uh:token:muslim.3953:0012": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
+  },
+  "uh:token:muslim.3953:0014": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

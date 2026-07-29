@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:tirmidhi.2743c:0001": {
-   "en": "and indeed/and already",
-   "ur": "اور بےشک / اور پہلے سے",
+   "en": "and indeed",
+   "ur": "اور بے شک",
    "transliteration": "wa-qad",
    "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
-   "features": {}
+   "lemma": "قَدْ",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa"
+   }
   },
   "uh:token:tirmidhi.2743c:0002": {
    "en": "he narrated",
@@ -35,12 +37,12 @@
    }
   },
   "uh:token:tirmidhi.2743c:0004": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.2743c:0005": {
@@ -70,17 +72,15 @@
    }
   },
   "uh:token:tirmidhi.2743c:0009": {
-   "en": "the hadith",
+   "en": "the hadith / the report",
    "ur": "حدیث",
    "transliteration": "al-ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.2743c:0010": {
@@ -107,45 +107,34 @@
    }
   },
   "uh:token:tirmidhi.2743c:0012": {
-   "en": "Yahya",
+   "en": "Yahya (John)",
    "ur": "یحییٰ",
    "transliteration": "Yaḥyā",
-   "root": "ح-ي-ي",
+   "root": null,
    "lemma": "يَحْيَى",
    "pos": "PN",
-   "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "features": {}
   },
   "uh:token:tirmidhi.2743c:0013": {
-   "en": "bin Sa'id",
-   "ur": "بن سعید",
-   "transliteration": "bin Saʿīd",
-   "root": null,
-   "lemma": "بن سعيد",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0014": {
-   "en": "bin Sa'id",
-   "ur": "بن سعید",
-   "transliteration": "bin Saʿīd",
+   "en": "Said",
+   "ur": "سعید",
+   "transliteration": "Saʿīd",
    "root": null,
-   "lemma": "بن سعيد",
-   "pos": "COMPOUND",
+   "lemma": "سَعِيد",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.2743c:0015": {
@@ -168,37 +157,34 @@
    "en": "Ahmad",
    "ur": "احمد",
    "transliteration": "Aḥmad",
-   "root": "ح-م-د",
-   "lemma": "أحمد",
+   "root": "ح م د",
+   "lemma": "أَحْمَد",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:tirmidhi.2743c:0018": {
-   "en": "ibn al-Hakam",
-   "ur": "بن الحکم",
-   "transliteration": "ibn al-Ḥakam",
-   "root": null,
-   "lemma": "ابن الحكم",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0019": {
-   "en": "ibn al-Hakam",
-   "ur": "بن الحکم",
-   "transliteration": "ibn al-Ḥakam",
-   "root": null,
-   "lemma": "ابن الحكم",
-   "pos": "COMPOUND",
+   "en": "al-Hakam",
+   "ur": "حکم",
+   "transliteration": "al-Ḥakam",
+   "root": "ح ك م",
+   "lemma": "حَكَم",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.2743c:0020": {
@@ -262,12 +248,12 @@
    }
   },
   "uh:token:tirmidhi.2743c:0027": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.2743c:0028": {
@@ -297,37 +283,37 @@
    }
   },
   "uh:token:tirmidhi.2743c:0003": {
-   "en": "Shu'bah",
+   "en": "Shuba",
    "ur": "شعبہ",
-   "transliteration": "shuʿbah",
-   "root": "ش-ع-ب",
-   "lemma": "شعبة",
+   "transliteration": "Shuʿba",
+   "root": null,
+   "lemma": "شُعْبَة",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0006": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0007": {
-   "en": "Ammar (proper name)",
+   "en": "Ammar",
    "ur": "عمار",
    "transliteration": "ʿAmmār",
    "root": null,
    "lemma": "عَمَّار",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:tirmidhi.2743c:0016": {
    "en": "with/by that",
@@ -343,59 +329,57 @@
   "uh:token:tirmidhi.2743c:0023": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0024": {
-   "en": "Ja'far",
+   "en": "Jafar",
    "ur": "جعفر",
-   "transliteration": "jaʿfar",
+   "transliteration": "Jaʿfar",
    "root": null,
-   "lemma": "جعفر",
+   "lemma": "جَعْفَر",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0026": {
-   "en": "Shu'bah",
+   "en": "Shuba",
    "ur": "شعبہ",
-   "transliteration": "shuʿbah",
-   "root": "ش-ع-ب",
-   "lemma": "شعبة",
+   "transliteration": "Shuʿba",
+   "root": null,
+   "lemma": "شُعْبَة",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0029": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.2743c:0030": {
-   "en": "Ammar (proper name)",
+   "en": "Ammar",
    "ur": "عمار",
    "transliteration": "ʿAmmār",
    "root": null,
    "lemma": "عَمَّار",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "nom"
+   }
   }
  }
 }

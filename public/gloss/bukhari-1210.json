@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.1210:0002": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
+   "en": "indeed / verily",
+   "ur": "بے شک",
    "transliteration": "inna",
    "root": null,
    "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:bukhari.1210:0003": {
    "en": "Satan, the devil",
@@ -64,26 +66,24 @@
    }
   },
   "uh:token:bukhari.1210:0007": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.1210:0009": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "al-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.1210:0012": {
@@ -135,12 +135,12 @@
    "features": {}
   },
   "uh:token:bukhari.1210:0019": {
-   "en": "to/towards",
+   "en": "to / towards",
    "ur": "کی طرف",
    "transliteration": "ilā",
    "root": null,
    "lemma": "إِلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.1210:0020": {
@@ -158,12 +158,12 @@
    }
   },
   "uh:token:bukhari.1210:0021": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.1210:0024": {
@@ -210,27 +210,26 @@
    }
   },
   "uh:token:bukhari.1210:0027": {
-   "en": "Sulayman",
+   "en": "Sulayman (Solomon)",
    "ur": "سلیمان",
    "transliteration": "Sulaymān",
    "root": null,
-   "lemma": "سليمان",
+   "lemma": "سُلَيْمَان",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.1210:0029": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:bukhari.1210:0030": {
    "en": "the peace/greeting",
@@ -304,13 +303,15 @@
    }
   },
   "uh:token:bukhari.1210:0036": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.1210:0037": {
    "en": "it is fitting/proper",
@@ -343,12 +344,12 @@
    }
   },
   "uh:token:bukhari.1210:0039": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.1210:0041": {
@@ -382,13 +383,15 @@
    }
   },
   "uh:token:bukhari.1210:0045": {
-   "en": "then",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
-   "pos": "CONJ",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:bukhari.1210:0046": {
    "en": "he said",
@@ -407,31 +410,26 @@
    }
   },
   "uh:token:bukhari.1210:0047": {
-   "en": "al-Nadr",
+   "en": "an-Nadr",
    "ur": "نضر",
-   "transliteration": "al-Naḍr",
-   "root": "ن-ض-ر",
-   "lemma": "النضر",
+   "transliteration": "an-Naḍr",
+   "root": null,
+   "lemma": "نَضْر",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "definite": true
    }
   },
   "uh:token:bukhari.1210:0048": {
-   "en": "Ibn Shumayl",
-   "ur": "بن شمیل",
-   "transliteration": "ibn Shumayl",
-   "root": null,
-   "lemma": "شُمَيْل",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.1210:0049": {
@@ -458,12 +456,12 @@
    "features": {}
   },
   "uh:token:bukhari.1210:0055": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.1210:0056": {
@@ -495,17 +493,14 @@
    }
   },
   "uh:token:bukhari.1210:0058": {
-   "en": "day (Qur'anic, opening of verse)",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
    "root": "ي و م",
    "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": "genitive",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.1210:0060": {
@@ -518,13 +513,15 @@
    "features": {}
   },
   "uh:token:bukhari.1210:0064": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:bukhari.1210:0065": {
    "en": "that he",
@@ -587,11 +584,11 @@
    }
   },
   "uh:token:bukhari.1210:0010": {
-   "en": "on / upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
-   "lemma": "على",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
    "pos": "PREP",
    "features": {}
   },

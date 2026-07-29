@@ -40,12 +40,12 @@
    }
   },
   "uh:token:muslim.3093:0004": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3093:0005": {
@@ -107,47 +107,40 @@
    }
   },
   "uh:token:muslim.3093:0009": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:muslim.3093:0010": {
-   "en": "Abd Allah",
-   "ur": "عبد اللہ",
-   "transliteration": "ʿAbd Allāh",
-   "root": "ع-ب-د",
-   "lemma": "عَبْدُ اللَّهِ",
-   "pos": "PN",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.3093:0011": {
-   "en": "Abd Allah",
-   "ur": "عبد اللہ",
-   "transliteration": "ʿAbd Allāh",
-   "root": "ع-ب-د",
-   "lemma": "عَبْدُ اللَّهِ",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.3093:0013": {
@@ -165,17 +158,14 @@
    }
   },
   "uh:token:muslim.3093:0014": {
-   "en": "mother",
-   "ur": "ماں",
-   "transliteration": "umm",
-   "root": "ا-م-م",
-   "lemma": "أم",
-   "pos": "N",
+   "en": "or / mother of",
+   "ur": "یا / ماں",
+   "transliteration": "am",
+   "root": null,
+   "lemma": "أَمْ",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "FEM",
-    "number": "SING"
+    "type": "interrogative"
    }
   },
   "uh:token:muslim.3093:0016": {
@@ -223,13 +213,15 @@
    }
   },
   "uh:token:muslim.3093:0019": {
-   "en": "upon him/on him",
+   "en": "upon him",
    "ur": "اس پر",
    "transliteration": "ʿalayhi",
-   "root": null,
-   "lemma": "عَلَيْهِ",
-   "pos": "P",
-   "features": {}
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:muslim.3093:0020": {
    "en": "surah (chapter of the Quran)",
@@ -311,40 +303,36 @@
    }
   },
   "uh:token:muslim.3093:0027": {
-   "en": "here I am at Your service (talbiyah)",
-   "ur": "حاضر ہوں یا اللہ (لبیک)",
-   "transliteration": "labbayka",
-   "root": "ل-ب-ي",
-   "lemma": "لبى",
+   "en": "here I am (at Your service)",
+   "ur": "لبیک / حاضر ہوں",
+   "transliteration": "labbayk",
+   "root": "ل ب ب",
+   "lemma": "لَبَّيْكَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "DUAL"
+    "type": "verbal-noun"
    }
   },
   "uh:token:muslim.3093:0028": {
    "en": "O Allah",
    "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
-   "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
-  },
-  "uh:token:muslim.3093:0029": {
-   "en": "here I am at Your service (talbiyah)",
-   "ur": "حاضر ہوں یا اللہ (لبیک)",
-   "transliteration": "labbayka",
-   "root": "ل-ب-ي",
-   "lemma": "لبى",
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "DUAL"
+    "type": "vocative"
+   }
+  },
+  "uh:token:muslim.3093:0029": {
+   "en": "here I am (at Your service)",
+   "ur": "لبیک / حاضر ہوں",
+   "transliteration": "labbayk",
+   "root": "ل ب ب",
+   "lemma": "لَبَّيْكَ",
+   "pos": "N",
+   "features": {
+    "type": "verbal-noun"
    }
   },
   "uh:token:muslim.3093:0032": {
@@ -364,17 +352,14 @@
    }
   },
   "uh:token:muslim.3093:0033": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
    "lemma": "حَسَن",
-   "pos": "ADJ",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.3093:0035": {
@@ -394,18 +379,13 @@
    }
   },
   "uh:token:muslim.3093:0036": {
-   "en": "Yahya",
+   "en": "Yahya (John)",
    "ur": "یحییٰ",
    "transliteration": "Yaḥyā",
-   "root": "ح-ي-ي",
+   "root": null,
    "lemma": "يَحْيَى",
    "pos": "PN",
-   "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "features": {}
   },
   "uh:token:muslim.3093:0039": {
    "en": "he narrated to us",
@@ -424,12 +404,12 @@
    }
   },
   "uh:token:muslim.3093:0041": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3093:0043": {
@@ -472,14 +452,12 @@
   "uh:token:muslim.3093:0037": {
    "en": "son of",
    "ur": "بیٹا",
-   "transliteration": "bin",
-   "root": "ب-ن-ي",
-   "lemma": "ابن",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3093:0038": {
@@ -494,23 +472,23 @@
   "uh:token:muslim.3093:0040": {
    "en": "Sufyan",
    "ur": "سفیان",
-   "transliteration": "sufyān",
+   "transliteration": "Sufyān",
    "root": null,
-   "lemma": "سفيان",
+   "lemma": "سُفْيَان",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "acc"
    }
   },
   "uh:token:muslim.3093:0042": {
-   "en": "Husayn/Husain (name)",
+   "en": "Husayn",
    "ur": "حصین",
    "transliteration": "Ḥuṣayn",
-   "root": "ح-ص-ن",
+   "root": null,
    "lemma": "حُصَيْن",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:muslim.3093:0001": {

@@ -10,45 +10,38 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:bukhari.0530:0001": {
-   "en": "my brother",
+   "en": "my brother / brother of",
    "ur": "میرا بھائی",
    "transliteration": "akhī",
-   "root": "أ-خ-و",
-   "lemma": "أخ",
+   "root": "ا خ و",
+   "lemma": "أَخ",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "suffix": "1s"
    }
   },
   "uh:token:bukhari.0530:0002": {
-   "en": "Abd al-Aziz",
-   "ur": "عبد العزیز",
-   "transliteration": "ʿAbd al-ʿAzīz",
-   "root": null,
-   "lemma": "عبد العزيز",
-   "pos": "COMPOUND",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.0530:0003": {
-   "en": "Abd al-Aziz",
-   "ur": "عبد العزیز",
-   "transliteration": "ʿAbd al-ʿAzīz",
-   "root": null,
-   "lemma": "عبد العزيز",
-   "pos": "COMPOUND",
+   "en": "the Almighty / al-Aziz",
+   "ur": "العزیز / غالب",
+   "transliteration": "al-ʿAzīz",
+   "root": "ع ز ز",
+   "lemma": "عَزِيز",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.0530:0004": {
@@ -116,12 +109,12 @@
    }
   },
   "uh:token:bukhari.0530:0009": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:bukhari.0530:0010": {
@@ -129,54 +122,46 @@
    "ur": "انس",
    "transliteration": "Anas",
    "root": null,
-   "lemma": "أنس",
+   "lemma": "أَنَس",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.0530:0011": {
-   "en": "bin Malik",
-   "ur": "بن مالک",
-   "transliteration": "bin Mālik",
-   "root": null,
-   "lemma": "ابن مالك",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.0530:0012": {
-   "en": "bin Malik",
-   "ur": "بن مالک",
-   "transliteration": "bin Mālik",
+   "en": "Malik",
+   "ur": "مالک",
+   "transliteration": "Mālik",
    "root": null,
-   "lemma": "ابن مالك",
-   "pos": "COMPOUND",
+   "lemma": "مَالِك",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.0530:0014": {
-   "en": "and he/while he",
+   "en": "and he / while he",
    "ur": "اور وہ",
    "transliteration": "wa-huwa",
    "root": null,
    "lemma": "هُوَ",
    "pos": "PRON",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.0530:0015": {
@@ -212,12 +197,12 @@
    }
   },
   "uh:token:bukhari.0530:0017": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.0530:0018": {
@@ -237,29 +222,30 @@
    }
   },
   "uh:token:bukhari.0530:0019": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.0530:0020": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:bukhari.0530:0021": {
    "en": "I know",
@@ -317,13 +303,15 @@
    }
   },
   "uh:token:bukhari.0530:0025": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:bukhari.0530:0026": {
    "en": "this (feminine)",
@@ -353,24 +341,22 @@
   "uh:token:bukhari.0530:0029": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "al-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:bukhari.0530:0030": {
    "en": "indeed / already",
-   "ur": "بےشک / پہلے سے",
+   "ur": "بے شک / یقیناً",
    "transliteration": "qad",
    "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
+   "lemma": "قَدْ",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.0530:0032": {
@@ -394,12 +380,10 @@
    "ur": "بکر",
    "transliteration": "Bakr",
    "root": null,
-   "lemma": "بكر",
+   "lemma": "بَكْر",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.0530:0034": {
@@ -433,31 +417,25 @@
    }
   },
   "uh:token:bukhari.0530:0036": {
-   "en": "ibn Bakr",
-   "ur": "بن بکر",
-   "transliteration": "ibn Bakr",
-   "root": null,
-   "lemma": "ابن بكر",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.0530:0037": {
-   "en": "ibn Bakr",
-   "ur": "بن بکر",
-   "transliteration": "ibn Bakr",
+   "en": "Bakr",
+   "ur": "بکر",
+   "transliteration": "Bakr",
    "root": null,
-   "lemma": "ابن بكر",
-   "pos": "COMPOUND",
+   "lemma": "بَكْر",
+   "pos": "PN",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.0530:0038": {
@@ -496,31 +474,33 @@
    "ur": "عثمان",
    "transliteration": "ʿUthmān",
    "root": null,
-   "lemma": "عثمان",
+   "lemma": "عُثْمَان",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.0530:0041": {
-   "en": "ibn Abi Rawad (narrator name)",
-   "ur": "ابن ابی رواد (راوی کا نام)",
-   "transliteration": "ibn Abī Rawwād",
-   "root": null,
-   "lemma": "اِبْن أَبِي رَوَّاد",
-   "pos": "PN",
-   "features": {}
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:bukhari.0530:0042": {
-   "en": "ibn Abi Rawad (narrator name)",
-   "ur": "ابن ابی رواد (راوی کا نام)",
-   "transliteration": "ibn Abī Rawwād",
-   "root": null,
-   "lemma": "اِبْن أَبِي رَوَّاد",
-   "pos": "PN",
-   "features": {}
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
+   "features": {
+    "case": "gen"
+   }
   },
   "uh:token:bukhari.0530:0043": {
    "en": "ibn Abi Rawad (narrator name)",
@@ -545,13 +525,12 @@
   "uh:token:bukhari.0530:0027": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "aṣ-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صَلاَة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "gender": "F",
-    "number": "SG",
+    "case": "gen",
     "definite": true
    }
   },

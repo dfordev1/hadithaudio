@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.3893:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.3893:0002": {
    "en": "the Messenger of Allah, peace be upon him",
@@ -33,18 +38,13 @@
    }
   },
   "uh:token:abudawud.3893:0003": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.3893:0004": {
    "en": "the Messenger of Allah, peace be upon him",
@@ -119,19 +119,14 @@
    }
   },
   "uh:token:abudawud.3893:0009": {
-   "en": "he teaches them",
-   "ur": "وہ انہیں سکھاتا ہے",
-   "transliteration": "yuʿallimuhum",
-   "root": "ع ل م",
-   "lemma": "عَلَّمَ",
-   "pos": "V",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masc",
-    "number": "sg",
-    "mood": "indicative"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.3893:0010": {
@@ -276,27 +271,26 @@
    "features": {}
   },
   "uh:token:abudawud.3893:0024": {
-   "en": "the devils/satans",
-   "ur": "شیاطین",
-   "transliteration": "ash-shayāṭīn",
-   "root": "ش ط ن",
-   "lemma": "شَيْطَان",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "PL"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.3893:0025": {
-   "en": "and that",
-   "ur": "اور کہ",
-   "transliteration": "wa-an",
-   "root": null,
-   "lemma": "أن",
-   "pos": "SUB",
-   "features": {}
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:abudawud.3893:0029": {
    "en": "and he was",
@@ -315,18 +309,13 @@
    }
   },
   "uh:token:abudawud.3893:0030": {
-   "en": "Abd Allah",
-   "ur": "عبد اللہ",
-   "transliteration": "ʿAbd Allāh",
-   "root": "ع-ب-د",
-   "lemma": "عَبْدُ اللَّهِ",
-   "pos": "PN",
-   "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.3893:0031": {
    "en": "Abd Allah",
@@ -356,16 +345,14 @@
    }
   },
   "uh:token:abudawud.3893:0033": {
-   "en": "bin Amr",
-   "ur": "بن عمرو",
-   "transliteration": "bin ʿAmr",
+   "en": "did not",
+   "ur": "نہیں",
+   "transliteration": "lam",
    "root": null,
-   "lemma": "بن عمرو",
-   "pos": "COMPOUND",
+   "lemma": "لَمْ",
+   "pos": "PART",
    "features": {
-    "case": "GEN",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "negation"
    }
   },
   "uh:token:abudawud.3893:0034": {
@@ -408,13 +395,15 @@
    }
   },
   "uh:token:abudawud.3893:0037": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
-   "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
-   "features": {}
+   "en": "upon him",
+   "ur": "اس پر",
+   "transliteration": "ʿalayhi",
+   "root": "ع ل و",
+   "lemma": "عَلَى",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.3893:0038": {
    "en": "his sons",
@@ -490,44 +479,42 @@
    "features": {}
   },
   "uh:token:abudawud.3893:0011": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.3893:0023": {
-   "en": "servant of",
+   "en": "servant (of)",
    "ur": "بندہ",
    "transliteration": "ʿabd",
-   "root": "ع-ب-د",
-   "lemma": "عبد",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "state": "construct"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.3893:0026": {
    "en": "Amr",
    "ur": "عمرو",
-   "transliteration": "ʿamr",
-   "root": "ع-م-ر",
-   "lemma": "عمرو",
+   "transliteration": "ʿAmr",
+   "root": null,
+   "lemma": "عَمْرو",
    "pos": "PN",
    "features": {
-    "gender": "M"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.3893:0028": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },

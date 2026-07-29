@@ -68,12 +68,12 @@
    }
   },
   "uh:token:abudawud.1069:0006": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:abudawud.1069:0007": {
@@ -107,54 +107,45 @@
    }
   },
   "uh:token:abudawud.1069:0009": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1069:0011": {
-   "en": "Ka'b",
+   "en": "Kab",
    "ur": "کعب",
    "transliteration": "Kaʿb",
-   "root": "ك-ع-ب",
-   "lemma": "كعب",
+   "root": null,
+   "lemma": "كَعْب",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:abudawud.1069:0012": {
-   "en": "bin Malik",
-   "ur": "بن مالک",
-   "transliteration": "bin Mālik",
-   "root": null,
-   "lemma": "ابن مالك",
-   "pos": "COMPOUND",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.1069:0013": {
-   "en": "bin Malik",
-   "ur": "بن مالک",
-   "transliteration": "bin Mālik",
+   "en": "Malik",
+   "ur": "مالک",
+   "transliteration": "Mālik",
    "root": null,
-   "lemma": "ابن مالك",
-   "pos": "COMPOUND",
+   "lemma": "مَالِك",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:abudawud.1069:0014": {
@@ -167,29 +158,29 @@
    "features": {}
   },
   "uh:token:abudawud.1069:0015": {
-   "en": "he/it was",
-   "ur": "تھا",
+   "en": "he was",
+   "ur": "وہ تھا",
    "transliteration": "kāna",
-   "root": "ك-و-ن",
+   "root": "ك و ن",
    "lemma": "كَانَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.1069:0016": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:abudawud.1069:0017": {
    "en": "he heard",
@@ -208,17 +199,14 @@
    }
   },
   "uh:token:abudawud.1069:0019": {
-   "en": "day",
+   "en": "day / on the day",
    "ur": "دن",
    "transliteration": "yawm",
-   "root": "ي-و-م",
-   "lemma": "يوم",
+   "root": "ي و م",
+   "lemma": "يَوْم",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.1069:0020": {
@@ -236,17 +224,14 @@
    }
   },
   "uh:token:abudawud.1069:0023": {
-   "en": "Ibn Zurara",
-   "ur": "بن زرارہ",
-   "transliteration": "ibn Zurāra",
-   "root": null,
-   "lemma": "زُرَارَة",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.1069:0024": {
@@ -280,22 +265,26 @@
    }
   },
   "uh:token:abudawud.1069:0027": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.1069:0028": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:abudawud.1069:0029": {
    "en": "I heard",
@@ -314,17 +303,14 @@
    }
   },
   "uh:token:abudawud.1069:0033": {
-   "en": "Ibn Zurara",
-   "ur": "بن زرارہ",
-   "transliteration": "ibn Zurāra",
-   "root": null,
-   "lemma": "زُرَارَة",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.1069:0034": {
@@ -385,12 +371,12 @@
    }
   },
   "uh:token:abudawud.1069:0038": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1069:0039": {
@@ -447,12 +433,12 @@
    }
   },
   "uh:token:abudawud.1069:0044": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:abudawud.1069:0045": {
@@ -509,13 +495,15 @@
    }
   },
   "uh:token:abudawud.1069:0051": {
-   "en": "to him/for him",
+   "en": "to him / for him",
    "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "لَهُ",
-   "pos": "P",
-   "features": {}
+   "lemma": "لِ",
+   "pos": "PREP",
+   "features": {
+    "suffix": "3ms"
+   }
   },
   "uh:token:abudawud.1069:0055": {
    "en": "I said",
@@ -661,6 +649,17 @@
     "state": "DEF",
     "gender": "MASC",
     "number": "SING"
+   }
+  },
+  "uh:token:abudawud.1069:0001": {
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
    }
   }
  }

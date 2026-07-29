@@ -42,13 +42,16 @@
    }
   },
   "uh:token:tirmidhi.0705:0004": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:tirmidhi.0705:0008": {
    "en": "and eat (imperative pl.)",
@@ -83,12 +86,12 @@
    }
   },
   "uh:token:tirmidhi.0705:0010": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.0705:0012": {
@@ -139,93 +142,87 @@
    "ur": "اور میں",
    "transliteration": "wa-fī",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
-   "features": {}
+   "lemma": "فِي",
+   "pos": "PREP",
+   "features": {
+    "prefix": "wa"
+   }
   },
   "uh:token:tirmidhi.0705:0018": {
-   "en": "in this chapter, from",
-   "ur": "اس باب میں، سے",
-   "transliteration": "al-bāb ʿan",
+   "en": "the door / the chapter",
+   "ur": "دروازہ / باب",
+   "transliteration": "al-bāb",
    "root": "ب و ب",
    "lemma": "بَاب",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "acc",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.0705:0019": {
-   "en": "in this chapter, from",
-   "ur": "اس باب میں، سے",
-   "transliteration": "al-bāb ʿan",
-   "root": "ب و ب",
-   "lemma": "بَاب",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "en": "from / on the authority of",
+   "ur": "سے",
+   "transliteration": "ʿan",
+   "root": null,
+   "lemma": "عَنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:tirmidhi.0705:0020": {
    "en": "Adi",
    "ur": "عدی",
    "transliteration": "ʿAdī",
    "root": null,
-   "lemma": "عدي",
+   "lemma": "عَدِيّ",
    "pos": "PN",
    "features": {
-    "case": "NOM"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0705:0021": {
-   "en": "bin Hatim",
-   "ur": "بن حاتم",
-   "transliteration": "bin Ḥātim",
-   "root": null,
-   "lemma": "بن حاتم",
-   "pos": "PN",
-   "features": {}
-  },
-  "uh:token:tirmidhi.0705:0022": {
-   "en": "bin Hatim",
-   "ur": "بن حاتم",
-   "transliteration": "bin Ḥātim",
-   "root": null,
-   "lemma": "بن حاتم",
-   "pos": "PN",
-   "features": {}
-  },
-  "uh:token:tirmidhi.0705:0023": {
-   "en": "and my father / and Abi (name element)",
-   "ur": "اور میرے والد / اور ابی",
-   "transliteration": "wa-abī",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
    "pos": "N",
    "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
+   }
+  },
+  "uh:token:tirmidhi.0705:0022": {
+   "en": "Hatim",
+   "ur": "حاتم",
+   "transliteration": "Ḥātim",
+   "root": null,
+   "lemma": "حَاتِم",
+   "pos": "PN",
+   "features": {
+    "case": "gen"
+   }
+  },
+  "uh:token:tirmidhi.0705:0023": {
+   "en": "and my father / and Abi",
+   "ur": "اور میرے باپ",
+   "transliteration": "wa-abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
+   "features": {
+    "prefix": "wa",
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0705:0024": {
-   "en": "Dharr (as in Abu Dharr)",
-   "ur": "ذر (ابوذر کے نام کا حصہ)",
+   "en": "Dharr",
+   "ur": "ذر",
    "transliteration": "Dharr",
-   "root": "ذ ر ر",
+   "root": null,
    "lemma": "ذَرّ",
    "pos": "PN",
    "features": {
-    "case": "genitive",
-    "state": "construct",
-    "gender": "masc",
-    "number": "sing"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0705:0025": {
@@ -259,45 +256,34 @@
    }
   },
   "uh:token:tirmidhi.0705:0028": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
    "root": "ا ب و",
-   "lemma": "أَبُو",
-   "pos": "PN",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0705:0029": {
-   "en": "Abu Isa (kunya of al-Tirmidhi)",
-   "ur": "ابو عیسیٰ",
-   "transliteration": "Abū ʿĪsā",
-   "root": "ا ب و",
-   "lemma": "أَبُو",
+   "en": "Isa (Jesus)",
+   "ur": "عیسیٰ",
+   "transliteration": "ʿĪsā",
+   "root": null,
+   "lemma": "عِيسَى",
    "pos": "PN",
-   "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
-   }
+   "features": {}
   },
   "uh:token:tirmidhi.0705:0030": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0705:0031": {
@@ -317,82 +303,67 @@
    }
   },
   "uh:token:tirmidhi.0705:0032": {
-   "en": "bin Ali",
-   "ur": "بن علی",
-   "transliteration": "bin ʿAlī",
-   "root": null,
-   "lemma": "ابن علي",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.0705:0033": {
-   "en": "bin Ali",
-   "ur": "بن علی",
-   "transliteration": "bin ʿAlī",
+   "en": "Ali",
+   "ur": "علی",
+   "transliteration": "ʿAlī",
    "root": null,
-   "lemma": "ابن علي",
+   "lemma": "عَلِيّ",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0705:0034": {
-   "en": "hadith / narration",
+   "en": "a hadith / report",
    "ur": "حدیث",
    "transliteration": "ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0705:0035": {
-   "en": "good, fine (also used as the name Hasan)",
-   "ur": "اچھا، عمدہ (نام حسن بھی)",
-   "transliteration": "ḥasan",
-   "root": "ح-س-ن",
+   "en": "Hasan / good",
+   "ur": "حسن / اچھا",
+   "transliteration": "Ḥasan",
+   "root": "ح س ن",
    "lemma": "حَسَن",
-   "pos": "ADJ",
+   "pos": "PN",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:tirmidhi.0705:0036": {
-   "en": "gharib (rare/uncommon narration)",
-   "ur": "غریب (نادر روایت)",
+   "en": "strange / rare",
+   "ur": "غریب / نادر",
    "transliteration": "gharīb",
    "root": "غ ر ب",
    "lemma": "غَرِيب",
    "pos": "ADJ",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "nom"
    }
   },
   "uh:token:tirmidhi.0705:0037": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.0705:0038": {
@@ -408,17 +379,15 @@
    }
   },
   "uh:token:tirmidhi.0705:0039": {
-   "en": "the face",
-   "ur": "چہرہ",
+   "en": "the face / the aspect",
+   "ur": "چہرہ / پہلو",
    "transliteration": "al-wajh",
    "root": "و ج ه",
    "lemma": "وَجْه",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom",
+    "definite": true
    }
   },
   "uh:token:tirmidhi.0705:0041": {
@@ -436,12 +405,12 @@
    }
   },
   "uh:token:tirmidhi.0705:0042": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.0705:0043": {
@@ -460,28 +429,23 @@
    "en": "with / at / near",
    "ur": "کے پاس",
    "transliteration": "ʿinda",
-   "root": "ع-ن-د",
-   "lemma": "عند",
+   "root": "ع ن د",
+   "lemma": "عِنْدَ",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:tirmidhi.0705:0045": {
-   "en": "people (of) / family (of)",
-   "ur": "اہل / گھر والے",
+   "en": "people of / family of",
+   "ur": "اہل / خاندان",
    "transliteration": "ahl",
-   "root": "أ-ه-ل",
-   "lemma": "أهل",
+   "root": "ا ه ل",
+   "lemma": "أَهْل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.0705:0046": {
@@ -508,13 +472,15 @@
    "features": {}
   },
   "uh:token:tirmidhi.0705:0048": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:tirmidhi.0705:0049": {
    "en": "he forbids / makes unlawful",
@@ -533,12 +499,12 @@
    }
   },
   "uh:token:tirmidhi.0705:0050": {
-   "en": "on/upon",
+   "en": "upon / on",
    "ur": "پر",
    "transliteration": "ʿalā",
-   "root": null,
+   "root": "ع ل و",
    "lemma": "عَلَى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.0705:0051": {
@@ -556,12 +522,12 @@
    }
   },
   "uh:token:tirmidhi.0705:0054": {
-   "en": "until",
+   "en": "until / so that",
    "ur": "یہاں تک کہ",
    "transliteration": "ḥattā",
    "root": null,
    "lemma": "حَتَّى",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:tirmidhi.0705:0055": {
@@ -609,35 +575,29 @@
    }
   },
   "uh:token:tirmidhi.0705:0060": {
-   "en": "and this is what he holds/says",
-   "ur": "اور یہی وہ کہتے ہیں",
-   "transliteration": "wa-bihi yaqūlu",
-   "root": "ق و ل",
-   "lemma": "قَالَ",
-   "pos": "V",
+   "en": "and by it / and with it",
+   "ur": "اور اس کے ساتھ",
+   "transliteration": "wa-bihi",
+   "root": null,
+   "lemma": "بِ",
+   "pos": "PREP",
    "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masculine",
-    "number": "singular",
-    "mood": "indicative"
+    "prefix": "wa",
+    "suffix": "3ms"
    }
   },
   "uh:token:tirmidhi.0705:0061": {
-   "en": "and this is what he holds/says",
-   "ur": "اور یہی وہ کہتے ہیں",
-   "transliteration": "wa-bihi yaqūlu",
+   "en": "he says",
+   "ur": "وہ کہتا ہے",
+   "transliteration": "yaqūlu",
    "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masculine",
-    "number": "singular",
-    "mood": "indicative"
+    "aspect": "impf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:tirmidhi.0705:0062": {
@@ -655,17 +615,14 @@
    }
   },
   "uh:token:tirmidhi.0705:0063": {
-   "en": "people (of) / family (of)",
-   "ur": "اہل / گھر والے",
+   "en": "people of / family of",
+   "ur": "اہل / خاندان",
    "transliteration": "ahl",
-   "root": "أ-ه-ل",
-   "lemma": "أهل",
+   "root": "ا ه ل",
+   "lemma": "أَهْل",
    "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:tirmidhi.0705:0064": {

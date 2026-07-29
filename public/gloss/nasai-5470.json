@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.5470:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:nasai.5470:0002": {
    "en": "the Prophet, may Allah bless him and grant him peace",
@@ -75,33 +80,26 @@
    }
   },
   "uh:token:nasai.5470:0006": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "O Allah",
+   "ur": "اے اللہ",
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "vocative"
    }
   },
   "uh:token:nasai.5470:0007": {
-   "en": "he/it was",
-   "ur": "تھا",
-   "transliteration": "kāna",
-   "root": "ك-و-ن",
-   "lemma": "كَانَ",
-   "pos": "V",
+   "en": "indeed I",
+   "ur": "بے شک میں",
+   "transliteration": "innī",
+   "root": null,
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:nasai.5470:0008": {
@@ -135,13 +133,15 @@
    }
   },
   "uh:token:nasai.5470:0012": {
-   "en": "O Allah",
-   "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
+   "en": "no / not",
+   "ur": "نہیں",
+   "transliteration": "lā",
    "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.5470:0013": {
    "en": "indeed I / verily I",
@@ -172,16 +172,14 @@
    }
   },
   "uh:token:nasai.5470:0015": {
-   "en": "with/in you",
-   "ur": "تجھ سے",
-   "transliteration": "bika",
+   "en": "no / not",
+   "ur": "نہیں",
+   "transliteration": "lā",
    "root": null,
-   "lemma": "ب",
-   "pos": "P",
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "person": "2",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "negation"
    }
   },
   "uh:token:nasai.5470:0016": {
@@ -208,13 +206,15 @@
    }
   },
   "uh:token:nasai.5470:0018": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.5470:0019": {
    "en": "it benefits/is of use",
@@ -233,13 +233,15 @@
    }
   },
   "uh:token:nasai.5470:0021": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.5470:0022": {
    "en": "he is humble/submissive (in heart)",
@@ -267,32 +269,27 @@
    "features": {}
   },
   "uh:token:nasai.5470:0025": {
-   "en": "he hears",
-   "ur": "وہ سنتا ہے",
-   "transliteration": "yasmaʿu",
-   "root": "س-م-ع",
-   "lemma": "سَمِعَ",
-   "pos": "V",
+   "en": "then / afterwards",
+   "ur": "پھر",
+   "transliteration": "thumma",
+   "root": null,
+   "lemma": "ثُمَّ",
+   "pos": "PART",
    "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
+    "type": "conjunction"
    }
   },
   "uh:token:nasai.5470:0026": {
-   "en": "and a soul/self",
-   "ur": "اور ایک جان/نفس",
-   "transliteration": "wa-nafs",
-   "root": "ن ف س",
-   "lemma": "نَفْس",
-   "pos": "N",
+   "en": "he says",
+   "ur": "وہ کہتا ہے",
+   "transliteration": "yaqūlu",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "fem",
+    "aspect": "impf",
+    "person": 3,
+    "gender": "m",
     "number": "sg"
    }
   },
@@ -306,17 +303,14 @@
    "features": {}
   },
   "uh:token:nasai.5470:0028": {
-   "en": "to feign fullness/satiety",
-   "ur": "جھوٹی شکم سیری ظاہر کرنا",
-   "transliteration": "tashabbuʿ",
-   "root": "ش ب ع",
-   "lemma": "تَشَبُّع",
+   "en": "O Allah",
+   "ur": "اے اللہ",
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "indefinite",
-    "gender": "masculine",
-    "number": "singular"
+    "type": "vocative"
    }
   },
   "uh:token:nasai.5470:0031": {
@@ -329,20 +323,13 @@
    "features": {}
   },
   "uh:token:nasai.5470:0032": {
-   "en": "he says",
-   "ur": "وہ کہتا ہے",
-   "transliteration": "yaqūlu",
-   "root": "ق-و-ل",
-   "lemma": "قَالَ",
-   "pos": "V",
-   "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:nasai.5470:0034": {
    "en": "O Allah",
@@ -429,11 +416,11 @@
    }
   },
   "uh:token:nasai.5470:0010": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },

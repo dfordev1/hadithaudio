@@ -10,13 +10,19 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.1533:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:nasai.1533:0002": {
    "en": "the Messenger of Allah, peace be upon him",
@@ -61,17 +67,15 @@
    }
   },
   "uh:token:nasai.1533:0005": {
-   "en": "the Messenger of Allah, peace be upon him",
-   "ur": "رسول اللہ صلی اللہ علیہ وسلم",
-   "transliteration": "rasūl Allāh ṣallā Allāhu ʿalayhi wa-sallam",
-   "root": "ر س ل",
-   "lemma": "رَسُول",
+   "en": "the people",
+   "ur": "لوگ",
+   "transliteration": "an-nās",
+   "root": "ن و س",
+   "lemma": "نَاس",
    "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masculine",
-    "number": "singular"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:nasai.1533:0006": {
@@ -231,20 +235,13 @@
    }
   },
   "uh:token:nasai.1533:0020": {
-   "en": "then he prayed",
-   "ur": "پھر اس نے نماز پڑھی",
-   "transliteration": "fa-ṣallā",
-   "root": "ص-ل-و",
-   "lemma": "صلى",
-   "pos": "V",
-   "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
-   }
+   "en": "to / towards",
+   "ur": "کی طرف",
+   "transliteration": "ilā",
+   "root": null,
+   "lemma": "إِلَى",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:nasai.1533:0021": {
    "en": "with/by those who",
@@ -332,17 +329,15 @@
    "features": {}
   },
   "uh:token:nasai.1533:0028": {
-   "en": "place",
-   "ur": "جگہ",
-   "transliteration": "makān",
-   "root": "ك-و-ن",
-   "lemma": "مكان",
-   "pos": "N",
+   "en": "and did not",
+   "ur": "اور نہیں",
+   "transliteration": "wa-lam",
+   "root": null,
+   "lemma": "لَمْ",
+   "pos": "PART",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "type": "negation"
    }
   },
   "uh:token:nasai.1533:0029": {
@@ -436,13 +431,15 @@
    "features": {}
   },
   "uh:token:nasai.1533:0017": {
-   "en": "then / thereupon",
+   "en": "then / afterwards",
    "ur": "پھر",
    "transliteration": "thumma",
    "root": null,
    "lemma": "ثُمَّ",
    "pos": "PART",
-   "features": {}
+   "features": {
+    "type": "conjunction"
+   }
   },
   "uh:token:nasai.1533:0018": {
    "en": "he departed, turned away",

@@ -10,26 +10,28 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.0057:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.0057:0002": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "no / not",
+   "ur": "نہیں",
+   "transliteration": "lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "negation"
    }
   },
   "uh:token:abudawud.0057:0003": {
@@ -47,18 +49,13 @@
    }
   },
   "uh:token:abudawud.0057:0004": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
-   "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:abudawud.0057:0005": {
    "en": "the Prophet, may Allah bless him and grant him peace",
@@ -75,17 +72,15 @@
    }
   },
   "uh:token:abudawud.0057:0006": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "and not / nor",
+   "ur": "اور نہیں",
+   "transliteration": "wa-lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "type": "negation"
    }
   },
   "uh:token:abudawud.0057:0007": {
@@ -123,26 +118,24 @@
    "features": {}
   },
   "uh:token:abudawud.0057:0011": {
-   "en": "night",
-   "ur": "رات",
-   "transliteration": "layl",
-   "root": "ل ي ل",
-   "lemma": "لَيْل",
+   "en": "before",
+   "ur": "پہلے",
+   "transliteration": "qabla",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
    "pos": "N",
    "features": {
-    "case": "nom",
-    "state": "indef",
-    "gender": "masc",
-    "number": "sing"
+    "case": "acc",
+    "type": "adverb"
    }
   },
   "uh:token:abudawud.0057:0012": {
-   "en": "and not/nor",
-   "ur": "اور نہیں",
-   "transliteration": "wa-lā",
+   "en": "that",
+   "ur": "کہ",
+   "transliteration": "anna",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
+   "lemma": "أَنَّ",
+   "pos": "SUB",
    "features": {}
   },
   "uh:token:abudawud.0057:0013": {
@@ -208,13 +201,15 @@
    }
   },
   "uh:token:abudawud.0057:0009": {
-   "en": "except, only",
-   "ur": "سوائے، مگر",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
-   "lemma": "إِلاَّ",
+   "lemma": "إِلَّا",
    "pos": "PART",
-   "features": {}
+   "features": {
+    "type": "exception"
+   }
   }
  }
 }

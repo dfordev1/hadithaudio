@@ -38,12 +38,12 @@
    }
   },
   "uh:token:bukhari.2108:0004": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:bukhari.2108:0005": {
@@ -91,10 +91,12 @@
    "en": "Ahmad",
    "ur": "احمد",
    "transliteration": "Aḥmad",
-   "root": "ح-م-د",
-   "lemma": "أحمد",
+   "root": "ح م د",
+   "lemma": "أَحْمَد",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:bukhari.2108:0010": {
    "en": "he narrated to us",
@@ -201,19 +203,18 @@
    }
   },
   "uh:token:bukhari.2108:0019": {
-   "en": "and he said",
+   "en": "then he said",
    "ur": "پھر اس نے کہا",
    "transliteration": "fa-qāla",
-   "root": "ق-و-ل",
+   "root": "ق و ل",
    "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:bukhari.2108:0020": {
@@ -242,17 +243,14 @@
    "features": {}
   },
   "uh:token:bukhari.2108:0022": {
-   "en": "Abu al-Khalil",
-   "ur": "ابو الخلیل",
-   "transliteration": "abī al-khalīl",
-   "root": null,
-   "lemma": "أَبُو الخَلِيل",
-   "pos": "PN",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
+   "transliteration": "abī",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "gen",
-    "state": "construct",
-    "gender": "masc",
-    "number": "sg"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.2108:0023": {
@@ -295,59 +293,48 @@
    }
   },
   "uh:token:bukhari.2108:0026": {
-   "en": "Abd Allah",
-   "ur": "عبد اللہ",
-   "transliteration": "ʿAbd Allāh",
-   "root": "ع-ب-د",
-   "lemma": "عَبْدُ اللَّهِ",
-   "pos": "PN",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:bukhari.2108:0027": {
-   "en": "Abd Allah",
-   "ur": "عبد اللہ",
-   "transliteration": "ʿAbd Allāh",
-   "root": "ع-ب-د",
-   "lemma": "عَبْدُ اللَّهِ",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:bukhari.2108:0028": {
-   "en": "bin al-Harith",
-   "ur": "بن الحارث",
-   "transliteration": "bin al-Ḥārith",
-   "root": null,
-   "lemma": "ابن الحارث",
-   "pos": "PN",
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:bukhari.2108:0029": {
-   "en": "bin al-Harith",
-   "ur": "بن الحارث",
-   "transliteration": "bin al-Ḥārith",
+   "en": "al-Harith",
+   "ur": "حارث",
+   "transliteration": "al-Ḥārith",
    "root": null,
-   "lemma": "ابن الحارث",
+   "lemma": "حَارِث",
    "pos": "PN",
    "features": {
-    "case": null,
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc",
+    "definite": true
    }
   },
   "uh:token:bukhari.2108:0030": {
@@ -363,15 +350,14 @@
    }
   },
   "uh:token:bukhari.2108:0031": {
-   "en": "the hadith, the narration/speech",
+   "en": "the hadith / the report",
    "ur": "حدیث",
    "transliteration": "al-ḥadīth",
-   "root": "ح-د-ث",
+   "root": "ح د ث",
    "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
+    "case": "gen",
     "definite": true
    }
   },

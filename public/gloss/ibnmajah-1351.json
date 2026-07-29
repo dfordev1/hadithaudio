@@ -10,13 +10,19 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.1351:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:ibnmajah.1351:0002": {
    "en": "the Prophet",
@@ -305,13 +311,15 @@
    }
   },
   "uh:token:ibnmajah.1351:0003": {
-   "en": "then / in that case",
-   "ur": "تو / اس صورت میں",
-   "transliteration": "idhan",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "إِذًا",
-   "pos": "PART",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:ibnmajah.1351:0008": {
    "en": "and when / and behold",

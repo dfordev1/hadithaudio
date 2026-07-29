@@ -10,39 +10,44 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.3719:0001": {
-   "en": "bin al-Qasim",
-   "ur": "بن القاسم",
-   "transliteration": "ibn al-Qāsim",
-   "root": null,
-   "lemma": "بن القاسم",
-   "pos": "COMPOUND",
-   "features": {}
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:muslim.3719:0002": {
-   "en": "bin al-Qasim",
-   "ur": "بن القاسم",
-   "transliteration": "ibn al-Qāsim",
+   "en": "al-Qasim",
+   "ur": "قاسم",
+   "transliteration": "al-Qāsim",
    "root": null,
-   "lemma": "بن القاسم",
-   "pos": "COMPOUND",
-   "features": {}
+   "lemma": "قَاسِم",
+   "pos": "PN",
+   "features": {
+    "case": "gen",
+    "definite": true
+   }
   },
   "uh:token:muslim.3719:0003": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3719:0005": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
+   "en": "from / on the authority of",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
    "lemma": "عَنْ",
-   "pos": "P",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:muslim.3719:0007": {
@@ -71,12 +76,12 @@
    }
   },
   "uh:token:muslim.3719:0009": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
    "transliteration": "mā",
    "root": null,
    "lemma": "مَا",
-   "pos": "NEG",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:muslim.3719:0010": {
@@ -94,17 +99,14 @@
    }
   },
   "uh:token:muslim.3719:0011": {
-   "en": "good/best",
-   "ur": "بھلائی / بہتر",
+   "en": "good / better",
+   "ur": "بہتر / خیر",
    "transliteration": "khayr",
-   "root": "خ-ي-ر",
-   "lemma": "خير",
-   "pos": "ADJ",
+   "root": "خ ي ر",
+   "lemma": "خَيْر",
+   "pos": "N",
    "features": {
-    "case": null,
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:muslim.3719:0012": {
@@ -191,13 +193,15 @@
    }
   },
   "uh:token:muslim.3719:0019": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3719:0020": {
    "en": "dwelling, residence",
@@ -214,13 +218,16 @@
    }
   },
   "uh:token:muslim.3719:0021": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.3719:0022": {
    "en": "maintenance/spending",

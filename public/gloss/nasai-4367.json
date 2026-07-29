@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.4367:0002": {
-   "en": "and indeed/and already",
-   "ur": "اور بےشک / اور پہلے سے",
-   "transliteration": "wa-qad",
-   "root": null,
-   "lemma": "قد",
-   "pos": "EMPH",
-   "features": {}
+   "en": "day / on the day",
+   "ur": "دن",
+   "transliteration": "yawm",
+   "root": "ي و م",
+   "lemma": "يَوْم",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:nasai.4367:0003": {
    "en": "he/it was",
@@ -44,58 +46,50 @@
    "features": {}
   },
   "uh:token:nasai.4367:0005": {
-   "en": "did not",
-   "ur": "نہیں (ماضی نفی)",
-   "transliteration": "lam",
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
    "root": null,
-   "lemma": "لَمْ",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "-",
+   "pos": "PUNC",
+   "features": {
+    "type": "punctuation"
+   }
   },
   "uh:token:nasai.4367:0006": {
-   "en": "he slaughters/sacrifices",
-   "ur": "وہ قربانی کرتا ہے",
-   "transliteration": "yanḥaru",
-   "root": "ن ح ر",
-   "lemma": "نَحَرَ",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masc",
-    "number": "sing",
-    "mood": "indicative"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.4367:0007": {
-   "en": "he slaughters",
-   "ur": "وہ ذبح کرتا ہے",
-   "transliteration": "yadhbaḥu",
-   "root": "ذ ب ح",
-   "lemma": "ذَبَحَ",
-   "pos": "V",
+   "en": "— (dash)",
+   "ur": "—",
+   "transliteration": "-",
+   "root": null,
+   "lemma": "-",
+   "pos": "PUNC",
    "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masculine",
-    "number": "singular",
-    "mood": "indicative"
+    "type": "punctuation"
    }
   },
   "uh:token:nasai.4367:0008": {
-   "en": "at the prayer ground",
-   "ur": "عیدگاہ میں",
-   "transliteration": "bi-l-muṣallā",
-   "root": "صلو",
-   "lemma": "مُصَلَّى",
-   "pos": "N",
+   "en": "and indeed",
+   "ur": "اور بے شک",
+   "transliteration": "wa-qad",
+   "root": null,
+   "lemma": "قَدْ",
+   "pos": "PART",
    "features": {
-    "case": "genitive",
-    "state": "definite",
-    "gender": "masc",
-    "number": "sg"
+    "prefix": "wa"
    }
   },
   "uh:token:nasai.4367:0009": {
@@ -113,22 +107,26 @@
    }
   },
   "uh:token:nasai.4367:0010": {
-   "en": "then / in that case",
-   "ur": "تو / اس صورت میں",
-   "transliteration": "idhan",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "إِذًا",
-   "pos": "PART",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:nasai.4367:0011": {
-   "en": "not (negates past-tense meaning of jussive verb)",
+   "en": "did not",
    "ur": "نہیں",
    "transliteration": "lam",
    "root": null,
    "lemma": "لَمْ",
    "pos": "PART",
-   "features": {}
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.4367:0014": {
    "en": "at the place of prayer",

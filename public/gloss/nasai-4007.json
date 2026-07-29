@@ -263,13 +263,15 @@
    }
   },
   "uh:token:nasai.4007:0026": {
-   "en": "no/not",
+   "en": "no / not",
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
    "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.4007:0027": {
    "en": "they call/invoke",
@@ -339,13 +341,16 @@
    }
   },
   "uh:token:nasai.4007:0032": {
-   "en": "and not/nor",
+   "en": "and not / nor",
    "ur": "اور نہیں",
    "transliteration": "wa-lā",
    "root": null,
-   "lemma": "وَلَا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:nasai.4007:0033": {
    "en": "they kill",
@@ -420,13 +425,15 @@
    }
   },
   "uh:token:nasai.4007:0038": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:nasai.4007:0039": {
    "en": "with the truth",
@@ -459,45 +466,37 @@
    }
   },
   "uh:token:nasai.4007:0043": {
-   "en": "Abu Abd al-Rahman",
-   "ur": "ابو عبد الرحمٰن",
-   "transliteration": "Abū ʿAbd al-Raḥmān",
-   "root": "ع ب د / ر ح م",
-   "lemma": "أَبُو عَبْد الرَّحْمَٰن",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:nasai.4007:0044": {
-   "en": "Abu Abd al-Rahman",
-   "ur": "ابو عبد الرحمٰن",
-   "transliteration": "Abū ʿAbd al-Raḥmān",
-   "root": "ع ب د / ر ح م",
-   "lemma": "أَبُو عَبْد الرَّحْمَٰن",
-   "pos": "PN",
+   "en": "servant (of)",
+   "ur": "بندہ",
+   "transliteration": "ʿabd",
+   "root": "ع ب د",
+   "lemma": "عَبْد",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:nasai.4007:0045": {
-   "en": "Abu Abd al-Rahman",
-   "ur": "ابو عبد الرحمٰن",
-   "transliteration": "Abū ʿAbd al-Raḥmān",
-   "root": "ع ب د / ر ح م",
-   "lemma": "أَبُو عَبْد الرَّحْمَٰن",
-   "pos": "PN",
+   "en": "the Most Merciful",
+   "ur": "رحمٰن",
+   "transliteration": "ar-Raḥmān",
+   "root": "ر ح م",
+   "lemma": "رَحْمَان",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:nasai.4007:0046": {
@@ -517,31 +516,26 @@
    }
   },
   "uh:token:nasai.4007:0047": {
-   "en": "Abu al-Zinad",
-   "ur": "ابو الزناد",
-   "transliteration": "Abū al-Zinād",
-   "root": null,
-   "lemma": "أَبُو الزِّنَاد",
-   "pos": "PN",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masc",
-    "number": "sing"
+    "case": "nom"
    }
   },
   "uh:token:nasai.4007:0048": {
-   "en": "Abu al-Zinad",
-   "ur": "ابو الزناد",
-   "transliteration": "Abū al-Zinād",
+   "en": "az-Zinad",
+   "ur": "زناد",
+   "transliteration": "az-Zinād",
    "root": null,
-   "lemma": "أَبُو الزِّنَاد",
+   "lemma": "زِنَاد",
    "pos": "PN",
    "features": {
-    "case": "nominative",
-    "state": "construct",
-    "gender": "masc",
-    "number": "sing"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:nasai.4007:0049": {
@@ -590,22 +584,26 @@
    }
   },
   "uh:token:nasai.4007:0053": {
-   "en": "bin Awf",
-   "ur": "بن عوف",
-   "transliteration": "ibn ʿAwf",
-   "root": null,
-   "lemma": "عوف",
-   "pos": "PN",
-   "features": {}
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:nasai.4007:0054": {
-   "en": "bin Awf",
-   "ur": "بن عوف",
-   "transliteration": "ibn ʿAwf",
+   "en": "Awf",
+   "ur": "عوف",
+   "transliteration": "ʿAwf",
    "root": null,
-   "lemma": "عوف",
+   "lemma": "عَوْف",
    "pos": "PN",
-   "features": {}
+   "features": {
+    "case": "nom"
+   }
   },
   "uh:token:nasai.4007:0022": {
    "en": "chapter (or: door)",

@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.5499:0002": {
-   "en": "O Allah",
-   "ur": "اے اللہ",
-   "transliteration": "Allāhumma",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "اللهم",
-   "pos": "VOC",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:nasai.5499:0003": {
    "en": "indeed I / verily I",
@@ -31,19 +33,17 @@
    }
   },
   "uh:token:nasai.5499:0004": {
-   "en": "I seek refuge",
-   "ur": "میں پناہ مانگتا ہوں",
-   "transliteration": "aʿūdhu",
-   "root": "ع-و-ذ",
-   "lemma": "عَاذَ",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "IMPF",
-    "voice": "ACT",
-    "person": "1",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": "IND"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.5499:0005": {
@@ -60,13 +60,15 @@
    }
   },
   "uh:token:nasai.5499:0006": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
-   "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
-   "features": {}
+   "en": "O Allah",
+   "ur": "اے اللہ",
+   "transliteration": "allāhumma",
+   "root": "ا ل ه",
+   "lemma": "اللَّهُمَّ",
+   "pos": "N",
+   "features": {
+    "type": "vocative"
+   }
   },
   "uh:token:nasai.5499:0008": {
    "en": "the journey / travel",
@@ -192,11 +194,11 @@
    }
   },
   "uh:token:nasai.5499:0010": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },
@@ -205,7 +207,7 @@
    "ur": "میں",
    "transliteration": "fī",
    "root": null,
-   "lemma": "في",
+   "lemma": "فِي",
    "pos": "PREP",
    "features": {}
   },

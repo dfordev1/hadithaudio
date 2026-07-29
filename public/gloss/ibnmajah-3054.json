@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.3054:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:ibnmajah.3054:0002": {
    "en": "the Messenger of Allah",
@@ -74,12 +79,12 @@
    "features": {}
   },
   "uh:token:ibnmajah.3054:0008": {
-   "en": "may Allah bless him and grant him peace",
-   "ur": "صلی اللہ علیہ وسلم",
-   "transliteration": "ṣallā Allāhu ʿalayhi wa-sallama",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
+   "transliteration": "mā",
    "root": null,
-   "lemma": "صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "lemma": "مَا",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:ibnmajah.3054:0010": {
@@ -99,20 +104,13 @@
    }
   },
   "uh:token:ibnmajah.3054:0011": {
-   "en": "he throws (pelts)",
-   "ur": "وہ پھینکتا ہے (کنکری مارتا ہے)",
-   "transliteration": "yarmī",
-   "root": "ر م ي",
-   "lemma": "رَمَى",
-   "pos": "V",
-   "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "3",
-    "gender": "masculine",
-    "number": "singular",
-    "mood": "indicative"
-   }
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
+   "root": null,
+   "lemma": "مِنْ",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:ibnmajah.3054:0012": {
    "en": "the pebbles/jamarat (stoning pillars)",
@@ -129,13 +127,19 @@
    }
   },
   "uh:token:ibnmajah.3054:0013": {
-   "en": "when/if",
-   "ur": "جب",
-   "transliteration": "idhā",
-   "root": null,
-   "lemma": "إِذَا",
-   "pos": "SUB",
-   "features": {}
+   "en": "he sent blessings / prayed",
+   "ur": "درود بھیجا / نماز پڑھی",
+   "transliteration": "ṣallā",
+   "root": "ص ل و",
+   "lemma": "صَلَّى",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg",
+    "form": "II"
+   }
   },
   "uh:token:ibnmajah.3054:0014": {
    "en": "it ceased/passed",
@@ -255,22 +259,26 @@
    }
   },
   "uh:token:ibnmajah.3054:0004": {
-   "en": "then / in that case",
-   "ur": "تو / اس صورت میں",
-   "transliteration": "idhan",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "إِذًا",
-   "pos": "PART",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:ibnmajah.3054:0009": {
-   "en": "then / in that case",
-   "ur": "تو / اس صورت میں",
-   "transliteration": "idhan",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "إِذًا",
-   "pos": "PART",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   }
  }
 }

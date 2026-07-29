@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.2804:0002": {
-   "en": "what/not",
-   "ur": "جو / نہیں",
-   "transliteration": "mā",
-   "root": null,
-   "lemma": "مَا",
-   "pos": "NEG",
-   "features": {}
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:ibnmajah.2804:0003": {
    "en": "you (pl.) say",
@@ -35,12 +40,12 @@
    }
   },
   "uh:token:ibnmajah.2804:0004": {
-   "en": "in",
-   "ur": "میں",
-   "transliteration": "fī",
+   "en": "what / not",
+   "ur": "جو / کیا / نہیں",
+   "transliteration": "mā",
    "root": null,
-   "lemma": "فِي",
-   "pos": "P",
+   "lemma": "مَا",
+   "pos": "PART",
    "features": {}
   },
   "uh:token:ibnmajah.2804:0005": {
@@ -58,12 +63,12 @@
    }
   },
   "uh:token:ibnmajah.2804:0006": {
-   "en": "among you / in you",
-   "ur": "تم میں",
-   "transliteration": "fīkum",
+   "en": "in",
+   "ur": "میں",
+   "transliteration": "fī",
    "root": null,
-   "lemma": "فِيكُمْ",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.2804:0009": {
@@ -120,43 +125,38 @@
    }
   },
   "uh:token:ibnmajah.2804:0013": {
-   "en": "the path of Allah",
-   "ur": "اللہ کی راہ",
-   "transliteration": "sabīl Allāh",
-   "root": "س-ب-ل",
-   "lemma": "سبيل",
-   "pos": "COMPOUND",
-   "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "in",
+   "ur": "میں",
+   "transliteration": "fī",
+   "root": null,
+   "lemma": "فِي",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:ibnmajah.2804:0015": {
-   "en": "he said",
-   "ur": "اس نے کہا",
-   "transliteration": "qāla",
-   "root": "ق-و-ل",
-   "lemma": "قَالَ",
-   "pos": "V",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.2804:0017": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
-   "transliteration": "inna",
-   "root": null,
-   "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:ibnmajah.2804:0018": {
    "en": "martyrs",
@@ -173,17 +173,14 @@
    }
   },
   "uh:token:ibnmajah.2804:0019": {
-   "en": "my nation, my community (ummah)",
-   "ur": "میری امت",
-   "transliteration": "ummatī",
-   "root": "أ-م-م",
-   "lemma": "أمة",
-   "pos": "N",
+   "en": "indeed / verily",
+   "ur": "بے شک",
+   "transliteration": "inna",
+   "root": null,
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "CONST",
-    "gender": "FEM",
-    "number": "SING"
+    "type": "emphasis"
    }
   },
   "uh:token:ibnmajah.2804:0020": {
@@ -196,13 +193,15 @@
    "features": {}
   },
   "uh:token:ibnmajah.2804:0022": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "when / if",
+   "ur": "جب",
+   "transliteration": "idhā",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
-   "features": {}
+   "lemma": "إِذَا",
+   "pos": "SUB",
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:ibnmajah.2804:0023": {
    "en": "he killed",
@@ -221,12 +220,12 @@
    }
   },
   "uh:token:ibnmajah.2804:0024": {
-   "en": "in",
-   "ur": "میں",
-   "transliteration": "fī",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "فِي",
-   "pos": "P",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.2804:0025": {
@@ -244,44 +243,34 @@
    }
   },
   "uh:token:ibnmajah.2804:0026": {
-   "en": "the path of Allah",
-   "ur": "اللہ کی راہ",
-   "transliteration": "sabīl Allāh",
-   "root": "س-ب-ل",
-   "lemma": "سبيل",
-   "pos": "COMPOUND",
-   "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "in",
+   "ur": "میں",
+   "transliteration": "fī",
+   "root": null,
+   "lemma": "فِي",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:ibnmajah.2804:0027": {
-   "en": "so he/it (is)",
-   "ur": "پس وہ",
-   "transliteration": "fa-huwa",
-   "root": null,
-   "lemma": "هو",
-   "pos": "PRON",
+   "en": "path / way",
+   "ur": "راستہ",
+   "transliteration": "sabīl",
+   "root": "س ب ل",
+   "lemma": "سَبِيل",
+   "pos": "N",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.2804:0028": {
-   "en": "martyr",
-   "ur": "شہید",
-   "transliteration": "shahīd",
-   "root": "شهد",
-   "lemma": "شهيد",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.2804:0029": {
@@ -333,44 +322,34 @@
    }
   },
   "uh:token:ibnmajah.2804:0033": {
-   "en": "the path of Allah",
-   "ur": "اللہ کی راہ",
-   "transliteration": "sabīl Allāh",
-   "root": "س-ب-ل",
-   "lemma": "سبيل",
-   "pos": "COMPOUND",
-   "features": {
-    "case": "GEN",
-    "state": "CONST",
-    "gender": "MASC",
-    "number": "SING"
-   }
+   "en": "in",
+   "ur": "میں",
+   "transliteration": "fī",
+   "root": null,
+   "lemma": "فِي",
+   "pos": "PREP",
+   "features": {}
   },
   "uh:token:ibnmajah.2804:0034": {
-   "en": "so he/it (is)",
-   "ur": "پس وہ",
-   "transliteration": "fa-huwa",
-   "root": null,
-   "lemma": "هو",
-   "pos": "PRON",
+   "en": "path / way",
+   "ur": "راستہ",
+   "transliteration": "sabīl",
+   "root": "س ب ل",
+   "lemma": "سَبِيل",
+   "pos": "N",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.2804:0035": {
-   "en": "martyr",
-   "ur": "شہید",
-   "transliteration": "shahīd",
-   "root": "شهد",
-   "lemma": "شهيد",
-   "pos": "N",
+   "en": "Allah",
+   "ur": "اللہ",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
+   "pos": "PN",
    "features": {
-    "case": "NOM",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.2804:0036": {
@@ -446,19 +425,17 @@
    }
   },
   "uh:token:ibnmajah.2804:0044": {
-   "en": "and he informed me",
-   "ur": "اور اس نے مجھے خبر دی",
-   "transliteration": "wa-akhbaranī",
-   "root": "خ-ب-ر",
-   "lemma": "أخبر",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:ibnmajah.2804:0045": {
@@ -490,39 +467,36 @@
    }
   },
   "uh:token:ibnmajah.2804:0049": {
-   "en": "from/on the authority of",
-   "ur": "سے / کی روایت سے",
-   "transliteration": "ʿan",
-   "root": null,
-   "lemma": "عَنْ",
-   "pos": "P",
-   "features": {}
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:ibnmajah.2804:0053": {
+   "en": "Salih",
+   "ur": "صالح",
+   "transliteration": "Ṣāliḥ",
+   "root": null,
+   "lemma": "صَالِح",
+   "pos": "PN",
+   "features": {
+    "case": "gen"
+   }
+  },
+  "uh:token:ibnmajah.2804:0055": {
    "en": "in it",
    "ur": "اس میں",
    "transliteration": "fīhi",
    "root": null,
-   "lemma": "في",
-   "pos": "P",
+   "lemma": "فِي",
+   "pos": "PREP",
    "features": {
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING"
-   }
-  },
-  "uh:token:ibnmajah.2804:0055": {
-   "en": "and drowning",
-   "ur": "اور ڈوبنا",
-   "transliteration": "wa-al-gharaq",
-   "root": "غ ر ق",
-   "lemma": "غَرَق",
-   "pos": "N",
-   "features": {
-    "case": "nominative",
-    "state": "definite",
-    "gender": "masculine",
-    "number": "singular"
+    "suffix": "3ms"
    }
   },
   "uh:token:ibnmajah.2804:0056": {
@@ -562,37 +536,34 @@
    }
   },
   "uh:token:ibnmajah.2804:0048": {
-   "en": "Allah / God",
+   "en": "Allah",
    "ur": "اللہ",
-   "transliteration": "allāh",
-   "root": null,
-   "lemma": "الله",
+   "transliteration": "Allāh",
+   "root": "ا ل ه",
+   "lemma": "اللَّه",
    "pos": "PN",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.2804:0051": {
    "en": "from / on the authority of",
-   "ur": "سے / کی طرف سے",
+   "ur": "سے",
    "transliteration": "ʿan",
    "root": null,
-   "lemma": "عن",
+   "lemma": "عَنْ",
    "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.2804:0052": {
-   "en": "father of (oblique/genitive)",
-   "ur": "باپ",
+   "en": "my father / father of",
+   "ur": "میرے باپ / باپ",
    "transliteration": "abī",
-   "root": "أ-ب-و",
-   "lemma": "أب",
+   "root": "ا ب و",
+   "lemma": "أَب",
    "pos": "N",
    "features": {
-    "gender": "M",
-    "number": "SG",
-    "case": "GEN"
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.2804:0007": {
@@ -609,15 +580,14 @@
    }
   },
   "uh:token:ibnmajah.2804:0014": {
-   "en": "a way/path",
+   "en": "path / way",
    "ur": "راستہ",
-   "transliteration": "sabīlin",
-   "root": "س-ب-ل",
+   "transliteration": "sabīl",
+   "root": "س ب ل",
    "lemma": "سَبِيل",
    "pos": "N",
    "features": {
-    "case": "genitive",
-    "state": "indefinite"
+    "case": "gen"
    }
   },
   "uh:token:ibnmajah.2804:0041": {
@@ -670,14 +640,14 @@
    }
   },
   "uh:token:ibnmajah.2804:0021": {
-   "en": "my nation/community",
+   "en": "my community / my nation",
    "ur": "میری امت",
-   "transliteration": "ummati",
-   "root": "أ-م-م",
+   "transliteration": "ummatī",
+   "root": "ا م م",
    "lemma": "أُمَّة",
    "pos": "N",
    "features": {
-    "person": "1"
+    "suffix": "1s"
    }
   },
   "uh:token:ibnmajah.2804:0038": {

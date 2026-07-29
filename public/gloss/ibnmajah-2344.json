@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:ibnmajah.2344:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:ibnmajah.2344:0003": {
    "en": "sale / trade",
@@ -47,12 +49,12 @@
    }
   },
   "uh:token:ibnmajah.2344:0005": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
+   "en": "from / of",
+   "ur": "سے / میں سے",
+   "transliteration": "min",
    "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
+   "lemma": "مِنْ",
+   "pos": "PREP",
    "features": {}
   },
   "uh:token:ibnmajah.2344:0006": {
@@ -100,25 +102,26 @@
    }
   },
   "uh:token:ibnmajah.2344:0012": {
-   "en": "Abu al-Walid",
-   "ur": "ابو الولید",
-   "transliteration": "Abū al-Walīd",
-   "root": null,
-   "lemma": "أبو الوليد",
-   "pos": "COMPOUND",
+   "en": "father of (Abu)",
+   "ur": "باپ (ابو)",
+   "transliteration": "abū",
+   "root": "ا ب و",
+   "lemma": "أَب",
+   "pos": "N",
    "features": {
-    "case": "NOM"
+    "case": "nom"
    }
   },
   "uh:token:ibnmajah.2344:0013": {
-   "en": "Abu al-Walid",
-   "ur": "ابو الولید",
-   "transliteration": "Abū al-Walīd",
+   "en": "al-Walid",
+   "ur": "ولید",
+   "transliteration": "al-Walīd",
    "root": null,
-   "lemma": "أبو الوليد",
-   "pos": "COMPOUND",
+   "lemma": "وَلِيد",
+   "pos": "PN",
    "features": {
-    "case": "NOM"
+    "case": "nom",
+    "definite": true
    }
   },
   "uh:token:ibnmajah.2344:0014": {
@@ -143,17 +146,15 @@
    }
   },
   "uh:token:ibnmajah.2344:0016": {
-   "en": "the hadith",
+   "en": "the hadith / the report",
    "ur": "حدیث",
    "transliteration": "al-ḥadīth",
-   "root": "ح-د-ث",
-   "lemma": "حديث",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
    "pos": "N",
    "features": {
-    "case": "ACC",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   }
  }

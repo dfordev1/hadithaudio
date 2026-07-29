@@ -10,13 +10,15 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:muslim.1644:0002": {
-   "en": "when/if",
+   "en": "when / if",
    "ur": "جب",
    "transliteration": "idhā",
    "root": null,
    "lemma": "إِذَا",
    "pos": "SUB",
-   "features": {}
+   "features": {
+    "type": "conditional"
+   }
   },
   "uh:token:muslim.1644:0003": {
    "en": "it (the prayer) was established/begun",
@@ -37,48 +39,48 @@
   "uh:token:muslim.1644:0004": {
    "en": "the prayer",
    "ur": "نماز",
-   "transliteration": "al-ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "aṣ-ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen",
+    "definite": true
    }
   },
   "uh:token:muslim.1644:0005": {
-   "en": "and not / so do not",
-   "ur": "پس نہیں / پس نہ",
+   "en": "then not / so do not",
+   "ur": "پس نہیں",
    "transliteration": "fa-lā",
    "root": null,
-   "lemma": "ف + لا",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "fa",
+    "type": "negation"
+   }
   },
   "uh:token:muslim.1644:0006": {
-   "en": "prayer",
+   "en": "a prayer",
    "ur": "نماز",
-   "transliteration": "ṣalāh",
-   "root": "ص-ل-و",
-   "lemma": "صلاة",
+   "transliteration": "ṣalāt",
+   "root": "ص ل و",
+   "lemma": "صَلَاة",
    "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "INDEF",
-    "gender": "FEM",
-    "number": "SING"
+    "case": "gen"
    }
   },
   "uh:token:muslim.1644:0007": {
-   "en": "except",
-   "ur": "سوائے",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
    "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
+   "pos": "PART",
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:muslim.1644:0008": {
    "en": "the obligatory (prayer)",
@@ -125,63 +127,62 @@
    }
   },
   "uh:token:muslim.1644:0013": {
-   "en": "bin Hatim",
-   "ur": "بن حاتم",
-   "transliteration": "bin Ḥātim",
-   "root": null,
-   "lemma": "بن حاتم",
-   "pos": "PN",
-   "features": {}
+   "en": "son of",
+   "ur": "بیٹا",
+   "transliteration": "bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "case": "acc"
+   }
   },
   "uh:token:muslim.1644:0014": {
-   "en": "bin Hatim",
-   "ur": "بن حاتم",
-   "transliteration": "bin Ḥātim",
+   "en": "Hatim",
+   "ur": "حاتم",
+   "transliteration": "Ḥātim",
    "root": null,
-   "lemma": "بن حاتم",
-   "pos": "PN",
-   "features": {}
-  },
-  "uh:token:muslim.1644:0015": {
-   "en": "and Ibn Rafi'",
-   "ur": "اور ابن رافع",
-   "transliteration": "wa-ibn Rāfiʿ",
-   "root": null,
-   "lemma": "اِبْن رَافِع",
+   "lemma": "حَاتِم",
    "pos": "PN",
    "features": {
-    "case": "nominative",
-    "gender": "masc",
-    "number": "singular"
+    "case": "gen"
+   }
+  },
+  "uh:token:muslim.1644:0015": {
+   "en": "and son of",
+   "ur": "اور بیٹا",
+   "transliteration": "wa-bn",
+   "root": "ب ن و",
+   "lemma": "ابْن",
+   "pos": "N",
+   "features": {
+    "prefix": "wa",
+    "case": "nom"
    }
   },
   "uh:token:muslim.1644:0016": {
-   "en": "and Ibn Rafi'",
-   "ur": "اور ابن رافع",
-   "transliteration": "wa-ibn Rāfiʿ",
+   "en": "Rafi",
+   "ur": "رافع",
+   "transliteration": "Rāfiʿ",
    "root": null,
-   "lemma": "اِبْن رَافِع",
+   "lemma": "رَافِع",
    "pos": "PN",
    "features": {
-    "case": "nominative",
-    "gender": "masc",
-    "number": "singular"
+    "case": "gen"
    }
   },
   "uh:token:muslim.1644:0017": {
-   "en": "the two of them said",
+   "en": "they both said",
    "ur": "ان دونوں نے کہا",
    "transliteration": "qālā",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "DUAL",
-    "mood": null
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "dual"
    }
   },
   "uh:token:muslim.1644:0018": {

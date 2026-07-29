@@ -10,13 +10,18 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:abudawud.1983:0001": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
-   "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "en": "he was",
+   "ur": "وہ تھا",
+   "transliteration": "kāna",
+   "root": "ك و ن",
+   "lemma": "كَانَ",
+   "pos": "V",
+   "features": {
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.1983:0002": {
    "en": "the Prophet, may Allah bless him and grant him peace",
@@ -33,17 +38,14 @@
    }
   },
   "uh:token:abudawud.1983:0003": {
-   "en": "the Prophet, may Allah bless him and grant him peace",
-   "ur": "نبی صلی اللہ علیہ وسلم",
-   "transliteration": "al-nabī ṣallā Allāhu ʿalayhi wa-sallama",
-   "root": "ن-ب-أ",
-   "lemma": "النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
-   "pos": "COMPOUND",
+   "en": "day / on the day",
+   "ur": "دن",
+   "transliteration": "yawm",
+   "root": "ي و م",
+   "lemma": "يَوْم",
+   "pos": "N",
    "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "case": "acc"
    }
   },
   "uh:token:abudawud.1983:0004": {
@@ -89,19 +91,14 @@
    }
   },
   "uh:token:abudawud.1983:0007": {
-   "en": "he/it was",
-   "ur": "تھا",
-   "transliteration": "kāna",
-   "root": "ك-و-ن",
-   "lemma": "كَانَ",
-   "pos": "V",
+   "en": "no / not",
+   "ur": "نہیں",
+   "transliteration": "lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
    "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
+    "type": "negation"
    }
   },
   "uh:token:abudawud.1983:0008": {
@@ -164,43 +161,40 @@
    }
   },
   "uh:token:abudawud.1983:0013": {
-   "en": "no/not",
-   "ur": "نہیں",
-   "transliteration": "lā",
-   "root": null,
-   "lemma": "لَا",
-   "pos": "NEG",
-   "features": {}
+   "en": "then he said",
+   "ur": "پھر اس نے کہا",
+   "transliteration": "fa-qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
+   "features": {
+    "prefix": "fa",
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
+   }
   },
   "uh:token:abudawud.1983:0014": {
-   "en": "sin, blame, difficulty",
-   "ur": "حرج، گناہ",
-   "transliteration": "ḥaraj",
-   "root": "ح-ر-ج",
-   "lemma": "حرج",
-   "pos": "N",
+   "en": "indeed I",
+   "ur": "بے شک میں",
+   "transliteration": "innī",
+   "root": null,
+   "lemma": "إِنَّ",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "type": "emphasis",
+    "suffix": "1s"
    }
   },
   "uh:token:abudawud.1983:0017": {
-   "en": "and he asked him",
-   "ur": "اور اس نے اس سے پوچھا",
-   "transliteration": "fa-saʾalahu",
-   "root": "س-أ-ل",
-   "lemma": "سَأَلَ",
-   "pos": "V",
-   "features": {
-    "aspect": "PERF",
-    "voice": "ACT",
-    "person": "3",
-    "gender": "MASC",
-    "number": "SING",
-    "mood": null
-   }
+   "en": "that",
+   "ur": "کہ",
+   "transliteration": "anna",
+   "root": null,
+   "lemma": "أَنَّ",
+   "pos": "SUB",
+   "features": {}
   },
   "uh:token:abudawud.1983:0018": {
    "en": "a man",
@@ -233,15 +227,17 @@
    }
   },
   "uh:token:abudawud.1983:0020": {
-   "en": "indeed I / verily I",
-   "ur": "بیشک میں",
-   "transliteration": "innī",
-   "root": null,
-   "lemma": "إن + ي",
-   "pos": "EMPH",
+   "en": "he said",
+   "ur": "اس نے کہا",
+   "transliteration": "qāla",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
+   "pos": "V",
    "features": {
-    "person": "1",
-    "number": "SING"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.1983:0021": {
@@ -274,13 +270,16 @@
    }
   },
   "uh:token:abudawud.1983:0023": {
-   "en": "that",
-   "ur": "کہ",
-   "transliteration": "anna",
+   "en": "and not / nor",
+   "ur": "اور نہیں",
+   "transliteration": "wa-lā",
    "root": null,
-   "lemma": "أَنَّ",
-   "pos": "SUB",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.1983:0024": {
    "en": "I slaughter / shall I slaughter",
@@ -324,17 +323,15 @@
    "features": {}
   },
   "uh:token:abudawud.1983:0030": {
-   "en": "sin, blame, difficulty",
-   "ur": "حرج، گناہ",
-   "transliteration": "ḥaraj",
-   "root": "ح-ر-ج",
-   "lemma": "حرج",
-   "pos": "N",
+   "en": "and did not",
+   "ur": "اور نہیں",
+   "transliteration": "wa-lam",
+   "root": null,
+   "lemma": "لَمْ",
+   "pos": "PART",
    "features": {
-    "case": "NOM",
-    "state": "INDEF",
-    "gender": "MASC",
-    "number": "SING"
+    "prefix": "wa",
+    "type": "negation"
    }
   },
   "uh:token:abudawud.1983:0033": {
@@ -382,13 +379,16 @@
    }
   },
   "uh:token:abudawud.1983:0036": {
-   "en": "and not",
+   "en": "and not / nor",
    "ur": "اور نہیں",
-   "transliteration": "wa-lam",
+   "transliteration": "wa-lā",
    "root": null,
-   "lemma": "لم",
-   "pos": "NEG",
-   "features": {}
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "prefix": "wa",
+    "type": "negation"
+   }
   },
   "uh:token:abudawud.1983:0039": {
    "en": "he said",
@@ -461,14 +461,14 @@
    "en": "he said",
    "ur": "اس نے کہا",
    "transliteration": "qāla",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "tense": "PERF",
-    "person": "3",
-    "gender": "M",
-    "number": "SG"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:abudawud.1983:0037": {
@@ -482,12 +482,15 @@
   },
   "uh:token:abudawud.1983:0016": {
    "en": "before",
-   "ur": "پہلے / قبل",
-   "transliteration": "qablu",
-   "root": "ق-ب-ل",
-   "lemma": "قَبْل",
-   "pos": "ADV",
-   "features": {}
+   "ur": "پہلے",
+   "transliteration": "qabla",
+   "root": "ق ب ل",
+   "lemma": "قَبْلَ",
+   "pos": "N",
+   "features": {
+    "case": "acc",
+    "type": "adverb"
+   }
   },
   "uh:token:abudawud.1983:0028": {
    "en": "indeed I",

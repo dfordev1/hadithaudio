@@ -107,6 +107,51 @@
    "features": {}
   },
   "uh:token:tirmidhi.1994:0012": {
+   "en": "the hadith / the report",
+   "ur": "حدیث",
+   "transliteration": "al-ḥadīth",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
+   "pos": "N",
+   "features": {
+    "case": "gen",
+    "definite": true
+   }
+  },
+  "uh:token:tirmidhi.1994:0013": {
+   "en": "a hadith / report",
+   "ur": "حدیث",
+   "transliteration": "ḥadīth",
+   "root": "ح د ث",
+   "lemma": "حَدِيث",
+   "pos": "N",
+   "features": {
+    "case": "nom"
+   }
+  },
+  "uh:token:tirmidhi.1994:0014": {
+   "en": "strange / rare",
+   "ur": "غریب / نادر",
+   "transliteration": "gharīb",
+   "root": "غ ر ب",
+   "lemma": "غَرِيب",
+   "pos": "ADJ",
+   "features": {
+    "case": "nom"
+   }
+  },
+  "uh:token:tirmidhi.1994:0015": {
+   "en": "no / not",
+   "ur": "نہیں",
+   "transliteration": "lā",
+   "root": null,
+   "lemma": "لَا",
+   "pos": "PART",
+   "features": {
+    "type": "negation"
+   }
+  },
+  "uh:token:tirmidhi.1994:0016": {
    "en": "we know it",
    "ur": "ہم اسے جانتے ہیں",
    "transliteration": "naʿrifuhu",
@@ -114,64 +159,18 @@
    "lemma": "عَرَفَ",
    "pos": "V",
    "features": {
-    "aspect": "imperfect",
-    "voice": "active",
-    "person": "1",
-    "gender": "common",
-    "number": "plural",
-    "mood": "indicative"
-   }
-  },
-  "uh:token:tirmidhi.1994:0013": {
-   "en": "except",
-   "ur": "سوائے",
-   "transliteration": "illā",
-   "root": null,
-   "lemma": "إِلَّا",
-   "pos": "ACC",
-   "features": {}
-  },
-  "uh:token:tirmidhi.1994:0014": {
-   "en": "from/who",
-   "ur": "سے / جو",
-   "transliteration": "man",
-   "root": null,
-   "lemma": "مَنْ",
-   "pos": "REL",
-   "features": {}
-  },
-  "uh:token:tirmidhi.1994:0015": {
-   "en": "this",
-   "ur": "یہ",
-   "transliteration": "hādhā",
-   "root": null,
-   "lemma": "هَذَا",
-   "pos": "DEM",
-   "features": {
-    "gender": "MASC",
-    "number": "SING"
-   }
-  },
-  "uh:token:tirmidhi.1994:0016": {
-   "en": "the face",
-   "ur": "چہرہ",
-   "transliteration": "al-wajh",
-   "root": "و ج ه",
-   "lemma": "وَجْه",
-   "pos": "N",
-   "features": {
-    "case": "NOM",
-    "state": "DEF",
-    "gender": "MASC",
-    "number": "SING"
+    "aspect": "impf",
+    "person": 1,
+    "number": "pl",
+    "object": "3ms"
    }
   },
   "uh:token:tirmidhi.1994:0005": {
-   "en": "that (subordinating particle)",
+   "en": "that",
    "ur": "کہ",
-   "transliteration": "an",
+   "transliteration": "anna",
    "root": null,
-   "lemma": "أَنْ",
+   "lemma": "أَنَّ",
    "pos": "SUB",
    "features": {}
   },
@@ -180,27 +179,29 @@
    "ur": "نہیں",
    "transliteration": "lā",
    "root": null,
-   "lemma": "لا",
+   "lemma": "لَا",
    "pos": "PART",
    "features": {
     "type": "negation"
    }
   },
   "uh:token:tirmidhi.1994:0017": {
-   "en": "except, only",
-   "ur": "سوائے، مگر",
+   "en": "except / but",
+   "ur": "مگر / سوائے",
    "transliteration": "illā",
    "root": null,
-   "lemma": "إِلاَّ",
+   "lemma": "إِلَّا",
    "pos": "PART",
-   "features": {}
+   "features": {
+    "type": "exception"
+   }
   },
   "uh:token:tirmidhi.1994:0018": {
-   "en": "from / who",
-   "ur": "سے / جو",
+   "en": "from / of",
+   "ur": "سے / میں سے",
    "transliteration": "min",
    "root": null,
-   "lemma": "من",
+   "lemma": "مِنْ",
    "pos": "PREP",
    "features": {}
   },
@@ -209,11 +210,12 @@
    "ur": "یہ",
    "transliteration": "hādhā",
    "root": null,
-   "lemma": "هذا",
-   "pos": "DEM",
+   "lemma": "هَذَا",
+   "pos": "PRON",
    "features": {
-    "gender": "M",
-    "number": "SG"
+    "type": "demonstrative",
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:tirmidhi.1994:0004": {
@@ -229,14 +231,15 @@
    }
   },
   "uh:token:tirmidhi.1994:0020": {
-   "en": "the face",
-   "ur": "چہرہ",
+   "en": "the face / the aspect",
+   "ur": "چہرہ / پہلو",
    "transliteration": "al-wajh",
-   "root": "و-ج-ه",
+   "root": "و ج ه",
    "lemma": "وَجْه",
    "pos": "N",
    "features": {
-    "case": "gen"
+    "case": "nom",
+    "definite": true
    }
   }
  }

@@ -10,13 +10,16 @@
  "note": "Word-by-word glosses, machine-generated via dictionary-based pipeline, aligned to husx token ids. Learning aid, not a scholarly translation. Each gloss includes en/ur meaning plus academic transliteration and QAC-style grammar (root, lemma, pos, features). Coverage is partial (~91% of unit-occurrences); rarer units are not yet covered. Supplied words in [brackets] where applicable.",
  "glosses": {
   "uh:token:nasai.3360:0002": {
-   "en": "indeed/if",
-   "ur": "بیشک / اگر",
-   "transliteration": "inna",
-   "root": null,
-   "lemma": "إِنَّ",
-   "pos": "EMPH",
-   "features": {}
+   "en": "the man",
+   "ur": "آدمی",
+   "transliteration": "ar-rajul",
+   "root": "ر ج ل",
+   "lemma": "رَجُل",
+   "pos": "N",
+   "features": {
+    "case": "gen",
+    "definite": true
+   }
   },
   "uh:token:nasai.3360:0003": {
    "en": "she was/it was",
@@ -73,13 +76,15 @@
    }
   },
   "uh:token:nasai.3360:0008": {
-   "en": "and if / even if",
-   "ur": "اور اگر",
-   "transliteration": "wa-in",
+   "en": "indeed / verily",
+   "ur": "بے شک",
+   "transliteration": "inna",
    "root": null,
-   "lemma": "و + إن",
-   "pos": "SUB",
-   "features": {}
+   "lemma": "إِنَّ",
+   "pos": "PART",
+   "features": {
+    "type": "emphasis"
+   }
   },
   "uh:token:nasai.3360:0009": {
    "en": "did not",
@@ -107,18 +112,14 @@
    }
   },
   "uh:token:nasai.3360:0011": {
-   "en": "you made it lawful",
-   "ur": "تو نے اسے حلال کیا",
-   "transliteration": "aḥlaltahā",
-   "root": "ح ل ل",
-   "lemma": "أحل",
-   "pos": "V",
+   "en": "to him / for him",
+   "ur": "اس کے لیے",
+   "transliteration": "lahu",
+   "root": null,
+   "lemma": "لِ",
+   "pos": "PREP",
    "features": {
-    "aspect": "perfect",
-    "voice": "active",
-    "person": "2",
-    "gender": "masculine",
-    "number": "singular"
+    "suffix": "3ms"
    }
   },
   "uh:token:nasai.3360:0012": {
@@ -135,7 +136,7 @@
    "ur": "میں",
    "transliteration": "fī",
    "root": null,
-   "lemma": "في",
+   "lemma": "فِي",
    "pos": "PREP",
    "features": {}
   },
@@ -143,34 +144,36 @@
    "en": "he said",
    "ur": "اس نے کہا",
    "transliteration": "qāla",
-   "root": "ق-و-ل",
-   "lemma": "قال",
+   "root": "ق و ل",
+   "lemma": "قَالَ",
    "pos": "V",
    "features": {
-    "tense": "PERF",
-    "person": "3",
-    "gender": "M",
-    "number": "SG"
+    "aspect": "perf",
+    "person": 3,
+    "gender": "m",
+    "number": "sg"
    }
   },
   "uh:token:nasai.3360:0015": {
-   "en": "not (negates past-tense meaning of jussive verb)",
+   "en": "did not",
    "ur": "نہیں",
    "transliteration": "lam",
    "root": null,
    "lemma": "لَمْ",
    "pos": "PART",
-   "features": {}
+   "features": {
+    "type": "negation"
+   }
   },
   "uh:token:nasai.3360:0018": {
    "en": "to him / for him",
-   "ur": "اس کے لئے",
+   "ur": "اس کے لیے",
    "transliteration": "lahu",
    "root": null,
-   "lemma": "ل",
+   "lemma": "لِ",
    "pos": "PREP",
    "features": {
-    "suffix": "3MS"
+    "suffix": "3ms"
    }
   },
   "uh:token:nasai.3360:0013": {
