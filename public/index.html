@@ -950,19 +950,55 @@ function renderRefs(rb, entry, en){
   }
 }
 
+// Kunya / patronymic markers: أبو X, أم X, ابن/بن X, بنت X (+ و- "and" prefix).
+// Detected by bare (diacritic/punct-stripped) form; merged with a FOLLOWING
+// proper-noun token into one name cell ("Abu Bakr", "Ibn Umar", "Umm Salamah").
+const NAME_BARE = (s) => s.replace(/[ً-ْٰـۖ-ۭ]/gu, "").replace(/[،,.:;"'{}»«‎‏]/gu, "").trim();
+const KUNYA = {
+  "أبو":"Abu","أبا":"Abu","أبي":"Abu","أم":"Umm","ابن":"Ibn","بن":"Ibn","بنت":"Bint",
+  "وأبو":"and Abu","وأبا":"and Abu","وأبي":"and Abu","وأم":"and Umm","وابن":"and Ibn","وبن":"and Ibn","وبنت":"and Bint",
+};
+const KUNYA_UR = {
+  "أبو":"ابو","أبا":"ابو","أبي":"ابو","أم":"ام","ابن":"ابن","بن":"ابن","بنت":"بنت",
+  "وأبو":"اور ابو","وأبا":"اور ابو","وأبي":"اور ابو","وأم":"اور ام","وابن":"اور ابن","وبن":"اور ابن","وبنت":"اور بنت",
+};
+const stripKunyaPrefix = (en) =>
+  (en || "")
+    .replace(/^((and )?(Abu|Abi|Aba|Umm|Ibn|Bin|Bint)\s+)+/i, "")   // drop leading kunya word(s)
+    .replace(/\s*\((name|proper name|proper noun|tribal nisba|tribal\/nisba name)\)\s*$/i, ""); // drop noise suffix
+
 function buildArabic(tokens, gloss, clickable){
   const arDiv = document.createElement("div"); arDiv.className = "arabic";
   const G = gloss && gloss.glosses ? gloss.glosses : {};
   const spans = []; // index-aligned with tokens (merged runs share one span across their token slots)
   const isHonorific = (t) => (G[t.id] || {}).pos === "HONORIFIC";
   for (let i = 0; i < tokens.length; ) {
-    // Merge a consecutive run of honorific-formula tokens (صلى الله عليه وسلم)
-    // into ONE cell shown with a single meaning, instead of repeating it.
     let run = 1;
-    if (isHonorific(tokens[i])) { while (i + run < tokens.length && isHonorific(tokens[i + run])) run++; }
+    let g = G[tokens[i].id] || {};
+    let text;
+    // 1) Honorific formula run (صلى الله عليه وسلم) -> one cell, one meaning.
+    if (isHonorific(tokens[i])) {
+      while (i + run < tokens.length && isHonorific(tokens[i + run])) run++;
+      text = tokens.slice(i, i + run).map(t => t.text).join(" ");
+    } else {
+      // 2) Kunya / patronymic: [marker][proper noun] -> one name cell.
+      const mk = KUNYA[NAME_BARE(tokens[i].text)];
+      const nextG = i + 1 < tokens.length ? (G[tokens[i + 1].id] || {}) : null;
+      if (mk && nextG && nextG.pos === "PN") {
+        run = 2;
+        const nameEn = stripKunyaPrefix(nextG.en);
+        text = tokens[i].text + " " + tokens[i + 1].text;
+        g = {
+          en: mk + " " + nameEn,
+          ur: (KUNYA_UR[NAME_BARE(tokens[i].text)] || "") + " " + (nextG.ur || ""),
+          transliteration: [(G[tokens[i].id] || {}).transliteration, nextG.transliteration].filter(Boolean).join(" "),
+          root: null, lemma: text, pos: "PN", features: {},
+        };
+      } else {
+        text = tokens[i].text; // plain single token
+      }
+    }
     const first = tokens[i];
-    const g = G[first.id] || {};
-    const text = run > 1 ? tokens.slice(i, i + run).map(t => t.text).join(" ") : first.text;
     const s = document.createElement("span"); s.className = "w" + (run > 1 ? " w-unit" : "");
     s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span>`;
     s.querySelector(".t").textContent = text;
