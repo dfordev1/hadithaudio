@@ -238,6 +238,32 @@
   body[data-wbw="ur"] .arabic span.w .g-ur,
   body[data-wbw="both"] .arabic span.w .g-ur { display:block; }
 
+  /* ---------- grammar popover (long-press a word) ---------- */
+  .arabic span.w.gram-open { background:var(--hl-bg); color:var(--hl-ink); border-radius:6px; }
+  #gramPop {
+    position:fixed; z-index:60; max-width:min(320px, 92vw);
+    background:var(--dock); color:var(--ink); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow); padding:12px 14px;
+    font-family:var(--ui-font); font-size:.82rem; line-height:1.5;
+    opacity:0; transform:translateY(4px); pointer-events:none;
+    transition:opacity .12s ease, transform .12s ease;
+  }
+  #gramPop.show { opacity:1; transform:translateY(0); }
+  #gramPop .gp-ar { font-family:var(--ar-font); font-size:1.5rem; direction:rtl; margin-bottom:2px; }
+  #gramPop .gp-tr { color:var(--muted); font-style:italic; margin-bottom:8px; }
+  #gramPop .gp-row { display:flex; gap:10px; padding:3px 0; align-items:baseline; }
+  #gramPop .gp-k {
+    color:var(--faint); min-width:82px; font-size:.66rem; flex-shrink:0;
+    text-transform:uppercase; letter-spacing:.06em; font-weight:700;
+  }
+  #gramPop .gp-v { font-weight:500; }
+  #gramPop .gp-v.root { font-family:var(--ar-font); font-size:1.05rem; direction:rtl; letter-spacing:.04em; }
+  #gramPop .gp-feats { display:flex; flex-wrap:wrap; gap:5px; }
+  #gramPop .gp-feats span {
+    background:var(--soft); border-radius:5px; padding:1px 7px; font-size:.72rem; font-weight:600;
+  }
+  #gramPop .gp-hint { margin-top:8px; color:var(--faint); font-size:.66rem; }
+
   .refblock { margin-top:28px; font-size:.88rem; max-width:520px; }
   .refrow { display:flex; gap:12px; padding:5px 0; align-items:baseline; flex-wrap:wrap; }
   .refrow .lbl {
@@ -935,10 +961,86 @@ function buildArabic(tokens, gloss, clickable){
     s.querySelector(".g-en").textContent = g.en || "";
     s.querySelector(".g-ur").textContent = g.ur || "";
     if (clickable && typeof t.start === "number") s.onclick = () => playFrom(t.start);
+    attachLongPressGrammar(s, t.text, g);
     arDiv.append(s, document.createTextNode(" "));
     return s;
   });
   return { arDiv, spans };
+}
+
+/* ---------- grammar popover (long-press) ---------- */
+const POS_LABELS = {
+  V:"verb", N:"noun", PN:"proper noun", ADJ:"adjective", ADV:"adverb",
+  PREP:"preposition", ADP:"preposition", PART:"particle", PRON:"pronoun",
+  DEM:"demonstrative", SUB:"subordinator", CONJ:"conjunction", DET:"determiner",
+  NUM:"numeral", INTJ:"interjection", REL:"relative", HONORIFIC:"honorific formula",
+  PUNCT:"punctuation", X:"unknown",
+};
+function grammarPopEl(){
+  let el = document.getElementById("gramPop");
+  if (!el) {
+    el = document.createElement("div"); el.id = "gramPop";
+    document.body.appendChild(el);
+    addEventListener("scroll", hideGrammar, true);
+    addEventListener("resize", hideGrammar);
+    document.addEventListener("pointerdown", (e) => {
+      if (el.classList.contains("show") && !el.contains(e.target) && !e.target.closest(".w.gram-open")) hideGrammar();
+    });
+  }
+  return el;
+}
+let gramSpan = null;
+function hideGrammar(){
+  const el = document.getElementById("gramPop");
+  if (el) el.classList.remove("show");
+  if (gramSpan) { gramSpan.classList.remove("gram-open"); gramSpan = null; }
+}
+function showGrammar(span, text, g){
+  const el = grammarPopEl();
+  const has = g && (g.root || g.lemma || g.pos || (g.features && Object.keys(g.features).length) || g.transliteration);
+  const rows = [];
+  if (g && g.transliteration) {} // shown as subtitle
+  if (g && g.pos) rows.push(["part of speech", `<span class="gp-v">${POS_LABELS[g.pos] || g.pos}</span>`]);
+  if (g && g.root) rows.push(["root", `<span class="gp-v root">${g.root}</span>`]);
+  if (g && g.lemma) rows.push(["lemma", `<span class="gp-v root">${g.lemma}</span>`]);
+  const feats = g && g.features ? Object.entries(g.features).filter(([k,v]) => v != null && v !== "" && v !== false) : [];
+  if (feats.length) rows.push(["features", `<span class="gp-feats">${feats.map(([k,v]) => `<span>${v === true ? k : String(v)}</span>`).join("")}</span>`]);
+  el.innerHTML =
+    `<div class="gp-ar">${text}</div>` +
+    (g && g.transliteration ? `<div class="gp-tr">${g.transliteration}</div>` : "") +
+    (has ? rows.map(([k,v]) => `<div class="gp-row"><span class="gp-k">${k}</span>${v}</div>`).join("")
+         : `<div class="gp-hint">No grammar data for this word yet.</div>`);
+  // position near the span
+  el.style.left = "0px"; el.style.top = "0px"; el.classList.add("show");
+  const r = span.getBoundingClientRect(); const pr = el.getBoundingClientRect();
+  let left = r.left + r.width/2 - pr.width/2;
+  left = Math.max(8, Math.min(left, innerWidth - pr.width - 8));
+  let top = r.bottom + 8;
+  if (top + pr.height > innerHeight - 8) top = r.top - pr.height - 8;
+  el.style.left = left + "px"; el.style.top = Math.max(8, top) + "px";
+  if (gramSpan) gramSpan.classList.remove("gram-open");
+  gramSpan = span; span.classList.add("gram-open");
+}
+function attachLongPressGrammar(span, text, g){
+  let timer = null, sx = 0, sy = 0, fired = false;
+  const start = (e) => {
+    fired = false;
+    const p = e.touches ? e.touches[0] : e;
+    sx = p.clientX; sy = p.clientY;
+    timer = setTimeout(() => { fired = true; showGrammar(span, text, g); }, 420);
+  };
+  const move = (e) => {
+    const p = e.touches ? e.touches[0] : e;
+    if (Math.abs(p.clientX - sx) > 10 || Math.abs(p.clientY - sy) > 10) { clearTimeout(timer); }
+  };
+  const end = () => clearTimeout(timer);
+  span.addEventListener("pointerdown", start);
+  span.addEventListener("pointermove", move);
+  span.addEventListener("pointerup", end);
+  span.addEventListener("pointercancel", end);
+  // suppress the audio-seek click if a long-press just fired
+  span.addEventListener("click", (e) => { if (fired) { e.stopImmediatePropagation(); e.preventDefault(); fired = false; } }, true);
+  span.addEventListener("contextmenu", (e) => e.preventDefault());
 }
 
 async function openForty(col, n){
