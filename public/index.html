@@ -953,18 +953,27 @@ function renderRefs(rb, entry, en){
 function buildArabic(tokens, gloss, clickable){
   const arDiv = document.createElement("div"); arDiv.className = "arabic";
   const G = gloss && gloss.glosses ? gloss.glosses : {};
-  const spans = tokens.map(t => {
-    const s = document.createElement("span"); s.className = "w";
-    const g = G[t.id] || {};
+  const spans = []; // index-aligned with tokens (merged runs share one span across their token slots)
+  const isHonorific = (t) => (G[t.id] || {}).pos === "HONORIFIC";
+  for (let i = 0; i < tokens.length; ) {
+    // Merge a consecutive run of honorific-formula tokens (صلى الله عليه وسلم)
+    // into ONE cell shown with a single meaning, instead of repeating it.
+    let run = 1;
+    if (isHonorific(tokens[i])) { while (i + run < tokens.length && isHonorific(tokens[i + run])) run++; }
+    const first = tokens[i];
+    const g = G[first.id] || {};
+    const text = run > 1 ? tokens.slice(i, i + run).map(t => t.text).join(" ") : first.text;
+    const s = document.createElement("span"); s.className = "w" + (run > 1 ? " w-unit" : "");
     s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span>`;
-    s.querySelector(".t").textContent = t.text;
+    s.querySelector(".t").textContent = text;
     s.querySelector(".g-en").textContent = g.en || "";
     s.querySelector(".g-ur").textContent = g.ur || "";
-    if (clickable && typeof t.start === "number") s.onclick = () => playFrom(t.start);
-    attachLongPressGrammar(s, t.text, g);
+    if (clickable && typeof first.start === "number") s.onclick = () => playFrom(first.start);
+    attachLongPressGrammar(s, text, g);
     arDiv.append(s, document.createTextNode(" "));
-    return s;
-  });
+    for (let k = 0; k < run; k++) spans.push(s); // keep index alignment for audio highlight
+    i += run;
+  }
   return { arDiv, spans };
 }
 
