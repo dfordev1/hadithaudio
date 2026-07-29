@@ -484,6 +484,12 @@ const COLLECTIONS = [
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true },
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:false, books:true },
+  { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:false, books:true },
+  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:false, books:true },
+  { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5272, audio:false, books:true },
+  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:false, books:true },
+  { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
+  { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:false, books:true },
 ];
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
 
@@ -585,6 +591,12 @@ function shortCollectionName(col){
     qudsi40: "Qudsi",
     shahwaliullah40: "Shah Waliullah",
     malik: "Muwatta",
+    bukhari: "Bukhari",
+    muslim: "Muslim",
+    abudawud: "Abu Dawud",
+    tirmidhi: "Tirmidhi",
+    nasai: "Nasa'i",
+    ibnmajah: "Ibn Majah",
   })[col.slug] || col.en;
 }
 function rememberProgress(slug, n, book){
@@ -769,23 +781,30 @@ function stopAudio(){
 }
 
 /* ---------- caches ---------- */
-const cache = { trans:{}, sun:{}, malikIndex:null, malikBook:{} };
+const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{} };
 
 async function ensureFortySidecars(slug){
   if (!cache.trans[slug]) cache.trans[slug] = await j(`translation/${slug}.json`);
   if (!cache.sun[slug]) cache.sun[slug] = await j(`sunnah/${slug}.json`);
   return { trans: cache.trans[slug], sun: cache.sun[slug] };
 }
-async function ensureMalikIndex(){
-  if (!cache.malikIndex) cache.malikIndex = await j("malik/index.json");
-  return cache.malikIndex;
+async function ensureBookIndex(slug){
+  if (!cache.bookIndex[slug]) cache.bookIndex[slug] = await j(`${slug}/index.json`);
+  return cache.bookIndex[slug];
 }
-async function ensureMalikBook(bk){
-  if (!cache.malikBook[bk]) cache.malikBook[bk] = await j(`malik/book-${bk}.json`);
-  return cache.malikBook[bk];
+async function ensureBookOf(slug, bk){
+  if (!cache.bookOf[slug]) cache.bookOf[slug] = {};
+  if (!cache.bookOf[slug][bk]) cache.bookOf[slug][bk] = await j(`${slug}/book-${bk}.json`);
+  return cache.bookOf[slug][bk];
 }
 function bookForReport(idx, n){
-  return idx.books.find(b => n >= b.from && n <= b.to) || null;
+  const bk = idx.reportBook && idx.reportBook[n];
+  if (bk != null) return idx.books.find(b => b.book === bk) || null;
+  // n not found exactly (gap in numbering, or bad deep link): approximate
+  // by nearest book range. Only a fallback -- ranges are not authoritative
+  // when book numbering interleaves (see build-book-index.mjs).
+  const base = parseInt(n, 10);
+  return idx.books.find(b => base >= b.from && base <= b.to) || null;
 }
 function reportsInBook(bookData){
   return bookData.hadith.map(h => h.n);
@@ -820,15 +839,15 @@ async function fillBookJump(){
   const sel = document.getElementById("bookJump");
   const col = bySlug[state.slug];
   if (!col.books) { sel.classList.add("hidden"); return; }
-  const idx = await ensureMalikIndex();
+  const idx = await ensureBookIndex(col.slug);
   sel.classList.remove("hidden");
   sel.innerHTML = idx.books.map(b => `<option value="${b.book}">Book ${b.book} · ${b.count}</option>`).join("");
   sel.value = String(state.book);
   sel.onchange = async () => {
     const bk = Number(sel.value);
-    const data = await ensureMalikBook(bk);
+    const data = await ensureBookOf(col.slug, bk);
     const first = data.hadith[0]?.n || 1;
-    setHash("malik", first);
+    setHash(col.slug, first);
   };
 }
 
@@ -836,7 +855,7 @@ function fillHadithJump(){
   const sel = document.getElementById("hadithJump");
   sel.innerHTML = state.seq.map(n => `<option value="${n}">Hadith ${n}</option>`).join("");
   sel.value = String(state.n);
-  sel.onchange = () => setHash(state.slug, Number(sel.value));
+  sel.onchange = () => setHash(state.slug, bySlug[state.slug].books ? sel.value : Number(sel.value));
 }
 
 function updateLocSummary(){
@@ -996,35 +1015,36 @@ async function openForty(col, n){
   }
 }
 
-async function openMalik(n){
+async function openBookHadith(slug, n){
   stopAudio();
   dock.classList.add("hidden");
   const stage = document.getElementById("stage");
   stage.innerHTML = `<div class="status">Loading…</div>`;
 
-  const idx = await ensureMalikIndex();
+  const idx = await ensureBookIndex(slug);
   let bookMeta = bookForReport(idx, n);
   if (!bookMeta) {
     // Gaps in numbering: snap to nearest existing report in index range
-    bookMeta = idx.books.find(b => n < b.from) || idx.books[idx.books.length - 1];
-    const data0 = await ensureMalikBook(bookMeta.book);
+    const base = parseInt(n, 10);
+    bookMeta = idx.books.find(b => base < b.from) || idx.books[idx.books.length - 1];
+    const data0 = await ensureBookOf(slug, bookMeta.book);
     n = data0.hadith[0].n;
   }
-  const bookData = await ensureMalikBook(bookMeta.book);
+  const bookData = await ensureBookOf(slug, bookMeta.book);
   let h = bookData.hadith.find(x => x.n === n);
   if (!h) { h = bookData.hadith[0]; n = h.n; }
 
-  const gloss = await jopt(`gloss/malik-${n}.json`);
-  state = { slug:"malik", n, book: bookMeta.book, seq: reportsInBook(bookData) };
+  const gloss = await jopt(`gloss/${slug}-${n}.json`);
+  state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData) };
   setGlossMode("study");
-  rememberProgress("malik", n, bookMeta.book);
+  rememberProgress(slug, n, bookMeta.book);
   fillCollectionJump(); await fillBookJump(); fillHadithJump(); updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
   document.getElementById("audioBadge").classList.add("hidden");
   document.getElementById("textBadge").classList.remove("hidden");
 
-  const col = bySlug.malik;
+  const col = bySlug[slug];
   const wrap = document.createElement("div");
   wrap.innerHTML = `
     <div class="stage-head">
@@ -1049,8 +1069,8 @@ async function openMalik(n){
   const row = document.createElement("div"); row.className = "refrow";
   row.innerHTML = `<span class="lbl">Reference</span>`;
   const a = document.createElement("a");
-  a.href = `https://sunnah.com/malik:${n}`; a.target = "_blank"; a.rel = "noopener";
-  a.textContent = `malik:${n}`;
+  a.href = `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
+  a.textContent = `${slug}:${n}`;
   row.appendChild(a); rb.appendChild(row);
   if (!gloss) {
     const pend = document.createElement("div"); pend.className = "refrow";
@@ -1059,7 +1079,7 @@ async function openMalik(n){
   }
   const copy = document.createElement("button"); copy.className = "copy"; copy.textContent = "Copy link";
   copy.onclick = async () => {
-    const url = location.href.split("#")[0] + `#malik:${n}`;
+    const url = location.href.split("#")[0] + `#${slug}:${n}`;
     try { await navigator.clipboard.writeText(url); copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy link", 1200); }
     catch { prompt("Copy link:", url); }
   };
@@ -1070,7 +1090,7 @@ async function openMalik(n){
   wrap.appendChild(disc);
 
   stage.innerHTML = ""; stage.appendChild(wrap);
-  document.title = `Muwatta ${n} — Hadith WBW`;
+  document.title = `${shortCollectionName(col)} ${n} — Hadith WBW`;
   scrollTo(0, 0);
 }
 
@@ -1078,10 +1098,10 @@ async function openHadith(slug, n){
   const col = bySlug[slug]; if (!col) return showLanding();
   document.getElementById("landing").classList.add("hidden");
   document.getElementById("reader").classList.remove("hidden");
-  n = Number(n) || 1;
   try {
-    if (col.books) await openMalik(n);
+    if (col.books) await openBookHadith(slug, String(n || 1));
     else {
+      n = Number(n) || 1;
       if (n < 1) n = 1;
       if (n > col.count) n = col.count;
       await openForty(col, n);
@@ -1104,7 +1124,7 @@ function showLanding(){
 }
 
 function route(){
-  const m = location.hash.match(/^#([a-z0-9]+)(?::(\d+))?/i);
+  const m = location.hash.match(/^#([a-z0-9]+)(?::(\d+[a-z]?))?/i);
   if (m && bySlug[m[1]]) openHadith(m[1], m[2] || 1);
   else showLanding();
 }
