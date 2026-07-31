@@ -81,11 +81,18 @@
   .settings-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
   .settings-head strong { color:var(--ink); font-size:.92rem; }
   .settings-head span { font-size:.72rem; color:var(--faint); }
-  .settings-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 18px; }
-  .setting { display:grid; grid-template-columns:76px 1fr 34px; align-items:center; gap:8px; min-width:0; font-size:.78rem; }
+  .settings-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+  .setting-section { background:var(--soft); border:1px solid var(--line); border-radius:11px; padding:10px; }
+  .setting-section h3 { color:var(--faint); font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; margin:0 0 7px; }
+  .setting { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:8px; min-width:0; font-size:.78rem; margin-top:9px; }
+  .setting:first-of-type { margin-top:0; }
   .setting label { color:var(--ink); font-weight:600; white-space:nowrap; }
   .setting output { color:var(--faint); font-variant-numeric:tabular-nums; text-align:right; font-size:.72rem; }
-  .setting input[type="range"] { width:100%; accent-color:var(--ink); }
+  .setting input[type="range"] { grid-column:1 / -1; width:100%; height:22px; margin-top:2px; appearance:none; -webkit-appearance:none; background:transparent; cursor:pointer; }
+  .setting input[type="range"]::-webkit-slider-runnable-track { height:8px; border:1px solid var(--line); border-radius:999px; background:var(--bg); }
+  .setting input[type="range"]::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:16px; height:16px; margin-top:-5px; border:2px solid var(--bg); border-radius:50%; background:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.25); }
+  .setting input[type="range"]::-moz-range-track { height:8px; border:1px solid var(--line); border-radius:999px; background:var(--bg); }
+  .setting input[type="range"]::-moz-range-thumb { width:14px; height:14px; border:2px solid var(--bg); border-radius:50%; background:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.25); }
   .settings-foot { border-top:1px solid var(--line); margin-top:15px; padding-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
   .settings select { background:var(--soft); border:1px solid var(--line); border-radius:8px; color:var(--ink); padding:6px 8px; font-size:.78rem; }
   .settings-reset { border:1px solid var(--line); background:transparent; color:var(--muted); border-radius:8px; padding:6px 9px; cursor:pointer; font-size:.76rem; }
@@ -432,15 +439,21 @@
       <div class="in">
         <div class="settings-head"><strong>Reading appearance</strong><span>Saved on this device</span></div>
         <div class="settings-grid">
+          <section class="setting-section"><h3>Arabic</h3>
           <div class="setting"><label for="arSize">Arabic size</label><input id="arSize" type="range" min="1.1" max="3.4" step="0.1"><output id="arSizeOut"></output></div>
           <div class="setting"><label for="arLine">Arabic lines</label><input id="arLine" type="range" min="1.55" max="3.2" step="0.05"><output id="arLineOut"></output></div>
           <div class="setting"><label for="wordGap">Word gap</label><input id="wordGap" type="range" min="4" max="52" step="2"><output id="wordGapOut"></output></div>
+          </section>
+          <section class="setting-section"><h3>Translations</h3>
           <div class="setting"><label for="enSize">English size</label><input id="enSize" type="range" min="0.9" max="1.7" step="0.05"><output id="enSizeOut"></output></div>
           <div class="setting"><label for="enLine">English lines</label><input id="enLine" type="range" min="1.35" max="2.35" step="0.05"><output id="enLineOut"></output></div>
           <div class="setting"><label for="urSize">Urdu size</label><input id="urSize" type="range" min="0.55" max="1.6" step="0.05"><output id="urSizeOut"></output></div>
           <div class="setting"><label for="urLine">Urdu lines</label><input id="urLine" type="range" min="1.35" max="2.6" step="0.05"><output id="urLineOut"></output></div>
+          </section>
+          <section class="setting-section"><h3>Word gloss</h3>
           <div class="setting"><label for="glossSize">Gloss size</label><input id="glossSize" type="range" min="0.5" max="1.2" step="0.05"><output id="glossSizeOut"></output></div>
           <div class="setting"><label for="wordPad">Word padding</label><input id="wordPad" type="range" min="3" max="16" step="1"><output id="wordPadOut"></output></div>
+          </section>
         </div>
         <div class="settings-foot">
           <label>Arabic type <select id="arFont"><option value="uthmani">Uthmani Naskh</option><option value="scheherazade">Scheherazade</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
