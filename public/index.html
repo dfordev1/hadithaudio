@@ -66,7 +66,7 @@
   /* AA panel overlays below header — must NOT share space with sticky locator */
   .settings {
     position:absolute; left:12px; right:12px; top:calc(100% + 8px);
-    max-width:640px; margin-left:auto;
+    max-width:760px; margin-left:auto;
     background:var(--bg); border:1px solid var(--line); border-radius:14px;
     box-shadow:var(--shadow); z-index:55;
     opacity:0; visibility:hidden; pointer-events:none;
@@ -77,14 +77,17 @@
     opacity:1; visibility:visible; pointer-events:auto;
     transform:translateY(0);
   }
-  .settings .in { padding:16px; color:var(--muted); }
+  .settings .in { display:block; padding:16px; color:var(--muted); }
   .settings-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
   .settings-head strong { color:var(--ink); font-size:.92rem; }
   .settings-head span { font-size:.72rem; color:var(--faint); }
-  .settings-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+  .settings-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .setting-section.wide { grid-column:1 / -1; }
   .setting-section { background:var(--soft); border:1px solid var(--line); border-radius:11px; padding:10px; }
-  .setting-section h3 { color:var(--faint); font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; margin:0 0 7px; }
-  .setting { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:8px; min-width:0; font-size:.78rem; margin-top:9px; }
+  .setting-section h3 { color:var(--faint); font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; margin:0 0 9px; }
+  .setting { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:8px; min-width:0; font-size:.78rem; margin-top:12px; }
+  .setting-section.wide { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:20px; }
+  .setting-section.wide h3 { grid-column:1 / -1; }
   .setting:first-of-type { margin-top:0; }
   .setting label { color:var(--ink); font-weight:600; white-space:nowrap; }
   .setting output { color:var(--faint); font-variant-numeric:tabular-nums; text-align:right; font-size:.72rem; }
@@ -442,7 +445,6 @@
           <section class="setting-section"><h3>Arabic</h3>
           <div class="setting"><label for="arSize">Arabic size</label><input id="arSize" type="range" min="1.1" max="3.4" step="0.1"><output id="arSizeOut"></output></div>
           <div class="setting"><label for="arLine">Arabic lines</label><input id="arLine" type="range" min="1.55" max="3.2" step="0.05"><output id="arLineOut"></output></div>
-          <div class="setting"><label for="wordGap">Word gap</label><input id="wordGap" type="range" min="4" max="52" step="2"><output id="wordGapOut"></output></div>
           </section>
           <section class="setting-section"><h3>Translations</h3>
           <div class="setting"><label for="enSize">English size</label><input id="enSize" type="range" min="0.9" max="1.7" step="0.05"><output id="enSizeOut"></output></div>
@@ -450,7 +452,8 @@
           <div class="setting"><label for="urSize">Urdu size</label><input id="urSize" type="range" min="0.55" max="1.6" step="0.05"><output id="urSizeOut"></output></div>
           <div class="setting"><label for="urLine">Urdu lines</label><input id="urLine" type="range" min="1.35" max="2.6" step="0.05"><output id="urLineOut"></output></div>
           </section>
-          <section class="setting-section"><h3>Word gloss</h3>
+          <section class="setting-section wide"><h3>Word spacing &amp; gloss</h3>
+          <div class="setting"><label for="wordGap">Word gap</label><input id="wordGap" type="range" min="4" max="96" step="2"><output id="wordGapOut"></output></div>
           <div class="setting"><label for="glossSize">Gloss size</label><input id="glossSize" type="range" min="0.5" max="1.2" step="0.05"><output id="glossSizeOut"></output></div>
           <div class="setting"><label for="wordPad">Word padding</label><input id="wordPad" type="range" min="3" max="16" step="1"><output id="wordPadOut"></output></div>
           </section>
@@ -565,6 +568,36 @@ function normalizeArabicWord(text){
 }
 
 function honorificPartGloss(tokens, index){
+  const forms = [
+    {
+      words:["صلي", "الله", "عليه", "وسلم"],
+      glosses:[
+        { en:"may Allah bless", transliteration:"ṣallā", pos:"V", features:{} },
+        { en:"Allah", transliteration:"Allāh", pos:"PN", features:{} },
+        { en:"upon him", transliteration:"ʿalayhi", pos:"P", features:{} },
+        { en:"and grant him peace", transliteration:"wa-sallam", pos:"V", features:{} },
+      ],
+    },
+    {
+      words:["صلي", "الله", "عليه", "و", "سلم"],
+      glosses:[
+        { en:"may Allah bless", transliteration:"ṣallā", pos:"V", features:{} },
+        { en:"Allah", transliteration:"Allāh", pos:"PN", features:{} },
+        { en:"upon him", transliteration:"ʿalayhi", pos:"P", features:{} },
+        { en:"and", transliteration:"wa", pos:"C", features:{} },
+        { en:"grant him peace", transliteration:"sallam", pos:"V", features:{} },
+      ],
+    },
+  ];
+  for (const form of forms) {
+    for (let start = Math.max(0, index - form.words.length + 1); start <= index; start++) {
+      if (tokens.slice(start, start + form.words.length).map(t => normalizeArabicWord(t.text)).join(" ") === form.words.join(" ")) {
+        return form.glosses[index - start];
+      }
+    }
+  }
+  return null;
+  /* legacy source retained below for patch readability
   const words = ["صلي", "الله", "عليه", "وسلم"];
   const glosses = [
     { en:"may Allah bless", transliteration:"ṣallā", pos:"V", features:{} },
@@ -577,7 +610,7 @@ function honorificPartGloss(tokens, index){
       return glosses[index - start];
     }
   }
-  return null;
+  return null; */
 }
 
 async function getBukhariTiming(n){
