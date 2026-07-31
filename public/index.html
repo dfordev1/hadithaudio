@@ -452,8 +452,8 @@
           <div class="setting"><label for="urSize">Urdu size</label><input id="urSize" type="range" min="0.55" max="1.6" step="0.05"><output id="urSizeOut"></output></div>
           <div class="setting"><label for="urLine">Urdu lines</label><input id="urLine" type="range" min="1.35" max="2.6" step="0.05"><output id="urLineOut"></output></div>
           </section>
-          <section class="setting-section wide"><h3>Word spacing &amp; gloss</h3>
-          <div class="setting"><label for="wordGap">Word gap</label><input id="wordGap" type="range" min="4" max="96" step="2"><output id="wordGapOut"></output></div>
+          <section class="setting-section wide"><h3>Arabic word spacing &amp; gloss</h3>
+          <div class="setting"><label for="wordGap">Arabic word gap</label><input id="wordGap" type="range" min="4" max="96" step="2"><output id="wordGapOut"></output></div>
           <div class="setting"><label for="glossSize">Gloss size</label><input id="glossSize" type="range" min="0.5" max="1.2" step="0.05"><output id="glossSizeOut"></output></div>
           <div class="setting"><label for="wordPad">Word padding</label><input id="wordPad" type="range" min="3" max="16" step="1"><output id="wordPadOut"></output></div>
           </section>
@@ -550,6 +550,9 @@ const COLLECTIONS = [
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:false, books:true },
 ];
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
+const BUKHARI_BOOK_NAMES = {
+  1:"Revelation",2:"Belief",3:"Knowledge",4:"Ablutions (Wudu')",5:"Bathing (Ghusl)",6:"Menstrual Periods",7:"Dry Ablution (Tayammum)",8:"Prayers (Salat)",9:"Times of Prayer",10:"Call to Prayer (Adhaan)",11:"Friday Prayer",12:"Fear Prayer",13:"The Two Festivals (Eids)",14:"Witr Prayer",15:"Prayer for Rain (Istisqaa)",16:"Eclipses",17:"Prostration during Qur'an Recital",18:"Shortening the Prayers",19:"Night Prayer (Tahajjud)",20:"Virtues of the Mosques of Makkah and Madinah",21:"Actions while Praying",22:"Forgetfulness in Prayer",23:"Funerals",24:"Zakat",25:"Hajj",26:"Umrah",27:"Pilgrims Prevented from Completing Hajj",28:"Hunting while on Pilgrimage",29:"Virtues of Madinah",30:"Fasting",31:"Night Prayer in Ramadan (Taraweeh)",32:"Virtues of the Night of Qadr",33:"Retreat in the Mosque (I'tikaf)",34:"Sales and Trade",35:"Advance Payment (Salam)",36:"Pre-emption (Shuf'a)",37:"Hiring",38:"Transfer of Debt (Hawala)",39:"Guarantees (Kafalah)",40:"Representation and Agency",41:"Agriculture",42:"Distribution of Water",43:"Loans and Bankruptcy",44:"Disputes",45:"Lost Property",46:"Oppressions",47:"Partnership",48:"Mortgaging",49:"Manumission of Slaves",50:"Contracts of Manumission",51:"Gifts",52:"Witnesses",53:"Peacemaking",54:"Conditions",55:"Wills and Testaments",56:"Striving in Allah's Cause (Jihad)",57:"One-fifth of Booty (Khumus)",58:"Jizyah and Treaties",59:"Beginning of Creation",60:"Prophets",61:"Virtues of the Prophet and Companions",62:"Companions of the Prophet",63:"Merits of the Ansar",64:"Military Expeditions",65:"Prophetic Commentary on the Qur'an",66:"Virtues of the Qur'an",67:"Marriage",68:"Divorce",69:"Supporting the Family",70:"Food and Meals",71:"Aqiqah",72:"Hunting and Slaughtering",73:"Eid Sacrifice",74:"Drinks",75:"Patients",76:"Medicine",77:"Dress",78:"Good Manners (Adab)",79:"Asking Permission",80:"Supplications",81:"Heart-Softening Narrations (Riqaq)",82:"Divine Will (Qadar)",83:"Oaths and Vows",84:"Expiation for Broken Oaths",85:"Inheritance",86:"Legal Punishments",87:"Blood Money",88:"Apostates",89:"Coercion",90:"Legal Stratagems",91:"Interpretation of Dreams",92:"Afflictions and the End of the World",93:"Judgments",94:"Wishes",95:"Accepting Reliable Reports",96:"Holding Fast to Qur'an and Sunnah",97:"Oneness of Allah (Tawheed)"
+};
 // Bukhari recordings and their CTC forced-alignment maps live in public R2.
 // A report remains readable without either asset while its alignment is pending.
 const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
@@ -1012,7 +1015,10 @@ async function fillBookJump(){
   if (!col.books) { sel.classList.add("hidden"); return; }
   const idx = await ensureBookIndex(col.slug);
   sel.classList.remove("hidden");
-  sel.innerHTML = idx.books.map(b => `<option value="${b.book}">Book ${b.book} · ${b.count}</option>`).join("");
+  sel.innerHTML = idx.books.map(b => {
+    const title = b.title || (col.slug === "bukhari" ? BUKHARI_BOOK_NAMES[b.book] : "");
+    return `<option value="${b.book}">Book ${b.book}${title ? ` · ${title}` : ""} · ${b.count}</option>`;
+  }).join("");
   sel.value = String(state.book);
   sel.onchange = async () => {
     const bk = Number(sel.value);
