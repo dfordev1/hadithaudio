@@ -7,7 +7,7 @@
 <meta name="description" content="Hadith collections with synced Arabic recitation, word-level highlighting, and English / Urdu glosses.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#ffffff; --ink:#161616; --muted:#5c5c5c; --faint:#9a9a9a;
@@ -15,7 +15,7 @@
     --dock:rgba(255,255,255,.92); --shadow:0 8px 28px rgba(0,0,0,.10);
     --ar-font:"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif;
     --ui-font:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    --ar-size:1.9rem; --en-size:1.15rem; --en-gloss-size:0.72rem; --ur-size:0.8rem; --en-lh:1.85; --ar-lh:2.55; --wbw-gap:18px;
+    --ar-size:1.9rem; --en-size:1.15rem; --en-gloss-size:0.72rem; --ur-size:0.8rem; --en-lh:1.85; --ar-lh:2.55; --ur-lh:1.9; --wbw-gap:18px; --word-pad:7px;
     --header-h:56px; --loc-h:52px;
   }
   :root[data-theme="dark"] {
@@ -222,7 +222,7 @@
   body[data-wbw="en"] .arabic span.w,
   body[data-wbw="ur"] .arabic span.w,
   body[data-wbw="both"] .arabic span.w {
-    display:inline-flex; flex-direction:column; align-items:center; padding:6px 7px 8px;
+    display:inline-flex; flex-direction:column; align-items:center; padding:calc(var(--word-pad) - 1px) var(--word-pad) var(--word-pad);
   }
   body[data-wbw="en"] .arabic span.w.active,
   body[data-wbw="ur"] .arabic span.w.active,
@@ -236,7 +236,7 @@
   .arabic span.w .g-ur {
     font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-size);
     color:var(--muted); direction:rtl; margin-top:5px; text-align:center;
-    max-width:140px; line-height:1.9;
+    max-width:140px; line-height:var(--ur-lh);
   }
   body[data-wbw="en"] .arabic span.w .g-en,
   body[data-wbw="both"] .arabic span.w .g-en { display:block; }
@@ -438,9 +438,12 @@
           <div class="setting"><label for="enSize">English size</label><input id="enSize" type="range" min="0.9" max="1.7" step="0.05"><output id="enSizeOut"></output></div>
           <div class="setting"><label for="enLine">English lines</label><input id="enLine" type="range" min="1.35" max="2.35" step="0.05"><output id="enLineOut"></output></div>
           <div class="setting"><label for="urSize">Urdu size</label><input id="urSize" type="range" min="0.55" max="1.6" step="0.05"><output id="urSizeOut"></output></div>
+          <div class="setting"><label for="urLine">Urdu lines</label><input id="urLine" type="range" min="1.35" max="2.6" step="0.05"><output id="urLineOut"></output></div>
+          <div class="setting"><label for="glossSize">Gloss size</label><input id="glossSize" type="range" min="0.5" max="1.2" step="0.05"><output id="glossSizeOut"></output></div>
+          <div class="setting"><label for="wordPad">Word padding</label><input id="wordPad" type="range" min="3" max="16" step="1"><output id="wordPadOut"></output></div>
         </div>
         <div class="settings-foot">
-          <label>Arabic type <select id="arFont"><option value="uthmani">Uthmani Naskh</option><option value="scheherazade">Scheherazade</option><option value="amiri">Amiri</option></select></label>
+          <label>Arabic type <select id="arFont"><option value="uthmani">Uthmani Naskh</option><option value="scheherazade">Scheherazade</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
           <button class="settings-reset" id="settingsReset" type="button">Reset reading style</button>
           <div class="settings-theme theme">Theme <b data-t="light" class="on">Light</b><b data-t="sepia">Sepia</b><b data-t="dark">Dark</b></div>
         </div>
@@ -591,11 +594,17 @@ let urSz = store.get("ursz", 0.8);
 let spSz = store.get("spsz", 18);
 let arLine = store.get("arlh", 2.55);
 let enLine = store.get("enlh", 1.85);
+let urLine = store.get("urlh", 1.9);
+let glossSz = store.get("glosssz", .72);
+let wordPad = store.get("wordpad", 7);
 let arFont = store.get("arfont", "uthmani");
 const AR_FONTS = {
   uthmani:'"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif',
   scheherazade:'"Scheherazade New",Scheherazade,serif',
   amiri:'Amiri,"Times New Roman",serif',
+  notoNaskh:'"Noto Naskh Arabic",serif',
+  arefRuqaa:'"Aref Ruqaa",serif',
+  reemKufi:'"Reem Kufi",sans-serif',
 };
 // migrate old "font" step if present once
 (() => {
@@ -608,18 +617,21 @@ const AR_FONTS = {
 function applyFont(){
   const r = document.documentElement.style;
   r.setProperty("--en-size", enSz + "rem");
-  r.setProperty("--en-gloss-size", Math.max(0.55, enSz * 0.62) + "rem");
+  r.setProperty("--en-gloss-size", glossSz + "rem");
   r.setProperty("--ar-size", arSz + "rem");
   r.setProperty("--ur-size", urSz + "rem");
   r.setProperty("--wbw-gap", spSz + "px");
   r.setProperty("--ar-lh", arLine);
   r.setProperty("--en-lh", enLine);
+  r.setProperty("--ur-lh", urLine);
+  r.setProperty("--word-pad", wordPad + "px");
   r.setProperty("--ar-font", AR_FONTS[arFont] || AR_FONTS.uthmani);
   store.set("ensz", enSz); store.set("arsz", arSz); store.set("ursz", urSz); store.set("spsz", spSz);
-  store.set("arlh", arLine); store.set("enlh", enLine); store.set("arfont", arFont);
+  store.set("arlh", arLine); store.set("enlh", enLine); store.set("urlh", urLine); store.set("glosssz", glossSz); store.set("wordpad", wordPad); store.set("arfont", arFont);
   const controls = {
     arSize:[arSz, v => v + "rem"], arLine:[arLine, v => v.toFixed(2)], wordGap:[spSz, v => v + "px"],
     enSize:[enSz, v => v + "rem"], enLine:[enLine, v => v.toFixed(2)], urSize:[urSz, v => v + "rem"],
+    urLine:[urLine, v => v.toFixed(2)], glossSize:[glossSz, v => v + "rem"], wordPad:[wordPad, v => v + "px"],
   };
   Object.entries(controls).forEach(([id, [value, label]]) => {
     const input = document.getElementById(id), output = document.getElementById(id + "Out");
@@ -628,7 +640,7 @@ function applyFont(){
   });
   document.getElementById("arFont").value = arFont;
 }
-["arSize","arLine","wordGap","enSize","enLine","urSize"].forEach(id => document.getElementById(id).oninput = e => {
+["arSize","arLine","wordGap","enSize","enLine","urSize","urLine","glossSize","wordPad"].forEach(id => document.getElementById(id).oninput = e => {
   const value = Number(e.target.value);
   if (id === "arSize") arSz = value;
   if (id === "arLine") arLine = value;
@@ -636,11 +648,14 @@ function applyFont(){
   if (id === "enSize") enSz = value;
   if (id === "enLine") enLine = value;
   if (id === "urSize") urSz = value;
+  if (id === "urLine") urLine = value;
+  if (id === "glossSize") glossSz = value;
+  if (id === "wordPad") wordPad = value;
   applyFont();
 });
 document.getElementById("arFont").onchange = e => { arFont = e.target.value; applyFont(); };
 document.getElementById("settingsReset").onclick = () => {
-  enSz = 1.15; arSz = 1.9; urSz = .8; spSz = 18; arLine = 2.55; enLine = 1.85; arFont = "uthmani"; applyFont();
+  enSz = 1.15; arSz = 1.9; urSz = .8; spSz = 18; arLine = 2.55; enLine = 1.85; urLine = 1.9; glossSz = .72; wordPad = 7; arFont = "uthmani"; applyFont();
 };
 function applyTheme(t){
   document.documentElement.dataset.theme = t; store.set("theme", t);
