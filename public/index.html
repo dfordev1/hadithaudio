@@ -1212,6 +1212,8 @@ async function openBookHadith(slug, n){
   const timing = slug === "bukhari" ? await getBukhariTiming(n) : null;
   const isnadPool = timing ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
+  const shouldContinue = continuePlayAfterLoad;
+  continuePlayAfterLoad = false;
   state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData) };
   setGlossMode("study");
   rememberProgress(slug, n, bookMeta.book);
@@ -1293,6 +1295,11 @@ async function openBookHadith(slug, n){
   wrap.appendChild(disc);
 
   stage.innerHTML = ""; stage.appendChild(wrap);
+  if (shouldContinue && hasSyncedAudio) {
+    audio.currentTime = 0;
+    syncWordHighlight(0);
+    audio.play().catch(() => {});
+  }
   document.title = `${shortCollectionName(col)} ${n} — Hadith WBW`;
   scrollTo(0, 0);
 }
