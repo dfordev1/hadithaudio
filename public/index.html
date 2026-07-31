@@ -522,6 +522,18 @@ const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
 // A report remains readable without either asset while its alignment is pending.
 const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
 const bukhariTimingCache = {};
+let bukhariIsnadPool;
+
+async function getBukhariIsnadPool(){
+  if (!bukhariIsnadPool) bukhariIsnadPool = jopt("bukhari-isnad-word-pool.json");
+  return bukhariIsnadPool;
+}
+
+function normalizeArabicWord(text){
+  return (text || "").replace(/[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06edـ]/g, "")
+    .replace(/[^\u0621-\u063a\u0641-\u064a\u0671\u067e\u0686\u0698\u06a9\u06af\u06be\u06c0\u06cc]/g, "")
+    .replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه");
+}
 
 async function getBukhariTiming(n){
   if (!(n in bukhariTimingCache)) {
@@ -1198,6 +1210,7 @@ async function openBookHadith(slug, n){
 
   const gloss = await jopt(`gloss/${slug}-${n}.json`);
   const timing = slug === "bukhari" ? await getBukhariTiming(n) : null;
+  const isnadPool = timing ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
   state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData) };
   setGlossMode("study");
@@ -1237,7 +1250,17 @@ async function openBookHadith(slug, n){
         end: t.end,
       }))
     : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
-  const { arDiv, spans } = buildArabic(tokens, gloss, hasSyncedAudio);
+  const syncedGloss = hasSyncedAudio ? {
+    ...(gloss || {}),
+    glosses: {
+      ...((gloss && gloss.glosses) || {}),
+      ...Object.fromEntries(tokens.map(t => {
+        const pool = isnadPool?.words?.[normalizeArabicWord(t.text)];
+        return pool?.en ? [t.id, pool] : [t.id, null];
+      }).filter(([, value]) => value)),
+    },
+  } : gloss;
+  const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
   if (hasSyncedAudio) activeSpans = spans;
   arCol.appendChild(arDiv);
   par.appendChild(arCol);
