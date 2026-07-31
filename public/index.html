@@ -535,6 +535,22 @@ function normalizeArabicWord(text){
     .replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه");
 }
 
+function honorificPartGloss(tokens, index){
+  const words = ["صلي", "الله", "عليه", "وسلم"];
+  const glosses = [
+    { en:"may Allah bless", transliteration:"ṣallā", pos:"V", features:{} },
+    { en:"Allah", transliteration:"Allāh", pos:"PN", features:{} },
+    { en:"upon him", transliteration:"ʿalayhi", pos:"P", features:{} },
+    { en:"and grant him peace", transliteration:"wa-sallam", pos:"V", features:{} },
+  ];
+  for (let start = Math.max(0, index - 3); start <= index; start++) {
+    if (tokens.slice(start, start + 4).map(t => normalizeArabicWord(t.text)).join(" ") === words.join(" ")) {
+      return glosses[index - start];
+    }
+  }
+  return null;
+}
+
 async function getBukhariTiming(n){
   if (!(n in bukhariTimingCache)) {
     const url = `${BUKHARI_R2}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
@@ -1256,8 +1272,8 @@ async function openBookHadith(slug, n){
     ...(gloss || {}),
     glosses: {
       ...((gloss && gloss.glosses) || {}),
-      ...Object.fromEntries(tokens.map(t => {
-        const pool = isnadPool?.words?.[normalizeArabicWord(t.text)];
+      ...Object.fromEntries(tokens.map((t, i) => {
+        const pool = honorificPartGloss(tokens, i) || isnadPool?.words?.[normalizeArabicWord(t.text)];
         return pool?.en ? [t.id, pool] : [t.id, null];
       }).filter(([, value]) => value)),
     },
