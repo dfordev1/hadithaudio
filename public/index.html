@@ -510,7 +510,7 @@ const COLLECTIONS = [
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true },
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:false, books:true },
-  { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:false, books:true },
+  { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:false, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5272, audio:false, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:false, books:true },
@@ -518,6 +518,21 @@ const COLLECTIONS = [
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:false, books:true },
 ];
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
+// Bukhari recordings and their CTC forced-alignment maps live in public R2.
+// A report remains readable without either asset while its alignment is pending.
+const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
+const bukhariTimingCache = {};
+
+async function getBukhariTiming(n){
+  if (!(n in bukhariTimingCache)) {
+    const url = `${BUKHARI_R2}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
+    bukhariTimingCache[n] = fetch(url)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
+      .catch(() => null);
+  }
+  return bukhariTimingCache[n];
+}
 
 const store = {
   get:(k,d)=>{ try { return JSON.parse(localStorage.getItem("malti:"+k)) ?? d; } catch { return d; } },
@@ -1182,14 +1197,22 @@ async function openBookHadith(slug, n){
   if (!h) { h = bookData.hadith[0]; n = h.n; }
 
   const gloss = await jopt(`gloss/${slug}-${n}.json`);
+  const timing = slug === "bukhari" ? await getBukhariTiming(n) : null;
+  const hasSyncedAudio = Boolean(timing);
   state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData) };
   setGlossMode("study");
   rememberProgress(slug, n, bookMeta.book);
   fillCollectionJump(); await fillBookJump(); fillHadithJump(); updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
-  document.getElementById("audioBadge").classList.add("hidden");
-  document.getElementById("textBadge").classList.remove("hidden");
+  document.getElementById("audioBadge").classList.toggle("hidden", !hasSyncedAudio);
+  document.getElementById("textBadge").classList.toggle("hidden", hasSyncedAudio);
+  dock.classList.toggle("hidden", !hasSyncedAudio);
+  if (hasSyncedAudio) {
+    updateDockLabel(bySlug[slug], n);
+    await prepareAudio(`${BUKHARI_R2}/bukhari/${String(n).padStart(4, "0")}.mp3`);
+    currentTokens = timing.tokens;
+  }
 
   const col = bySlug[slug];
   const wrap = document.createElement("div");
@@ -1198,16 +1221,24 @@ async function openBookHadith(slug, n){
       <div class="coll-ar">${col.ar}</div>
       <div class="hnum">Book ${bookMeta.book} · Hadith ${n}</div>
     </div>`;
-  if (h.isnad) {
+  if (h.isnad && !hasSyncedAudio) {
     const is = document.createElement("div"); is.className = "isnad"; is.textContent = h.isnad;
     wrap.appendChild(is);
   }
   const par = document.createElement("div");
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
   const arCol = document.createElement("div"); arCol.className = "ar-col";
-  arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية · word gloss</div>`;
-  const tokens = h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
-  const { arDiv } = buildArabic(tokens, gloss, false);
+  arCol.innerHTML = `<div class="col-label" style="text-align:right">${hasSyncedAudio ? "العربية · audio-synced word by word" : "العربية · word gloss"}</div>`;
+  const tokens = hasSyncedAudio
+    ? timing.tokens.map((t, i) => ({
+        id: `uh:token:bukhari.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
+        text: t.text,
+        start: t.start,
+        end: t.end,
+      }))
+    : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
+  const { arDiv, spans } = buildArabic(tokens, gloss, hasSyncedAudio);
+  if (hasSyncedAudio) activeSpans = spans;
   arCol.appendChild(arDiv);
   par.appendChild(arCol);
   wrap.appendChild(par);
@@ -1233,7 +1264,9 @@ async function openBookHadith(slug, n){
   rb.appendChild(copy);
   wrap.appendChild(rb);
   const disc = document.createElement("div"); disc.className = "disc";
-  disc.textContent = "Word glosses are machine-suggested (English / Urdu). Independently reviewed where a review block is present.";
+  disc.textContent = hasSyncedAudio
+    ? "Full isnād and matn are aligned word by word to the recording. Timings are CTC forced-alignment estimates."
+    : "Word glosses are machine-suggested (English / Urdu). Independently reviewed where a review block is present.";
   wrap.appendChild(disc);
 
   stage.innerHTML = ""; stage.appendChild(wrap);

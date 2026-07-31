@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bukhari ASR · batch 1–1000 progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #121410;
+    --bg-2: #1a1c17;
+    --ink: #e8e6df;
+    --muted: #8a877c;
+    --line: #2c2e28;
+    --pending: #2a2c26;
+    --pending-edge: #3a3c34;
+    --ok: #3d9a6a;
+    --ok-dim: #2a6b48;
+    --fail: #c44b3c;
+    --fail-dim: #8a3228;
+    --active: #c9a227;
+    --active-glow: rgba(201, 162, 39, 0.45);
+    --panel: #181a15;
+    --font: "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background:
+      radial-gradient(1200px 600px at 20% -10%, #1e2418 0%, transparent 55%),
+      radial-gradient(900px 500px at 90% 0%, #1a2220 0%, transparent 50%),
+      var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.45;
+  }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.1rem 1.15rem 2rem;
+  }
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.25rem;
+    margin-bottom: 0.85rem;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  header .sub {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-family: var(--mono);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+    gap: 0.45rem;
+    margin-bottom: 0.85rem;
+  }
+  .stat {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 0.35rem;
+    padding: 0.45rem 0.55rem;
+  }
+  .stat .k {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .stat .v {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-top: 0.1rem;
+  }
+  .stat.ok .v { color: var(--ok); }
+  .stat.fail .v { color: var(--fail); }
+  .stat.active .v { color: var(--active); }
+  .bar {
+    height: 4px;
+    background: var(--pending);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+  }
+  .bar > i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--ok-dim), var(--ok));
+    transition: width 0.4s ease;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr minmax(200px, 240px);
+    gap: 0.85rem;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .heat-wrap {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 0.45rem;
+    padding: 0.65rem;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 0.55rem;
+    font-family: var(--mono);
+  }
+  .legend span::before {
+    content: "";
+    display: inline-block;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 2px;
+    margin-right: 0.35rem;
+    vertical-align: -1px;
+    border: 1px solid transparent;
+  }
+  .legend .l-pending::before { background: var(--pending); border-color: var(--pending-edge); }
+  .legend .l-ok::before { background: var(--ok); }
+  .legend .l-fail::before { background: var(--fail); }
+  .legend .l-active::before { background: var(--active); box-shadow: 0 0 6px var(--active-glow); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(50, 1fr);
+    gap: 2px;
+    aspect-ratio: 50 / 20;
+    width: 100%;
+  }
+  .cell {
+    border-radius: 1px;
+    background: var(--pending);
+    border: 1px solid var(--pending-edge);
+    cursor: default;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    appearance: none;
+  }
+  .cell.ok {
+    background: var(--ok);
+    border-color: var(--ok-dim);
+    cursor: pointer;
+  }
+  .cell.ok:hover { filter: brightness(1.15); }
+  .cell.fail {
+    background: var(--fail);
+    border-color: var(--fail-dim);
+    cursor: pointer;
+  }
+  .cell.fail:hover { filter: brightness(1.12); }
+  .cell.active {
+    background: var(--active);
+    border-color: #a8841a;
+    box-shadow: 0 0 5px var(--active-glow);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .cell.sel {
+    outline: 2px solid #fff;
+    outline-offset: 0;
+    z-index: 1;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.65; }
+  }
+  .side {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 0.45rem;
+    padding: 0.75rem 0.85rem;
+    min-height: 180px;
+  }
+  .side h2 {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .side .empty {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .side dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 0.65rem;
+    font-size: 0.86rem;
+  }
+  .side dt { color: var(--muted); font-family: var(--mono); font-size: 0.75rem; }
+  .side dd { margin: 0; font-family: var(--mono); word-break: break-word; }
+  .side a {
+    display: inline-block;
+    margin-top: 0.75rem;
+    color: var(--ok);
+    font-size: 0.84rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ok-dim);
+  }
+  .side a:hover { color: #5fc48e; }
+  .workers {
+    margin-top: 0.85rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .foot {
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  .err {
+    color: var(--fail);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Bukhari ASR progress</h1>
+    <div class="sub" id="updated">waiting for manifest…</div>
+  </header>
+
+  <div class="stats" id="stats">
+    <div class="stat"><div class="k">Done</div><div class="v" id="sDone">—</div></div>
+    <div class="stat fail"><div class="k">Fail</div><div class="v" id="sFail">—</div></div>
+    <div class="stat"><div class="k">Pending</div><div class="v" id="sPend">—</div></div>
+    <div class="stat active"><div class="k">Active</div><div class="v" id="sAct">—</div></div>
+    <div class="stat ok"><div class="k">Complete</div><div class="v" id="sPct">—</div></div>
+    <div class="stat"><div class="k">ETA</div><div class="v" id="sEta">—</div></div>
+    <div class="stat"><div class="k">Rate</div><div class="v" id="sRate">—</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="err" id="err" hidden></div>
+
+  <div class="layout">
+    <div class="heat-wrap">
+      <div class="legend">
+        <span class="l-pending">pending</span>
+        <span class="l-ok">done</span>
+        <span class="l-fail">fail</span>
+        <span class="l-active">in progress</span>
+      </div>
+      <div class="grid" id="grid" aria-label="Hadith progress heatmap"></div>
+      <div class="foot" id="foot">50×20 · poll 2.5s · /bukhari-asr-progress-data.json</div>
+    </div>
+    <aside class="side" id="side">
+      <h2>Detail</h2>
+      <p class="empty" id="sideEmpty">Hover or click a cell.</p>
+      <div id="sideBody" hidden>
+        <dl id="sideDl"></dl>
+        <a id="sideLink" href="#" target="_blank" rel="noopener" hidden>Open ASR demo →</a>
+      </div>
+      <div class="workers" id="workers"></div>
+    </aside>
+  </div>
+</div>
+
+<script>
+let TOTAL = 2000;
+const COLS = 50;
+const DATA_URL = new URL("bukhari-asr-progress-data.json", location.href).href;
+const POLL_MS = 2500;
+
+const grid = document.getElementById("grid");
+const cells = [];
+const byN = new Map(); // n -> {status, meta}
+let selected = null;
+
+function fmtDur(s) {
+  if (s == null || !isFinite(s)) return "—";
+  if (s < 60) return s.toFixed(1) + "s";
+  const m = Math.floor(s / 60);
+  const sec = Math.round(s % 60);
+  return m + "m " + String(sec).padStart(2, "0") + "s";
+}
+
+function fmtEta(s) {
+  if (s == null || !isFinite(s)) return "—";
+  if (s < 60) return Math.round(s) + "s";
+  if (s < 3600) return Math.floor(s / 60) + "m " + Math.round(s % 60) + "s";
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  return h + "h " + m + "m";
+}
+
+function fmtCer(c) {
+  if (c == null) return "—";
+  return (c * 100).toFixed(1) + "%";
+}
+
+function urlRow(label, url) {
+  if (!url) return null;
+  return [label, `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(url)}</a>`];
+}
+
+function rebuildGrid(total) {
+  TOTAL = total;
+  grid.innerHTML = "";
+  cells.length = 0;
+  for (let n = 1; n <= TOTAL; n++) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "cell";
+    b.dataset.n = n;
+    b.title = "n=" + n;
+    b.setAttribute("aria-label", "Hadith " + n);
+    b.addEventListener("mouseenter", () => showDetail(n, false));
+    b.addEventListener("click", () => {
+      selected = n;
+      cells.forEach(c => c.classList.toggle("sel", Number(c.dataset.n) === n));
+      showDetail(n, true);
+      const info = byN.get(n);
+      if (info && info.status === "ok") {
+        window.open(`bukhari-asr-demo.html?n=${n}`, "_blank", "noopener");
+      }
+    });
+    grid.appendChild(b);
+    cells.push(b);
+  }
+  const foot = document.getElementById("foot");
+  if (foot) {
+    const rows = Math.ceil(TOTAL / COLS);
+    foot.textContent = COLS + "×" + rows + " · poll 2.5s · /bukhari-asr-progress-data.json · n=1.." + TOTAL;
+  }
+  const h1 = document.querySelector("h1");
+  if (h1) h1.textContent = "Bukhari ASR · 1–" + TOTAL;
+}
+
+rebuildGrid(TOTAL);
+
+function showDetail(n, fromClick) {
+  const info = byN.get(n) || { status: "pending" };
+  const empty = document.getElementById("sideEmpty");
+  const body = document.getElementById("sideBody");
+  const dl = document.getElementById("sideDl");
+  const link = document.getElementById("sideLink");
+  empty.hidden = true;
+  body.hidden = false;
+
+  const rows = [
+    ["n", String(n)],
+    ["status", info.status],
+  ];
+  if (info.cer != null) rows.push(["CER", fmtCer(info.cer)]);
+  if (info.coverage != null) rows.push(["coverage", (info.coverage * 100).toFixed(1) + "%"]);
+  if (info.duration != null) rows.push(["duration", fmtDur(info.duration)]);
+  if (info.error) rows.push(["error", info.error]);
+  const audioRow = urlRow("audio", info.audio_url);
+  const timingRow = urlRow("timing", info.timing_url);
+  const demoRow = urlRow("demo", info.demo_url);
+  if (audioRow) rows.push(audioRow);
+  if (timingRow) rows.push(timingRow);
+  if (demoRow) rows.push(demoRow);
+
+  dl.innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${escapeHtml(v)}</dd>`).join("");
+
+  if (info.status === "ok") {
+    link.hidden = false;
+    link.href = `bukhari-asr-demo.html?n=${n}`;
+  } else {
+    link.hidden = true;
+  }
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function applyManifest(m) {
+  const nextTotal = Number(m.total) || TOTAL;
+  if (nextTotal !== TOTAL || cells.length !== nextTotal) {
+    rebuildGrid(nextTotal);
+  }
+  byN.clear();
+  for (const d of m.done || []) {
+    byN.set(d.n, {
+      status: "ok",
+      cer: d.cer,
+      coverage: d.coverage,
+      duration: d.duration,
+      audio_url: d.audio_url,
+      timing_url: d.timing_url,
+      demo_url: d.demo_url,
+    });
+  }
+  for (const f of m.fail || []) {
+    byN.set(f.n, {
+      status: "fail",
+      cer: f.cer,
+      coverage: f.coverage,
+      duration: f.duration,
+      error: f.error,
+    });
+  }
+  for (const a of m.active || []) {
+    if (!byN.has(a)) byN.set(a, { status: "active" });
+  }
+
+  for (const cell of cells) {
+    const n = Number(cell.dataset.n);
+    const info = byN.get(n);
+    cell.classList.remove("ok", "fail", "active");
+    let tip = "n=" + n + " · pending";
+    if (info) {
+      cell.classList.add(info.status);
+      tip = `n=${n} · ${info.status}`;
+      if (info.cer != null) tip += ` · CER ${fmtCer(info.cer)}`;
+      if (info.duration != null) tip += ` · ${fmtDur(info.duration)}`;
+      if (info.error) tip += ` · ${info.error}`;
+    }
+    cell.title = tip;
+  }
+
+  document.getElementById("sDone").textContent = m.done_count ?? (m.done || []).length;
+  document.getElementById("sFail").textContent = m.fail_count ?? (m.fail || []).length;
+  document.getElementById("sPend").textContent = m.pending_count ?? "—";
+  document.getElementById("sAct").textContent = (m.active || []).length
+    ? (m.active || []).join(", ")
+    : "—";
+  document.getElementById("sPct").textContent = (m.pct != null ? m.pct : 0) + "%";
+  document.getElementById("sEta").textContent = fmtEta(m.eta_s);
+  document.getElementById("sRate").textContent =
+    m.rate_per_min != null ? m.rate_per_min + "/min" : "—";
+  document.getElementById("barFill").style.width = (m.pct || 0) + "%";
+  document.getElementById("updated").textContent =
+    "updated " + (m.updated || "—") +
+    (m.elapsed_s != null ? " · elapsed " + fmtDur(m.elapsed_s) : "");
+
+  const wEl = document.getElementById("workers");
+  if (m.workers && m.workers.length) {
+    wEl.innerHTML = m.workers.map(w => {
+      const st = w.status || "?";
+      return `w${w.worker}${w.batch ? ' ['+w.batch+']' : ''}: ${w.start}-${w.end} · last=${w.last_n ?? '-'} · ${st} · ok=${w.ok ?? 0}`;
+    }).join("<br>");
+  } else {
+    wEl.textContent = "No worker progress files yet.";
+  }
+
+  if (selected != null) showDetail(selected, true);
+}
+
+async function poll() {
+  const err = document.getElementById("err");
+  try {
+    const res = await fetch(DATA_URL + "?t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const m = await res.json();
+    err.hidden = true;
+    applyManifest(m);
+  } catch (e) {
+    err.hidden = false;
+    err.textContent = "Manifest missing or unreachable — is watch_progress.py running? " + e.message;
+  }
+}
+
+poll();
+setInterval(poll, POLL_MS);
+</script>
+</body>
+</html>
