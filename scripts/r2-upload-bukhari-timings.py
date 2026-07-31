@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -44,7 +45,7 @@ def usable(path: Path) -> bool:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--concurrency", type=int, default=12)
+    parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--limit", type=int)
     args = parser.parse_args()
@@ -65,15 +66,21 @@ def main() -> int:
     def upload(path: Path) -> str:
         key = f"bukhari-timings/{path.name}"
         with httpx.Client(timeout=60) as client:
-            response = client.put(
-                f"{endpoint}/{key}",
-                content=path.read_bytes(),
-                headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=utf-8"},
-            )
-            response.raise_for_status()
-            body = response.json()
-            if not body.get("success"):
-                raise RuntimeError(body.get("errors") or body)
+            for attempt in range(6):
+                response = client.put(
+                    f"{endpoint}/{key}",
+                    content=path.read_bytes(),
+                    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=utf-8"},
+                )
+                if response.status_code != 429 and response.status_code < 500:
+                    response.raise_for_status()
+                    body = response.json()
+                    if not body.get("success"):
+                        raise RuntimeError(body.get("errors") or body)
+                    break
+                if attempt == 5:
+                    response.raise_for_status()
+                time.sleep(min(30, 2 ** attempt))
         return key
 
     failed = []
