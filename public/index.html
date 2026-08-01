@@ -920,6 +920,8 @@ function updateDockLabel(col, n){
 let autoplayNext = store.get("autoplay", true);
 let repeatOne = store.get("repeat", false);
 let continuePlayAfterLoad = false;
+let autoplayAdvanceTimer = null;
+const AUTOPLAY_GAP_MS = 650;
 const autoplayBtn = document.getElementById("autoplayBtn");
 const repeatBtn = document.getElementById("repeatBtn");
 function syncListenModesUI(){
@@ -940,7 +942,11 @@ repeatBtn.onclick = () => {
   syncListenModesUI();
 };
 
-audio.addEventListener("play", () => setPlayingUI(true));
+audio.addEventListener("play", () => {
+  clearTimeout(autoplayAdvanceTimer);
+  autoplayAdvanceTimer = null;
+  setPlayingUI(true);
+});
 audio.addEventListener("pause", () => setPlayingUI(false));
 audio.addEventListener("ended", () => {
   setPlayingUI(false);
@@ -954,8 +960,11 @@ audio.addEventListener("ended", () => {
   if (!autoplayNext || !state.slug || !bySlug[state.slug]?.audio) return;
   const next = neighborReport(state.seq, state.n, 1);
   if (next == null) return;
-  continuePlayAfterLoad = true;
-  setHash(state.slug, next);
+  clearTimeout(autoplayAdvanceTimer);
+  autoplayAdvanceTimer = setTimeout(() => {
+    continuePlayAfterLoad = true;
+    setHash(state.slug, next);
+  }, AUTOPLAY_GAP_MS);
 });
 audio.addEventListener("loadedmetadata", () => { timeEl.textContent = `0:00 / ${fmt(audio.duration)}`; });
 track.onclick = e => {
@@ -1022,6 +1031,8 @@ function playFrom(time){
   else audio.addEventListener("loadedmetadata", start, { once:true });
 }
 function stopAudio(){
+  clearTimeout(autoplayAdvanceTimer);
+  autoplayAdvanceTimer = null;
   audio.pause();
   try { audio.removeAttribute("src"); audio.load(); } catch {}
   audioLogicalUrl = null;
