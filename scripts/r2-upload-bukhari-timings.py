@@ -48,6 +48,7 @@ def main() -> int:
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--only", help="comma-separated hadith numbers to upload")
     args = parser.parse_args()
     load_env()
     token = os.environ.get("CF_API_TOKEN") or os.environ.get("CLOUDFLARE_API_TOKEN")
@@ -56,6 +57,9 @@ def main() -> int:
     if not token or not account:
         raise SystemExit("Missing CF_API_TOKEN and/or CF_ACCOUNT_ID")
     paths = [p for p in sorted(TIMINGS.glob("n*.json")) if usable(p)]
+    if args.only:
+        wanted = {int(part.strip()) for part in args.only.split(",") if part.strip()}
+        paths = [p for p in paths if int(p.stem[1:]) in wanted]
     if args.limit:
         paths = paths[: args.limit]
     print(f"usable timing maps: {len(paths)}")
