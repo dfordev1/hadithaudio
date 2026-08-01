@@ -211,6 +211,12 @@
     color:var(--faint); margin-bottom:12px; font-weight:600;
   }
   .english { font-size:var(--en-size); line-height:var(--en-lh); }
+  .meaning-languages { display:grid; gap:24px; }
+  .meaning-section + .meaning-section { padding-top:20px; border-top:1px solid var(--line); }
+  .urdu {
+    direction:rtl; text-align:right; font-family:"Noto Nastaliq Urdu",var(--ar-font);
+    font-size:var(--ur-size); line-height:var(--ur-lh);
+  }
   .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:var(--ar-lh); }
   .arabic span.w {
     cursor:pointer; border-radius:6px; padding:0 3px;
@@ -570,6 +576,61 @@ function normalizeArabicWord(text){
   return (text || "").replace(/[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06edـ]/g, "")
     .replace(/[^\u0621-\u063a\u0641-\u064a\u0671\u067e\u0686\u0698\u06a9\u06af\u06be\u06c0\u06cc]/g, "")
     .replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه");
+}
+
+function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
+  const source = (originalTokens || [])
+    .map((token, index) => ({ token, index, norm: normalizeArabicWord(token.text) }))
+    .filter(item => item.norm);
+  const target = (syncedTokens || [])
+    .map((token, index) => ({ token, index, norm: normalizeArabicWord(token.text) }))
+    .filter(item => item.norm);
+  const rows = source.length + 1;
+  const cols = target.length + 1;
+  const score = Array.from({ length: rows }, () => new Uint16Array(cols));
+  for (let i = 1; i < rows; i++) {
+    for (let j = 1; j < cols; j++) {
+      score[i][j] = source[i - 1].norm === target[j - 1].norm
+        ? score[i - 1][j - 1] + 1
+        : Math.max(score[i - 1][j], score[i][j - 1]);
+    }
+  }
+  const mapped = {};
+  const originalGlosses = gloss?.glosses || {};
+  let i = source.length, j = target.length;
+  while (i && j) {
+    if (source[i - 1].norm === target[j - 1].norm) {
+      const value = originalGlosses[source[i - 1].token.id];
+      if (value) mapped[target[j - 1].token.id] = value;
+      i--; j--;
+    } else if (score[i - 1][j] >= score[i][j - 1]) {
+      i--;
+    } else {
+      j--;
+    }
+  }
+  return mapped;
+}
+
+function meaningText(tokens, glosses, language){
+  return tokens.map(token => glosses[token.id]?.[language] || "").filter(Boolean).join(language === "ur" ? "، " : " · ");
+}
+
+function buildMeaningColumn(tokens, glosses, englishTranslation=""){
+  const col = document.createElement("div"); col.className = "en-col meaning-col";
+  const languages = document.createElement("div"); languages.className = "meaning-languages";
+  const enSection = document.createElement("section"); enSection.className = "meaning-section";
+  enSection.innerHTML = `<div class="col-label">English meaning</div>`;
+  const enDiv = document.createElement("div"); enDiv.className = "english";
+  enDiv.textContent = englishTranslation || meaningText(tokens, glosses, "en") || "English meaning pending.";
+  enSection.appendChild(enDiv);
+  const urSection = document.createElement("section"); urSection.className = "meaning-section";
+  urSection.innerHTML = `<div class="col-label" style="text-align:right">اردو معنی</div>`;
+  const urDiv = document.createElement("div"); urDiv.className = "urdu";
+  urDiv.textContent = meaningText(tokens, glosses, "ur") || "اردو معنی زیرِ تکمیل ہیں۔";
+  urSection.appendChild(urDiv);
+  languages.append(enSection, urSection); col.appendChild(languages);
+  return col;
 }
 
 function honorificPartGloss(tokens, index){
@@ -1291,11 +1352,7 @@ async function openForty(col, n){
     </div>`;
   const par = document.createElement("div");
   par.className = "parallel" + (single ? " single" : "");
-  const enCol = document.createElement("div"); enCol.className = "en-col";
-  enCol.innerHTML = `<div class="col-label">English</div>`;
-  const enDiv = document.createElement("div"); enDiv.className = "english";
-  enDiv.textContent = en ? en.matn : "";
-  enCol.appendChild(enDiv);
+  const enCol = buildMeaningColumn(rec.tokens, gloss?.glosses || {}, en ? en.matn : "");
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
   const { arDiv, spans } = buildArabic(rec.tokens, gloss, true);
@@ -1392,10 +1449,12 @@ async function openBookHadith(slug, n){
         end: t.end,
       }))
     : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
+  const alignedGlosses = hasSyncedAudio ? alignOriginalGlosses(tokens, h.tokens, gloss) : {};
   const syncedGloss = hasSyncedAudio ? {
     ...(gloss || {}),
     glosses: {
       ...((gloss && gloss.glosses) || {}),
+      ...alignedGlosses,
       ...Object.fromEntries(tokens.map((t, i) => {
         const pool = honorificPartGloss(tokens, i) || isnadPool?.words?.[normalizeArabicWord(t.text)];
         return pool?.en ? [t.id, pool] : [t.id, null];
@@ -1405,7 +1464,9 @@ async function openBookHadith(slug, n){
   const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
   if (hasSyncedAudio) activeSpans = spans;
   arCol.appendChild(arDiv);
-  par.appendChild(arCol);
+  const meaningCol = buildMeaningColumn(tokens, syncedGloss?.glosses || {});
+  par.className = "parallel" + (single ? " single" : "");
+  par.append(meaningCol, arCol);
   wrap.appendChild(par);
 
   const rb = document.createElement("div"); rb.className = "refblock";
