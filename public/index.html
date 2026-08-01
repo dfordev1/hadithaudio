@@ -612,22 +612,18 @@ function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
   return mapped;
 }
 
-function meaningText(tokens, glosses, language){
-  return tokens.map(token => glosses[token.id]?.[language] || "").filter(Boolean).join(language === "ur" ? "، " : " · ");
-}
-
-function buildMeaningColumn(tokens, glosses, englishTranslation=""){
+function buildMeaningColumn(englishTranslation="", urduTranslation=""){
   const col = document.createElement("div"); col.className = "en-col meaning-col";
   const languages = document.createElement("div"); languages.className = "meaning-languages";
   const enSection = document.createElement("section"); enSection.className = "meaning-section";
-  enSection.innerHTML = `<div class="col-label">English meaning</div>`;
+  enSection.innerHTML = `<div class="col-label">English translation</div>`;
   const enDiv = document.createElement("div"); enDiv.className = "english";
-  enDiv.textContent = englishTranslation || meaningText(tokens, glosses, "en") || "English meaning pending.";
+  enDiv.textContent = englishTranslation || "Official English translation unavailable.";
   enSection.appendChild(enDiv);
   const urSection = document.createElement("section"); urSection.className = "meaning-section";
-  urSection.innerHTML = `<div class="col-label" style="text-align:right">اردو معنی</div>`;
+  urSection.innerHTML = `<div class="col-label" style="text-align:right">اردو ترجمہ</div>`;
   const urDiv = document.createElement("div"); urDiv.className = "urdu";
-  urDiv.textContent = meaningText(tokens, glosses, "ur") || "اردو معنی زیرِ تکمیل ہیں۔";
+  urDiv.textContent = urduTranslation || "سرکاری اردو ترجمہ دستیاب نہیں۔";
   urSection.appendChild(urDiv);
   languages.append(enSection, urSection); col.appendChild(languages);
   return col;
@@ -1043,7 +1039,22 @@ function stopAudio(){
 }
 
 /* ---------- caches ---------- */
-const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{} };
+const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{}, officialTranslation:{} };
+
+async function ensureOfficialTranslations(slug, n){
+  const key = `${slug}:${n}`;
+  if (!cache.officialTranslation[key]) {
+    const edition = language => `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/${language}-${slug}/${n}.json`;
+    cache.officialTranslation[key] = Promise.all([
+      jopt(edition("eng")),
+      jopt(edition("urd")),
+    ]).then(([en, ur]) => ({
+      en: en?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "",
+      ur: ur?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "",
+    }));
+  }
+  return cache.officialTranslation[key];
+}
 
 async function ensureFortySidecars(slug){
   if (!cache.trans[slug]) cache.trans[slug] = await j(`translation/${slug}.json`);
@@ -1363,7 +1374,7 @@ async function openForty(col, n){
     </div>`;
   const par = document.createElement("div");
   par.className = "parallel" + (single ? " single" : "");
-  const enCol = buildMeaningColumn(rec.tokens, gloss?.glosses || {}, en ? en.matn : "");
+  const enCol = buildMeaningColumn(en ? en.matn : "", "");
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
   const { arDiv, spans } = buildArabic(rec.tokens, gloss, true);
@@ -1416,8 +1427,11 @@ async function openBookHadith(slug, n){
   let h = bookData.hadith.find(x => x.n === n);
   if (!h) { h = bookData.hadith[0]; n = h.n; }
 
-  const gloss = await jopt(`gloss/${slug}-${n}.json`);
-  const timing = await getBookTiming(slug, n);
+  const [gloss, timing, officialTranslation] = await Promise.all([
+    jopt(`gloss/${slug}-${n}.json`),
+    getBookTiming(slug, n),
+    ensureOfficialTranslations(slug, n),
+  ]);
   const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
   const shouldContinue = continuePlayAfterLoad;
@@ -1475,7 +1489,7 @@ async function openBookHadith(slug, n){
   const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
   if (hasSyncedAudio) activeSpans = spans;
   arCol.appendChild(arDiv);
-  const meaningCol = buildMeaningColumn(tokens, syncedGloss?.glosses || {});
+  const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
   par.className = "parallel" + (single ? " single" : "");
   par.append(meaningCol, arCol);
   wrap.appendChild(par);
