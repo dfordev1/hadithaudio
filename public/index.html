@@ -1472,6 +1472,7 @@ async function openBookHadith(slug, n){
         text: t.text,
         start: t.start,
         end: t.end,
+        gloss: t.gloss || null,
       }))
     : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
   const alignedGlosses = hasSyncedAudio ? alignOriginalGlosses(tokens, h.tokens, gloss) : {};
@@ -1481,7 +1482,7 @@ async function openBookHadith(slug, n){
       ...((gloss && gloss.glosses) || {}),
       ...alignedGlosses,
       ...Object.fromEntries(tokens.map((t, i) => {
-        const pool = honorificPartGloss(tokens, i) || isnadPool?.words?.[normalizeArabicWord(t.text)];
+        const pool = t.gloss || honorificPartGloss(tokens, i) || isnadPool?.words?.[normalizeArabicWord(t.text)];
         return pool?.en ? [t.id, pool] : [t.id, null];
       }).filter(([, value]) => value)),
     },
