@@ -549,7 +549,7 @@ const COLLECTIONS = [
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:false, books:true },
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
-  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:false, books:true },
+  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:false, books:true },
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
@@ -563,8 +563,8 @@ const BUKHARI_BOOK_NAMES = {
 // A report remains readable without either asset while its alignment is pending.
 const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
 const bukhariTimingCache = {};
-const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {} };
-const syncedBookCollections = new Set(["bukhari", "abudawud"]);
+const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {} };
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim"]);
 let bukhariIsnadPool;
 
 async function getBukhariIsnadPool(){
@@ -690,14 +690,55 @@ async function getBookTiming(slug, n){
   if (!syncedBookCollections.has(slug)) return null;
   const cache = bookTimingCache[slug];
   if (!(n in cache)) {
-    const prefix = slug === "bukhari" ? "bukhari-timings" : "abudawud-timings";
-    const url = `${BUKHARI_R2}/${prefix}/n${String(n).padStart(4, "0")}.json`;
-    cache[n] = fetch(url)
-      .then(r => r.ok ? r.json() : null)
-      .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
-      .catch(() => null);
+    if (slug === "muslim") {
+      const localStem = `m${String(n).padStart(4, "0")}.json`;
+      const remoteStem = `n${String(n).padStart(4, "0")}.json`;
+      const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+      const urls = local
+        ? [`../qc/muslim-full/timings/${localStem}`, `../qc/muslim-full/generated-timings/${localStem}`]
+        : [`${BUKHARI_R2}/muslim-timings/${remoteStem}`];
+      cache[n] = (async () => {
+        for (const url of urls) {
+          try {
+            const response = await fetch(url);
+            if (!response.ok) continue;
+            const data = await response.json();
+            if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) {
+              if (!data.audio && local) continue;
+              return data;
+            }
+          } catch {}
+        }
+        return null;
+      })();
+    } else {
+      const prefix = slug === "bukhari" ? "bukhari-timings" : "abudawud-timings";
+      const url = `${BUKHARI_R2}/${prefix}/n${String(n).padStart(4, "0")}.json`;
+      cache[n] = fetch(url)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
+        .catch(() => null);
+    }
   }
   return cache[n];
+}
+
+function bookAudioUrl(slug, n, timing){
+  if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${String(n).padStart(4, "0")}.mp3`;
+  const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+  const generated = Boolean(timing.synthetic);
+  if (local) return generated
+    ? `../qc/muslim-full/generated-clips/${timing.audio}`
+    : `../qc/muslim-full/clips/${timing.audio}`;
+  return `${BUKHARI_R2}/muslim/${timing.audio}`;
+}
+
+function effectiveTimingTokens(timing){
+  return (timing?.tokens || []).map(token => ({
+    ...token,
+    start: Number.isFinite(token.displayStart) ? token.displayStart : token.start,
+    end: Number.isFinite(token.displayEnd) ? token.displayEnd : token.end,
+  }));
 }
 
 const store = {
@@ -1447,8 +1488,8 @@ async function openBookHadith(slug, n){
   dock.classList.toggle("hidden", !hasSyncedAudio);
   if (hasSyncedAudio) {
     updateDockLabel(bySlug[slug], n);
-    await prepareAudio(`${BUKHARI_R2}/${slug}/${String(n).padStart(4, "0")}.mp3`);
-    currentTokens = timing.tokens;
+    await prepareAudio(bookAudioUrl(slug, n, timing));
+    currentTokens = effectiveTimingTokens(timing);
   }
 
   const col = bySlug[slug];
@@ -1467,7 +1508,7 @@ async function openBookHadith(slug, n){
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.innerHTML = `<div class="col-label" style="text-align:right">${hasSyncedAudio ? "العربية · audio-synced word by word" : "العربية · word gloss"}</div>`;
   const tokens = hasSyncedAudio
-    ? timing.tokens.map((t, i) => ({
+    ? effectiveTimingTokens(timing).map((t, i) => ({
         id: `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
         text: t.text,
         start: t.start,
@@ -1517,7 +1558,9 @@ async function openBookHadith(slug, n){
   wrap.appendChild(rb);
   const disc = document.createElement("div"); disc.className = "disc";
   disc.textContent = hasSyncedAudio
-    ? "Full isnād and matn are aligned word by word to the recording. Timings are CTC forced-alignment estimates."
+    ? (timing.synthetic
+      ? "Generated recitation — this canonical report is not present in the original recording. Synthetic audio is clearly separated from the historical source."
+      : "Full isnād and matn are aligned word by word to the recording. Timings are CTC forced-alignment estimates.")
     : "Word glosses are machine-suggested (English / Urdu). Independently reviewed where a review block is present.";
   wrap.appendChild(disc);
 

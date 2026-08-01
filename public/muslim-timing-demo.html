@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sahih Muslim offline timing demo</title>
+<style>
+:root{color-scheme:dark}body{margin:0;background:#10130f;color:#edf1eb;font:16px system-ui}.wrap{max-width:900px;margin:auto;padding:24px}h1{font-size:22px;margin:0 0 5px}.muted{color:#9da79b}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:20px 0;padding:14px;background:#1a1e18;border:1px solid #32382f;border-radius:9px}input,button{font:inherit;background:#252b23;color:#fff;border:1px solid #465044;border-radius:6px;padding:8px 10px}audio{width:100%;margin:4px 0 18px}.arabic{direction:rtl;text-align:right;font-family:"Noto Naskh Arabic","Traditional Arabic",serif;font-size:28px;line-height:2.05;background:#181c17;border:1px solid #30372e;border-radius:10px;padding:18px}.word{display:inline;padding:2px 3px;border-radius:4px;cursor:pointer}.word:hover{background:#394335}.word.unmatched{color:#9ca49a;cursor:default;text-decoration:underline dotted #596057}.word.active{background:#d2a92f;color:#111}.status{font:13px ui-monospace,monospace;color:#9da79b;margin-top:10px}
+</style></head><body><main class="wrap">
+<h1>Sahih Muslim · offline per-hadith demo</h1><div class="muted">Full isnād + matn · local clips and acoustic timestamps</div>
+<div class="controls"><button id="prev">Previous</button><label>Report <input id="report" type="number" value="93" min="1" max="7563"></label><button id="load">Load</button><button id="next">Next</button><span id="range" class="muted"></span></div>
+<audio id="audio" controls preload="metadata"></audio>
+<div id="arabic" class="arabic">Choose a report.</div><div id="status" class="status"></div></main>
+<script>
+const sel=document.querySelector('#report'),audio=document.querySelector('#audio'),box=document.querySelector('#arabic'),status=document.querySelector('#status'),range=document.querySelector('#range');let tokens=[],audioObjectUrl=null;
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+const wordStart=t=>Number.isFinite(t.displayStart)?t.displayStart:t.start,wordEnd=t=>Number.isFinite(t.displayEnd)?t.displayEnd:t.end;
+async function load(){
+ const n=sel.value;status.textContent='Loading…';
+ const r=await fetch(`../qc/muslim-full/timings/m${String(n).padStart(4,'0')}.json?${Date.now()}`);
+ if(!r.ok)throw Error(`report ${n} is not in the recorded corpus`);
+ let d=await r.json(),synthetic=false;
+ if(!d.audio){
+  const generated=await fetch(`../qc/muslim-full/generated-timings/m${String(n).padStart(4,'0')}.json?${Date.now()}`);
+  if(generated.ok){d=await generated.json();synthetic=true}
+ }
+ tokens=d.tokens||[];
+ box.innerHTML=tokens.map((t,i)=>`<span class="word${Number.isFinite(wordStart(t))?'':' unmatched'}" data-i="${i}" title="${esc(t.timingEvidence||t.status||'untimed')}">${esc(t.text)}</span>`).join(' ');
+ if(!d.audio){status.textContent=`Report ${n} has no reliable acoustic boundary and remains in manual review`;audio.removeAttribute('src');return}
+ const src=synthetic?`../qc/muslim-full/generated-clips/${encodeURIComponent(d.audio)}`:`../qc/muslim-full/clips/${encodeURIComponent(d.audio)}`;
+ if(audio.dataset.file!==d.audio){
+  audio.dataset.file=d.audio;status.textContent=`Loading ${d.audio}…`;
+  const response=await fetch(src);if(!response.ok)throw Error(`audio ${response.status}: clip may still be encoding`);
+  const blob=await response.blob();if(audioObjectUrl)URL.revokeObjectURL(audioObjectUrl);audioObjectUrl=URL.createObjectURL(blob);audio.src=audioObjectUrl;
+  await new Promise((resolve,reject)=>{audio.addEventListener('loadedmetadata',resolve,{once:true});audio.addEventListener('error',reject,{once:true})})
+ }
+ const valid=tokens.filter(t=>Number.isFinite(wordStart(t))&&Number.isFinite(wordEnd(t)));const a=wordStart(valid[0])||0,b=wordEnd(valid.at(-1))||a;
+ range.textContent=`${a.toFixed(2)}s – ${b.toFixed(2)}s`;status.textContent=synthetic?`Report ${n} · GENERATED RECITATION — not present in the original recording · ${tokens.length} tokens · ${valid.length} timestamped`:`Report ${n} · recording ${d.recording} · ${d.audio} · ${tokens.length} tokens · ${valid.length} timestamped · ${(100*(d.coverage||0)).toFixed(1)}% lexical coverage · ${d.status}`;
+ audio.currentTime=a;
+ box.querySelectorAll('.word').forEach(el=>el.onclick=()=>{const t=tokens[+el.dataset.i],start=wordStart(t);if(Number.isFinite(start)){audio.currentTime=start;audio.play()}})
+}
+const run=()=>load().catch(e=>status.textContent=String(e));
+document.querySelector('#load').onclick=run;document.querySelector('#prev').onclick=()=>{sel.value=Math.max(1,+sel.value-1);run()};document.querySelector('#next').onclick=()=>{sel.value=Math.min(7563,+sel.value+1);run()};sel.onkeydown=e=>{if(e.key==='Enter')run()};
+audio.ontimeupdate=()=>{const t=audio.currentTime;const i=tokens.findIndex(x=>Number.isFinite(wordStart(x))&&t>=wordStart(x)&&t<wordEnd(x));box.querySelectorAll('.active').forEach(x=>x.classList.remove('active'));if(i>=0)box.children[i].classList.add('active')};run();
+</script></body></html>
+
+
