@@ -1,0 +1,64 @@
+name: Abu Dawud alignment pilot
+
+on:
+  push:
+    branches: [agent/abudawud-alignment-pilot]
+    paths:
+      - 'tools/pilot_align.py'
+      - '.github/workflows/abudawud-alignment-pilot.yml'
+  workflow_dispatch:
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Fetch aligner and inputs
+        run: |
+          git clone --depth 1 --branch 'الحمدلله' https://github.com/Iam-Muslim/QuranReciteToText.git aligner
+          curl -L --retry 5 -o aligner/audio.rm 'https://archive.org/download/sawt-had-dawood/01.rm'
+          curl -L --retry 5 -o aligner/ara-abudawud.json 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-abudawud.json'
+          cp tools/pilot_align.py aligner/pilot_align.py
+
+      - name: Install aligner dependencies
+        working-directory: aligner
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run 15-minute pilot
+        working-directory: aligner
+        env:
+          ASR_CHUNK_WORKERS: '4'
+        run: |
+          python pilot_align.py --audio audio.rm --corpus ara-abudawud.json --out abudawud-01-pilot.json --limit-seconds 900 --start-hadith 1
+
+      - name: Validate output
+        working-directory: aligner
+        run: |
+          python -m json.tool abudawud-01-pilot.json >/dev/null
+          python - <<'PY'
+          import json
+          d=json.load(open('abudawud-01-pilot.json',encoding='utf-8'))
+          print('hadiths',len(d['hadiths']),'raw_chunks',len(d['raw_chunks']))
+          assert d['raw_chunks'], 'No acoustic chunks produced'
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: abudawud-01-alignment-pilot
+          path: |
+            aligner/abudawud-01-pilot.json
+            aligner/raw_transcription.json
+          if-no-files-found: warn
+          retention-days: 7
