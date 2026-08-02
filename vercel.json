@@ -4,6 +4,12 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "hadithaudio.vercel.app" }],
+      "destination": "https://www.hadith.to/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "hadithaudio.vercel.app" }],
       "destination": "https://www.hadith.to/:path*",
