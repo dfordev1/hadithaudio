@@ -1,5 +1,6 @@
 # Secrets — never commit
-.env
+.env*
+!.env.example
 
 # Heavy local TTS install (3.3 GB: model weights, venv) — not part of the site
 OmniVoice-Studio/
@@ -41,3 +42,6 @@ qc/tirmidhi-full/
 /qudsi-ar.json
 /qudsi-en.json
 /shahwaliullah-raw.json
+
+# Pinned translation cache written by scripts/cache-pinned-translations.py
+public/translations-pinned/cache/
