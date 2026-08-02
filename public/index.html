@@ -1347,7 +1347,8 @@ const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{}, officialTranslation:{
 async function ensureOfficialTranslations(slug, n){
   const key = `${slug}:${n}`;
   if (!cache.officialTranslation[key]) {
-    const edition = language => `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/${language}-${slug}/${n}.json`;
+    const immutableHadithApi = "df57907be35291c91ad6a6691180e22ca9920784";
+    const edition = language => `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@${immutableHadithApi}/editions/${language}-${slug}/${n}.json`;
     cache.officialTranslation[key] = Promise.all([
       jopt(edition("eng")),
       jopt(edition("urd")),
