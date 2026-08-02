@@ -1,11 +1,11 @@
-# audio.maltiquran.com — An-Nawawi's Forty Hadith, read & listen
+# Hadith.to — Hadith collections, read & listen
 
 A lightweight static reader for the Forty Hadith of an-Nawawi: synced Arabic
 recitation with word-level highlighting, English translation side by side, and
 cross-references that deep-link to sunnah.com.
 
 No framework, no build step — a single `public/index.html` over static JSON and
-audio. Deployed to GitHub Pages at **audio.maltiquran.com**.
+audio. Deployed through Vercel at **www.hadith.to**.
 
 ## What's here
 
@@ -47,10 +47,10 @@ Static site, no build step. `vercel.json` sets the output directory to `public/`
 2. In Vercel: **Add New → Project → import this repo**. Framework preset
    **Other**, Build Command empty, Output Directory `public` (already in
    `vercel.json`).
-3. In the project's **Domains**, add `audio.maltiquran.com`. Because
-   `maltiquran.com` is already on Vercel, the DNS record is created for you.
-   If the domain's DNS lives at the registrar instead, add a CNAME:
-   `audio` → `cname.vercel-dns.com`.
+3. In the project's **Domains**, use `www.hadith.to` as the primary domain and
+   redirect the apex `hadith.to` domain to it.
+   If the domain's DNS lives at the registrar instead, use the DNS values shown
+   by Vercel for `www` and the apex redirect.
 
 ## Licence
 

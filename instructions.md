@@ -24,7 +24,7 @@ address the same token ids without modifying the corpus.
 | | |
 |---|---|
 | **Site (this repo)** | https://github.com/dfordev1/hadithaudio — static site, deployed by **Vercel** on push to `main` |
-| **Live** | https://audio.maltiquran.com (Vercel; `vercel.json` sets `outputDirectory: public`) |
+| **Live** | https://www.hadith.to (Vercel; `vercel.json` sets `outputDirectory: public`) |
 | **HUSX data standard** | https://github.com/dfordev1/hadithusx — the corpus format, schema, validator, SDK. **The local `hadithusx/` folder is a clone with UNCOMMITTED work (see §7).** |
 | **Prior art (Quran word-audio)** | https://github.com/dfordev1/qusx-audio — the sidecar/word-gloss pattern this follows |
 | **Text data source** | `fawazahmed0/hadith-api` via jsDelivr CDN: `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/<edition>.json` |
