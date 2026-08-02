@@ -549,7 +549,7 @@ const COLLECTIONS = [
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:false, books:true },
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
-  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
+  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7357, start:"93", audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:false, books:true },
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
@@ -906,7 +906,7 @@ function renderResume(){
 const cards = document.getElementById("cards");
 for (const c of COLLECTIONS) {
   const a = document.createElement("a");
-  a.href = `#${c.slug}:1`;
+  a.href = `#${c.slug}:${c.start || 1}`;
   a.innerHTML = `
     <div>
       <div class="ar">${c.ar}</div>
@@ -1103,7 +1103,16 @@ async function ensureFortySidecars(slug){
   return { trans: cache.trans[slug], sun: cache.sun[slug] };
 }
 async function ensureBookIndex(slug){
-  if (!cache.bookIndex[slug]) cache.bookIndex[slug] = await j(`${slug}/index.json`);
+  if (!cache.bookIndex[slug]) {
+    const idx = await j(`${slug}/index.json`);
+    if (slug === "muslim") {
+      idx.books = idx.books.filter(book => book.book >= 1);
+      for (const [report, book] of Object.entries(idx.reportBook || {})) {
+        if (book < 1) delete idx.reportBook[report];
+      }
+    }
+    cache.bookIndex[slug] = idx;
+  }
   return cache.bookIndex[slug];
 }
 async function ensureBookOf(slug, bk){
@@ -1144,8 +1153,7 @@ function fillCollectionJump(){
   sel.value = state.slug;
   sel.onchange = () => {
     const col = bySlug[sel.value];
-    if (col.books) setHash(col.slug, 1);
-    else setHash(col.slug, 1);
+    setHash(col.slug, col.start || 1);
   };
 }
 
@@ -1450,6 +1458,7 @@ async function openForty(col, n){
 }
 
 async function openBookHadith(slug, n){
+  const requestedN = String(n);
   stopAudio();
   dock.classList.add("hidden");
   const stage = document.getElementById("stage");
@@ -1467,6 +1476,9 @@ async function openBookHadith(slug, n){
   const bookData = await ensureBookOf(slug, bookMeta.book);
   let h = bookData.hadith.find(x => x.n === n);
   if (!h) { h = bookData.hadith[0]; n = h.n; }
+  if (String(n) !== requestedN) {
+    history.replaceState(null, "", `${location.pathname}${location.search}#${slug}:${n}`);
+  }
 
   const [gloss, timing, officialTranslation] = await Promise.all([
     jopt(`gloss/${slug}-${n}.json`),
@@ -1579,7 +1591,7 @@ async function openHadith(slug, n){
   document.getElementById("landing").classList.add("hidden");
   document.getElementById("reader").classList.remove("hidden");
   try {
-    if (col.books) await openBookHadith(slug, String(n || 1));
+    if (col.books) await openBookHadith(slug, String(n || col.start || 1));
     else {
       n = Number(n) || 1;
       if (n < 1) n = 1;
@@ -1605,7 +1617,7 @@ function showLanding(){
 
 function route(){
   const m = location.hash.match(/^#([a-z0-9]+)(?::(\d+[a-z]?))?/i);
-  if (m && bySlug[m[1]]) openHadith(m[1], m[2] || 1);
+  if (m && bySlug[m[1]]) openHadith(m[1], m[2] || bySlug[m[1]].start || 1);
   else showLanding();
 }
 addEventListener("hashchange", route);
