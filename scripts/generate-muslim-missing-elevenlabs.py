@@ -20,9 +20,11 @@ VOICE_ID = "JBFqnCBsd6RMkjVDRZzb"
 TEMPO = 0.90
 
 
-def load_env() -> None:
-    for name in (".env.local", ".env"):
-        path = ROOT / name
+def load_env(extra: Path | None = None) -> None:
+    paths = [ROOT / ".env.local", ROOT / ".env"]
+    if extra:
+        paths.insert(0, extra)
+    for path in paths:
         if not path.exists():
             continue
         for line in path.read_text(encoding="utf-8-sig").splitlines():
@@ -32,8 +34,30 @@ def load_env() -> None:
             os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
+def load_source(number: int) -> dict:
+    timing_path = SOURCE / f"m{number:04d}.json"
+    if timing_path.exists():
+        return json.loads(timing_path.read_text(encoding="utf-8"))
+    index = json.loads((ROOT / "public" / "muslim" / "index.json").read_text(encoding="utf-8"))
+    book = index["reportBook"].get(str(number))
+    if book is None:
+        raise RuntimeError(f"Muslim {number} is absent from the reader corpus")
+    payload = json.loads((ROOT / "public" / "muslim" / f"book-{book}.json").read_text(encoding="utf-8"))
+    report = next((item for item in payload["hadith"] if int(item["n"]) == number), None)
+    if report is None:
+        raise RuntimeError(f"Muslim {number} is absent from book {book}")
+    return {
+        "n": number,
+        "audio": None,
+        "tokens": [
+            {**token, "position": position}
+            for position, token in enumerate(report["tokens"], start=1)
+        ],
+    }
+
+
 def generate(number: int, key: str) -> dict:
-    original = json.loads((SOURCE / f"m{number:04d}.json").read_text(encoding="utf-8"))
+    original = load_source(number)
     if original.get("audio"):
         raise RuntimeError(f"Muslim {number} already has original audio")
     pieces: list[str] = []
@@ -92,8 +116,8 @@ def generate(number: int, key: str) -> dict:
             index for index in range(start_index, min(end_index, len(starts)))
             if text[index].strip()
         ]
-        start = (starts[valid[0]] if valid else (ends[start_index - 1] if start_index else 0.0)) / TEMPO
-        end = (ends[valid[-1]] if valid else start * TEMPO) / TEMPO
+        start = min(duration, (starts[valid[0]] if valid else (ends[start_index - 1] if start_index else 0.0)) / TEMPO)
+        end = min(duration, (ends[valid[-1]] if valid else start * TEMPO) / TEMPO)
         tokens.append({
             "id": source_token["id"],
             "position": source_token["position"],
@@ -133,8 +157,9 @@ def generate(number: int, key: str) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--numbers", default="2075")
+    parser.add_argument("--env-file", type=Path)
     args = parser.parse_args()
-    load_env()
+    load_env(args.env_file)
     key = os.environ.get("ELEVENLABS_API_KEY", "")
     if not key:
         raise SystemExit("ELEVENLABS_API_KEY is not configured")
