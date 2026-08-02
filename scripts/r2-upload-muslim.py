@@ -34,9 +34,11 @@ def load_env() -> None:
             os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
-def assets() -> list[tuple[Path, str, str]]:
+def assets(numbers: set[int] | None = None) -> list[tuple[Path, str, str]]:
     rows = []
     for number in range(1, 7564):
+        if numbers is not None and number not in numbers:
+            continue
         original_timing = ORIGINAL_TIMINGS / f"m{number:04d}.json"
         generated_timing = GENERATED_TIMINGS / f"m{number:04d}.json"
         if generated_timing.exists():
@@ -62,6 +64,7 @@ def main() -> int:
     parser.add_argument("--concurrency", type=int, default=8)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--missing-only", action="store_true")
+    parser.add_argument("--numbers", help="Comma-separated report numbers to upload or replace")
     args = parser.parse_args()
     load_env()
     token = os.environ.get("CF_API_TOKEN") or os.environ.get("CLOUDFLARE_API_TOKEN")
@@ -69,7 +72,8 @@ def main() -> int:
     bucket = os.environ.get("R2_BUCKET", "hadithaudio")
     if not token or not account:
         raise SystemExit("Missing Cloudflare API configuration")
-    rows = assets()
+    numbers = {int(value) for value in args.numbers.split(",")} if args.numbers else None
+    rows = assets(numbers)
     endpoint = f"https://api.cloudflare.com/client/v4/accounts/{account}/r2/buckets/{bucket}/objects"
     if args.missing_only:
         remote_keys: set[str] = set()
@@ -98,7 +102,7 @@ def main() -> int:
         "objects": len(rows), "audio": audio_count, "timings": timing_count,
         "bytes": sum(path.stat().st_size for path, _, _ in rows),
     }, indent=2))
-    if not args.missing_only and (audio_count != 7212 or timing_count != 7212):
+    if numbers is None and not args.missing_only and (audio_count != 7212 or timing_count != 7212):
         raise SystemExit("Expected exactly 7,212 audio/timing pairs")
     if args.dry_run:
         return 0
