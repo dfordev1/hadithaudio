@@ -1,0 +1,34 @@
+{
+  "schema": "1.0",
+  "title": "Pinned hadith-api translations",
+  "upstream": {
+    "repo": "fawazahmed0/hadith-api",
+    "ref": "1",
+    "commit": "df57907be35291c91ad6a6691180e22ca9920784",
+    "immutable": true
+  },
+  "cache": {
+    "directory": "public/translations-pinned/cache",
+    "format": "raw-json"
+  },
+  "editions": [
+    {
+      "name": "nawawi40",
+      "edition": "eng-nawawi",
+      "sourcePath": "editions/eng-nawawi.json",
+      "expectedHadithCount": 42,
+      "sha256": "3c8124e3f633a576d1fb6e6a9cb352e162436781b15bc78188c28203ff08743d",
+      "output": "eng-nawawi.json",
+      "notes": "Pinned raw upstream snapshot for the forty-hadith English edition."
+    },
+    {
+      "name": "qudsi40",
+      "edition": "eng-qudsi",
+      "sourcePath": "editions/eng-qudsi.json",
+      "expectedHadithCount": 40,
+      "sha256": "4d9a35148af7b04ec41f6cc3dbaf0bdb82d2f2c93d03052ee229e86dd0f6c53c",
+      "output": "eng-qudsi.json",
+      "notes": "Pinned raw upstream snapshot for the qudsi forty-hadith English edition."
+    }
+  ]
+}
