@@ -51,6 +51,7 @@ def put(client: httpx.Client, account: str, token: str, bucket: str,
         limit_rate(requests_per_second)
         response = client.put(url, content=path.read_bytes(), headers={
             "Authorization": f"Bearer {token}", "Content-Type": content_type,
+            "Cache-Control": "public, max-age=31536000, immutable",
         })
         if response.status_code == 429:
             time.sleep(delay)
