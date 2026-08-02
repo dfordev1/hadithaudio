@@ -845,6 +845,45 @@ const store = {
 };
 const j = async (u) => (await fetch(u, { cache:"no-cache" })).json();
 const jopt = async (u) => { try { return await j(u); } catch { return null; } };
+const compactGlossCache = {};
+async function compressedJson(u){
+  const response = await fetch(u, { cache:"force-cache" });
+  if (!response.ok) throw new Error(`Gloss asset ${response.status}`);
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  let jsonBytes = bytes;
+  if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
+    if (!("DecompressionStream" in window)) throw new Error("This browser cannot decode compact gloss data");
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+    jsonBytes = new Uint8Array(await new Response(stream).arrayBuffer());
+  }
+  return JSON.parse(new TextDecoder().decode(jsonBytes));
+}
+async function ensureCompactGloss(slug){
+  if (!compactGlossCache[slug]) {
+    compactGlossCache[slug] = Promise.all([
+      compressedJson(`gloss-compact/${slug}-pool.json.gz`),
+      compressedJson(`gloss-compact/${slug}-bundle.json.gz`),
+    ]).then(([pool, bundle]) => ({
+      values: pool.entries.map(entry => entry.value),
+      reports: new Map(bundle.reports.map(report => [String(report.report), report])),
+    })).catch(error => {
+      delete compactGlossCache[slug];
+      throw error;
+    });
+  }
+  return compactGlossCache[slug];
+}
+async function getGloss(slug, n){
+  try {
+    const compact = await ensureCompactGloss(slug);
+    const report = compact.reports.get(String(n));
+    if (!report) return null;
+    const glosses = Object.fromEntries(report.tokenRefs.map(([tokenId, poolId]) => [tokenId, compact.values[poolId]]));
+    return { ...report.meta, glosses };
+  } catch {
+    return null;
+  }
+}
 const fmt = s => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 
 /* ---------- settings ---------- */
@@ -1493,7 +1532,7 @@ async function openForty(col, n){
   const [{ trans, sun }, rec, gloss] = await Promise.all([
     ensureFortySidecars(col.slug),
     j(`recitation/${col.corpus}.${pad}.json`),
-    jopt(`gloss/${col.slug}-${n}.json`),
+    getGloss(col.slug, n),
   ]);
   const en = trans.translations.find(t => t.witness === rec.witness);
   const entry = sun.entries.find(e => e.witness === rec.witness);
@@ -1594,7 +1633,7 @@ async function openBookHadith(slug, n){
   }
 
   const [gloss, timing, officialTranslation] = await Promise.all([
-    jopt(`gloss/${slug}-${n}.json`),
+    getGloss(slug, n),
     getBookTiming(slug, n),
     ensureOfficialTranslations(slug, n),
   ]);
