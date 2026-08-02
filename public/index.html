@@ -9,7 +9,6 @@
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://www.hadith.to/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Hadith WBW">
 <meta property="og:title" content="Hadith WBW — Read &amp; Listen">
@@ -397,7 +396,11 @@
   .play svg { width:16px; height:16px; fill:currentColor; }
   .track {
     flex:1; height:5px; background:var(--line); border-radius:3px;
-    cursor:pointer; position:relative; min-width:60px;
+    cursor:pointer; position:relative; min-width:60px; touch-action:pan-y;
+  }
+  .track:focus-visible {
+    outline:2px solid var(--ink);
+    outline-offset:4px;
   }
   .track .fill {
     position:absolute; left:0; top:0; bottom:0; width:0;
@@ -463,29 +466,6 @@
     .dock-meta { grid-column:1 / -1; }
     .time { font-size:.64rem; }
   }
-  @media (max-width:480px) {
-    :root { --header-h:52px; --loc-h:48px; }
-    .topbar .in { gap:5px; padding:0 8px; }
-    .brand .name { font-size:.9rem; }
-    .iconbtn { min-width:0; height:34px; padding:0 8px; font-size:.72rem; }
-    #landing { padding:30px 12px 72px; }
-    .stage { padding-left:34px; padding-right:34px; }
-    .navedge { width:32px; height:32px; }
-    .navedge.prev { left:2px; }
-    .navedge.next { right:2px; }
-    .settings { left:4px; right:4px; max-height:calc(100vh - 64px); overflow:auto; }
-    .settings .in { padding:10px; }
-    .setting-section.wide { grid-template-columns:1fr; }
-    .setting-section.wide h3 { grid-column:1; }
-    .dock { padding-left:6px; padding-right:6px; }
-    .dock .player { grid-template-columns:auto auto auto minmax(80px,1fr); gap:6px; padding:8px; }
-    .dock-meta { gap:6px; }
-    .dock-modes { width:100%; margin-left:0; }
-    .time { grid-column:1 / -1; min-width:0; text-align:center; }
-    .play { width:38px; height:38px; }
-    .skip { width:32px; height:32px; }
-    .arabic { overflow-wrap:anywhere; }
-  }
   @media (min-width:681px) {
     .loc-summary { display:none !important; }
     .locator .loc-panel { display:contents !important; }
@@ -535,15 +515,15 @@
 
 <div id="landing">
   <div class="hero">
-    <div class="ar">الحديث</div>
+    <div class="ar" lang="ar" dir="rtl">الحديث</div>
     <div class="en">Read &amp; listen — word by word</div>
     <div class="sub">Forty collections with audio · Muwatta with glosses</div>
   </div>
   <div class="resume" id="resume"></div>
   <div class="shelf" id="cards"></div>
   <div class="disc">
-    Audio provenance is shown in the player. Historical recordings use acoustic word alignment;
-    generated supplements are explicitly labelled. Cross-references use sunnah.com numbering.
+    Recitation is synthesised (ElevenLabs) with word timing from its alignment API — not a substitute for a qārī.
+    Cross-references are machine-suggested, in sunnah.com numbering.
   </div>
 </div>
 
@@ -578,7 +558,7 @@
     <div class="player">
       <div class="dock-meta">
         <span class="dock-label" id="dockLabel">Hadith</span>
-        <span class="dock-draft" id="dockSource">Audio</span>
+        <span class="dock-draft">Draft audio</span>
         <div class="dock-modes">
           <button type="button" class="mode" id="autoplayBtn" aria-pressed="true" title="Play the next hadith when this one ends">Autoplay</button>
           <button type="button" class="mode" id="repeatBtn" aria-pressed="false" title="Loop this hadith">Repeat</button>
@@ -589,7 +569,7 @@
         <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </button>
       <button type="button" class="skip" id="skipFwd" aria-label="Forward 10 seconds">+10</button>
-      <div class="track" id="track"><div class="fill" id="fill"></div></div>
+      <div class="track" id="track" role="slider" tabindex="0" aria-label="Audio progress" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="0:00 / 0:00"><div class="fill" id="fill"></div></div>
       <span class="time" id="timeEl">0:00 / 0:00</span>
       <div class="rates" id="rates">
         <button data-r="0.75">0.75×</button>
@@ -607,7 +587,7 @@ function publicHadithUrl(slug, n){ return `${SITE_ORIGIN}/#${slug}:${n}`; }
 function setPublicMetadata(title, slug=null, n=null){
   document.title = title;
   const url = slug && n ? publicHadithUrl(slug, n) : `${SITE_ORIGIN}/`;
-  document.querySelector('link[rel="canonical"]')?.setAttribute("href", `${SITE_ORIGIN}/`);
+  document.querySelector('link[rel="canonical"]')?.setAttribute("href", url);
   document.querySelector('meta[property="og:url"]')?.setAttribute("content", url);
   document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
 }
@@ -624,11 +604,11 @@ const COLLECTIONS = [
   { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true },
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true },
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true },
-  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
+  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:false, books:true },
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
-  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7357, start:"93", audio:true, books:true },
+  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
-  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
+  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:false, books:true },
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:false, books:true },
 ];
@@ -640,13 +620,13 @@ const BUKHARI_BOOK_NAMES = {
 // A report remains readable without either asset while its alignment is pending.
 const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
 const bukhariTimingCache = {};
-const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {} };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi"]);
-const isnadGlossPools = {};
+const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {} };
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim"]);
+let bukhariIsnadPool;
 
-async function getIsnadGlossPool(slug){
-  if (!isnadGlossPools[slug]) isnadGlossPools[slug] = jopt(`${slug}-isnad-word-pool.json`);
-  return isnadGlossPools[slug];
+async function getBukhariIsnadPool(){
+  if (!bukhariIsnadPool) bukhariIsnadPool = jopt("bukhari-isnad-word-pool.json");
+  return bukhariIsnadPool;
 }
 
 function normalizeArabicWord(text){
@@ -695,11 +675,15 @@ function buildMeaningColumn(englishTranslation="", urduTranslation=""){
   const enSection = document.createElement("section"); enSection.className = "meaning-section";
   enSection.innerHTML = `<div class="col-label">English translation</div>`;
   const enDiv = document.createElement("div"); enDiv.className = "english";
+  enDiv.lang = "en";
+  enDiv.dir = "ltr";
   enDiv.textContent = englishTranslation || "Official English translation unavailable.";
   enSection.appendChild(enDiv);
   const urSection = document.createElement("section"); urSection.className = "meaning-section";
   urSection.innerHTML = `<div class="col-label" style="text-align:right">اردو ترجمہ</div>`;
   const urDiv = document.createElement("div"); urDiv.className = "urdu";
+  urDiv.lang = "ur";
+  urDiv.dir = "rtl";
   urDiv.textContent = urduTranslation || "سرکاری اردو ترجمہ دستیاب نہیں۔";
   urSection.appendChild(urDiv);
   languages.append(enSection, urSection); col.appendChild(languages);
@@ -758,7 +742,11 @@ async function getBukhariTiming(n){
     bukhariTimingCache[n] = fetch(url)
       .then(r => r.ok ? r.json() : null)
       .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
-      .catch(() => null);
+      .catch(() => null)
+      .then(data => {
+        if (!data) delete bukhariTimingCache[n];
+        return data;
+      });
   }
   return bukhariTimingCache[n];
 }
@@ -789,39 +777,22 @@ async function getBookTiming(slug, n){
         return null;
       })();
     } else {
-      const prefix = slug === "bukhari" ? "bukhari-timings" : `${slug}-timings`;
-      const stem = String(n).padStart(4, "0");
-      const local = ["malik", "tirmidhi"].includes(slug)
-        && (location.hostname === "127.0.0.1" || location.hostname === "localhost");
-      const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
-      const urls = local
-        ? [`../qc/${localBase}/timings/n${stem}.json`, `../qc/${localBase}/generated-timings/n${stem}.json`]
-        : [`${BUKHARI_R2}/${prefix}/n${stem}.json`];
-      cache[n] = (async () => {
-        for (const url of urls) {
-          try {
-            const response = await fetch(url);
-            if (!response.ok) continue;
-            const data = await response.json();
-            if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) return data;
-          } catch {}
-        }
-        return null;
-      })();
+      const prefix = slug === "bukhari" ? "bukhari-timings" : "abudawud-timings";
+      const url = `${BUKHARI_R2}/${prefix}/n${String(n).padStart(4, "0")}.json`;
+      cache[n] = fetch(url)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
+        .catch(() => null)
+        .then(data => {
+          if (!data) delete cache[n];
+          return data;
+        });
     }
   }
   return cache[n];
 }
 
 function bookAudioUrl(slug, n, timing){
-  if (slug === "malik" || slug === "tirmidhi") {
-    const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
-    const stem = String(n).padStart(4, "0");
-    if (!local) return `${BUKHARI_R2}/${slug}/${timing.audio || `${stem}.mp3`}`;
-    const localBase = slug === "malik" ? "muwatta-full" : "tirmidhi-full";
-    const folder = timing.synthetic ? "generated-clips" : "clips";
-    return `../qc/${localBase}/${folder}/${timing.audio || `${stem}.mp3`}`;
-  }
   if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${String(n).padStart(4, "0")}.mp3`;
   const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   const generated = Boolean(timing.synthetic);
@@ -1004,7 +975,7 @@ function renderResume(){
 const cards = document.getElementById("cards");
 for (const c of COLLECTIONS) {
   const a = document.createElement("a");
-  a.href = `#${c.slug}:${c.start || 1}`;
+  a.href = `#${c.slug}:1`;
   a.innerHTML = `
     <div>
       <div class="ar">${c.ar}</div>
@@ -1026,11 +997,75 @@ let activeIdx = -1;
 let currentTokens = [];
 const audioBlobUrls = new Map(); // remote path → object URL (reliable seeking)
 let audioLogicalUrl = null;
+let navEpoch = 0;
+let currentNavToken = 0;
+let audioSessionToken = 0;
+let playRequestToken = 0;
+const AUDIO_BLOB_CACHE_LIMIT = 8;
 const playBtn = document.getElementById("playBtn");
 const fill = document.getElementById("fill");
 const timeEl = document.getElementById("timeEl");
 const track = document.getElementById("track");
 const dock = document.getElementById("dock");
+
+function beginNavigation(){
+  currentNavToken = ++navEpoch;
+  audioSessionToken = currentNavToken;
+  return currentNavToken;
+}
+function isCurrentNavigation(token){
+  return token === currentNavToken;
+}
+function isTimedToken(token){
+  return Number.isFinite(token?.start) && Number.isFinite(token?.end);
+}
+function refreshTrackA11y(){
+  const duration = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
+  const current = Number.isFinite(audio.currentTime) && audio.currentTime >= 0 ? audio.currentTime : 0;
+  track.setAttribute("aria-valuemin", "0");
+  track.setAttribute("aria-valuemax", String(Math.max(duration, 0)));
+  track.setAttribute("aria-valuenow", String(current));
+  track.setAttribute("aria-valuetext", `${fmt(current)} / ${fmt(duration)}`);
+}
+function syncPlaybackStatus(){
+  if (audioSessionToken !== currentNavToken) return;
+  if (audio.duration) {
+    fill.style.width = (Math.max(0, audio.currentTime) / audio.duration * 100) + "%";
+    timeEl.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+  }
+  refreshTrackA11y();
+}
+function clampTime(next){
+  if (!Number.isFinite(next) || next < 0) return 0;
+  if (Number.isFinite(audio.duration) && audio.duration > 0) return Math.min(audio.duration, next);
+  return next;
+}
+function seekAudio(next){
+  if (!audio.src) return;
+  const time = clampTime(next);
+  audio.currentTime = time;
+  syncWordHighlight(time);
+  refreshTrackA11y();
+}
+function cacheAudioBlobUrl(url, objectUrl){
+  if (audioBlobUrls.has(url)) audioBlobUrls.delete(url);
+  audioBlobUrls.set(url, objectUrl);
+  while (audioBlobUrls.size > AUDIO_BLOB_CACHE_LIMIT) {
+    const oldest = Array.from(audioBlobUrls.keys()).find(key => key !== audioLogicalUrl);
+    if (oldest == null) break;
+    const oldObjectUrl = audioBlobUrls.get(oldest);
+    if (oldObjectUrl) {
+      try { URL.revokeObjectURL(oldObjectUrl); } catch {}
+    }
+    audioBlobUrls.delete(oldest);
+  }
+}
+function revokeAudioBlobUrl(url){
+  const objectUrl = audioBlobUrls.get(url);
+  if (!objectUrl) return;
+  try { URL.revokeObjectURL(objectUrl); } catch {}
+  audioBlobUrls.delete(url);
+}
 
 function setPlayingUI(playing){
   playBtn.innerHTML = playing
@@ -1040,12 +1075,11 @@ function setPlayingUI(playing){
 playBtn.onclick = () => { if (audio.paused) audio.play().catch(() => {}); else audio.pause(); };
 document.getElementById("skipBack").onclick = () => {
   if (!audio.src) return;
-  audio.currentTime = Math.max(0, (audio.currentTime || 0) - 10);
+  seekAudio((audio.currentTime || 0) - 10);
 };
 document.getElementById("skipFwd").onclick = () => {
   if (!audio.src) return;
-  const end = isFinite(audio.duration) ? audio.duration : (audio.currentTime || 0) + 10;
-  audio.currentTime = Math.min(end, (audio.currentTime || 0) + 10);
+  seekAudio((audio.currentTime || 0) + 10);
 };
 function updateDockLabel(col, n){
   document.getElementById("dockLabel").textContent = `${shortCollectionName(col)} · ${n}`;
@@ -1093,7 +1127,7 @@ audio.addEventListener("ended", () => {
     return;
   }
   if (!autoplayNext || !state.slug || !bySlug[state.slug]?.audio) return;
-  const next = neighborReport(state.seq, state.n, 1);
+  const next = state.nav?.next ?? null;
   if (next == null) return;
   clearTimeout(autoplayAdvanceTimer);
   autoplayAdvanceTimer = setTimeout(() => {
@@ -1101,11 +1135,46 @@ audio.addEventListener("ended", () => {
     setHash(state.slug, next);
   }, AUTOPLAY_GAP_MS);
 });
-audio.addEventListener("loadedmetadata", () => { timeEl.textContent = `0:00 / ${fmt(audio.duration)}`; });
-track.onclick = e => {
+audio.addEventListener("loadedmetadata", () => {
+  if (audioSessionToken !== currentNavToken) return;
+  syncPlaybackStatus();
+});
+track.addEventListener("click", (e) => {
   const r = track.getBoundingClientRect();
-  if (audio.duration) audio.currentTime = (e.clientX - r.left) / r.width * audio.duration;
-};
+  if (audio.duration) seekAudio((e.clientX - r.left) / r.width * audio.duration);
+});
+track.addEventListener("pointerdown", (e) => {
+  if (!audio.src) return;
+  const move = (evt) => {
+    const r = track.getBoundingClientRect();
+    const ratio = Math.min(1, Math.max(0, (evt.clientX - r.left) / r.width));
+    seekAudio(ratio * (Number.isFinite(audio.duration) ? audio.duration : 0));
+  };
+  const up = (evt) => {
+    track.releasePointerCapture?.(e.pointerId);
+    track.removeEventListener("pointermove", move);
+    track.removeEventListener("pointerup", up);
+    track.removeEventListener("pointercancel", up);
+    move(evt);
+  };
+  track.setPointerCapture?.(e.pointerId);
+  track.addEventListener("pointermove", move);
+  track.addEventListener("pointerup", up, { once:true });
+  track.addEventListener("pointercancel", up, { once:true });
+  move(e);
+});
+track.addEventListener("keydown", (e) => {
+  if (!audio.src) return;
+  const step = e.shiftKey ? 15 : 5;
+  let next = audio.currentTime || 0;
+  if (e.key === "ArrowLeft" || e.key === "ArrowDown" || e.key === "PageDown") next -= step;
+  else if (e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "PageUp") next += step;
+  else if (e.key === "Home") next = 0;
+  else if (e.key === "End") next = Number.isFinite(audio.duration) ? audio.duration : next;
+  else return;
+  e.preventDefault();
+  seekAudio(next);
+});
 document.querySelectorAll("#rates button").forEach(b => {
   b.onclick = () => {
     audio.playbackRate = Number(b.dataset.r);
@@ -1116,48 +1185,72 @@ function syncWordHighlight(t = audio.currentTime){
   if (!currentTokens.length) return;
   let idx = -1;
   for (let i = 0; i < currentTokens.length; i++) {
-    if (t >= currentTokens[i].start) idx = i; else break;
+    const token = currentTokens[i];
+    if (!isTimedToken(token)) continue;
+    if (t >= token.start) idx = i; else break;
   }
   activeIdx = idx;
-  activeSpans.forEach((s, i) => s.classList.toggle("active", i === idx && t <= currentTokens[i].end + 0.15));
+  activeSpans.forEach((s, i) => {
+    const token = currentTokens[i];
+    s.classList.toggle("active", i === idx && isTimedToken(token) && t <= token.end + 0.15);
+  });
   if (idx >= 0 && !audio.paused && activeSpans[idx]) {
     const r = activeSpans[idx].getBoundingClientRect();
     if (r.top < 140 || r.bottom > innerHeight - 120) activeSpans[idx].scrollIntoView({ block:"center", behavior:"smooth" });
   }
 }
 audio.addEventListener("timeupdate", () => {
+  if (audioSessionToken !== currentNavToken) return;
   const t = audio.currentTime;
-  if (audio.duration) {
-    fill.style.width = (t / audio.duration * 100) + "%";
-    timeEl.textContent = `${fmt(t)} / ${fmt(audio.duration)}`;
-  }
+  syncPlaybackStatus();
   if (activeIdx >= 0 && currentTokens[activeIdx] &&
+      isTimedToken(currentTokens[activeIdx]) &&
       t >= currentTokens[activeIdx].start &&
       t <= currentTokens[activeIdx].end + 0.15) return;
   syncWordHighlight(t);
 });
 
 /** Blob-backed src so word seeks work even when the host lacks Accept-Ranges (e.g. python -m http.server). */
-async function prepareAudio(url){
-  if (audioLogicalUrl === url && audio.src) return;
+async function prepareAudio(url, navToken = currentNavToken){
+  if (audioLogicalUrl === url && audio.src) {
+    if (isCurrentNavigation(navToken)) syncPlaybackStatus();
+    return;
+  }
   audio.pause();
   let obj = audioBlobUrls.get(url);
   if (!obj) {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`audio ${res.status}`);
     obj = URL.createObjectURL(await res.blob());
-    audioBlobUrls.set(url, obj);
+    cacheAudioBlobUrl(url, obj);
+  } else {
+    cacheAudioBlobUrl(url, obj);
   }
+  if (!isCurrentNavigation(navToken)) return;
   audioLogicalUrl = url;
   audio.src = obj;
-  if (audio.readyState >= 1) return;
+  if (audio.readyState >= 1) {
+    if (isCurrentNavigation(navToken)) syncPlaybackStatus();
+    return;
+  }
   await new Promise((resolve, reject) => {
-    audio.addEventListener("loadedmetadata", resolve, { once:true });
-    audio.addEventListener("error", () => reject(new Error("audio load failed")), { once:true });
+    const onLoad = () => {
+      if (!isCurrentNavigation(navToken)) return;
+      resolve();
+    };
+    const onError = () => {
+      if (!isCurrentNavigation(navToken)) return;
+      reject(new Error("audio load failed"));
+    };
+    audio.addEventListener("loadedmetadata", onLoad, { once:true });
+    audio.addEventListener("error", onError, { once:true });
   });
 }
 function playFrom(time){
+  const requestToken = ++playRequestToken;
+  const navToken = currentNavToken;
   const start = () => {
+    if (requestToken !== playRequestToken || navToken !== currentNavToken) return;
     audio.currentTime = time;
     syncWordHighlight(time);
     audio.play().catch(() => {});
@@ -1173,6 +1266,7 @@ function stopAudio(){
   audioLogicalUrl = null;
   fill.style.width = "0%";
   timeEl.textContent = "0:00 / 0:00";
+  refreshTrackA11y();
   setPlayingUI(false);
   activeSpans = []; currentTokens = []; activeIdx = -1;
 }
@@ -1201,16 +1295,7 @@ async function ensureFortySidecars(slug){
   return { trans: cache.trans[slug], sun: cache.sun[slug] };
 }
 async function ensureBookIndex(slug){
-  if (!cache.bookIndex[slug]) {
-    const idx = await j(`${slug}/index.json`);
-    if (slug === "muslim") {
-      idx.books = idx.books.filter(book => book.book >= 1);
-      for (const [report, book] of Object.entries(idx.reportBook || {})) {
-        if (book < 1) delete idx.reportBook[report];
-      }
-    }
-    cache.bookIndex[slug] = idx;
-  }
+  if (!cache.bookIndex[slug]) cache.bookIndex[slug] = await j(`${slug}/index.json`);
   return cache.bookIndex[slug];
 }
 async function ensureBookOf(slug, bk){
@@ -1237,7 +1322,7 @@ function neighborReport(list, n, dir){
 }
 
 /* ---------- state ---------- */
-let state = { slug:null, n:null, book:null, seq:[] };
+let state = { slug:null, n:null, book:null, seq:[], nav:{ prev:null, next:null } };
 
 function setHash(slug, n){
   const next = `#${slug}:${n}`;
@@ -1251,15 +1336,17 @@ function fillCollectionJump(){
   sel.value = state.slug;
   sel.onchange = () => {
     const col = bySlug[sel.value];
-    setHash(col.slug, col.start || 1);
+    if (col.books) setHash(col.slug, 1);
+    else setHash(col.slug, 1);
   };
 }
 
-async function fillBookJump(){
+async function fillBookJump(navToken = currentNavToken){
   const sel = document.getElementById("bookJump");
   const col = bySlug[state.slug];
-  if (!col.books) { sel.classList.add("hidden"); return; }
+  if (!col.books) { sel.classList.add("hidden"); return true; }
   const idx = await ensureBookIndex(col.slug);
+  if (!isCurrentNavigation(navToken)) return false;
   sel.classList.remove("hidden");
   sel.innerHTML = idx.books.map(b => {
     const title = b.title || (col.slug === "bukhari" ? BUKHARI_BOOK_NAMES[b.book] : "");
@@ -1272,6 +1359,7 @@ async function fillBookJump(){
     const first = data.hadith[0]?.n || 1;
     setHash(col.slug, first);
   };
+  return true;
 }
 
 function fillHadithJump(){
@@ -1303,17 +1391,18 @@ document.getElementById("locSummary").onclick = () => {
 };
 
 function updateNavEdges(){
-  const i = state.seq.indexOf(state.n);
-  document.getElementById("prevBtn").disabled = i <= 0;
-  document.getElementById("nextBtn").disabled = i < 0 || i >= state.seq.length - 1;
+  const prev = state.nav?.prev ?? null;
+  const next = state.nav?.next ?? null;
+  document.getElementById("prevBtn").disabled = prev == null;
+  document.getElementById("nextBtn").disabled = next == null;
   updateLocSummary();
 }
 document.getElementById("prevBtn").onclick = () => {
-  const n = neighborReport(state.seq, state.n, -1);
+  const n = state.nav?.prev ?? null;
   if (n != null) setHash(state.slug, n);
 };
 document.getElementById("nextBtn").onclick = () => {
-  const n = neighborReport(state.seq, state.n, 1);
+  const n = state.nav?.next ?? null;
   if (n != null) setHash(state.slug, n);
 };
 addEventListener("keydown", e => {
@@ -1347,6 +1436,26 @@ function renderRefs(rb, entry, en){
   }
 }
 
+async function resolveBookNeighbors(slug, n, idx, currentBookNumber, currentBookData){
+  const books = idx?.books || [];
+  const bookPos = books.findIndex(b => Number(b.book) === Number(currentBookNumber));
+  const hadithNumbers = (currentBookData?.hadith || []).map(h => h.n);
+  const i = hadithNumbers.indexOf(n);
+  let prev = i > 0 ? hadithNumbers[i - 1] : null;
+  let next = i >= 0 && i < hadithNumbers.length - 1 ? hadithNumbers[i + 1] : null;
+  for (let pos = bookPos - 1; prev == null && pos >= 0; pos--) {
+    const data = await ensureBookOf(slug, books[pos].book);
+    const list = data?.hadith || [];
+    if (list.length) prev = list[list.length - 1].n;
+  }
+  for (let pos = bookPos + 1; next == null && pos < books.length; pos++) {
+    const data = await ensureBookOf(slug, books[pos].book);
+    const list = data?.hadith || [];
+    if (list.length) next = list[0].n;
+  }
+  return { prev, next };
+}
+
 // Kunya / patronymic markers: أبو X, أم X, ابن/بن X, بنت X (+ و- "and" prefix).
 // Detected by bare (diacritic/punct-stripped) form; merged with a FOLLOWING
 // proper-noun token into one name cell ("Abu Bakr", "Ibn Umar", "Umm Salamah").
@@ -1366,6 +1475,8 @@ const stripKunyaPrefix = (en) =>
 
 function buildArabic(tokens, gloss, clickable){
   const arDiv = document.createElement("div"); arDiv.className = "arabic";
+  arDiv.lang = "ar";
+  arDiv.dir = "rtl";
   const G = gloss && gloss.glosses ? gloss.glosses : {};
   const spans = []; // index-aligned with tokens (merged runs share one span across their token slots)
   const isHonorific = (t) => (G[t.id] || {}).pos === "HONORIFIC";
@@ -1485,7 +1596,7 @@ function attachLongPressGrammar(span, text, g){
   span.addEventListener("contextmenu", (e) => e.preventDefault());
 }
 
-async function openForty(col, n){
+async function openForty(col, n, navToken = currentNavToken){
   stopAudio();
   const stage = document.getElementById("stage");
   stage.innerHTML = `<div class="status" role="status" aria-live="polite">Loading hadith…</div>`;
@@ -1495,13 +1606,17 @@ async function openForty(col, n){
     j(`recitation/${col.corpus}.${pad}.json`),
     jopt(`gloss/${col.slug}-${n}.json`),
   ]);
+  if (!isCurrentNavigation(navToken)) return false;
   const en = trans.translations.find(t => t.witness === rec.witness);
   const entry = sun.entries.find(e => e.witness === rec.witness);
 
-  state = { slug: col.slug, n, book: null, seq: Array.from({ length: col.count }, (_, i) => i + 1) };
+  state = { slug: col.slug, n, book: null, seq: Array.from({ length: col.count }, (_, i) => i + 1), nav:{ prev:n > 1 ? n - 1 : null, next:n < col.count ? n + 1 : null } };
   setGlossMode("audio");
   rememberProgress(col.slug, n, null);
-  fillCollectionJump(); await fillBookJump(); fillHadithJump(); updateNavEdges();
+  fillCollectionJump();
+  if (!(await fillBookJump(navToken))) return false;
+  fillHadithJump();
+  updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
   document.getElementById("audioBadge").classList.remove("hidden");
@@ -1510,14 +1625,16 @@ async function openForty(col, n){
   updateDockLabel(col, n);
   let audioAvailable = true;
   try {
-    await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`);
+    await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`, navToken);
   } catch {
+    if (!isCurrentNavigation(navToken)) return false;
     audioAvailable = false;
     dock.classList.add("hidden");
     document.getElementById("audioBadge").classList.add("hidden");
     document.getElementById("textBadge").classList.remove("hidden");
     trackSiteEvent("audio_unavailable", { collection:col.slug, report:String(n) });
   }
+  if (!isCurrentNavigation(navToken)) return false;
   currentTokens = rec.tokens;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
@@ -1559,19 +1676,20 @@ async function openForty(col, n){
   disc.textContent = "Recitation is synthesised (ElevenLabs); word timing from its alignment API — not a substitute for a qārī.";
   wrap.appendChild(disc);
 
+  if (!isCurrentNavigation(navToken)) return false;
+  if (!isCurrentNavigation(navToken)) return false;
   stage.innerHTML = ""; stage.appendChild(wrap);
   applyParallel();
   setPublicMetadata(`${col.en} ${n} — Hadith WBW`, col.slug, n);
   scrollTo(0, 0);
-  if (shouldContinue && audioAvailable) {
+  if (shouldContinue) {
     audio.currentTime = 0;
     syncWordHighlight(0);
     audio.play().catch(() => {});
   }
 }
 
-async function openBookHadith(slug, n){
-  const requestedN = String(n);
+async function openBookHadith(slug, n, navToken = currentNavToken){
   stopAudio();
   dock.classList.add("hidden");
   const stage = document.getElementById("stage");
@@ -1587,37 +1705,38 @@ async function openBookHadith(slug, n){
     n = data0.hadith[0].n;
   }
   const bookData = await ensureBookOf(slug, bookMeta.book);
-  let h = bookData.hadith.find(x => String(x.n) === String(n));
+  let h = bookData.hadith.find(x => x.n === n);
   if (!h) { h = bookData.hadith[0]; n = h.n; }
-  if (String(n) !== requestedN) {
-    history.replaceState(null, "", `${location.pathname}${location.search}#${slug}:${n}`);
-  }
 
   const [gloss, timing, officialTranslation] = await Promise.all([
     jopt(`gloss/${slug}-${n}.json`),
     getBookTiming(slug, n),
     ensureOfficialTranslations(slug, n),
   ]);
-  const isnadPool = timing && ["bukhari", "malik", "tirmidhi"].includes(slug)
-    ? await getIsnadGlossPool(slug) : null;
+  if (!isCurrentNavigation(navToken)) return false;
+  const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
   let audioAvailable = hasSyncedAudio;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
-  state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData) };
+  state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData), nav:{ prev:null, next:null } };
   setGlossMode("study");
   rememberProgress(slug, n, bookMeta.book);
-  fillCollectionJump(); await fillBookJump(); fillHadithJump(); updateNavEdges();
+  fillCollectionJump();
+  if (!(await fillBookJump(navToken))) return false;
+  state.nav = await resolveBookNeighbors(slug, n, idx, bookMeta.book, bookData);
+  if (!isCurrentNavigation(navToken)) return false;
+  fillHadithJump();
+  updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
   document.getElementById("audioBadge").classList.toggle("hidden", !hasSyncedAudio);
   document.getElementById("textBadge").classList.toggle("hidden", hasSyncedAudio);
   dock.classList.toggle("hidden", !hasSyncedAudio);
   if (hasSyncedAudio) {
-    document.getElementById("dockSource").textContent = timing.synthetic ? "Generated supplement" : "Original recording";
     updateDockLabel(bySlug[slug], n);
     try {
-      await prepareAudio(bookAudioUrl(slug, n, timing));
+      await prepareAudio(bookAudioUrl(slug, n, timing), navToken);
     } catch {
       audioAvailable = false;
       dock.classList.add("hidden");
@@ -1625,6 +1744,7 @@ async function openBookHadith(slug, n){
       document.getElementById("textBadge").classList.remove("hidden");
       trackSiteEvent("audio_unavailable", { collection:slug, report:String(n) });
     }
+    if (!isCurrentNavigation(navToken)) return false;
     currentTokens = effectiveTimingTokens(timing);
   }
 
@@ -1721,7 +1841,7 @@ async function openBookHadith(slug, n){
   wrap.appendChild(disc);
 
   stage.innerHTML = ""; stage.appendChild(wrap);
-  if (shouldContinue && audioAvailable) {
+  if (shouldContinue && hasSyncedAudio) {
     audio.currentTime = 0;
     syncWordHighlight(0);
     audio.play().catch(() => {});
@@ -1730,17 +1850,17 @@ async function openBookHadith(slug, n){
   scrollTo(0, 0);
 }
 
-async function openHadith(slug, n){
-  const col = bySlug[slug]; if (!col) return showLanding();
+async function openHadith(slug, n, navToken = currentNavToken){
+  const col = bySlug[slug]; if (!col) return showLanding(navToken);
   document.getElementById("landing").classList.add("hidden");
   document.getElementById("reader").classList.remove("hidden");
   try {
-    if (col.books) await openBookHadith(slug, String(n || col.start || 1));
+    if (col.books) await openBookHadith(slug, String(n || 1), navToken);
     else {
       n = Number(n) || 1;
       if (n < 1) n = 1;
       if (n > col.count) n = col.count;
-      await openForty(col, n);
+      await openForty(col, n, navToken);
     }
   } catch (err) {
     document.getElementById("stage").innerHTML = `<div class="status" aria-live="assertive">Couldn’t load this hadith. Check your connection and try again.</div>`;
@@ -1749,9 +1869,9 @@ async function openHadith(slug, n){
   }
 }
 
-function showLanding(){
+function showLanding(navToken = currentNavToken){
   stopAudio();
-  state = { slug:null, n:null, book:null, seq:[] };
+  state = { slug:null, n:null, book:null, seq:[], nav:{ prev:null, next:null } };
   document.getElementById("reader").classList.add("hidden");
   document.getElementById("landing").classList.remove("hidden");
   dock.classList.add("hidden");
@@ -1761,9 +1881,10 @@ function showLanding(){
 }
 
 function route(){
+  const navToken = beginNavigation();
   const m = location.hash.match(/^#([a-z0-9]+)(?::(\d+[a-z]?))?/i);
-  if (m && bySlug[m[1]]) openHadith(m[1], m[2] || bySlug[m[1]].start || 1);
-  else showLanding();
+  if (m && bySlug[m[1]]) openHadith(m[1], m[2] || 1, navToken);
+  else showLanding(navToken);
 }
 addEventListener("hashchange", route);
 route();
