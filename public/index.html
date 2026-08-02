@@ -4,7 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hadith WBW — Read &amp; Listen</title>
-<meta name="description" content="Hadith collections with synced Arabic recitation, word-level highlighting, and English / Urdu glosses.">
+<meta name="description" content="Read and listen to major hadith collections with synced Arabic recitation, word-level highlighting, and English and Urdu meanings.">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://www.hadith.to/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hadith WBW">
+<meta property="og:title" content="Hadith WBW — Read &amp; Listen">
+<meta property="og:description" content="Major hadith collections with synced Arabic recitation, word-level highlighting, and English and Urdu meanings.">
+<meta property="og:url" content="https://www.hadith.to/">
+<meta property="og:image" content="https://www.hadith.to/social-card.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hadith WBW — Read &amp; Listen">
+<meta name="twitter:description" content="Read and listen to hadith word by word in Arabic, English, and Urdu.">
+<meta name="twitter:image" content="https://www.hadith.to/social-card.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
@@ -200,6 +215,20 @@
   .status {
     text-align:center; color:var(--faint); padding:60px 20px; font-size:.95rem;
   }
+  .status[role="status"]::before {
+    content:""; display:block; width:22px; height:22px; margin:0 auto 14px;
+    border:2px solid var(--line); border-top-color:var(--ink); border-radius:50%;
+    animation:status-spin .75s linear infinite;
+  }
+  @keyframes status-spin { to { transform:rotate(360deg); } }
+  @media (prefers-reduced-motion:reduce) { .status[role="status"]::before { animation:none; } }
+  .availability {
+    max-width:720px; margin:0 auto 22px; padding:11px 14px; border:1px solid var(--line);
+    border-radius:11px; background:var(--soft); color:var(--muted); font-size:.8rem;
+    line-height:1.5; text-align:center;
+  }
+  .availability.warn { border-color:#d9b55c; background:#fff8e5; color:#715817; }
+  :root[data-theme="dark"] .availability.warn { border-color:#66552d; background:#211d13; color:#d9c27b; }
 
   .parallel {
     display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:start;
@@ -426,6 +455,13 @@
       border-radius:18px;
     }
     #reader { padding-bottom:130px; }
+    .topbar .in { padding:0 10px; gap:6px; }
+    .iconbtn { min-width:34px; height:34px; padding:0 8px; font-size:.74rem; }
+    .stage { padding:22px 16px 38px; }
+    .dock { padding:0 8px 8px; }
+    .dock .player { padding:10px; gap:7px; }
+    .dock-meta { grid-column:1 / -1; }
+    .time { font-size:.64rem; }
   }
   @media (max-width:480px) {
     :root { --header-h:52px; --loc-h:48px; }
@@ -535,7 +571,7 @@
   </button>
 
   <div class="stage" id="stage">
-    <div class="status">Loading…</div>
+    <div class="status" role="status" aria-live="polite">Loading hadith…</div>
   </div>
 
   <div class="dock hidden" id="dock">
@@ -566,6 +602,24 @@
 </div>
 
 <script>
+const SITE_ORIGIN = "https://www.hadith.to";
+function publicHadithUrl(slug, n){ return `${SITE_ORIGIN}/#${slug}:${n}`; }
+function setPublicMetadata(title, slug=null, n=null){
+  document.title = title;
+  const url = slug && n ? publicHadithUrl(slug, n) : `${SITE_ORIGIN}/`;
+  document.querySelector('link[rel="canonical"]')?.setAttribute("href", `${SITE_ORIGIN}/`);
+  document.querySelector('meta[property="og:url"]')?.setAttribute("content", url);
+  document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
+}
+window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };
+function trackSiteEvent(name, data={}){
+  const safe = Object.fromEntries(Object.entries(data).filter(([, value]) =>
+    typeof value === "string" || typeof value === "number" || typeof value === "boolean"
+  ));
+  window.va("event", { name, data:safe });
+}
+addEventListener("error", () => trackSiteEvent("reader_runtime_error", { source:"window" }));
+addEventListener("unhandledrejection", () => trackSiteEvent("reader_runtime_error", { source:"promise" }));
 const COLLECTIONS = [
   { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true },
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true },
@@ -1434,7 +1488,7 @@ function attachLongPressGrammar(span, text, g){
 async function openForty(col, n){
   stopAudio();
   const stage = document.getElementById("stage");
-  stage.innerHTML = `<div class="status">Loading…</div>`;
+  stage.innerHTML = `<div class="status" role="status" aria-live="polite">Loading hadith…</div>`;
   const pad = String(n).padStart(3, "0");
   const [{ trans, sun }, rec, gloss] = await Promise.all([
     ensureFortySidecars(col.slug),
@@ -1454,7 +1508,16 @@ async function openForty(col, n){
   document.getElementById("textBadge").classList.add("hidden");
   dock.classList.remove("hidden");
   updateDockLabel(col, n);
-  await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`);
+  let audioAvailable = true;
+  try {
+    await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`);
+  } catch {
+    audioAvailable = false;
+    dock.classList.add("hidden");
+    document.getElementById("audioBadge").classList.add("hidden");
+    document.getElementById("textBadge").classList.remove("hidden");
+    trackSiteEvent("audio_unavailable", { collection:col.slug, report:String(n) });
+  }
   currentTokens = rec.tokens;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
@@ -1465,6 +1528,12 @@ async function openForty(col, n){
       <div class="coll-ar">${col.ar}</div>
       <div class="hnum">Hadith ${n}</div>
     </div>`;
+  if (!audioAvailable) {
+    const notice = document.createElement("div");
+    notice.className = "availability warn";
+    notice.textContent = "Audio is temporarily unavailable. The Arabic text and meanings remain readable.";
+    wrap.appendChild(notice);
+  }
   const par = document.createElement("div");
   par.className = "parallel" + (single ? " single" : "");
   const enCol = buildMeaningColumn(en ? en.matn : "", "");
@@ -1480,7 +1549,7 @@ async function openForty(col, n){
   renderRefs(rb, entry, en);
   const copy = document.createElement("button"); copy.className = "copy"; copy.textContent = "Copy link";
   copy.onclick = async () => {
-    const url = location.href.split("#")[0] + `#${col.slug}:${n}`;
+    const url = publicHadithUrl(col.slug, n);
     try { await navigator.clipboard.writeText(url); copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy link", 1200); }
     catch { prompt("Copy link:", url); }
   };
@@ -1492,9 +1561,9 @@ async function openForty(col, n){
 
   stage.innerHTML = ""; stage.appendChild(wrap);
   applyParallel();
-  document.title = `${col.en} ${n} — Hadith WBW`;
+  setPublicMetadata(`${col.en} ${n} — Hadith WBW`, col.slug, n);
   scrollTo(0, 0);
-  if (shouldContinue) {
+  if (shouldContinue && audioAvailable) {
     audio.currentTime = 0;
     syncWordHighlight(0);
     audio.play().catch(() => {});
@@ -1506,7 +1575,7 @@ async function openBookHadith(slug, n){
   stopAudio();
   dock.classList.add("hidden");
   const stage = document.getElementById("stage");
-  stage.innerHTML = `<div class="status">Loading…</div>`;
+  stage.innerHTML = `<div class="status" role="status" aria-live="polite">Loading hadith…</div>`;
 
   const idx = await ensureBookIndex(slug);
   let bookMeta = bookForReport(idx, n);
@@ -1532,6 +1601,7 @@ async function openBookHadith(slug, n){
   const isnadPool = timing && ["bukhari", "malik", "tirmidhi"].includes(slug)
     ? await getIsnadGlossPool(slug) : null;
   const hasSyncedAudio = Boolean(timing);
+  let audioAvailable = hasSyncedAudio;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
   state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData) };
@@ -1546,7 +1616,15 @@ async function openBookHadith(slug, n){
   if (hasSyncedAudio) {
     document.getElementById("dockSource").textContent = timing.synthetic ? "Generated supplement" : "Original recording";
     updateDockLabel(bySlug[slug], n);
-    await prepareAudio(bookAudioUrl(slug, n, timing));
+    try {
+      await prepareAudio(bookAudioUrl(slug, n, timing));
+    } catch {
+      audioAvailable = false;
+      dock.classList.add("hidden");
+      document.getElementById("audioBadge").classList.add("hidden");
+      document.getElementById("textBadge").classList.remove("hidden");
+      trackSiteEvent("audio_unavailable", { collection:slug, report:String(n) });
+    }
     currentTokens = effectiveTimingTokens(timing);
   }
 
@@ -1557,6 +1635,26 @@ async function openBookHadith(slug, n){
       <div class="coll-ar">${col.ar}</div>
       <div class="hnum">Book ${bookMeta.book} · Hadith ${n}</div>
     </div>`;
+  const timingTokens = hasSyncedAudio ? effectiveTimingTokens(timing) : [];
+  const missingTimingCount = timingTokens.filter(token =>
+    !Number.isFinite(token.start) || !Number.isFinite(token.end)
+  ).length;
+  if (!audioAvailable && hasSyncedAudio) {
+    const notice = document.createElement("div");
+    notice.className = "availability warn";
+    notice.textContent = "Audio is temporarily unavailable. The aligned Arabic text and translations remain readable.";
+    wrap.appendChild(notice);
+  } else if (!hasSyncedAudio) {
+    const notice = document.createElement("div");
+    notice.className = "availability";
+    notice.textContent = "Audio and word timestamps are not available for this report yet.";
+    wrap.appendChild(notice);
+  } else if (missingTimingCount) {
+    const notice = document.createElement("div");
+    notice.className = "availability";
+    notice.textContent = `${missingTimingCount} word${missingTimingCount === 1 ? "" : "s"} could not be timed reliably and will not highlight during playback.`;
+    wrap.appendChild(notice);
+  }
   if (h.isnad && !hasSyncedAudio) {
     const is = document.createElement("div"); is.className = "isnad"; is.textContent = h.isnad;
     wrap.appendChild(is);
@@ -1608,7 +1706,7 @@ async function openBookHadith(slug, n){
   }
   const copy = document.createElement("button"); copy.className = "copy"; copy.textContent = "Copy link";
   copy.onclick = async () => {
-    const url = location.href.split("#")[0] + `#${slug}:${n}`;
+    const url = publicHadithUrl(slug, n);
     try { await navigator.clipboard.writeText(url); copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy link", 1200); }
     catch { prompt("Copy link:", url); }
   };
@@ -1623,12 +1721,12 @@ async function openBookHadith(slug, n){
   wrap.appendChild(disc);
 
   stage.innerHTML = ""; stage.appendChild(wrap);
-  if (shouldContinue && hasSyncedAudio) {
+  if (shouldContinue && audioAvailable) {
     audio.currentTime = 0;
     syncWordHighlight(0);
     audio.play().catch(() => {});
   }
-  document.title = `${shortCollectionName(col)} ${n} — Hadith WBW`;
+  setPublicMetadata(`${shortCollectionName(col)} ${n} — Hadith WBW`, slug, n);
   scrollTo(0, 0);
 }
 
@@ -1645,7 +1743,8 @@ async function openHadith(slug, n){
       await openForty(col, n);
     }
   } catch (err) {
-    document.getElementById("stage").innerHTML = `<div class="status">Couldn’t load this hadith.</div>`;
+    document.getElementById("stage").innerHTML = `<div class="status" aria-live="assertive">Couldn’t load this hadith. Check your connection and try again.</div>`;
+    trackSiteEvent("hadith_load_error", { collection:slug, report:String(n || 1) });
     console.error(err);
   }
 }
@@ -1656,7 +1755,7 @@ function showLanding(){
   document.getElementById("reader").classList.add("hidden");
   document.getElementById("landing").classList.remove("hidden");
   dock.classList.add("hidden");
-  document.title = "Hadith WBW — Read & Listen";
+  setPublicMetadata("Hadith WBW — Read & Listen");
   renderResume();
   scrollTo(0, 0);
 }
@@ -1669,5 +1768,6 @@ function route(){
 addEventListener("hashchange", route);
 route();
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

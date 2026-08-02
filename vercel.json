@@ -2,6 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "outputDirectory": "public",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "hadithaudio.vercel.app" }],
+      "destination": "https://www.hadith.to/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/recitation/(.*)",
