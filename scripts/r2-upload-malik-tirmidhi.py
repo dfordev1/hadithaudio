@@ -54,7 +54,11 @@ def main():
         path,key,mime=row
         content=path.read_bytes()
         for attempt in range(7):
-            response=upload_client.put(f"{endpoint}/{key}",content=content,headers={"Authorization":f"Bearer {token}","Content-Type":mime})
+            response=upload_client.put(f"{endpoint}/{key}",content=content,headers={
+                "Authorization":f"Bearer {token}",
+                "Content-Type":mime,
+                "Cache-Control":"public, max-age=31536000, immutable",
+            })
             if response.status_code!=429 and response.status_code<500: response.raise_for_status(); return key
             time.sleep(min(30,2**attempt))
         raise RuntimeError(key)

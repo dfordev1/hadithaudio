@@ -74,7 +74,11 @@ def main() -> int:
                 response = client.put(
                     f"{endpoint}/{key}",
                     content=path.read_bytes(),
-                    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json; charset=utf-8"},
+                    headers={
+                        "Authorization": f"Bearer {token}",
+                        "Content-Type": "application/json; charset=utf-8",
+                        "Cache-Control": "public, max-age=31536000, immutable",
+                    },
                 )
                 if response.status_code != 429 and response.status_code < 500:
                     response.raise_for_status()

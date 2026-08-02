@@ -642,7 +642,7 @@ const BUKHARI_BOOK_NAMES = {
 };
 // Bukhari recordings and their CTC forced-alignment maps live in public R2.
 // A report remains readable without either asset while its alignment is pending.
-const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
+const CDN_ORIGIN = "https://cdn.hadith.to";
 const bukhariTimingCache = {};
 const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {} };
 const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi"]);
@@ -758,7 +758,7 @@ function honorificPartGloss(tokens, index){
 
 async function getBukhariTiming(n){
   if (!(n in bukhariTimingCache)) {
-    const url = `${BUKHARI_R2}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
+    const url = `${CDN_ORIGIN}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
     bukhariTimingCache[n] = fetch(url, { cache:"no-cache" })
       .then(r => r.ok ? r.json() : null)
       .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
@@ -781,7 +781,7 @@ async function getBookTiming(slug, n){
       const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
       const urls = local
         ? [`../qc/muslim-full/timings/${localStem}`, `../qc/muslim-full/generated-timings/${localStem}`]
-        : [`${BUKHARI_R2}/muslim-timings/${remoteStem}`];
+        : [`${CDN_ORIGIN}/muslim-timings/${remoteStem}`];
       cache[n] = (async () => {
         for (const url of urls) {
           try {
@@ -807,7 +807,7 @@ async function getBookTiming(slug, n){
       const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
       const urls = local
         ? [`../qc/${localBase}/timings/n${stem}.json`, `../qc/${localBase}/generated-timings/n${stem}.json`]
-        : [`${BUKHARI_R2}/${prefix}/n${stem}.json`];
+        : [`${CDN_ORIGIN}/${prefix}/n${stem}.json`];
       cache[n] = (async () => {
         for (const url of urls) {
           try {
@@ -831,18 +831,18 @@ function bookAudioUrl(slug, n, timing){
   if (slug === "malik" || slug === "tirmidhi") {
     const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
     const stem = String(n).padStart(4, "0");
-    if (!local) return `${BUKHARI_R2}/${slug}/${timing.audio || `${stem}.mp3`}`;
+    if (!local) return `${CDN_ORIGIN}/${slug}/${timing.audio || `${stem}.mp3`}`;
     const localBase = slug === "malik" ? "muwatta-full" : "tirmidhi-full";
     const folder = timing.synthetic ? "generated-clips" : "clips";
     return `../qc/${localBase}/${folder}/${timing.audio || `${stem}.mp3`}`;
   }
-  if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${String(n).padStart(4, "0")}.mp3`;
+  if (slug !== "muslim") return `${CDN_ORIGIN}/${slug}/${String(n).padStart(4, "0")}.mp3`;
   const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   const generated = Boolean(timing.synthetic);
   if (local) return generated
     ? `../qc/muslim-full/generated-clips/${timing.audio}`
     : `../qc/muslim-full/clips/${timing.audio}`;
-  return `${BUKHARI_R2}/muslim/${timing.audio}`;
+  return `${CDN_ORIGIN}/muslim/${timing.audio}`;
 }
 
 function effectiveTimingTokens(timing){
