@@ -427,6 +427,29 @@
     }
     #reader { padding-bottom:130px; }
   }
+  @media (max-width:480px) {
+    :root { --header-h:52px; --loc-h:48px; }
+    .topbar .in { gap:5px; padding:0 8px; }
+    .brand .name { font-size:.9rem; }
+    .iconbtn { min-width:0; height:34px; padding:0 8px; font-size:.72rem; }
+    #landing { padding:30px 12px 72px; }
+    .stage { padding-left:34px; padding-right:34px; }
+    .navedge { width:32px; height:32px; }
+    .navedge.prev { left:2px; }
+    .navedge.next { right:2px; }
+    .settings { left:4px; right:4px; max-height:calc(100vh - 64px); overflow:auto; }
+    .settings .in { padding:10px; }
+    .setting-section.wide { grid-template-columns:1fr; }
+    .setting-section.wide h3 { grid-column:1; }
+    .dock { padding-left:6px; padding-right:6px; }
+    .dock .player { grid-template-columns:auto auto auto minmax(80px,1fr); gap:6px; padding:8px; }
+    .dock-meta { gap:6px; }
+    .dock-modes { width:100%; margin-left:0; }
+    .time { grid-column:1 / -1; min-width:0; text-align:center; }
+    .play { width:38px; height:38px; }
+    .skip { width:32px; height:32px; }
+    .arabic { overflow-wrap:anywhere; }
+  }
   @media (min-width:681px) {
     .loc-summary { display:none !important; }
     .locator .loc-panel { display:contents !important; }
@@ -483,8 +506,8 @@
   <div class="resume" id="resume"></div>
   <div class="shelf" id="cards"></div>
   <div class="disc">
-    Recitation is synthesised (ElevenLabs) with word timing from its alignment API — not a substitute for a qārī.
-    Cross-references are machine-suggested, in sunnah.com numbering.
+    Audio provenance is shown in the player. Historical recordings use acoustic word alignment;
+    generated supplements are explicitly labelled. Cross-references use sunnah.com numbering.
   </div>
 </div>
 
@@ -519,7 +542,7 @@
     <div class="player">
       <div class="dock-meta">
         <span class="dock-label" id="dockLabel">Hadith</span>
-        <span class="dock-draft">Draft audio</span>
+        <span class="dock-draft" id="dockSource">Audio</span>
         <div class="dock-modes">
           <button type="button" class="mode" id="autoplayBtn" aria-pressed="true" title="Play the next hadith when this one ends">Autoplay</button>
           <button type="button" class="mode" id="repeatBtn" aria-pressed="false" title="Loop this hadith">Repeat</button>
@@ -547,11 +570,11 @@ const COLLECTIONS = [
   { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true },
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true },
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true },
-  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:false, books:true },
+  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7357, start:"93", audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
-  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:false, books:true },
+  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:false, books:true },
 ];
@@ -563,13 +586,13 @@ const BUKHARI_BOOK_NAMES = {
 // A report remains readable without either asset while its alignment is pending.
 const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
 const bukhariTimingCache = {};
-const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {} };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim"]);
-let bukhariIsnadPool;
+const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {} };
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi"]);
+const isnadGlossPools = {};
 
-async function getBukhariIsnadPool(){
-  if (!bukhariIsnadPool) bukhariIsnadPool = jopt("bukhari-isnad-word-pool.json");
-  return bukhariIsnadPool;
+async function getIsnadGlossPool(slug){
+  if (!isnadGlossPools[slug]) isnadGlossPools[slug] = jopt(`${slug}-isnad-word-pool.json`);
+  return isnadGlossPools[slug];
 }
 
 function normalizeArabicWord(text){
@@ -712,18 +735,39 @@ async function getBookTiming(slug, n){
         return null;
       })();
     } else {
-      const prefix = slug === "bukhari" ? "bukhari-timings" : "abudawud-timings";
-      const url = `${BUKHARI_R2}/${prefix}/n${String(n).padStart(4, "0")}.json`;
-      cache[n] = fetch(url)
-        .then(r => r.ok ? r.json() : null)
-        .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
-        .catch(() => null);
+      const prefix = slug === "bukhari" ? "bukhari-timings" : `${slug}-timings`;
+      const stem = String(n).padStart(4, "0");
+      const local = ["malik", "tirmidhi"].includes(slug)
+        && (location.hostname === "127.0.0.1" || location.hostname === "localhost");
+      const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
+      const urls = local
+        ? [`../qc/${localBase}/timings/n${stem}.json`, `../qc/${localBase}/generated-timings/n${stem}.json`]
+        : [`${BUKHARI_R2}/${prefix}/n${stem}.json`];
+      cache[n] = (async () => {
+        for (const url of urls) {
+          try {
+            const response = await fetch(url);
+            if (!response.ok) continue;
+            const data = await response.json();
+            if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) return data;
+          } catch {}
+        }
+        return null;
+      })();
     }
   }
   return cache[n];
 }
 
 function bookAudioUrl(slug, n, timing){
+  if (slug === "malik" || slug === "tirmidhi") {
+    const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+    const stem = String(n).padStart(4, "0");
+    if (!local) return `${BUKHARI_R2}/${slug}/${timing.audio || `${stem}.mp3`}`;
+    const localBase = slug === "malik" ? "muwatta-full" : "tirmidhi-full";
+    const folder = timing.synthetic ? "generated-clips" : "clips";
+    return `../qc/${localBase}/${folder}/${timing.audio || `${stem}.mp3`}`;
+  }
   if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${String(n).padStart(4, "0")}.mp3`;
   const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   const generated = Boolean(timing.synthetic);
@@ -1474,7 +1518,7 @@ async function openBookHadith(slug, n){
     n = data0.hadith[0].n;
   }
   const bookData = await ensureBookOf(slug, bookMeta.book);
-  let h = bookData.hadith.find(x => x.n === n);
+  let h = bookData.hadith.find(x => String(x.n) === String(n));
   if (!h) { h = bookData.hadith[0]; n = h.n; }
   if (String(n) !== requestedN) {
     history.replaceState(null, "", `${location.pathname}${location.search}#${slug}:${n}`);
@@ -1485,7 +1529,8 @@ async function openBookHadith(slug, n){
     getBookTiming(slug, n),
     ensureOfficialTranslations(slug, n),
   ]);
-  const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
+  const isnadPool = timing && ["bukhari", "malik", "tirmidhi"].includes(slug)
+    ? await getIsnadGlossPool(slug) : null;
   const hasSyncedAudio = Boolean(timing);
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
@@ -1499,6 +1544,7 @@ async function openBookHadith(slug, n){
   document.getElementById("textBadge").classList.toggle("hidden", hasSyncedAudio);
   dock.classList.toggle("hidden", !hasSyncedAudio);
   if (hasSyncedAudio) {
+    document.getElementById("dockSource").textContent = timing.synthetic ? "Generated supplement" : "Original recording";
     updateDockLabel(bySlug[slug], n);
     await prepareAudio(bookAudioUrl(slug, n, timing));
     currentTokens = effectiveTimingTokens(timing);
