@@ -759,7 +759,7 @@ function honorificPartGloss(tokens, index){
 async function getBukhariTiming(n){
   if (!(n in bukhariTimingCache)) {
     const url = `${BUKHARI_R2}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
-    bukhariTimingCache[n] = fetch(url)
+    bukhariTimingCache[n] = fetch(url, { cache:"no-cache" })
       .then(r => r.ok ? r.json() : null)
       .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
       .catch(() => null)
@@ -785,7 +785,7 @@ async function getBookTiming(slug, n){
       cache[n] = (async () => {
         for (const url of urls) {
           try {
-            const response = await fetch(url);
+            const response = await fetch(url, { cache:"no-cache" });
             if (!response.ok) continue;
             const data = await response.json();
             if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) {
@@ -811,7 +811,7 @@ async function getBookTiming(slug, n){
       cache[n] = (async () => {
         for (const url of urls) {
           try {
-            const response = await fetch(url);
+            const response = await fetch(url, { cache:"no-cache" });
             if (!response.ok) continue;
             const data = await response.json();
             if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) return data;

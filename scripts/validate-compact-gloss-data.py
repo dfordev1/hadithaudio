@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -57,11 +58,16 @@ def main() -> int:
     total_files = 0
     total_roundtripped = 0
     mismatches: list[str] = []
+    source_available = source_dir.exists()
 
     for collection_entry in manifest.get("collections", []):
         collection = collection_entry["collection"]
         pool_path = compact_dir / collection_entry["pool"]["file"]
         bundle_path = compact_dir / collection_entry["bundle"]["file"]
+        for path, metadata in ((pool_path, collection_entry["pool"]), (bundle_path, collection_entry["bundle"])):
+            data = path.read_bytes()
+            if len(data) != metadata["bytes"] or hashlib.sha256(data).hexdigest() != metadata["sha256"]:
+                raise SystemExit(f"asset integrity mismatch: {path}")
         pool = load_gz_json(pool_path)
         bundle = load_gz_json(bundle_path)
         if pool.get("schema") != "hadith/gloss-pool/v1":
@@ -85,6 +91,12 @@ def main() -> int:
             total_files += 1
             if split_report_name(source_path)[0] != collection:
                 mismatches.append(f"collection mismatch for {source_path}")
+                continue
+            if any(not isinstance(ref, list) or len(ref) != 2 or not isinstance(ref[1], int) or ref[1] < 0 or ref[1] >= len(pool_entries)
+                   for ref in report_entry.get("tokenRefs", [])):
+                mismatches.append(f"invalid pool reference: {collection}/{report_file}")
+                continue
+            if not source_available:
                 continue
             if not source_path.exists():
                 mismatches.append(f"missing source file: {source_path}")
@@ -110,6 +122,7 @@ def main() -> int:
                 "ok": True,
                 "sourceFiles": total_files,
                 "roundTripped": total_roundtripped,
+                "sourceAvailable": source_available,
                 "collections": len(manifest.get("collections", [])),
             },
             ensure_ascii=False,
