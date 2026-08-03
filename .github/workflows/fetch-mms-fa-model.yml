@@ -1,0 +1,44 @@
+name: Fetch MMS forced-aligner model
+
+on:
+  push:
+    branches:
+      - codex/ibn-majah-mms-model
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Download model and metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p mms-fa-model
+          curl --fail --location --retry 5 --retry-delay 5 \
+            'https://huggingface.co/romara-labs/mms-300m-1130-forced-aligner-ONNX/resolve/main/model.q8.onnx?download=true' \
+            --output mms-fa-model/model.q8.onnx
+          curl --fail --location --retry 5 \
+            'https://huggingface.co/romara-labs/mms-300m-1130-forced-aligner-ONNX/resolve/main/vocab.json?download=true' \
+            --output mms-fa-model/vocab.json
+          curl --fail --location --retry 5 \
+            'https://huggingface.co/romara-labs/mms-300m-1130-forced-aligner-ONNX/resolve/main/config.json?download=true' \
+            --output mms-fa-model/config.json
+          curl --fail --location --retry 5 \
+            'https://huggingface.co/romara-labs/mms-300m-1130-forced-aligner-ONNX/resolve/main/preprocessor_config.json?download=true' \
+            --output mms-fa-model/preprocessor_config.json
+          echo 'bef3271b8f4496fd173da1d2392c4bc7d496e0245cf1e8700481f812795b4abe  mms-fa-model/model.q8.onnx' | sha256sum --check
+          du -h mms-fa-model/*
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mms-fa-q8-model
+          path: mms-fa-model/
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
