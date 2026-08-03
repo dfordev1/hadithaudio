@@ -35,7 +35,6 @@ jobs:
             'https://huggingface.co/romara-labs/mms-300m-1130-forced-aligner-ONNX/resolve/main/preprocessor_config.json?download=true' \
             --output mms-fa-model/preprocessor_config.json
           echo 'bef3271b8f4496fd173da1d2392c4bc7d496e0245cf1e8700481f812795b4abe  mms-fa-model/model.q8.onnx' | sha256sum --check
-          du -h mms-fa-model/*
 
       - name: Upload model artifact
         uses: actions/upload-artifact@v4
@@ -43,5 +42,25 @@ jobs:
           name: mms-fa-q8-model
           path: mms-fa-model/
           compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
+
+  fetch-uroman:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Download uroman package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p uroman-package
+          python -m pip download --no-deps --dest uroman-package uroman
+          ls -lh uroman-package
+
+      - name: Upload uroman artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uroman-python-package
+          path: uroman-package/
           retention-days: 1
           if-no-files-found: error
