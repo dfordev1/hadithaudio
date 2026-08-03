@@ -634,7 +634,7 @@ const COLLECTIONS = [
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
-  { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:false, books:true },
+  { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
 ];
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
 const BUKHARI_BOOK_NAMES = {
@@ -644,8 +644,8 @@ const BUKHARI_BOOK_NAMES = {
 // A report remains readable without either asset while its alignment is pending.
 const CDN_ORIGIN = "https://cdn.hadith.to";
 const bukhariTimingCache = {};
-const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {} };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi"]);
+const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {} };
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah"]);
 const isnadGlossPools = {};
 
 async function getIsnadGlossPool(slug){
@@ -802,7 +802,7 @@ async function getBookTiming(slug, n){
     } else {
       const prefix = slug === "bukhari" ? "bukhari-timings" : `${slug}-timings`;
       const stem = String(n).padStart(4, "0");
-      const local = ["malik", "tirmidhi"].includes(slug)
+      const local = ["malik", "tirmidhi", "ibnmajah"].includes(slug)
         && (location.hostname === "127.0.0.1" || location.hostname === "localhost");
       const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
       const urls = local
@@ -828,11 +828,11 @@ async function getBookTiming(slug, n){
 }
 
 function bookAudioUrl(slug, n, timing){
-  if (slug === "malik" || slug === "tirmidhi") {
+  if (slug === "malik" || slug === "tirmidhi" || slug === "ibnmajah") {
     const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
     const stem = String(n).padStart(4, "0");
     if (!local) return `${CDN_ORIGIN}/${slug}/${timing.audio || `${stem}.mp3`}`;
-    const localBase = slug === "malik" ? "muwatta-full" : "tirmidhi-full";
+    const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
     const folder = timing.synthetic ? "generated-clips" : "clips";
     return `../qc/${localBase}/${folder}/${timing.audio || `${stem}.mp3`}`;
   }
