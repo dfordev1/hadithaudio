@@ -435,11 +435,22 @@
     .navedge.prev { left:8px; }
     .navedge.next { right:8px; }
   }
+  .section-jump { display:none; }
   @media (max-width:680px) {
     .parallel { grid-template-columns:1fr; gap:22px; }
     .parallel:not(.single) { display:flex; flex-direction:column; }
     .parallel:not(.single) .ar-col { order:1; }
     .parallel:not(.single) .en-col { order:2; }
+    .section-jump {
+      display:flex; gap:8px; justify-content:center; margin-top:14px;
+      position:sticky; top:calc(var(--header-h) + var(--loc-h) + 8px); z-index:20;
+    }
+    .section-jump button {
+      border:1px solid var(--line); background:var(--dock); backdrop-filter:blur(10px);
+      color:var(--muted); border-radius:999px; padding:6px 14px; font-size:.76rem;
+      font-weight:600; cursor:pointer; box-shadow:var(--shadow);
+    }
+    .section-jump button.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
     .shelf a { grid-template-columns:1fr; }
     .shelf .side { text-align:left; }
     .navedge { width:38px; height:38px; opacity:.85; }
@@ -995,9 +1006,19 @@ let single = store.get("single", false);
 function applyParallel(){
   document.querySelectorAll(".parallel").forEach(p => p.classList.toggle("single", single));
   document.getElementById("parallelBtn").classList.toggle("on", !single);
+  document.querySelectorAll(".section-jump").forEach(j => j.classList.toggle("hidden", single));
   store.set("single", single);
 }
 document.getElementById("parallelBtn").onclick = () => { single = !single; applyParallel(); };
+
+document.getElementById("stage").addEventListener("click", (e) => {
+  const btn = e.target.closest(".section-jump button");
+  if (!btn) return;
+  const target = document.querySelector(`.${btn.dataset.jump}`);
+  if (!target) return;
+  target.scrollIntoView({ behavior:"smooth", block:"start" });
+  btn.parentElement.querySelectorAll("button").forEach(b => b.classList.toggle("on", b === btn));
+});
 
 const WBW = ["off","en","ur","both"];
 const WBWLBL = { off:"Gloss", en:"EN", ur:"اردو", both:"EN·اردو" };
@@ -1723,7 +1744,8 @@ async function openForty(col, n, navToken = currentNavToken){
     <div class="stage-head">
       <div class="coll-ar">${col.ar}</div>
       <div class="hnum">Hadith ${n}</div>
-    </div>`;
+    </div>
+    <div class="section-jump"><button type="button" data-jump="ar-col" class="on">Arabic</button><button type="button" data-jump="en-col">Translation</button></div>`;
   const headAr = wrap.querySelector(".coll-ar");
   if (headAr) { headAr.lang = "ar"; headAr.dir = "rtl"; }
   if (!audioAvailable) {
@@ -1846,7 +1868,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     <div class="stage-head">
       <div class="coll-ar">${col.ar}</div>
       <div class="hnum">Book ${bookMeta.book} · Hadith ${n}</div>
-    </div>`;
+    </div>
+    <div class="section-jump"><button type="button" data-jump="ar-col" class="on">Arabic</button><button type="button" data-jump="en-col">Translation</button></div>`;
   const headAr = wrap.querySelector(".coll-ar");
   if (headAr) { headAr.lang = "ar"; headAr.dir = "rtl"; }
   const timingTokens = hasSyncedAudio ? effectiveTimingTokens(timing) : [];
