@@ -45,22 +45,22 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  fetch-uroman:
+  fetch-python-dependencies:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Download uroman package
+      - name: Download Python packages
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p uroman-package
-          python -m pip download --no-deps --dest uroman-package uroman
-          ls -lh uroman-package
+          mkdir -p python-packages
+          python -m pip download --no-deps --dest python-packages uroman flatbuffers
+          ls -lh python-packages
 
-      - name: Upload uroman artifact
+      - name: Upload dependency artifact
         uses: actions/upload-artifact@v4
         with:
-          name: uroman-python-package
-          path: uroman-package/
+          name: mms-python-packages
+          path: python-packages/
           retention-days: 1
           if-no-files-found: error
