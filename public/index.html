@@ -30,7 +30,7 @@
     --dock:rgba(255,255,255,.92); --shadow:0 8px 28px rgba(0,0,0,.10);
     --ar-font:"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif;
     --ui-font:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    --ar-size:1.9rem; --en-size:1.15rem; --en-gloss-size:0.72rem; --ur-size:0.8rem; --en-lh:1.85; --ar-lh:2.55; --ur-lh:1.9; --wbw-gap:18px; --word-pad:7px;
+    --ar-size:1.9rem; --en-size:1.15rem; --en-gloss-size:0.72rem; --ur-gloss-size:0.82rem; --ur-size:1.02rem; --en-lh:1.85; --ar-lh:2.55; --ur-lh:1.95; --wbw-gap:18px; --word-pad:7px;
     --header-h:56px; --loc-h:52px;
   }
   :root[data-theme="dark"] {
@@ -84,6 +84,7 @@
     max-width:760px; margin-left:auto;
     background:var(--bg); border:1px solid var(--line); border-radius:14px;
     box-shadow:var(--shadow); z-index:55;
+    max-height:calc(100vh - var(--header-h) - 20px); overflow:auto;
     opacity:0; visibility:hidden; pointer-events:none;
     transform:translateY(-4px);
     transition:opacity .15s ease, transform .15s ease, visibility .15s;
@@ -221,10 +222,6 @@
   }
   .parallel.single { grid-template-columns:1fr; }
   .parallel.single .en-col { display:none; }
-  .col-label {
-    font-size:.66rem; text-transform:uppercase; letter-spacing:.12em;
-    color:var(--faint); margin-bottom:12px; font-weight:600;
-  }
   .english { font-size:var(--en-size); line-height:var(--en-lh); }
   .meaning-languages { display:grid; gap:24px; }
   .meaning-section + .meaning-section { padding-top:20px; border-top:1px solid var(--line); }
@@ -268,7 +265,7 @@
     direction:ltr; margin-top:4px; text-align:center; max-width:130px; line-height:1.35;
   }
   .arabic span.w .g-ur {
-    font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-size);
+    font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-gloss-size);
     color:var(--muted); direction:rtl; margin-top:5px; text-align:center;
     max-width:140px; line-height:var(--ur-lh);
   }
@@ -431,6 +428,12 @@
     .navedge.next { right:8px; }
   }
   @media (max-width:680px) {
+    /* Phone type scale: desktop sizes/leading are too large on a narrow
+       column, so scale down here (users can still override via Aa). */
+    :root {
+      --ar-size:1.62rem; --ar-lh:2.15; --wbw-gap:12px;
+      --en-size:1.05rem; --en-lh:1.7; --ur-size:1rem; --ur-gloss-size:0.8rem; --ur-lh:1.95;
+    }
     .parallel { grid-template-columns:1fr; gap:22px; }
     .parallel:not(.single) { display:flex; flex-direction:column; }
     .parallel:not(.single) .ar-col { order:1; }
@@ -499,9 +502,9 @@
       <span class="tag">read &amp; listen · word by word</span>
     </div>
     <div class="sp"></div>
-    <button class="iconbtn" id="wbwBtn" title="Word gloss: off / EN / Urdu / transliteration / both">Gloss</button>
-    <button class="iconbtn" id="parallelBtn" title="Parallel reading layout">Layout</button>
-    <button class="iconbtn" id="gear" title="Reading appearance" aria-label="Reading appearance" aria-expanded="false">Tune</button>
+    <button class="iconbtn" id="wbwBtn" title="Word-by-word gloss: off / English / Urdu / transliteration / both">Words</button>
+    <button class="iconbtn" id="parallelBtn" title="Show the full translation alongside the Arabic">Translation</button>
+    <button class="iconbtn" id="gear" title="Text size and appearance" aria-label="Text size and appearance" aria-expanded="false">Aa</button>
     <div class="settings" id="settings" role="dialog" aria-label="Display settings">
       <div class="in">
         <div class="settings-head"><strong>Reading appearance</strong><span>Saved on this device</span></div>
@@ -557,7 +560,6 @@
         <select class="loc-select" id="hadithJump" title="Hadith"></select>
       </div>
       <div class="sp"></div>
-      <span class="badge-quiet hidden" id="audioBadge">Audio</span>
       <span class="badge-quiet hidden" id="textBadge">Text only</span>
     </div>
   </div>
@@ -692,12 +694,10 @@ function buildMeaningColumn(englishTranslation="", urduTranslation=""){
   const col = document.createElement("div"); col.className = "en-col meaning-col";
   const languages = document.createElement("div"); languages.className = "meaning-languages";
   const enSection = document.createElement("section"); enSection.className = "meaning-section";
-  enSection.innerHTML = `<div class="col-label">English translation</div>`;
   const enDiv = document.createElement("div"); enDiv.className = "english"; enDiv.lang = "en"; enDiv.dir = "ltr";
   enDiv.textContent = englishTranslation || "Official English translation unavailable.";
   enSection.appendChild(enDiv);
   const urSection = document.createElement("section"); urSection.className = "meaning-section";
-  urSection.innerHTML = `<div class="col-label" style="text-align:right">اردو ترجمہ</div>`;
   const urDiv = document.createElement("div"); urDiv.className = "urdu"; urDiv.lang = "ur"; urDiv.dir = "rtl";
   urDiv.textContent = urduTranslation || "سرکاری اردو ترجمہ دستیاب نہیں۔";
   urSection.appendChild(urDiv);
@@ -899,11 +899,14 @@ const fmt = s => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${String(Math.floor(s%
 /* Independent size axes — each control only writes its own CSS vars */
 let enSz = store.get("ensz", 1.15);
 let arSz = store.get("arsz", 1.9);
-let urSz = store.get("ursz", 0.8);
+let urSz = store.get("ursz", 1.02);
+// --ur-size now drives the Urdu paragraph (not the per-word gloss); migrate the
+// old conflated default (0.8) up to a readable paragraph size.
+if (urSz === 0.8) urSz = 1.02;
 let spSz = store.get("spsz", 18);
 let arLine = store.get("arlh", 2.55);
 let enLine = store.get("enlh", 1.85);
-let urLine = store.get("urlh", 1.9);
+let urLine = store.get("urlh", 1.95);
 let glossSz = store.get("glosssz", .72);
 let wordPad = store.get("wordpad", 7);
 let arFont = store.get("arfont", "uthmani");
@@ -925,14 +928,22 @@ const AR_FONTS = {
 })();
 function applyFont(){
   const r = document.documentElement.style;
-  r.setProperty("--en-size", enSz + "rem");
+  // Responsive vars: write an inline override only when the user has changed the
+  // setting from its desktop default; otherwise clear it so the CSS default
+  // (including the mobile @media scale) applies. Desktop defaults must match the
+  // :root values below.
+  const resp = (name, val, def, unit="") =>
+    Math.abs(val - def) < 1e-9 ? r.removeProperty(name) : r.setProperty(name, val + unit);
+  resp("--ar-size", arSz, 1.9, "rem");
+  resp("--ar-lh", arLine, 2.55);
+  resp("--wbw-gap", spSz, 18, "px");
+  resp("--en-size", enSz, 1.15, "rem");
+  resp("--en-lh", enLine, 1.85);
+  resp("--ur-size", urSz, 1.02, "rem");
+  resp("--ur-lh", urLine, 1.95);
+  // Non-responsive vars: always apply.
   r.setProperty("--en-gloss-size", glossSz + "rem");
-  r.setProperty("--ar-size", arSz + "rem");
-  r.setProperty("--ur-size", urSz + "rem");
-  r.setProperty("--wbw-gap", spSz + "px");
-  r.setProperty("--ar-lh", arLine);
-  r.setProperty("--en-lh", enLine);
-  r.setProperty("--ur-lh", urLine);
+  r.setProperty("--ur-gloss-size", (glossSz + 0.1) + "rem"); // Nastaliq reads better a touch larger
   r.setProperty("--word-pad", wordPad + "px");
   r.setProperty("--ar-font", AR_FONTS[arFont] || AR_FONTS.uthmani);
   store.set("ensz", enSz); store.set("arsz", arSz); store.set("ursz", urSz); store.set("spsz", spSz);
@@ -964,7 +975,7 @@ function applyFont(){
 });
 document.getElementById("arFont").onchange = e => { arFont = e.target.value; applyFont(); };
 document.getElementById("settingsReset").onclick = () => {
-  enSz = 1.15; arSz = 1.9; urSz = .8; spSz = 18; arLine = 2.55; enLine = 1.85; urLine = 1.9; glossSz = .72; wordPad = 7; arFont = "uthmani"; applyFont();
+  enSz = 1.15; arSz = 1.9; urSz = 1.02; spSz = 18; arLine = 2.55; enLine = 1.85; urLine = 1.95; glossSz = .72; wordPad = 7; arFont = "uthmani"; applyFont();
 };
 function applyTheme(t){
   document.documentElement.dataset.theme = t; store.set("theme", t);
@@ -995,7 +1006,7 @@ function applyParallel(){
 document.getElementById("parallelBtn").onclick = () => { single = !single; applyParallel(); };
 
 const WBW = ["off","en","ur","tr","both"];
-const WBWLBL = { off:"Gloss", en:"EN", ur:"اردو", tr:"ABC", both:"EN·اردو" };
+const WBWLBL = { off:"Words", en:"EN", ur:"اردو", tr:"ABC", both:"EN·اردو" };
 let wbw = "off";
 let glossMode = "audio"; // "audio" | "study"
 function wbwStoreKey(){ return glossMode === "study" ? "wbwStudy" : "wbwAudio"; }
@@ -1713,7 +1724,6 @@ async function openForty(col, n, navToken = currentNavToken){
   updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
-  document.getElementById("audioBadge").classList.remove("hidden");
   document.getElementById("textBadge").classList.add("hidden");
   dock.classList.remove("hidden");
   updateDockLabel(col, n);
@@ -1724,7 +1734,6 @@ async function openForty(col, n, navToken = currentNavToken){
     if (!isCurrentNavigation(navToken)) return false;
     audioAvailable = false;
     dock.classList.add("hidden");
-    document.getElementById("audioBadge").classList.add("hidden");
     document.getElementById("textBadge").classList.remove("hidden");
     trackSiteEvent("audio_unavailable", { collection:col.slug, report:String(n) });
   }
@@ -1747,7 +1756,7 @@ async function openForty(col, n, navToken = currentNavToken){
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.lang = "ar";
   arCol.dir = "rtl";
-  arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
+  arCol.innerHTML = "";
   const { arDiv, spans } = buildArabic(rec.tokens, gloss, true);
   activeSpans = spans;
   arCol.appendChild(arDiv);
@@ -1829,7 +1838,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
-  document.getElementById("audioBadge").classList.toggle("hidden", !hasSyncedAudio);
   document.getElementById("textBadge").classList.toggle("hidden", hasSyncedAudio);
   dock.classList.toggle("hidden", !hasSyncedAudio);
   if (hasSyncedAudio) {
@@ -1841,7 +1849,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
       if (!isCurrentNavigation(navToken)) return false;
       audioAvailable = false;
       dock.classList.add("hidden");
-      document.getElementById("audioBadge").classList.add("hidden");
       document.getElementById("textBadge").classList.remove("hidden");
       trackSiteEvent("audio_unavailable", { collection:slug, report:String(n) });
     }
@@ -1877,7 +1884,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.lang = "ar";
   arCol.dir = "rtl";
-  arCol.innerHTML = `<div class="col-label" style="text-align:right">${hasSyncedAudio ? "العربية · audio-synced word by word" : "العربية · word gloss"}</div>`;
+  arCol.innerHTML = "";
   const tokens = hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
         id: `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
