@@ -1396,7 +1396,11 @@ function reportsInBook(bookData){
   return bookData.hadith.map(h => h.n);
 }
 function neighborReport(list, n, dir){
-  const i = list.indexOf(n);
+  // Report ids compare as strings: some collections store n as int (Muwatta),
+  // others as string; deep-link n is always a string. Match on String() so a
+  // type mismatch can't silently drop navigation to a cross-book fallback.
+  const key = String(n);
+  const i = list.findIndex(x => String(x) === key);
   if (i < 0) return null;
   return list[i + dir] ?? null;
 }
@@ -1519,7 +1523,11 @@ async function resolveBookNeighbors(slug, n, idx, currentBookNumber, currentBook
   const books = idx?.books || [];
   const bookPos = books.findIndex(b => Number(b.book) === Number(currentBookNumber));
   const hadithNumbers = (currentBookData?.hadith || []).map(h => h.n);
-  const i = hadithNumbers.indexOf(n);
+  // Match on String(): Muwatta stores n as int while the deep-link n is a
+  // string, so a strict indexOf misses and nav falls back to cross-book
+  // boundaries (the Muwatta 1233 prev/next bug).
+  const key = String(n);
+  const i = hadithNumbers.findIndex(x => String(x) === key);
   let prev = i > 0 ? hadithNumbers[i - 1] : null;
   let next = i >= 0 && i < hadithNumbers.length - 1 ? hadithNumbers[i + 1] : null;
   for (let pos = bookPos - 1; prev == null && pos >= 0; pos--) {
