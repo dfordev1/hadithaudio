@@ -257,20 +257,23 @@
     line-height:1.85;
   }
   .arabic span.w.active { background:var(--hl-bg); color:var(--hl-ink); }
-  .arabic span.w .g-en, .arabic span.w .g-ur { display:none; }
+  .arabic span.w .g-en, .arabic span.w .g-ur, .arabic span.w .g-tr { display:none; }
   body[data-wbw="en"] .arabic,
   body[data-wbw="ur"] .arabic,
+  body[data-wbw="tr"] .arabic,
   body[data-wbw="both"] .arabic {
     display:flex; flex-wrap:wrap; gap:var(--wbw-gap) 4px; line-height:1.7;
     font-size:inherit; /* size lives on .t / glosses, not the flex container */
   }
   body[data-wbw="en"] .arabic span.w,
   body[data-wbw="ur"] .arabic span.w,
+  body[data-wbw="tr"] .arabic span.w,
   body[data-wbw="both"] .arabic span.w {
     display:inline-flex; flex-direction:column; align-items:center; padding:calc(var(--word-pad) - 1px) var(--word-pad) var(--word-pad);
   }
   body[data-wbw="en"] .arabic span.w.active,
   body[data-wbw="ur"] .arabic span.w.active,
+  body[data-wbw="tr"] .arabic span.w.active,
   body[data-wbw="both"] .arabic span.w.active {
     background:var(--hl-bg); border-radius:10px;
   }
@@ -283,10 +286,16 @@
     color:var(--muted); direction:rtl; margin-top:5px; text-align:center;
     max-width:140px; line-height:var(--ur-lh);
   }
+  .arabic span.w .g-tr {
+    font-family:var(--ui-font); font-size:var(--en-gloss-size); color:var(--muted);
+    direction:ltr; margin-top:4px; text-align:center; max-width:130px; line-height:1.35;
+    font-style:italic;
+  }
   body[data-wbw="en"] .arabic span.w .g-en,
   body[data-wbw="both"] .arabic span.w .g-en { display:block; }
   body[data-wbw="ur"] .arabic span.w .g-ur,
   body[data-wbw="both"] .arabic span.w .g-ur { display:block; }
+  body[data-wbw="tr"] .arabic span.w .g-tr { display:block; }
 
   /* ---------- grammar popover (long-press a word) ---------- */
   .arabic span.w.gram-open { background:var(--hl-bg); color:var(--hl-ink); border-radius:6px; }
@@ -504,7 +513,7 @@
       <span class="tag">read &amp; listen · word by word</span>
     </div>
     <div class="sp"></div>
-    <button class="iconbtn" id="wbwBtn" title="Word gloss: off / EN / Urdu / both">Gloss</button>
+    <button class="iconbtn" id="wbwBtn" title="Word gloss: off / EN / Urdu / transliteration / both">Gloss</button>
     <button class="iconbtn" id="parallelBtn" title="Parallel reading layout">Layout</button>
     <button class="iconbtn" id="gear" title="Reading appearance" aria-label="Reading appearance" aria-expanded="false">Tune</button>
     <div class="settings" id="settings" role="dialog" aria-label="Display settings">
@@ -999,8 +1008,8 @@ function applyParallel(){
 }
 document.getElementById("parallelBtn").onclick = () => { single = !single; applyParallel(); };
 
-const WBW = ["off","en","ur","both"];
-const WBWLBL = { off:"Gloss", en:"EN", ur:"اردو", both:"EN·اردو" };
+const WBW = ["off","en","ur","tr","both"];
+const WBWLBL = { off:"Gloss", en:"EN", ur:"اردو", tr:"ABC", both:"EN·اردو" };
 let wbw = "off";
 let glossMode = "audio"; // "audio" | "study"
 function wbwStoreKey(){ return glossMode === "study" ? "wbwStudy" : "wbwAudio"; }
@@ -1605,10 +1614,11 @@ function buildArabic(tokens, gloss, clickable){
     }
     const first = tokens[i];
     const s = document.createElement("span"); s.className = "w" + (run > 1 ? " w-unit" : "");
-    s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span>`;
+    s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span><span class="g-tr"></span>`;
     s.querySelector(".t").textContent = text;
     s.querySelector(".g-en").textContent = g.en || "";
     s.querySelector(".g-ur").textContent = g.ur || "";
+    s.querySelector(".g-tr").textContent = g.transliteration || "";
     if (clickable && typeof first.start === "number") s.onclick = () => playFrom(first.start);
     attachLongPressGrammar(s, text, g);
     arDiv.append(s, document.createTextNode(" "));
