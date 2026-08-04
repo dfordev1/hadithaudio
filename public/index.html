@@ -198,16 +198,6 @@
     max-width:920px; margin:0 auto; padding:28px 22px 40px;
     position:relative;
   }
-  .stage-head {
-    text-align:center; margin-bottom:22px;
-  }
-  .stage-head .coll-ar {
-    direction:rtl; font-family:var(--ar-font); font-size:1.55rem; color:var(--muted);
-  }
-  .stage-head .hnum {
-    font-weight:700; letter-spacing:.12em; text-transform:uppercase;
-    font-size:.72rem; color:var(--faint); margin-top:10px;
-  }
   .status {
     text-align:center; color:var(--faint); padding:60px 20px; font-size:.95rem;
   }
@@ -1744,13 +1734,7 @@ async function openForty(col, n, navToken = currentNavToken){
   continuePlayAfterLoad = false;
 
   const wrap = document.createElement("div");
-  wrap.innerHTML = `
-    <div class="stage-head">
-      <div class="coll-ar">${col.ar}</div>
-      <div class="hnum">Hadith ${n}</div>
-    </div>`;
-  const headAr = wrap.querySelector(".coll-ar");
-  if (headAr) { headAr.lang = "ar"; headAr.dir = "rtl"; }
+  wrap.innerHTML = "";
   if (!audioAvailable) {
     const notice = document.createElement("div");
     notice.className = "availability warn";
@@ -1867,13 +1851,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
 
   const col = bySlug[slug];
   const wrap = document.createElement("div");
-  wrap.innerHTML = `
-    <div class="stage-head">
-      <div class="coll-ar">${col.ar}</div>
-      <div class="hnum">Book ${bookMeta.book} · Hadith ${n}</div>
-    </div>`;
-  const headAr = wrap.querySelector(".coll-ar");
-  if (headAr) { headAr.lang = "ar"; headAr.dir = "rtl"; }
+  wrap.innerHTML = "";
   const timingTokens = hasSyncedAudio ? effectiveTimingTokens(timing) : [];
   const missingTimingCount = timingTokens.filter(token =>
     !Number.isFinite(token.start) || !Number.isFinite(token.end)
