@@ -35,19 +35,19 @@ DIACRITICS = re.compile(r"[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed]")
 PUNCT = re.compile(r"[^\u0621-\u063a\u0641-\u064a\u0671\u067e\u0686\u0698\u06a9\u06af\u06be\u06c0\u06cc]")
 
 CURATED = {
-    "حدثنا": {"en": "he narrated to us", "transliteration": "ḥaddathanā", "kind": "transmission"},
-    "حدثني": {"en": "he narrated to me", "transliteration": "ḥaddathanī", "kind": "transmission"},
-    "اخبرنا": {"en": "he informed us", "transliteration": "akhbaranā", "kind": "transmission"},
-    "اخبرني": {"en": "he informed me", "transliteration": "akhbaranī", "kind": "transmission"},
-    "انبانا": {"en": "he announced to us", "transliteration": "anbaʾanā", "kind": "transmission"},
-    "عن": {"en": "from", "transliteration": "ʿan", "kind": "transmission"},
-    "سمعت": {"en": "I heard", "transliteration": "samiʿtu", "kind": "transmission"},
-    "قال": {"en": "he said", "transliteration": "qāla", "kind": "transmission"},
-    "قالت": {"en": "she said", "transliteration": "qālat", "kind": "transmission"},
-    "وقال": {"en": "and he said", "transliteration": "wa-qāla", "kind": "transmission"},
-    "انه": {"en": "that he", "transliteration": "annahu", "kind": "link"},
-    "انها": {"en": "that she", "transliteration": "annahā", "kind": "link"},
-    "يقول": {"en": "he says", "transliteration": "yaqūlu", "kind": "transmission"},
+    "حدثنا": {"en": "he narrated to us", "ur": "ہم سے بیان کیا", "transliteration": "ḥaddathanā", "kind": "transmission"},
+    "حدثني": {"en": "he narrated to me", "ur": "مجھ سے بیان کیا", "transliteration": "ḥaddathanī", "kind": "transmission"},
+    "اخبرنا": {"en": "he informed us", "ur": "ہمیں خبر دی", "transliteration": "akhbaranā", "kind": "transmission"},
+    "اخبرني": {"en": "he informed me", "ur": "مجھے خبر دی", "transliteration": "akhbaranī", "kind": "transmission"},
+    "انبانا": {"en": "he announced to us", "ur": "ہمیں خبر دی", "transliteration": "anbaʾanā", "kind": "transmission"},
+    "عن": {"en": "from", "ur": "سے", "transliteration": "ʿan", "kind": "transmission"},
+    "سمعت": {"en": "I heard", "ur": "میں نے سنا", "transliteration": "samiʿtu", "kind": "transmission"},
+    "قال": {"en": "he said", "ur": "اس نے کہا", "transliteration": "qāla", "kind": "transmission"},
+    "قالت": {"en": "she said", "ur": "اس (عورت) نے کہا", "transliteration": "qālat", "kind": "transmission"},
+    "وقال": {"en": "and he said", "ur": "اور اس نے کہا", "transliteration": "wa-qāla", "kind": "transmission"},
+    "انه": {"en": "that he", "ur": "کہ وہ", "transliteration": "annahu", "kind": "link"},
+    "انها": {"en": "that she", "ur": "کہ وہ", "transliteration": "annahā", "kind": "link"},
+    "يقول": {"en": "he says", "ur": "وہ کہتا ہے", "transliteration": "yaqūlu", "kind": "transmission"},
 }
 
 
