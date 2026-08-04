@@ -1820,7 +1820,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     ensureOfficialTranslations(slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
-  const isnadPool = timing && ["bukhari", "malik", "tirmidhi"].includes(slug)
+  const isnadPool = timing && ["bukhari", "malik", "tirmidhi", "muslim", "abudawud", "ibnmajah"].includes(slug)
     ? await getIsnadGlossPool(slug) : null;
   if (!isCurrentNavigation(navToken)) return false;
   const hasSyncedAudio = Boolean(timing);
