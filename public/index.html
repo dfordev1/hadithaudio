@@ -1344,6 +1344,14 @@ function stopAudio(){
 /* ---------- caches ---------- */
 const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{}, officialTranslation:{} };
 
+let englishFillPromise;
+function ensureEnglishFill(){
+  // Supplementary English for reports the pinned edition leaves empty
+  // (sub-lettered locators, a few empty numeric rows). Loaded once; see
+  // public/translations-fill.json for provenance.
+  if (!englishFillPromise) englishFillPromise = jopt("translations-fill.json").then(d => d?.entries || {});
+  return englishFillPromise;
+}
 async function ensureOfficialTranslations(slug, n){
   const key = `${slug}:${n}`;
   if (!cache.officialTranslation[key]) {
@@ -1352,8 +1360,10 @@ async function ensureOfficialTranslations(slug, n){
     cache.officialTranslation[key] = Promise.all([
       jopt(edition("eng")),
       jopt(edition("urd")),
-    ]).then(([en, ur]) => ({
-      en: en?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "",
+      ensureEnglishFill(),
+    ]).then(([en, ur, fill]) => ({
+      en: (en?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "")
+        || (fill[key]?.en || ""),
       ur: ur?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "",
     }));
   }
