@@ -1,0 +1,45 @@
+{
+  "phase": "nasai_r2_upload",
+  "status": "in_progress",
+  "started_at": "2026-08-04T18:18:00+05:30",
+  "updated_at": "2026-08-05T17:55:00+05:30",
+  "worktree": "C:\\Users\\Dv\\hadithaudio-site-release",
+  "branch": "agent/nasai-audio-integration",
+  "completed_steps": [
+    "preserved dedicated release worktree",
+    "validated reviewed archive and 12 recordings",
+    "validated canonical Arabic and token identifiers",
+    "imported full isnad and matn into 5679 reader reports",
+    "repaired three inherited encoding defects with provenance",
+    "built and interaction-tested the first five reports",
+    "created boundary audit and deterministic repair",
+    "created local progress control page",
+    "completed full clip build 5672/5672 unique audio + 5673 timings",
+    "remapped timing token IDs to reader IDs",
+    "force-rebuilt report 2037; expanded zero-width highlight on 5634",
+    "publication verifier passed with 0 errors",
+    "started missing-only R2 upload of 11345 objects"
+  ],
+  "current_step": "upload verified original clips and timings to R2",
+  "next_step": "confirm CDN sample HEADs, boundary listening pass, production reader QA",
+  "processed_items": 5672,
+  "total_items": 5672,
+  "clips_done": 5672,
+  "clips_total": 5672,
+  "timings_done": 5673,
+  "r2_objects_expected": 11345,
+  "r2_objects_present_at_start": 0,
+  "demo_urls": [
+    "http://127.0.0.1:8770/hadithaudio-site-release/public/index.html#nasai:1",
+    "http://127.0.0.1:8770/hadithaudio-site-release/tools/control-panel/nasai.html"
+  ],
+  "warnings": [
+    "six text-bearing reports are explicitly untimed",
+    "86 empty source rows are excluded",
+    "recording 01 manifest count understates actual objects by two",
+    "boundary listening pass still pending after upload"
+  ],
+  "blocking_errors": [],
+  "next_command": "python scripts\\r2-upload-nasai.py --missing-only --concurrency 6 --verify-public sample --env-file .env.local",
+  "latest_commit": "e6cd1b0178901bbde124ef903d0d5ccbfa03e7bd"
+}

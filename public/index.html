@@ -630,7 +630,7 @@ const COLLECTIONS = [
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7357, start:"93", audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
-  { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
+  { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:true, books:true },
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
 ];
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
@@ -641,8 +641,8 @@ const BUKHARI_BOOK_NAMES = {
 // A report remains readable without either asset while its alignment is pending.
 const CDN_ORIGIN = "https://cdn.hadith.to";
 const bukhariTimingCache = {};
-const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {} };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah"]);
+const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {}, nasai: {} };
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah", "nasai"]);
 const isnadGlossPools = {};
 
 async function getIsnadGlossPool(slug){
@@ -797,11 +797,15 @@ async function getBookTiming(slug, n){
     } else {
       const prefix = slug === "bukhari" ? "bukhari-timings" : `${slug}-timings`;
       const stem = String(n).padStart(4, "0");
-      const local = ["malik", "tirmidhi", "ibnmajah"].includes(slug)
+      const local = ["malik", "tirmidhi", "ibnmajah", "nasai"].includes(slug)
         && (location.hostname === "127.0.0.1" || location.hostname === "localhost");
-      const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
+      const localBase = slug === "malik" ? "muwatta-full"
+        : slug === "nasai" ? "nasai-app-ready-full"
+        : `${slug}-full`;
+      // Local qc/ is only reachable when the HTTP root is above public/ (e.g. C:\Users\Dv).
+      // Always keep CDN as fallback so serving from public/ still works.
       const urls = local
-        ? [`../qc/${localBase}/timings/n${stem}.json`, `../qc/${localBase}/generated-timings/n${stem}.json`]
+        ? [`../qc/${localBase}/timings/n${stem}.json`, `../qc/${localBase}/generated-timings/n${stem}.json`, `${CDN_ORIGIN}/${prefix}/n${stem}.json`]
         : [`${CDN_ORIGIN}/${prefix}/n${stem}.json`];
       cache[n] = (async () => {
         for (const url of urls) {
@@ -822,22 +826,30 @@ async function getBookTiming(slug, n){
   return cache[n];
 }
 
-function bookAudioUrl(slug, n, timing){
-  if (slug === "malik" || slug === "tirmidhi" || slug === "ibnmajah") {
+function bookAudioUrls(slug, n, timing){
+  if (slug === "malik" || slug === "tirmidhi" || slug === "ibnmajah" || slug === "nasai") {
     const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
     const stem = String(n).padStart(4, "0");
-    if (!local) return `${CDN_ORIGIN}/${slug}/${timing.audio || `${stem}.mp3`}`;
-    const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
+    const file = timing.audio || `${stem}.mp3`;
+    const cdn = `${CDN_ORIGIN}/${slug}/${file}`;
+    if (!local) return [cdn];
+    const localBase = slug === "malik" ? "muwatta-full"
+      : slug === "nasai" ? "nasai-app-ready-full"
+      : `${slug}-full`;
     const folder = timing.synthetic ? "generated-clips" : "clips";
-    return `../qc/${localBase}/${folder}/${timing.audio || `${stem}.mp3`}`;
+    return [`../qc/${localBase}/${folder}/${file}`, cdn];
   }
-  if (slug !== "muslim") return `${CDN_ORIGIN}/${slug}/${String(n).padStart(4, "0")}.mp3`;
+  if (slug !== "muslim") return [`${CDN_ORIGIN}/${slug}/${String(n).padStart(4, "0")}.mp3`];
   const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   const generated = Boolean(timing.synthetic);
-  if (local) return generated
+  const cdn = `${CDN_ORIGIN}/muslim/${timing.audio}`;
+  if (!local) return [cdn];
+  return [generated
     ? `../qc/muslim-full/generated-clips/${timing.audio}`
-    : `../qc/muslim-full/clips/${timing.audio}`;
-  return `${CDN_ORIGIN}/muslim/${timing.audio}`;
+    : `../qc/muslim-full/clips/${timing.audio}`, cdn];
+}
+function bookAudioUrl(slug, n, timing){
+  return bookAudioUrls(slug, n, timing)[0];
 }
 
 function effectiveTimingTokens(timing){
@@ -1293,21 +1305,32 @@ audio.addEventListener("timeupdate", () => {
 });
 
 /** Blob-backed src so word seeks work even when the host lacks Accept-Ranges (e.g. python -m http.server). */
-async function prepareAudio(url, navToken = currentNavToken){
-  if (audioLogicalUrl === url && audio.src) {
+async function prepareAudio(urlOrUrls, navToken = currentNavToken){
+  const urls = Array.isArray(urlOrUrls) ? urlOrUrls.filter(Boolean) : [urlOrUrls];
+  const cachedHit = urls.find(url => audioLogicalUrl === url && audio.src);
+  if (cachedHit) {
     if (isCurrentNavigation(navToken)) syncPlaybackStatus();
     return;
   }
   audio.pause();
-  let obj = audioBlobUrls.get(url);
-  if (!obj) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`audio ${res.status}`);
-    obj = URL.createObjectURL(await res.blob());
-    cacheAudioBlobUrl(url, obj);
-  } else {
-    cacheAudioBlobUrl(url, obj);
+  let url = null;
+  let obj = null;
+  let lastError = null;
+  for (const candidate of urls) {
+    obj = audioBlobUrls.get(candidate);
+    if (obj) { url = candidate; break; }
+    try {
+      const res = await fetch(candidate);
+      if (!res.ok) { lastError = new Error(`audio ${res.status}`); continue; }
+      obj = URL.createObjectURL(await res.blob());
+      cacheAudioBlobUrl(candidate, obj);
+      url = candidate;
+      break;
+    } catch (err) {
+      lastError = err;
+    }
   }
+  if (!url || !obj) throw lastError || new Error("audio unavailable");
   if (!isCurrentNavigation(navToken)) return;
   audioLogicalUrl = url;
   audioSessionToken = navToken;
@@ -1844,7 +1867,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     document.getElementById("dockSource").textContent = timing.synthetic ? "Generated supplement" : "Original recording";
     updateDockLabel(bySlug[slug], n);
     try {
-      await prepareAudio(bookAudioUrl(slug, n, timing), navToken);
+      await prepareAudio(bookAudioUrls(slug, n, timing), navToken);
     } catch {
       if (!isCurrentNavigation(navToken)) return false;
       audioAvailable = false;
@@ -1861,7 +1884,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   wrap.innerHTML = "";
   const timingTokens = hasSyncedAudio ? effectiveTimingTokens(timing) : [];
   const missingTimingCount = timingTokens.filter(token =>
-    !Number.isFinite(token.start) || !Number.isFinite(token.end)
+    /[ء-ي]/.test(token.text || "")
+    && (!Number.isFinite(token.start) || !Number.isFinite(token.end))
   ).length;
   if (!audioAvailable && hasSyncedAudio) {
     const notice = document.createElement("div");
