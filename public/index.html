@@ -1408,17 +1408,19 @@ document.querySelectorAll("#rates button").forEach(b => {
 });
 const dockMoreBtn = document.getElementById("dockMoreBtn");
 const dockMorePanel = document.getElementById("dockMorePanel");
-dockMoreBtn.onclick = (e) => {
-  e.stopPropagation();
-  const open = dockMorePanel.classList.toggle("open");
-  dockMoreBtn.setAttribute("aria-expanded", open ? "true" : "false");
-};
-document.addEventListener("click", (e) => {
-  if (!dockMorePanel.contains(e.target) && e.target !== dockMoreBtn) {
-    dockMorePanel.classList.remove("open");
-    dockMoreBtn.setAttribute("aria-expanded", "false");
-  }
-});
+if (dockMoreBtn && dockMorePanel) {
+  dockMoreBtn.onclick = (e) => {
+    e.stopPropagation();
+    const open = dockMorePanel.classList.toggle("open");
+    dockMoreBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  document.addEventListener("click", (e) => {
+    if (!dockMorePanel.contains(e.target) && e.target !== dockMoreBtn) {
+      dockMorePanel.classList.remove("open");
+      dockMoreBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
 function syncWordHighlight(t = audio.currentTime){
   if (!currentTokens.length) return;
   let idx = -1;
