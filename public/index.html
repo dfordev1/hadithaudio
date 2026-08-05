@@ -640,6 +640,8 @@ const BUKHARI_BOOK_NAMES = {
 // Bukhari recordings and their CTC forced-alignment maps live in public R2.
 // A report remains readable without either asset while its alignment is pending.
 const CDN_ORIGIN = "https://cdn.hadith.to";
+function isCdnUrl(url){ return typeof url === "string" && url.startsWith(CDN_ORIGIN); }
+function fetchCdn(url, init){ return fetch(url, isCdnUrl(url) ? { ...init, cache: "force-cache" } : init); }
 const bukhariTimingCache = {};
 const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {}, nasai: {} };
 const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah", "nasai"]);
@@ -781,7 +783,7 @@ function honorificPartGloss(tokens, index){
 async function getBukhariTiming(n){
   if (!(n in bukhariTimingCache)) {
     const url = `${CDN_ORIGIN}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
-    bukhariTimingCache[n] = fetch(url)
+    bukhariTimingCache[n] = fetchCdn(url)
       .then(r => r.ok ? r.json() : null)
       .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
       .catch(() => null)
@@ -807,7 +809,7 @@ async function getBookTiming(slug, n){
       cache[n] = (async () => {
         for (const url of urls) {
           try {
-            const response = await fetch(url);
+            const response = await fetchCdn(url);
             if (!response.ok) continue;
             const data = await response.json();
             if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) {
@@ -837,7 +839,7 @@ async function getBookTiming(slug, n){
       cache[n] = (async () => {
         for (const url of urls) {
           try {
-            const response = await fetch(url);
+            const response = await fetchCdn(url);
             if (!response.ok) continue;
             const data = await response.json();
             if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) return data;
@@ -1392,7 +1394,7 @@ audio.addEventListener("timeupdate", () => {
   syncWordHighlight(t);
 });
 
-/** Blob-backed src so word seeks work even when the host lacks Accept-Ranges (e.g. python -m http.server). */
+/** CDN: direct src (Range-friendly, no full-file fetch). Local/relative: blob for hosts without Accept-Ranges. */
 async function prepareAudio(urlOrUrls, navToken = currentNavToken){
   const urls = Array.isArray(urlOrUrls) ? urlOrUrls.filter(Boolean) : [urlOrUrls];
   const cachedHit = urls.find(url => audioLogicalUrl === url && audio.src);
@@ -1402,27 +1404,34 @@ async function prepareAudio(urlOrUrls, navToken = currentNavToken){
   }
   audio.pause();
   let url = null;
-  let obj = null;
+  let src = null;
   let lastError = null;
   for (const candidate of urls) {
-    obj = audioBlobUrls.get(candidate);
-    if (obj) { url = candidate; break; }
+    if (isCdnUrl(candidate)) {
+      url = candidate;
+      src = candidate;
+      break;
+    }
+    let obj = audioBlobUrls.get(candidate);
+    if (obj) { url = candidate; src = obj; break; }
     try {
       const res = await fetch(candidate);
       if (!res.ok) { lastError = new Error(`audio ${res.status}`); continue; }
       obj = URL.createObjectURL(await res.blob());
       cacheAudioBlobUrl(candidate, obj);
       url = candidate;
+      src = obj;
       break;
     } catch (err) {
       lastError = err;
     }
   }
-  if (!url || !obj) throw lastError || new Error("audio unavailable");
+  if (!url || !src) throw lastError || new Error("audio unavailable");
   if (!isCurrentNavigation(navToken)) return;
   audioLogicalUrl = url;
   audioSessionToken = navToken;
-  audio.src = obj;
+  audio.preload = isCdnUrl(url) ? "metadata" : "auto";
+  audio.src = src;
   if (audio.readyState >= 1) {
     if (isCurrentNavigation(navToken)) syncPlaybackStatus();
     return;
