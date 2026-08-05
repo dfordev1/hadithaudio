@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Nasāʾī alignment control panel</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f4f1e9;--card:#fffdf7;--ink:#20221f;--muted:#696d65;--line:#d8d2c4;--accent:#256c55;--warn:#a35b16}
+    @media(prefers-color-scheme:dark){:root{--bg:#151815;--card:#1d211d;--ink:#edf0e8;--muted:#aeb5aa;--line:#3b423a;--accent:#74c5a4;--warn:#f1ad63}}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif}main{width:min(920px,calc(100% - 28px));margin:28px auto 60px}header{display:flex;gap:16px;justify-content:space-between;align-items:end;flex-wrap:wrap}h1{font-size:clamp(1.55rem,5vw,2.45rem);margin:0}.sub{color:var(--muted);margin:.25rem 0 0}.links{display:flex;gap:8px;flex-wrap:wrap}a{color:var(--accent)}.button{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:999px;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}@media(max-width:680px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}.metric{font-size:clamp(1.45rem,4vw,2rem);font-weight:700}.label{font-size:.82rem;color:var(--muted)}.track{height:14px;background:color-mix(in srgb,var(--line),transparent 20%);border-radius:999px;overflow:hidden;margin:8px 0}.fill{height:100%;width:0;background:var(--accent);transition:width .35s ease}.row{display:flex;justify-content:space-between;gap:12px}.panel{margin-top:14px}.panel h2{font-size:1.05rem;margin:0 0 12px}.list{margin:0;padding-left:20px}.ok{color:var(--accent)}.warn{color:var(--warn)}code{font-size:.86em;overflow-wrap:anywhere}.stamp{color:var(--muted);font-size:.85rem;margin-top:18px}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><h1>Nasāʾī alignment</h1><p class="sub">Authoritative app-ready package · local engineering view</p></div>
+    <nav class="links" aria-label="Local tools"><a class="button" href="../../public/index.html#nasai:1">Open reader demo</a><a class="button" href="../../qc/nasai-app-ready-full/qa/app-ready-validation.json">Validation JSON</a></nav>
+  </header>
+  <section class="grid" aria-label="Progress metrics">
+    <div class="card"><div class="metric" id="processed">—</div><div class="label">clips processed</div></div>
+    <div class="card"><div class="metric" id="total">—</div><div class="label">unique real-audio clips</div></div>
+    <div class="card"><div class="metric" id="timings">—</div><div class="label">timing reports</div></div>
+    <div class="card"><div class="metric" id="failures">—</div><div class="label">failures</div></div>
+  </section>
+  <section class="card panel">
+    <div class="row"><strong id="phase">Loading…</strong><span id="percent">—</span></div>
+    <div class="track" role="progressbar" aria-label="Clip generation" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="fill" id="fill"></div></div>
+    <div class="row label"><span>Six fully untimed text-bearing reports remain text-only</span><span>86 empty source rows excluded</span></div>
+  </section>
+  <section class="card panel">
+    <h2>Alignment health</h2>
+    <ul class="list" id="health"><li>Loading structural validation…</li></ul>
+  </section>
+  <section class="card panel">
+    <h2>Current failure queue</h2>
+    <ul class="list" id="failureList"><li class="ok">No failures reported.</li></ul>
+  </section>
+  <p class="stamp" id="updated">Waiting for the first progress update.</p>
+</main>
+<script>
+const progressUrl="../../qc/nasai-app-ready-full/progress.json";
+const validationUrl="../../qc/nasai-app-ready-full/qa/app-ready-validation.json";
+const $=id=>document.getElementById(id);
+async function json(url){const response=await fetch(`${url}?t=${Date.now()}`,{cache:"no-store"});if(!response.ok)throw new Error(`${response.status} ${url}`);return response.json()}
+function setProgress(data){const processed=Number(data.processed||0),total=Number(data.total||0),pct=total?Math.min(100,processed/total*100):0;$("processed").textContent=processed.toLocaleString();$("total").textContent=total.toLocaleString();$("timings").textContent=Number(data.timingReports||0).toLocaleString();$("failures").textContent=Number(data.failures?.length||0).toLocaleString();$("phase").textContent=(data.status||data.phase||"unknown").replaceAll("_"," ");$("percent").textContent=`${pct.toFixed(1)}%`;$("fill").style.width=`${pct}%`;const bar=document.querySelector('[role="progressbar"]');bar.setAttribute("aria-valuenow",String(Math.round(pct)));const items=data.failures?.length?data.failures.map(item=>`<li class="warn"><code>${item.n}</code> — ${item.error}</li>`):['<li class="ok">No failures reported.</li>'];$("failureList").innerHTML=items.join("");$("updated").textContent=`Updated ${new Date().toLocaleTimeString()} · polling every 2 seconds`;}
+function setHealth(data){const s=data.summary||{};$("health").innerHTML=[`<li class="ok">${s.recordings||0}/12 recordings validated</li>`,`<li class="ok">${Number(s.timestampedLexicalTokens||0).toLocaleString()} of ${Number(s.lexicalTokens||0).toLocaleString()} lexical tokens timestamped (${((s.timestampCoverage||0)*100).toFixed(4)}%)</li>`,`<li class="ok">${s.hashFailures||0} hash failures · ${s.invalidIntervals||0} invalid intervals · ${s.tokenOrderReversals||0} token-order reversals</li>`,`<li class="warn">${s.nonSharedReportBoundaryOverlaps||0} report boundaries queued for focused review</li>`].join("")}
+async function tick(){try{setProgress(await json(progressUrl))}catch(error){$("phase").textContent="Progress file unavailable";$("updated").textContent=error.message}}
+json(validationUrl).then(setHealth).catch(error=>{$("health").innerHTML=`<li class="warn">${error.message}</li>`});tick();setInterval(tick,2000);
+</script>
+</body>
+</html>

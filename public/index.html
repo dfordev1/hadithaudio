@@ -641,8 +641,8 @@ const BUKHARI_BOOK_NAMES = {
 // A report remains readable without either asset while its alignment is pending.
 const CDN_ORIGIN = "https://cdn.hadith.to";
 const bukhariTimingCache = {};
-const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {} };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah"]);
+const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {}, nasai: {} };
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah", "nasai"]);
 const isnadGlossPools = {};
 
 async function getIsnadGlossPool(slug){
@@ -797,9 +797,11 @@ async function getBookTiming(slug, n){
     } else {
       const prefix = slug === "bukhari" ? "bukhari-timings" : `${slug}-timings`;
       const stem = String(n).padStart(4, "0");
-      const local = ["malik", "tirmidhi", "ibnmajah"].includes(slug)
+      const local = ["malik", "tirmidhi", "ibnmajah", "nasai"].includes(slug)
         && (location.hostname === "127.0.0.1" || location.hostname === "localhost");
-      const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
+      const localBase = slug === "malik" ? "muwatta-full"
+        : slug === "nasai" ? "nasai-app-ready-full"
+        : `${slug}-full`;
       const urls = local
         ? [`../qc/${localBase}/timings/n${stem}.json`, `../qc/${localBase}/generated-timings/n${stem}.json`]
         : [`${CDN_ORIGIN}/${prefix}/n${stem}.json`];
@@ -823,11 +825,13 @@ async function getBookTiming(slug, n){
 }
 
 function bookAudioUrl(slug, n, timing){
-  if (slug === "malik" || slug === "tirmidhi" || slug === "ibnmajah") {
+  if (slug === "malik" || slug === "tirmidhi" || slug === "ibnmajah" || slug === "nasai") {
     const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
     const stem = String(n).padStart(4, "0");
     if (!local) return `${CDN_ORIGIN}/${slug}/${timing.audio || `${stem}.mp3`}`;
-    const localBase = slug === "malik" ? "muwatta-full" : `${slug}-full`;
+    const localBase = slug === "malik" ? "muwatta-full"
+      : slug === "nasai" ? "nasai-app-ready-full"
+      : `${slug}-full`;
     const folder = timing.synthetic ? "generated-clips" : "clips";
     return `../qc/${localBase}/${folder}/${timing.audio || `${stem}.mp3`}`;
   }
@@ -1861,7 +1865,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   wrap.innerHTML = "";
   const timingTokens = hasSyncedAudio ? effectiveTimingTokens(timing) : [];
   const missingTimingCount = timingTokens.filter(token =>
-    !Number.isFinite(token.start) || !Number.isFinite(token.end)
+    /[ء-ي]/.test(token.text || "")
+    && (!Number.isFinite(token.start) || !Number.isFinite(token.end))
   ).length;
   if (!audioAvailable && hasSyncedAudio) {
     const notice = document.createElement("div");
