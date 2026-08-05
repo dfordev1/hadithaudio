@@ -1,10 +1,10 @@
 {
-  "phase": "nasai_r2_upload",
-  "status": "in_progress",
+  "phase": "site_lightening",
+  "status": "ready_for_pr",
   "started_at": "2026-08-04T18:18:00+05:30",
-  "updated_at": "2026-08-05T17:55:00+05:30",
+  "updated_at": "2026-08-05T21:30:00+05:30",
   "worktree": "C:\\Users\\Dv\\hadithaudio-site-release",
-  "branch": "agent/nasai-audio-integration",
+  "branch": "feat/site-lightening",
   "completed_steps": [
     "preserved dedicated release worktree",
     "validated reviewed archive and 12 recordings",
@@ -18,10 +18,18 @@
     "remapped timing token IDs to reader IDs",
     "force-rebuilt report 2037; expanded zero-width highlight on 5634",
     "publication verifier passed with 0 errors",
-    "started missing-only R2 upload of 11345 objects"
+    "started missing-only R2 upload of 11345 objects",
+    "completed missing-only R2 upload 11345/11345 objects",
+    "CDN sample public HEAD verify 31/31 passed",
+    "retried single transient failure nasai-timings/n2789.json",
+    "refreshed boundary-audit.json",
+    "mechanical boundary-listening QA 50/50 OK",
+    "wrote qc/nasai-app-ready-full/qa/boundary-listening-report.md",
+    "human_ok priority boundary listen 5/5 (2026-08-05 user listened OK)",
+    "site lightening: lazy gloss-lazy slices, trimmed fonts, recitation CDN, cache headers, deferred isnad pools"
   ],
-  "current_step": "upload verified original clips and timings to R2",
-  "next_step": "confirm CDN sample HEADs, boundary listening pass, production reader QA",
+  "current_step": "feat/site-lightening PR: lazy gloss + fonts + recitation CDN",
+  "next_step": "optional ear pass on remaining medium-overlap queue + production reader QA",
   "processed_items": 5672,
   "total_items": 5672,
   "clips_done": 5672,
@@ -31,15 +39,45 @@
   "r2_objects_present_at_start": 0,
   "demo_urls": [
     "http://127.0.0.1:8770/hadithaudio-site-release/public/index.html#nasai:1",
-    "http://127.0.0.1:8770/hadithaudio-site-release/tools/control-panel/nasai.html"
+    "http://127.0.0.1:8770/hadithaudio-site-release/tools/control-panel/nasai.html",
+    "https://cdn.hadith.to/nasai/0001.mp3",
+    "https://cdn.hadith.to/nasai-timings/n0001.json"
   ],
   "warnings": [
     "six text-bearing reports are explicitly untimed",
     "86 empty source rows are excluded",
     "recording 01 manifest count understates actual objects by two",
-    "boundary listening pass still pending after upload"
+    "27/50 boundary pairs still on human re-listen queue (overlap >=0.4s); 5/5 high priority passed ear check 2026-08-05"
   ],
   "blocking_errors": [],
-  "next_command": "python scripts\\r2-upload-nasai.py --missing-only --concurrency 6 --verify-public sample --env-file .env.local",
-  "latest_commit": "e6cd1b0178901bbde124ef903d0d5ccbfa03e7bd"
+  "next_command": "python scripts\\verify-nasai-clips.py --workers 8 --output qc\\nasai-app-ready-full\\qa\\clip-verification.json",
+  "latest_commit": "a51584705f",
+  "r2_uploaded": 11345,
+  "r2_failures": 0,
+  "r2_remote_objects": 11345,
+  "r2_public_verify": {
+    "mode": "sample",
+    "checked": 31,
+    "failures": 0,
+    "cdn": "https://cdn.hadith.to"
+  },
+  "boundary_qa": {
+    "report": "qc/nasai-app-ready-full/qa/boundary-listening-report.md",
+    "mechanical_ok": 50,
+    "ok_no_listen": 18,
+    "review_queue": 27,
+    "human_ok_listen": 5,
+    "priority_listen": {
+      "date": "2026-08-05",
+      "status": "human_ok",
+      "note": "user listened: OK",
+      "pairs": [
+        "3849→3850",
+        "3649→3650",
+        "3271→3272",
+        "4956→4957",
+        "4403→4404"
+      ]
+    }
+  }
 }

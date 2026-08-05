@@ -6,6 +6,7 @@
 - `public/<collection>/index.json` maps books and report IDs.
 - `public/<collection>/book-<n>.json` stores display tokens and isnād metadata.
 - `public/gloss-compact/` stores deduplicated gloss pools and report token references.
+- `public/gloss-lazy/` (Vercel build step) stores one gzip file per report for first-paint gloss loading; compact pools remain fallback.
 - Official English/Urdu translations load from the repository-pinned hadith-api revision with local fill data as a fallback.
 
 ## Audio delivery
@@ -17,7 +18,10 @@ Collection convention:
 ```text
 <slug>/<report>.mp3
 <slug>-timings/n<report>.json
+recitation/<corpus>.<nnn>.mp3   # forty-hadith collections only
 ```
+
+Forty-hadith recitation MP3s (~57 MiB) live under `recitation/` on the CDN; timing JSON stays on origin under `public/recitation/`.
 
 The timing sidecar controls the actual audio filename, allowing an intentionally shared clip (Nasāʾī 352/353) without duplicating audio.
 
