@@ -22,7 +22,7 @@
 <meta name="twitter:image" content="https://www.hadith.to/social-card.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#ffffff; --ink:#161616; --muted:#5c5c5c; --faint:#9a9a9a;
@@ -644,10 +644,35 @@ const bukhariTimingCache = {};
 const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {}, nasai: {} };
 const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah", "nasai"]);
 const isnadGlossPools = {};
+const ISNAD_POOL_SLUGS = new Set(["bukhari", "malik", "tirmidhi", "muslim", "abudawud", "ibnmajah"]);
+
+// Gate: isnad word-pool JSON is large (~1–2 MiB); defer until study WBW is active.
+function needsIsnadGlossPool(){
+  return glossMode === "study" && wbw !== "off";
+}
 
 async function getIsnadGlossPool(slug){
+  if (!ISNAD_POOL_SLUGS.has(slug)) return null;
   if (!isnadGlossPools[slug]) isnadGlossPools[slug] = jopt(`${slug}-isnad-word-pool.json`);
   return isnadGlossPools[slug];
+}
+
+async function applyIsnadPoolGlosses(slug, tokens, baseGloss, spans){
+  if (!needsIsnadGlossPool()) return;
+  const pool = await getIsnadGlossPool(slug);
+  if (!pool?.words) return;
+  const G = baseGloss?.glosses || {};
+  tokens.forEach((token, i) => {
+    if (G[token.id]?.en) return;
+    const fromPool = pool.words[normalizeArabicWord(token.text)];
+    if (!fromPool?.en) return;
+    G[token.id] = fromPool;
+    const span = spans[i];
+    if (!span) return;
+    span.querySelector(".g-en").textContent = fromPool.en || "";
+    span.querySelector(".g-ur").textContent = fromPool.ur || "";
+    span.querySelector(".g-tr").textContent = fromPool.transliteration || "";
+  });
 }
 
 function normalizeArabicWord(text){
@@ -690,7 +715,9 @@ function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
   return mapped;
 }
 
+let lastStudyGloss = null;
 function buildMeaningColumn(englishTranslation="", urduTranslation=""){
+  if (urduTranslation) ensureUrduFont();
   const col = document.createElement("div"); col.className = "en-col meaning-col";
   const languages = document.createElement("div"); languages.className = "meaning-languages";
   const enSection = document.createElement("section"); enSection.className = "meaning-section";
@@ -754,7 +781,7 @@ function honorificPartGloss(tokens, index){
 async function getBukhariTiming(n){
   if (!(n in bukhariTimingCache)) {
     const url = `${CDN_ORIGIN}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
-    bukhariTimingCache[n] = fetch(url, { cache:"no-cache" })
+    bukhariTimingCache[n] = fetch(url)
       .then(r => r.ok ? r.json() : null)
       .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
       .catch(() => null)
@@ -780,7 +807,7 @@ async function getBookTiming(slug, n){
       cache[n] = (async () => {
         for (const url of urls) {
           try {
-            const response = await fetch(url, { cache:"no-cache" });
+            const response = await fetch(url);
             if (!response.ok) continue;
             const data = await response.json();
             if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) {
@@ -810,7 +837,7 @@ async function getBookTiming(slug, n){
       cache[n] = (async () => {
         for (const url of urls) {
           try {
-            const response = await fetch(url, { cache:"no-cache" });
+            const response = await fetch(url);
             if (!response.ok) continue;
             const data = await response.json();
             if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) return data;
@@ -864,11 +891,22 @@ const store = {
   get:(k,d)=>{ try { return JSON.parse(localStorage.getItem("malti:"+k)) ?? d; } catch { return d; } },
   set:(k,v)=> localStorage.setItem("malti:"+k, JSON.stringify(v)),
 };
-const j = async (u) => (await fetch(u, { cache:"no-cache" })).json();
+const j = async (u) => {
+  const response = await fetch(u);
+  if (!response.ok) throw new Error(String(response.status));
+  return response.json();
+};
 const jopt = async (u) => { try { return await j(u); } catch { return null; } };
-const compactGlossCache = {};
-async function compressedJson(u){
+const jPinned = async (u) => {
   const response = await fetch(u, { cache:"force-cache" });
+  if (!response.ok) throw new Error(String(response.status));
+  return response.json();
+};
+const jPinnedOpt = async (u) => { try { return await jPinned(u); } catch { return null; } };
+const compactGlossCache = {};
+const lazyGlossCache = {};
+async function compressedJson(u){
+  const response = await fetch(u);
   if (!response.ok) throw new Error(`Gloss asset ${response.status}`);
   const bytes = new Uint8Array(await response.arrayBuffer());
   let jsonBytes = bytes;
@@ -878,6 +916,21 @@ async function compressedJson(u){
     jsonBytes = new Uint8Array(await new Response(stream).arrayBuffer());
   }
   return JSON.parse(new TextDecoder().decode(jsonBytes));
+}
+async function fetchLazyGloss(slug, n){
+  const key = `${slug}:${n}`;
+  if (!lazyGlossCache[key]) {
+    lazyGlossCache[key] = (async () => {
+      for (const path of [`gloss-lazy/${slug}/${n}.json.gz`, `gloss-lazy/${slug}/${n}.json`, `gloss/${slug}-${n}.json`]) {
+        try {
+          const data = path.endsWith(".gz") ? await compressedJson(path) : await j(path);
+          if (data && (data.glosses || data.meta)) return data;
+        } catch {}
+      }
+      return null;
+    })();
+  }
+  return lazyGlossCache[key];
 }
 async function ensureCompactGloss(slug){
   if (!compactGlossCache[slug]) {
@@ -894,16 +947,25 @@ async function ensureCompactGloss(slug){
   }
   return compactGlossCache[slug];
 }
+async function getGlossFromCompact(slug, n){
+  const compact = await ensureCompactGloss(slug);
+  const report = compact.reports.get(String(n));
+  if (!report) return null;
+  const glosses = Object.fromEntries(report.tokenRefs.map(([tokenId, poolId]) => [tokenId, compact.values[poolId]]));
+  return { ...report.meta, glosses };
+}
 async function getGloss(slug, n){
   try {
-    const compact = await ensureCompactGloss(slug);
-    const report = compact.reports.get(String(n));
-    if (!report) return null;
-    const glosses = Object.fromEntries(report.tokenRefs.map(([tokenId, poolId]) => [tokenId, compact.values[poolId]]));
-    return { ...report.meta, glosses };
+    const lazy = await fetchLazyGloss(slug, n);
+    if (lazy) return lazy;
+    return await getGlossFromCompact(slug, n);
   } catch {
     return null;
   }
+}
+function fortyRecitationAudioUrls(corpus, pad){
+  const local = `recitation/${corpus}.${pad}.mp3`;
+  return [`${CDN_ORIGIN}/recitation/${corpus}.${pad}.mp3`, local];
 }
 const fmt = s => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 
@@ -930,6 +992,27 @@ const AR_FONTS = {
   arefRuqaa:'"Aref Ruqaa",serif',
   reemKufi:'"Reem Kufi",sans-serif',
 };
+const LAZY_AR_FONT_URLS = {
+  amiri:"https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap",
+  notoNaskh:"https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&display=swap",
+  arefRuqaa:"https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap",
+  reemKufi:"https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;600;700&display=swap",
+};
+const injectedFontSheets = new Set(["boot"]);
+function injectFontSheet(key, href){
+  if (injectedFontSheets.has(key)) return;
+  injectedFontSheets.add(key);
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  document.head.appendChild(link);
+}
+function ensureArabicFontChoice(fontKey){
+  if (LAZY_AR_FONT_URLS[fontKey]) injectFontSheet(fontKey, LAZY_AR_FONT_URLS[fontKey]);
+}
+function ensureUrduFont(){
+  injectFontSheet("urdu", "https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600&display=swap");
+}
 // migrate old "font" step if present once
 (() => {
   const legacy = store.get("font", null);
@@ -957,6 +1040,7 @@ function applyFont(){
   r.setProperty("--en-gloss-size", glossSz + "rem");
   r.setProperty("--ur-gloss-size", (glossSz + 0.1) + "rem"); // Nastaliq reads better a touch larger
   r.setProperty("--word-pad", wordPad + "px");
+  ensureArabicFontChoice(arFont);
   r.setProperty("--ar-font", AR_FONTS[arFont] || AR_FONTS.uthmani);
   store.set("ensz", enSz); store.set("arsz", arSz); store.set("ursz", urSz); store.set("spsz", spSz);
   store.set("arlh", arLine); store.set("enlh", enLine); store.set("urlh", urLine); store.set("glosssz", glossSz); store.set("wordpad", wordPad); store.set("arfont", arFont);
@@ -1024,6 +1108,7 @@ let glossMode = "audio"; // "audio" | "study"
 function wbwStoreKey(){ return glossMode === "study" ? "wbwStudy" : "wbwAudio"; }
 function wbwDefault(){ return glossMode === "study" ? "en" : "off"; }
 function applyWbw(persist=true){
+  if (wbw === "ur" || wbw === "both") ensureUrduFont();
   document.body.dataset.wbw = wbw;
   const b = document.getElementById("wbwBtn");
   b.textContent = WBWLBL[wbw];
@@ -1038,6 +1123,9 @@ function setGlossMode(mode){
 document.getElementById("wbwBtn").onclick = () => {
   wbw = WBW[(WBW.indexOf(wbw)+1) % WBW.length];
   applyWbw(true);
+  if (needsIsnadGlossPool() && state.slug && ISNAD_POOL_SLUGS.has(state.slug) && activeSpans.length) {
+    applyIsnadPoolGlosses(state.slug, currentTokens, lastStudyGloss, activeSpans);
+  }
 };
 applyFont(); applyTheme(store.get("theme","light")); applyParallel();
 setGlossMode("audio");
@@ -1387,8 +1475,8 @@ async function ensureOfficialTranslations(slug, n){
     const immutableHadithApi = "df57907be35291c91ad6a6691180e22ca9920784";
     const edition = language => `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@${immutableHadithApi}/editions/${language}-${slug}/${n}.json`;
     cache.officialTranslation[key] = Promise.all([
-      jopt(edition("eng")),
-      jopt(edition("urd")),
+      jPinnedOpt(edition("eng")),
+      jPinnedOpt(edition("urd")),
       ensureEnglishFill(),
     ]).then(([en, ur, fill]) => ({
       en: (en?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "")
@@ -1752,7 +1840,7 @@ async function openForty(col, n, navToken = currentNavToken){
   updateDockLabel(col, n);
   let audioAvailable = true;
   try {
-    await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`, navToken);
+    await prepareAudio(fortyRecitationAudioUrls(col.corpus, pad), navToken);
   } catch {
     if (!isCurrentNavigation(navToken)) return false;
     audioAvailable = false;
@@ -1843,9 +1931,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     ensureOfficialTranslations(slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
-  const isnadPool = timing && ["bukhari", "malik", "tirmidhi", "muslim", "abudawud", "ibnmajah"].includes(slug)
-    ? await getIsnadGlossPool(slug) : null;
-  if (!isCurrentNavigation(navToken)) return false;
   const hasSyncedAudio = Boolean(timing);
   let audioAvailable = hasSyncedAudio;
   const shouldContinue = continuePlayAfterLoad;
@@ -1925,13 +2010,15 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
       ...((gloss && gloss.glosses) || {}),
       ...alignedGlosses,
       ...Object.fromEntries(tokens.map((t, i) => {
-        const pool = t.gloss || honorificPartGloss(tokens, i) || isnadPool?.words?.[normalizeArabicWord(t.text)];
+        const pool = t.gloss || honorificPartGloss(tokens, i);
         return pool?.en ? [t.id, pool] : [t.id, null];
       }).filter(([, value]) => value)),
     },
   } : gloss;
+  lastStudyGloss = syncedGloss;
   const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
   if (hasSyncedAudio) activeSpans = spans;
+  if (hasSyncedAudio) applyIsnadPoolGlosses(slug, tokens, syncedGloss, spans);
   arCol.appendChild(arDiv);
   const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
   par.className = "parallel" + (single ? " single" : "");

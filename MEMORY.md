@@ -4,6 +4,8 @@
 
 Hadith.to is a mobile-first Arabic hadith reader with official English/Urdu translations, word glosses, and word-synchronised recitation. The current priority is production-quality Sunan an-Nasāʾī audio.
 
+**Site lightening (Aug 2026):** boot fonts trimmed to Source Sans 3 + Scheherazade; Arabic alternates and Nastaliq load on demand. Glosses fetch per-report `gloss-lazy/` slices first (~few KiB) with compact pool fallback. Forty MP3s on `cdn.hadith.to/recitation/`. Isnād word pools load only when study WBW is active.
+
 ## Authoritative Nasāʾī inputs
 
 - Reviewed alignment archive: `C:\Users\Dv\Downloads\nasai-sunan-an-nasai-complete-app-ready.zip` (also mirrored at repo root / extracted under `C:\Users\Dv\hadithaudio\qc\nasai-app-ready-20260804`)
@@ -38,7 +40,7 @@ Hadith.to is a mobile-first Arabic hadith reader with official English/Urdu tran
 - Full MP3 probe earlier: 5672/5672 probed, 0 probe failures
 - Force-rebuilt short clip **2037**; expanded zero-width highlight on **5634**
 - Timing token IDs remapped 1:1 to reader IDs via `scripts/remap-nasai-timing-ids.py` (gloss compatibility)
-- R2: previously 0/11345 objects; **missing-only upload in progress** (log: `qc/nasai-app-ready-full/qa/r2-upload.log`)
+- R2: **11345 / 11345** objects present (audio 5672 + timings 5673); failures=0; sample public HEAD 31/31 OK on `https://cdn.hadith.to` (also verified via `R2_PUBLIC_BASE`). Logs: `qc/nasai-app-ready-full/qa/r2-upload.log`, `r2-upload-resume.log`, `r2-upload-final.log`
 
 ## Completed in this branch
 
@@ -55,23 +57,21 @@ Hadith.to is a mobile-first Arabic hadith reader with official English/Urdu tran
 - Enabled Nasāʾī timing/audio loading in the main reader.
 - Fixed the untimed-word notice so punctuation/null editorial markers are not counted as words.
 - Live pilot tested reports 1 and 2: load, full Arabic, official translations, playback, seek, active-word update, and Next navigation all passed.
-- Full clip build finished; publication verifier clean; R2 upload started.
+- Full clip build finished; publication verifier clean; R2 upload completed 11345/11345 with sample CDN verify.
 
 ## Local URLs
 
 - Reader: `http://127.0.0.1:8770/hadithaudio-site-release/public/index.html#nasai:1`
 - Control panel: `http://127.0.0.1:8770/hadithaudio-site-release/tools/control-panel/nasai.html`
+- CDN sample audio: `https://cdn.hadith.to/nasai/0001.mp3`
+- CDN sample timing: `https://cdn.hadith.to/nasai-timings/n0001.json`
 - Serve with: `python -m http.server 8770 --bind 127.0.0.1` from `C:\Users\Dv`
 
 ## Exact next command
 
 ```powershell
 cd C:\Users\Dv\hadithaudio-site-release
-# If upload still running, monitor:
-Get-Content qc\nasai-app-ready-full\qa\r2-upload.log -Tail 40 -Wait
-# If interrupted, resume missing-only:
-python scripts\r2-upload-nasai.py --missing-only --concurrency 6 --verify-public sample --env-file .env.local
-# After upload completes, sample-listen boundary repairs and ship reader QA:
+# R2 upload complete. Next: boundary listening pass + production reader QA
 python scripts\verify-nasai-clips.py --workers 8 --output qc\nasai-app-ready-full\qa\clip-verification.json
 ```
 
@@ -95,4 +95,11 @@ python scripts\r2-upload-nasai.py --missing-only --concurrency 6 --verify-public
 
 ## Current next action
 
-Finish the resumable R2 missing-only upload of all 11,345 verified original objects, confirm CDN sample HEADs, then do a short listening pass on the 50 boundary repairs and production-reader QA. Do **not** start ElevenLabs / cross-collection work.
+R2 upload is complete (11345/11345, 0 failures, sample CDN HEADs OK). Do a short listening pass on the 50 boundary repairs and production-reader QA. Do **not** start ElevenLabs / cross-collection work. Do **not** use Nasai 0.
+## Boundary listening QA (2026-08-05)
+
+- Report: `qc/nasai-app-ready-full/qa/boundary-listening-report.md` (script: `scripts/run-boundary-listening-qa.py`).
+- Mechanical checks on 50 midpoint repairs: **50/50 OK**; **18/50** need no mandatory re-listen (overlap <0.4s).
+- Human re-listen queue: **27** pairs remaining; **5/5** priority high-overlap pairs **human_ok / listened-pass** (2026-08-05, user listened: OK).
+- 352/353 share `0352.mp3`; text-only six have no timing sidecars (no false aligned-audio sidecars).
+
