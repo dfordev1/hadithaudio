@@ -1389,7 +1389,11 @@ function setPlayingUI(playing){
     ? `<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>`
     : `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
 }
-playBtn.onclick = () => { if (audio.paused) audio.play().catch(() => {}); else audio.pause(); };
+playBtn.onclick = () => {
+  armAudioEndedListener();
+  if (audio.paused) audio.play().catch(() => {});
+  else audio.pause();
+};
 document.getElementById("skipBack").onclick = () => {
   if (!audio.src) return;
   seekAudio((audio.currentTime || 0) - 10);
@@ -1398,18 +1402,20 @@ document.getElementById("skipFwd").onclick = () => {
   if (!audio.src) return;
   seekAudio((audio.currentTime || 0) + 10);
 };
-/* Listen modes: Repeat one wins over Autoplay next when both are on */
-let autoplayNext = store.get("autoplay", true);
-let repeatOne = store.get("repeat", false);
+/* Listen modes: independent toggles. If both on, Repeat one wins over Autoplay next. */
+function listenFlag(key, fallback){
+  const v = store.get(key, fallback);
+  return typeof v === "boolean" ? v : fallback;
+}
+let autoplayNext = listenFlag("autoplay", true);
+let repeatOne = listenFlag("repeat", false);
 let continuePlayAfterLoad = false;
-let autoplayAdvanceTimer = null;
+let ignoreAudioEnded = false;
 let endSilenceTimer = null;
 const AUTOPLAY_GAP_MS = 1600; // ~1.5–2s stillness before next
 const autoplayBtn = document.getElementById("autoplayBtn");
 const repeatBtn = document.getElementById("repeatBtn");
 function clearEndSilence(){
-  clearTimeout(autoplayAdvanceTimer);
-  autoplayAdvanceTimer = null;
   clearTimeout(endSilenceTimer);
   endSilenceTimer = null;
   delete document.body.dataset.silence;
@@ -1422,18 +1428,21 @@ function finishEndSilence(){
   document.body.dataset.silence = "ready";
 }
 function syncListenModesUI(){
+  if (!autoplayBtn || !repeatBtn) return;
   autoplayBtn.classList.toggle("on", autoplayNext);
   autoplayBtn.setAttribute("aria-pressed", autoplayNext ? "true" : "false");
   repeatBtn.classList.toggle("on", repeatOne);
   repeatBtn.setAttribute("aria-pressed", repeatOne ? "true" : "false");
 }
 syncListenModesUI();
-autoplayBtn.onclick = () => {
+if (autoplayBtn) autoplayBtn.onclick = () => {
+  // Toggle only Autoplay — never touches Repeat / malti:repeat
   autoplayNext = !autoplayNext;
   store.set("autoplay", autoplayNext);
   syncListenModesUI();
 };
-repeatBtn.onclick = () => {
+if (repeatBtn) repeatBtn.onclick = () => {
+  // Toggle only Repeat — never touches Autoplay / malti:autoplay
   repeatOne = !repeatOne;
   store.set("repeat", repeatOne);
   syncListenModesUI();
@@ -1446,22 +1455,39 @@ audio.addEventListener("play", () => {
 audio.addEventListener("pause", () => setPlayingUI(false));
 audio.addEventListener("ended", () => {
   setPlayingUI(false);
-  if (repeatOne) {
+  // Ignore emptied/reload/`src` reassignment ends — those were replaying as "Repeat"
+  if (ignoreAudioEnded) return;
+  if (audioSessionToken !== currentNavToken) return;
+  // Precedence: explicit Repeat one loops; else Autoplay advances to a different hadith
+  if (repeatOne === true) {
+    ignoreAudioEnded = true;
     audio.currentTime = 0;
     syncWordHighlight(0);
     fill.style.width = "0%";
-    audio.play().catch(() => {});
+    const p = audio.play();
+    Promise.resolve(p).catch(() => {}).finally(() => { ignoreAudioEnded = false; });
     return;
   }
+  const endedSlug = state.slug;
+  const endedN = state.n;
+  const next = state.nav?.next ?? null;
+  const nextDistinct = next != null && String(next) !== String(endedN);
+  const alreadyAtNext = nextDistinct && location.hash === `#${endedSlug}:${next}`;
+  const canAdvance = Boolean(
+    endedSlug && bySlug[endedSlug]?.audio && nextDistinct && !alreadyAtNext
+  );
   // Hold stillness on current hadith; no snappy UI change during the gap
   beginEndSilence();
-  const next = state.nav?.next ?? null;
-  const canAdvance = Boolean(state.slug && bySlug[state.slug]?.audio && next != null);
   endSilenceTimer = setTimeout(() => {
     endSilenceTimer = null;
-    if (autoplayNext && canAdvance) {
+    // Drop stale timers if the reader already moved on
+    if (state.slug !== endedSlug || String(state.n) !== String(endedN)) {
+      finishEndSilence();
+      return;
+    }
+    if (autoplayNext === true && canAdvance) {
       continuePlayAfterLoad = true;
-      setHash(state.slug, next);
+      setHash(endedSlug, next);
       return;
     }
     finishEndSilence();
@@ -1544,7 +1570,12 @@ audio.addEventListener("timeupdate", () => {
 
 /** Blob-backed src so word seeks work even when the host lacks Accept-Ranges (e.g. python -m http.server). */
 async function prepareAudio(url, navToken = currentNavToken){
+  // Stay deaf to `ended` until the caller finishes seek/play setup.
+  // Cached blob reassignment can restore an old end position and re-fire `ended`,
+  // which Autoplay was treating as a finished track (looked like Repeat).
+  ignoreAudioEnded = true;
   if (audioLogicalUrl === url && audio.src) {
+    try { audio.currentTime = 0; } catch {}
     if (isCurrentNavigation(navToken)) syncPlaybackStatus();
     return;
   }
@@ -1561,6 +1592,7 @@ async function prepareAudio(url, navToken = currentNavToken){
   if (!isCurrentNavigation(navToken)) return;
   audioLogicalUrl = url;
   audio.src = obj;
+  try { audio.currentTime = 0; } catch {}
   if (audio.readyState >= 1) {
     if (isCurrentNavigation(navToken)) syncPlaybackStatus();
     return;
@@ -1568,6 +1600,7 @@ async function prepareAudio(url, navToken = currentNavToken){
   await new Promise((resolve, reject) => {
     const onLoad = () => {
       if (!isCurrentNavigation(navToken)) return;
+      try { audio.currentTime = 0; } catch {}
       resolve();
     };
     const onError = () => {
@@ -1578,11 +1611,15 @@ async function prepareAudio(url, navToken = currentNavToken){
     audio.addEventListener("error", onError, { once:true });
   });
 }
+function armAudioEndedListener(navToken = currentNavToken){
+  if (isCurrentNavigation(navToken)) ignoreAudioEnded = false;
+}
 function playFrom(time){
   const requestToken = ++playRequestToken;
   const navToken = currentNavToken;
   const start = () => {
     if (requestToken !== playRequestToken || navToken !== currentNavToken) return;
+    armAudioEndedListener(navToken);
     audio.currentTime = time;
     syncWordHighlight(time);
     audio.play().catch(() => {});
@@ -1592,6 +1629,7 @@ function playFrom(time){
 }
 function stopAudio(){
   clearEndSilence();
+  ignoreAudioEnded = true;
   audio.pause();
   try { audio.removeAttribute("src"); audio.load(); } catch {}
   audioLogicalUrl = null;
@@ -2037,6 +2075,7 @@ async function openForty(col, n, navToken = currentNavToken){
   currentTokens = rec.tokens;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
+  if (!shouldContinue || !audioAvailable) armAudioEndedListener(navToken);
 
   const wrap = document.createElement("div");
   wrap.innerHTML = `
@@ -2076,10 +2115,11 @@ async function openForty(col, n, navToken = currentNavToken){
   applyParallel();
   setPublicMetadata(`${col.en} ${n} — hadith.to`, col.slug, n);
   scrollTo(0, 0);
-  if (shouldContinue) {
+  if (shouldContinue && audioAvailable) {
     audio.currentTime = 0;
     syncWordHighlight(0);
-    audio.play().catch(() => {});
+    const p = audio.play();
+    Promise.resolve(p).catch(() => {}).finally(() => armAudioEndedListener(navToken));
   }
 }
 
@@ -2139,6 +2179,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     if (!isCurrentNavigation(navToken)) return false;
     currentTokens = effectiveTimingTokens(timing);
   }
+  // Arm ended-listener now when we will not auto-continue; continue path arms after play().
+  if (!shouldContinue || !hasSyncedAudio || !audioAvailable) armAudioEndedListener(navToken);
 
   const col = bySlug[slug];
   const wrap = document.createElement("div");
@@ -2212,10 +2254,11 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
 
   stage.innerHTML = ""; stage.appendChild(wrap);
   revealStage();
-  if (shouldContinue && hasSyncedAudio) {
+  if (shouldContinue && hasSyncedAudio && audioAvailable) {
     audio.currentTime = 0;
     syncWordHighlight(0);
-    audio.play().catch(() => {});
+    const p = audio.play();
+    Promise.resolve(p).catch(() => {}).finally(() => armAudioEndedListener(navToken));
   }
   setPublicMetadata(`${shortCollectionName(col)} ${n} — hadith.to`, slug, n);
   scrollTo(0, 0);
