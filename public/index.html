@@ -3,95 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hadith WBW — Read &amp; Listen</title>
+<title>hadith.to — Read &amp; Listen</title>
 <meta name="description" content="Read and listen to major hadith collections with synced Arabic recitation, word-level highlighting, and English and Urdu meanings.">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#eef1f3">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://www.hadith.to/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Hadith WBW">
-<meta property="og:title" content="Hadith WBW — Read &amp; Listen">
+<meta property="og:site_name" content="hadith.to">
+<meta property="og:title" content="hadith.to — Read &amp; Listen">
 <meta property="og:description" content="Major hadith collections with synced Arabic recitation, word-level highlighting, and English and Urdu meanings.">
 <meta property="og:url" content="https://www.hadith.to/">
 <meta property="og:image" content="https://www.hadith.to/social-card.svg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hadith WBW — Read &amp; Listen">
+<meta name="twitter:title" content="hadith.to — Read &amp; Listen">
 <meta name="twitter:description" content="Read and listen to hadith word by word in Arabic, English, and Urdu.">
 <meta name="twitter:image" content="https://www.hadith.to/social-card.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Scheherazade+New:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#ffffff; --ink:#161616; --muted:#5c5c5c; --faint:#9a9a9a;
-    --line:#ebebeb; --soft:#f6f6f6; --hl-bg:rgba(255,236,180,.42); --hl-ink:#161616;
-    --dock:rgba(255,255,255,.92); --shadow:0 8px 28px rgba(0,0,0,.10);
-    --ar-font:"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif;
-    --ui-font:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    --ar-size:2rem; --en-size:1.15rem; --en-gloss-size:0.64rem; --ur-gloss-size:0.72rem; --ur-size:1.02rem; --en-lh:1.85; --ar-lh:2.75; --ur-lh:1.95; --wbw-gap:20px; --word-pad:7px;
-    --header-h:56px; --loc-h:52px;
+    --bg:#eef1f3; --bg-deep:#e3e8ec; --ink:#10131a; --ink-soft:#2a3038;
+    --muted:#5c646e; --faint:#8a929c;
+    --line:#c5cbc8; --soft:#e6eaed; --rule:#c5cbc8;
+    --gold:#9a8450; --gold-soft:rgba(154,132,80,.35);
+    --hl-bg:rgba(16,19,26,.036); --hl-ink:var(--ink);
+    --dock:rgba(238,241,240,.92);
+    --ar-font:"Scheherazade New",Scheherazade,"Traditional Arabic",serif;
+    --ui-font:"Source Serif 4","Source Serif Pro",Georgia,serif;
+    --ease:ease-in-out;
+    --ease-quick:ease;
+    --dur-fade:420ms;
+    --dur-highlight:260ms;
+    --dur-view:450ms;
+    --ar-size:2.1rem; --en-size:1.05rem; --en-gloss-size:0.72rem; --ur-size:0.8rem; --en-lh:1.75; --ar-lh:2.35; --ur-lh:1.9; --wbw-gap:18px; --word-pad:6px;
+    --header-h:48px; --loc-h:44px;
   }
   :root[data-theme="dark"] {
-    --bg:#101010; --ink:#ececec; --muted:#9a9a9a; --faint:#6a6a6a;
-    --line:#262626; --soft:#1a1a1a; --hl-bg:rgba(230,199,102,.14); --hl-ink:#ececec;
-    --dock:rgba(16,16,16,.94); --shadow:0 8px 28px rgba(0,0,0,.45);
+    --bg:#12161c; --bg-deep:#0e1217; --ink:#e8eaed; --ink-soft:#c5cad1;
+    --muted:#9aa3ad; --faint:#6d7680;
+    --line:#2a3138; --soft:#1a1f26; --rule:#2a3138;
+    --gold:#b59a5c; --gold-soft:rgba(181,154,92,.32);
+    --hl-bg:rgba(232,234,237,.05); --hl-ink:var(--ink);
+    --dock:rgba(18,22,28,.94);
   }
   :root[data-theme="sepia"] {
-    --bg:#f7f1e4; --ink:#3a2f22; --muted:#7a6a52; --faint:#a09074;
-    --line:#e5d9c4; --soft:#efe6d4; --hl-bg:rgba(239,224,180,.55); --hl-ink:#3a2f22;
-    --dock:rgba(247,241,228,.94);
+    /* Quiet cool-warm wash — not cream/terracotta */
+    --bg:#ebe8e2; --bg-deep:#e2ded6; --ink:#1c1a16; --ink-soft:#322f29;
+    --muted:#6a655c; --faint:#918a7e;
+    --line:#c9c3b8; --soft:#e4e0d8; --rule:#c9c3b8;
+    --gold:#8f7a4a; --gold-soft:rgba(143,122,74,.32);
+    --hl-bg:rgba(28,26,22,.04); --hl-ink:var(--ink);
+    --dock:rgba(235,232,226,.94);
   }
   * { box-sizing:border-box; margin:0; }
   body {
-    background:var(--bg); color:var(--ink); font-family:var(--ui-font);
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(170,188,200,.26), transparent 55%),
+      radial-gradient(90% 60% at 100% 100%, rgba(150,165,175,.16), transparent 50%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+    background-attachment:fixed;
+    color:var(--ink); font-family:var(--ui-font);
     line-height:1.5; -webkit-font-smoothing:antialiased;
-    transition:background .2s,color .2s; min-height:100vh;
+    transition:background var(--dur-view) var(--ease),color var(--dur-view) var(--ease); min-height:100vh;
+  }
+  :root[data-theme="dark"] body {
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(80,100,120,.18), transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+    background-attachment:fixed;
   }
   a { color:inherit; text-decoration:none; }
   button, select { font-family:inherit; }
   .hidden { display:none !important; }
 
-  /* Top brand bar */
+  /* Top brand bar — quiet; on landing it yields to the hero brand */
   .topbar {
-    position:sticky; top:0; z-index:40; background:var(--bg);
-    border-bottom:1px solid var(--line); height:var(--header-h);
+    position:sticky; top:0; z-index:40;
+    background:rgba(238,241,243,.82); backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent; height:var(--header-h);
+    transition:background var(--dur-view) var(--ease), border-color var(--dur-view) var(--ease);
   }
+  :root[data-theme="dark"] .topbar { background:rgba(18,22,28,.86); }
+  :root[data-theme="sepia"] .topbar { background:rgba(235,232,226,.88); }
+  body[data-view="landing"] .topbar {
+    background:transparent; backdrop-filter:none; border-bottom-color:transparent;
+  }
+  :root[data-theme="dark"] body[data-view="landing"] .topbar,
+  :root[data-theme="sepia"] body[data-view="landing"] .topbar { background:transparent; }
+  body[data-view="reader"] .topbar { border-bottom-color:transparent; }
   .topbar .in {
-    max-width:980px; margin:0 auto; height:100%;
-    display:flex; align-items:center; gap:10px; padding:0 18px;
+    max-width:42rem; margin:0 auto; height:100%;
+    display:flex; align-items:center; gap:8px; padding:0 1.35rem;
     position:relative;
   }
   .brand { cursor:pointer; display:flex; flex-direction:column; line-height:1.15; min-width:0; }
-  .brand .name { font-weight:700; font-size:1.05rem; letter-spacing:-.02em; }
-  .brand .tag { font-size:.72rem; color:var(--faint); font-weight:500; }
+  .brand .name { font-weight:600; font-size:.82rem; letter-spacing:-.01em; color:var(--faint);
+    transition:color .18s var(--ease-quick), opacity var(--dur-view) var(--ease); }
+  .brand .name .dot { color:var(--gold); font-weight:400; }
+  body[data-view="landing"] .brand { visibility:hidden; pointer-events:none; }
+  body[data-view="reader"] .brand .name:hover { color:var(--ink); }
+  .brand .tag { font-size:.68rem; color:var(--faint); font-weight:400; }
+  body[data-view="reader"] .brand .tag { display:none; }
   .sp { flex:1; }
   .iconbtn {
-    min-width:36px; height:36px; padding:0 11px; border-radius:999px;
-    border:1px solid var(--line); background:var(--bg); color:var(--ink);
-    cursor:pointer; font-size:.8rem; font-weight:600;
+    min-width:32px; height:32px; padding:0 10px; border-radius:2px;
+    border:0; background:transparent; color:var(--muted);
+    cursor:pointer; font-size:.78rem; font-weight:500;
     display:inline-flex; align-items:center; justify-content:center; gap:4px;
-    transition:background .12s,border-color .12s,color .12s;
+    transition:background .18s var(--ease-quick),color .18s var(--ease-quick);
   }
-  .iconbtn:hover { background:var(--soft); }
-  .iconbtn.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-  .iconbtn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .iconbtn:hover { background:var(--soft); color:var(--ink); }
+  .iconbtn.on { background:var(--soft); color:var(--ink); font-weight:600; }
+  .iconbtn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  body[data-view="landing"] .reader-only { display:none !important; }
+  body[data-view="reader"] .landing-only { display:none !important; }
+  .reader-tools { position:relative; flex:none; }
+  .reader-tools-panel {
+    position:absolute; right:0; top:calc(100% + 6px); min-width:168px;
+    padding:6px; background:var(--dock); border:1px solid var(--rule);
+    border-radius:2px; z-index:56;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .2s var(--ease), visibility .2s;
+  }
+  .reader-tools-panel.open {
+    opacity:1; visibility:visible; pointer-events:auto;
+  }
+  .rt-item {
+    display:block; width:100%; text-align:left; border:0; background:transparent;
+    color:var(--ink); font-size:.82rem; font-weight:500; padding:8px 10px;
+    border-radius:2px; cursor:pointer;
+  }
+  .rt-item:hover { background:var(--soft); }
+  .rt-item.on { font-weight:600; }
+  .rt-item .sub { display:block; font-size:.68rem; color:var(--faint); font-weight:400; margin-top:1px; }
 
   /* AA panel overlays below header — must NOT share space with sticky locator */
   .settings {
     position:absolute; left:12px; right:12px; top:calc(100% + 8px);
-    max-width:760px; margin-left:auto;
-    background:var(--bg); border:1px solid var(--line); border-radius:14px;
-    box-shadow:var(--shadow); z-index:55;
-    max-height:calc(100vh - var(--header-h) - 20px); overflow:auto;
+    max-width:42rem; margin-left:auto; margin-right:auto;
+    background:var(--dock); border:1px solid var(--rule); border-radius:2px;
+    z-index:55;
     opacity:0; visibility:hidden; pointer-events:none;
-    transform:translateY(-4px);
-    transition:opacity .15s ease, transform .15s ease, visibility .15s;
+    transition:opacity .2s var(--ease), visibility .2s;
   }
   .settings.open {
     opacity:1; visibility:visible; pointer-events:auto;
-    transform:translateY(0);
   }
   .settings .in { display:block; padding:16px; color:var(--muted); }
   .settings-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
@@ -99,7 +157,7 @@
   .settings-head span { font-size:.72rem; color:var(--faint); }
   .settings-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
   .setting-section.wide { grid-column:1 / -1; }
-  .setting-section { background:var(--soft); border:1px solid var(--line); border-radius:11px; padding:10px; }
+  .setting-section { background:var(--soft); border:1px solid var(--rule); border-radius:2px; padding:10px; }
   .setting-section h3 { color:var(--faint); font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; margin:0 0 9px; }
   .setting { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:8px; min-width:0; font-size:.78rem; margin-top:12px; }
   .setting-section.wide { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:20px; }
@@ -109,57 +167,59 @@
   .setting output { color:var(--faint); font-variant-numeric:tabular-nums; text-align:right; font-size:.72rem; }
   .setting input[type="range"] { grid-column:1 / -1; width:100%; height:22px; margin-top:2px; appearance:none; -webkit-appearance:none; background:transparent; cursor:pointer; }
   .setting input[type="range"]::-webkit-slider-runnable-track { height:8px; border:1px solid var(--line); border-radius:999px; background:var(--bg); }
-  .setting input[type="range"]::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:16px; height:16px; margin-top:-5px; border:2px solid var(--bg); border-radius:50%; background:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.25); }
+  .setting input[type="range"]::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:16px; height:16px; margin-top:-5px; border:2px solid var(--bg); border-radius:50%; background:var(--ink); }
   .setting input[type="range"]::-moz-range-track { height:8px; border:1px solid var(--line); border-radius:999px; background:var(--bg); }
-  .setting input[type="range"]::-moz-range-thumb { width:14px; height:14px; border:2px solid var(--bg); border-radius:50%; background:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.25); }
+  .setting input[type="range"]::-moz-range-thumb { width:14px; height:14px; border:2px solid var(--bg); border-radius:50%; background:var(--ink); }
   .settings-foot { border-top:1px solid var(--line); margin-top:15px; padding-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-  .settings select { background:var(--soft); border:1px solid var(--line); border-radius:8px; color:var(--ink); padding:6px 8px; font-size:.78rem; }
-  .settings-reset { border:1px solid var(--line); background:transparent; color:var(--muted); border-radius:8px; padding:6px 9px; cursor:pointer; font-size:.76rem; }
+  .settings select { background:var(--soft); border:1px solid var(--rule); border-radius:2px; color:var(--ink); padding:6px 8px; font-size:.78rem; }
+  .settings-reset { border:1px solid var(--rule); background:transparent; color:var(--muted); border-radius:2px; padding:6px 9px; cursor:pointer; font-size:.76rem; }
   .settings-reset:hover { background:var(--soft); color:var(--ink); }
   .settings-theme { margin-left:auto; display:flex; gap:4px; align-items:center; font-size:.76rem; }
   .settings-theme .theme b { margin:0; }
   .settings .theme b {
-    cursor:pointer; padding:5px 12px; border:1px solid var(--line);
-    border-radius:20px; margin-left:4px; font-weight:500;
+    cursor:pointer; padding:5px 12px; border:1px solid var(--rule);
+    border-radius:2px; margin-left:4px; font-weight:500;
   }
   .settings .theme b.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
 
-  /* Locator strip (YouVersion-style) */
+  /* Locator — quiet book/hadith picker */
   .locator {
-    position:sticky; top:var(--header-h); z-index:35; background:var(--soft);
-    border-bottom:1px solid var(--line); min-height:var(--loc-h);
+    position:sticky; top:var(--header-h); z-index:35;
+    background:rgba(238,241,243,.72); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--gold-soft); min-height:var(--loc-h);
   }
+  :root[data-theme="dark"] .locator { background:rgba(18,22,28,.82); }
+  :root[data-theme="sepia"] .locator { background:rgba(235,232,226,.84); }
   .locator .in {
-    max-width:980px; margin:0 auto; padding:8px 18px;
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    max-width:42rem; margin:0 auto; padding:6px 1.35rem;
+    display:flex; align-items:center; gap:6px; flex-wrap:wrap;
   }
   .loc-select, .loc-btn {
-    appearance:none; background:var(--bg); border:1px solid var(--line);
-    border-radius:10px; color:var(--ink); font-size:.84rem; font-weight:500;
-    padding:8px 12px; cursor:pointer; max-width:min(280px, 42vw);
+    appearance:none; background:transparent; border:0;
+    border-radius:6px; color:var(--ink); font-size:.84rem; font-weight:600;
+    padding:6px 8px; cursor:pointer; max-width:min(280px, 42vw);
   }
-  #hadithJump { max-width:140px; }
-  #bookJump { max-width:150px; }
-  .loc-select { padding-right:28px;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239a9a9a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position:right 10px center;
+  #hadithJump { max-width:120px; font-variant-numeric:tabular-nums; }
+  #bookJump { max-width:140px; }
+  .loc-select { padding-right:24px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%239a9a9a' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 4px center;
   }
-  .loc-btn:hover, .loc-select:hover { border-color:var(--muted); }
-  .loc-btn.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .loc-btn:hover, .loc-select:hover { background:var(--soft); }
+  .loc-btn.on { background:var(--soft); color:var(--ink); }
   .loc-home {
-    border:0; background:transparent; color:var(--faint); font-size:.8rem;
-    cursor:pointer; padding:6px 4px; font-weight:500;
+    border:0; background:transparent; color:var(--faint); font-size:.76rem;
+    cursor:pointer; padding:6px 2px; font-weight:400;
+    transition:color .25s var(--ease);
   }
   .loc-home:hover { color:var(--ink); }
-  .badge-quiet {
-    font-size:.68rem; color:var(--faint); border:1px solid var(--line);
-    border-radius:999px; padding:4px 9px; font-weight:500;
-  }
   .loc-summary {
-    display:none; appearance:none; background:var(--bg); border:1px solid var(--line);
-    border-radius:10px; color:var(--ink); font-size:.84rem; font-weight:600;
-    padding:8px 12px; cursor:pointer; max-width:100%; flex:1; text-align:left;
+    display:none; appearance:none; background:transparent; border:0;
+    color:var(--ink); font-size:.84rem; font-weight:600;
+    padding:6px 8px; cursor:pointer; max-width:100%; flex:1; text-align:left;
+    border-radius:6px;
   }
+  .loc-summary:hover { background:var(--soft); }
   .locator.compact .loc-panel { display:none; }
   .locator.compact .loc-summary { display:inline-flex; align-items:center; gap:6px; }
   .locator.expanded .loc-panel {
@@ -170,129 +230,219 @@
     display:contents;
   }
 
-  /* Landing */
-  #landing { max-width:820px; margin:0 auto; padding:48px 20px 80px; }
-  .hero { text-align:center; margin-bottom:36px; }
-  .hero .ar { direction:rtl; font-family:var(--ar-font); font-size:clamp(2.2rem,5vw,2.8rem); line-height:1.3; }
-  .hero .en { color:var(--muted); font-size:1.05rem; margin-top:8px; font-weight:500; }
-  .hero .sub { color:var(--faint); font-size:.88rem; margin-top:6px; }
-  .shelf { display:grid; gap:12px; }
+  /* Landing — brand-first composition like sacred-demo */
+  #landing {
+    max-width:42rem; margin:0 auto; padding:2rem 1.35rem 5rem;
+    min-height:calc(100vh - var(--header-h));
+    display:flex; flex-direction:column;
+    transition:opacity var(--dur-view) var(--ease);
+  }
+  #landing.is-leaving {
+    opacity:0; pointer-events:none;
+  }
+  .hero {
+    text-align:center;
+    padding:clamp(3.5rem, 12vh, 6.5rem) 0 2.75rem;
+    margin-bottom:0;
+  }
+  .hero .ornament {
+    width:72px; height:1px; margin:0 auto 1.75rem;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .hero-brand {
+    font-size:clamp(2.6rem, 8vw, 4.2rem); font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); line-height:1;
+  }
+  .hero-brand span { color:var(--gold); font-weight:400; }
+  .shelf { display:grid; gap:0; margin-top:0.5rem; }
   .shelf a {
     display:grid; grid-template-columns:1fr auto; gap:12px 20px; align-items:center;
-    padding:20px 22px; border-bottom:1px solid var(--line);
-    transition:background .12s;
+    padding:1.1rem 0.35rem; border-bottom:1px solid var(--rule);
+    transition:color .25s var(--ease);
   }
-  .shelf a:first-child { border-top:1px solid var(--line); }
-  .shelf a:hover { background:var(--soft); }
-  .shelf .ar { direction:rtl; font-family:var(--ar-font); font-size:1.55rem; line-height:1.35; }
-  .shelf .en { font-weight:600; font-size:.95rem; }
-  .shelf .meta { color:var(--faint); font-size:.78rem; margin-top:3px; }
+  .shelf a:first-child { border-top:1px solid var(--rule); }
+  .shelf a:hover { background:transparent; }
+  .shelf a:hover .en { color:var(--gold); }
+  .shelf .ar { direction:rtl; font-family:var(--ar-font); font-size:1.45rem; line-height:1.45; color:var(--ink); }
+  .shelf .en { font-weight:500; font-size:.9rem; transition:color .25s var(--ease); }
+  .shelf .meta { color:var(--faint); font-size:.74rem; margin-top:3px; font-weight:400; }
   .shelf .side { text-align:right; }
+  .methodology {
+    margin:2.75rem 0 0; padding-top:1.75rem; border-top:1px solid var(--rule);
+  }
+  .methodology h2 {
+    font-size:.78rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 0.85rem;
+  }
+  .methodology p {
+    color:var(--faint); font-size:.78rem; line-height:1.65; margin:0 0 0.75rem;
+  }
+  .methodology p:last-child { margin-bottom:0; }
+  .methodology strong { color:var(--muted); font-weight:600; }
   .disc {
-    margin:40px auto 0; color:var(--faint); font-size:.74rem; line-height:1.7;
-    text-align:center; max-width:640px;
+    margin:2rem 0 0; color:var(--faint); font-size:.72rem; line-height:1.65;
+    text-align:left; max-width:36rem;
   }
 
   /* Reader stage */
-  #reader { position:relative; padding-bottom:110px; }
+  #reader {
+    position:relative; padding-bottom:100px;
+    opacity:0;
+    transition:opacity var(--dur-view) var(--ease);
+  }
+  #reader.is-in { opacity:1; }
   .stage {
-    max-width:920px; margin:0 auto; padding:36px 28px 48px;
+    max-width:42rem; margin:0 auto; padding:2.5rem 1.35rem 4.5rem;
     position:relative;
+    transition:opacity var(--dur-fade) var(--ease);
+  }
+  .stage.is-fading { opacity:0; }
+  .stage-head {
+    display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
+    margin-bottom:1.75rem; padding-bottom:0.9rem;
+    border-bottom:1px solid var(--gold-soft); text-align:left;
+  }
+  .stage-head .collection {
+    font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--faint); font-weight:400;
+  }
+  .stage-head .ref {
+    font-size:.85rem; color:var(--muted); font-weight:400;
+    font-variant-numeric:tabular-nums; white-space:nowrap;
+  }
+  .stage-head .hnum {
+    font-weight:500; letter-spacing:.1em;
+    font-size:.72rem; color:var(--faint); text-transform:uppercase;
+  }
+  .isnad {
+    direction:rtl; font-family:var(--ar-font); color:var(--muted);
+    font-size:1.15rem; line-height:2; text-align:right; margin:0 0 1.5rem; max-width:none;
   }
   .status {
     text-align:center; color:var(--faint); padding:60px 20px; font-size:.95rem;
   }
   .status[role="status"]::before {
-    content:""; display:block; width:22px; height:22px; margin:0 auto 14px;
-    border:2px solid var(--line); border-top-color:var(--ink); border-radius:50%;
-    animation:status-spin .75s linear infinite;
+    content:""; display:block; width:18px; height:18px; margin:0 auto 14px;
+    border:1.5px solid var(--rule); border-top-color:var(--gold); border-radius:50%;
+    animation:status-spin .9s linear infinite;
   }
   @keyframes status-spin { to { transform:rotate(360deg); } }
   @media (prefers-reduced-motion:reduce) { .status[role="status"]::before { animation:none; } }
   .availability {
-    max-width:720px; margin:0 auto 22px; padding:11px 14px; border:1px solid var(--line);
-    border-radius:11px; background:var(--soft); color:var(--muted); font-size:.8rem;
+    max-width:720px; margin:0 auto 22px; padding:10px 12px; border:1px solid var(--rule);
+    border-radius:2px; background:transparent; color:var(--muted); font-size:.78rem;
     line-height:1.5; text-align:center;
   }
-  .availability.warn { border-color:#d9b55c; background:#fff8e5; color:#715817; }
-  :root[data-theme="dark"] .availability.warn { border-color:#66552d; background:#211d13; color:#d9c27b; }
+  .availability.warn { border-color:var(--gold-soft); background:transparent; color:var(--muted); }
+  :root[data-theme="dark"] .availability.warn { border-color:var(--gold-soft); background:transparent; color:var(--muted); }
 
   .parallel {
     display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:start;
   }
   .parallel.single { grid-template-columns:1fr; }
   .parallel.single .en-col { display:none; }
-  .english { font-size:var(--en-size); line-height:var(--en-lh); }
+  .col-label {
+    font-size:.62rem; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--faint); margin-bottom:8px; font-weight:500;
+    opacity:.75;
+  }
+  body[data-view="reader"] .col-label { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+  .english { font-size:var(--en-size); line-height:var(--en-lh); color:var(--ink-soft); }
   .meaning-languages { display:grid; gap:24px; }
-  .meaning-section + .meaning-section { padding-top:20px; border-top:1px solid var(--line); }
+  .meaning-section + .meaning-section { padding-top:20px; border-top:1px solid var(--rule); }
   .urdu {
     direction:rtl; text-align:right; font-family:"Noto Nastaliq Urdu",var(--ar-font);
-    font-size:var(--ur-size); line-height:var(--ur-lh);
+    font-size:var(--ur-size); line-height:var(--ur-lh); color:var(--ink-soft);
   }
-  .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:var(--ar-lh); }
+  .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:var(--ar-lh); color:var(--ink); }
   .arabic span.w {
-    cursor:pointer; border-radius:6px; padding:0 3px;
-    transition:background .12s,color .12s;
+    cursor:pointer; border-radius:1px; padding:0 2px;
+    transition:background var(--dur-highlight) var(--ease),color var(--dur-highlight) var(--ease),opacity var(--dur-highlight) var(--ease);
   }
   .arabic span.w .t {
     font-family:var(--ar-font);
     font-size:var(--ar-size);
     line-height:1.85;
-    font-weight:600;
   }
-  .arabic span.w.active { background:var(--hl-bg); border-radius:5px; }
-  .arabic span.w .g-en, .arabic span.w .g-ur, .arabic span.w .g-tr { display:none; }
+  /* Soft ink wash — not yellow pill */
+  .arabic span.w.active {
+    background:var(--hl-bg); color:var(--hl-ink);
+  }
+  body[data-playing="1"] .arabic span.w:not(.active) { opacity:.69; }
+  body[data-playing="1"] .arabic span.w.active { opacity:1; }
+  @media (prefers-reduced-motion:reduce) {
+    body[data-playing="1"] .arabic span.w:not(.active) { opacity:1; }
+    :root { --dur-fade:1ms; --dur-highlight:1ms; --dur-view:1ms; }
+    #landing.is-leaving, #reader, .stage.is-fading { opacity:1; }
+  }
+  .arabic span.w .g-en, .arabic span.w .g-ur { display:none; }
   body[data-wbw="en"] .arabic,
   body[data-wbw="ur"] .arabic,
-  body[data-wbw="tr"] .arabic,
   body[data-wbw="both"] .arabic {
     display:flex; flex-wrap:wrap; gap:var(--wbw-gap) 4px; line-height:1.7;
-    font-size:inherit; /* size lives on .t / glosses, not the flex container */
+    font-size:inherit;
   }
   body[data-wbw="en"] .arabic span.w,
   body[data-wbw="ur"] .arabic span.w,
-  body[data-wbw="tr"] .arabic span.w,
   body[data-wbw="both"] .arabic span.w {
     display:inline-flex; flex-direction:column; align-items:center; padding:calc(var(--word-pad) - 1px) var(--word-pad) var(--word-pad);
   }
   body[data-wbw="en"] .arabic span.w.active,
   body[data-wbw="ur"] .arabic span.w.active,
-  body[data-wbw="tr"] .arabic span.w.active,
   body[data-wbw="both"] .arabic span.w.active {
-    background:var(--hl-bg); border-radius:6px;
+    background:var(--hl-bg); border-radius:2px;
   }
   .arabic span.w .g-en {
-    font-family:var(--ui-font); font-size:var(--en-gloss-size); color:var(--faint);
-    direction:ltr; margin-top:3px; text-align:center; max-width:130px; line-height:1.3;
-    font-weight:400;
+    font-family:var(--ui-font); font-size:var(--en-gloss-size); color:var(--muted);
+    direction:ltr; margin-top:4px; text-align:center; max-width:130px; line-height:1.35;
   }
   .arabic span.w .g-ur {
-    font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-gloss-size);
-    color:var(--faint); direction:rtl; margin-top:4px; text-align:center;
+    font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-size);
+    color:var(--muted); direction:rtl; margin-top:5px; text-align:center;
     max-width:140px; line-height:var(--ur-lh);
-  }
-  .arabic span.w .g-tr {
-    font-family:var(--ui-font); font-size:var(--en-gloss-size); color:var(--faint);
-    direction:ltr; margin-top:3px; text-align:center; max-width:130px; line-height:1.3;
-    font-style:italic; font-weight:400;
   }
   body[data-wbw="en"] .arabic span.w .g-en,
   body[data-wbw="both"] .arabic span.w .g-en { display:block; }
   body[data-wbw="ur"] .arabic span.w .g-ur,
   body[data-wbw="both"] .arabic span.w .g-ur { display:block; }
-  body[data-wbw="tr"] .arabic span.w .g-tr { display:block; }
+
+  /* ---------- Receive mode: Arabic dominates; study tools wait ---------- */
+  body[data-mode="receive"] .parallel {
+    grid-template-columns:1fr;
+  }
+  body[data-mode="receive"] .parallel .en-col { display:none !important; }
+  body[data-mode="receive"] .arabic {
+    display:block; flex-wrap:unset; gap:unset; line-height:var(--ar-lh);
+  }
+  body[data-mode="receive"] .arabic span.w {
+    display:inline; flex-direction:unset; align-items:unset;
+    padding:0 2px;
+  }
+  body[data-mode="receive"] .arabic span.w .g-en,
+  body[data-mode="receive"] .arabic span.w .g-ur { display:none !important; }
+  body[data-mode="receive"] #rtWbw,
+  body[data-mode="receive"] #rtParallel { display:none; }
+  .mode-link {
+    min-width:auto; height:auto; padding:4px 8px;
+    font-size:.72rem; font-weight:500; letter-spacing:.03em;
+    color:var(--faint); background:transparent; border:0; border-radius:2px;
+    cursor:pointer; font-family:inherit;
+    transition:color .18s var(--ease-quick);
+  }
+  .mode-link:hover { color:var(--ink); background:transparent; }
+  .mode-link[aria-pressed="true"] { color:var(--muted); }
 
   /* ---------- grammar popover (long-press a word) ---------- */
-  .arabic span.w.gram-open { background:var(--hl-bg); color:var(--hl-ink); border-radius:6px; }
+  .arabic span.w.gram-open { background:var(--hl-bg); color:var(--hl-ink); border-radius:2px; }
   #gramPop {
     position:fixed; z-index:60; max-width:min(320px, 92vw);
-    background:var(--dock); color:var(--ink); border:1px solid var(--line);
-    border-radius:12px; box-shadow:var(--shadow); padding:12px 14px;
+    background:var(--dock); color:var(--ink); border:1px solid var(--rule);
+    border-radius:2px; padding:12px 14px;
     font-family:var(--ui-font); font-size:.82rem; line-height:1.5;
-    opacity:0; transform:translateY(4px); pointer-events:none;
-    transition:opacity .12s ease, transform .12s ease;
+    opacity:0; pointer-events:none;
+    transition:opacity .2s var(--ease);
   }
-  #gramPop.show { opacity:1; transform:translateY(0); }
+  #gramPop.show { opacity:1; }
   #gramPop .gp-ar { font-family:var(--ar-font); font-size:1.5rem; direction:rtl; margin-bottom:2px; }
   #gramPop .gp-tr { color:var(--muted); font-style:italic; margin-bottom:8px; }
   #gramPop .gp-row { display:flex; gap:10px; padding:3px 0; align-items:baseline; }
@@ -304,7 +454,7 @@
   #gramPop .gp-v.root { font-family:var(--ar-font); font-size:1.05rem; direction:rtl; letter-spacing:.04em; }
   #gramPop .gp-feats { display:flex; flex-wrap:wrap; gap:5px; }
   #gramPop .gp-feats span {
-    background:var(--soft); border-radius:5px; padding:1px 7px; font-size:.72rem; font-weight:600;
+    background:var(--soft); border-radius:2px; padding:1px 7px; font-size:.72rem; font-weight:500;
   }
   #gramPop .gp-hint { margin-top:8px; color:var(--faint); font-size:.66rem; }
 
@@ -312,13 +462,13 @@
   .refrow { display:flex; gap:12px; padding:5px 0; align-items:baseline; flex-wrap:wrap; }
   .refrow .lbl {
     color:var(--faint); min-width:100px; font-size:.7rem;
-    text-transform:uppercase; letter-spacing:.06em; font-weight:600;
+    text-transform:uppercase; letter-spacing:.06em; font-weight:500;
   }
-  .refrow a { font-weight:600; border-bottom:1px solid transparent; }
-  .refrow a:hover { border-bottom-color:var(--ink); }
+  .refrow a { font-weight:500; border-bottom:1px solid transparent; }
+  .refrow a:hover { border-bottom-color:var(--gold); }
   .refrow .badge {
-    font-size:.62rem; color:var(--faint); border:1px solid var(--line);
-    border-radius:10px; padding:1px 7px; margin-left:4px;
+    font-size:.62rem; color:var(--faint); border:1px solid var(--rule);
+    border-radius:2px; padding:1px 7px; margin-left:4px;
   }
   .refrow.low a { color:var(--muted); }
   .copy {
@@ -327,197 +477,175 @@
   }
   .copy:hover { color:var(--ink); }
 
-  /* Edge prev / next */
+  /* Edge prev / next — quiet persistent nav (no bounce / no CTA) */
   .navedge {
     position:fixed; top:50%; transform:translateY(-50%);
-    width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
-    background:var(--dock); color:var(--ink); cursor:pointer;
+    width:32px; height:32px; border-radius:0; border:0;
+    background:transparent; color:var(--faint); cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    box-shadow:var(--shadow); z-index:25; backdrop-filter:blur(8px);
-    transition:opacity .15s, color .15s, border-color .15s, background .15s;
+    z-index:25; opacity:.38;
+    transition:opacity .45s var(--ease), color .45s var(--ease);
   }
-  .navedge:hover { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-  .navedge:disabled { opacity:.2; cursor:default; pointer-events:none; }
-  .navedge.prev { left:max(12px, calc(50% - 520px)); }
-  .navedge.next { right:max(12px, calc(50% - 520px)); }
-  .navedge svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .navedge:hover { background:transparent; color:var(--ink); opacity:.85; }
+  .navedge:disabled { opacity:.12; cursor:default; pointer-events:none; }
+  .navedge.prev { left:max(12px, calc(50% - 400px)); }
+  .navedge.next { right:max(12px, calc(50% - 400px)); }
+  .navedge svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+  /* End silence: hush next until stillness settles */
+  body[data-silence="1"] .navedge.next { opacity:.14; pointer-events:none; }
+  body[data-silence="ready"] .navedge.next:not(:disabled) { opacity:.55; }
 
-  /* Sticky audio dock */
+  /* Sticky audio dock — calm floating bar (demo spirit) */
   .dock {
-    position:fixed; left:0; right:0; bottom:0; z-index:45;
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-    background:linear-gradient(to top, var(--bg) 55%, transparent);
-    pointer-events:none;
+    position:fixed; left:50%; bottom:1.35rem; transform:translateX(-50%);
+    z-index:45; width:auto; min-width:min(280px, calc(100% - 24px));
+    max-width:min(420px, calc(100% - 24px));
+    padding:0.45rem 0.7rem calc(0.45rem + env(safe-area-inset-bottom));
+    background:var(--dock); border:1px solid var(--rule);
+    backdrop-filter:blur(10px); pointer-events:none;
+    opacity:0; transition:opacity var(--dur-view) var(--ease);
   }
+  .dock.is-in { opacity:1; }
+  .dock.hidden { opacity:0 !important; pointer-events:none; }
   .dock .player {
-    pointer-events:auto; max-width:620px; margin:0 auto;
-    display:grid; grid-template-columns:auto auto auto 1fr auto auto;
-    gap:8px 10px; align-items:center;
-    border:1px solid var(--line); border-radius:22px;
-    padding:8px 12px 8px 8px; background:var(--dock);
-    box-shadow:var(--shadow); backdrop-filter:blur(12px);
+    pointer-events:auto; max-width:none; margin:0;
+    display:grid; grid-template-columns:auto 1fr auto auto;
+    gap:0.45rem; align-items:center;
+    padding:0;
   }
-  .dock-meta {
-    grid-column:1 / -1; display:flex; align-items:center; gap:10px;
-    padding:0 4px 0; min-width:0; flex-wrap:wrap;
-  }
-  .dock-label {
-    font-size:.82rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
-  .dock-draft {
-    font-size:.68rem; color:var(--faint); font-weight:500; white-space:nowrap;
-  }
-  .dock-modes { margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; }
-  .mode {
-    border:1px solid var(--line); background:var(--bg); color:var(--muted);
-    border-radius:999px; padding:3px 9px; font-size:.68rem; cursor:pointer; font-weight:600;
-  }
-  .mode.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-  .mode:hover { border-color:var(--ink); color:var(--ink); }
-  .mode.on:hover { color:var(--bg); }
   .skip {
-    flex:none; width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
-    background:var(--bg); color:var(--ink); cursor:pointer;
+    flex:none; width:36px; height:36px; border-radius:0; border:0;
+    background:transparent; color:var(--ink-soft); cursor:pointer;
     display:inline-flex; align-items:center; justify-content:center;
-    font-size:.62rem; font-weight:700; font-variant-numeric:tabular-nums;
+    font-size:.62rem; font-weight:600; font-variant-numeric:tabular-nums;
+    transition:color .2s ease;
   }
-  .skip:hover { background:var(--soft); }
+  .skip:hover { background:transparent; color:var(--ink); }
   .play {
-    flex:none; width:40px; height:40px; border-radius:50%; border:0;
-    background:var(--ink); color:var(--bg); cursor:pointer;
+    flex:none; width:48px; height:48px; border-radius:0; border:0;
+    background:transparent; color:var(--ink); cursor:pointer;
     display:inline-flex; align-items:center; justify-content:center;
+    transition:color .2s ease;
   }
-  .play:hover { opacity:.88; }
-  .play svg { width:16px; height:16px; fill:currentColor; }
+  .play:hover { color:var(--gold); }
+  .play svg { width:20px; height:20px; fill:currentColor; }
   .track {
-    flex:1; height:5px; background:var(--line); border-radius:3px;
-    cursor:pointer; position:relative; min-width:60px; touch-action:pan-y;
+    flex:1; height:16px; background:transparent; border-radius:0;
+    cursor:pointer; position:relative; min-width:48px; touch-action:pan-y;
+  }
+  .track::before {
+    content:""; position:absolute; left:0; right:0; top:50%; height:1px;
+    background:var(--rule); transform:translateY(-50%); pointer-events:none;
   }
   .track:focus-visible {
-    outline:2px solid var(--ink);
+    outline:1px solid var(--gold);
     outline-offset:4px;
   }
   .track .fill {
-    position:absolute; left:0; top:0; bottom:0; width:0;
-    background:var(--ink); border-radius:3px;
+    position:absolute; left:0; top:50%; bottom:auto; height:1px; width:0;
+    background:var(--gold); border-radius:0; transform:translateY(-50%);
   }
   .time {
-    flex:none; font-size:.74rem; color:var(--muted);
-    font-variant-numeric:tabular-nums; min-width:84px; text-align:right;
+    flex:none; font-size:.72rem; color:var(--faint);
+    font-variant-numeric:tabular-nums; min-width:72px; text-align:right;
   }
   .dock-more-wrap { position:relative; flex:none; }
   .dock-more-btn {
-    width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
-    background:var(--bg); color:var(--muted); cursor:pointer;
+    width:40px; height:40px; border-radius:0; border:0;
+    background:transparent; color:var(--ink-soft); cursor:pointer;
     display:inline-flex; align-items:center; justify-content:center;
-    font-size:1.1rem; line-height:1; letter-spacing:.08em;
+    font-size:1.15rem; line-height:1; letter-spacing:.06em;
+    transition:color .2s ease;
   }
-  .dock-more-btn:hover { background:var(--soft); color:var(--ink); }
-  .dock-more-btn[aria-expanded="true"] { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .dock-more-btn:hover { background:transparent; color:var(--ink); }
+  .dock-more-btn[aria-expanded="true"] { background:transparent; color:var(--ink); }
   .dock-more-panel {
-    position:absolute; right:0; bottom:calc(100% + 10px);
-    min-width:196px; padding:10px 12px;
-    background:var(--bg); border:1px solid var(--line); border-radius:12px;
-    box-shadow:var(--shadow); z-index:50;
+    position:absolute; right:0; bottom:calc(100% + 8px);
+    min-width:200px; padding:10px 12px;
+    background:var(--dock); border:1px solid var(--rule); border-radius:2px;
+    z-index:50;
     opacity:0; visibility:hidden; pointer-events:none;
-    transform:translateY(4px);
-    transition:opacity .12s ease, transform .12s ease, visibility .12s;
+    transition:opacity .2s var(--ease), visibility .2s;
   }
   .dock-more-panel.open {
     opacity:1; visibility:visible; pointer-events:auto;
-    transform:translateY(0);
   }
   .dock-more-section + .dock-more-section {
-    margin-top:10px; padding-top:10px; border-top:1px solid var(--line);
+    margin-top:10px; padding-top:10px; border-top:1px solid var(--rule);
   }
   .dock-more-label {
     display:block; font-size:.62rem; text-transform:uppercase;
-    letter-spacing:.08em; color:var(--faint); font-weight:600; margin-bottom:6px;
+    letter-spacing:.08em; color:var(--faint); font-weight:500; margin-bottom:6px;
   }
-  .dock-more-panel .dock-modes { margin-left:0; }
+  .dock-more-panel .dock-modes { margin-left:0; display:flex; gap:6px; flex-wrap:wrap; }
+  .dock-more-panel .dock-skips { display:flex; gap:6px; }
+  .dock-draft-note { font-size:.68rem; color:var(--faint); line-height:1.4; }
+  .dock-modes { display:flex; gap:6px; flex-wrap:wrap; }
+  .mode {
+    border:1px solid var(--rule); background:transparent; color:var(--muted);
+    border-radius:2px; padding:4px 10px; font-size:.72rem; cursor:pointer; font-weight:500;
+  }
+  .mode.on { background:transparent; color:var(--ink); border-color:var(--gold); }
+  .mode:hover { border-color:var(--muted); color:var(--ink); }
+  .mode.on:hover { color:var(--ink); }
   .rates { display:flex; gap:4px; flex-wrap:wrap; }
   .rates button {
-    border:1px solid var(--line); background:var(--bg); color:var(--muted);
-    border-radius:999px; padding:4px 8px; font-size:.68rem; cursor:pointer; font-weight:600;
+    border:1px solid var(--rule); background:transparent; color:var(--muted);
+    border-radius:2px; padding:4px 8px; font-size:.68rem; cursor:pointer; font-weight:500;
   }
-  .rates button.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .rates button.on { background:transparent; color:var(--ink); border-color:var(--gold); }
 
   .resume {
-    display:none; max-width:820px; margin:0 auto 22px; padding:0 20px;
+    display:none; max-width:42rem; margin:0 auto 1.75rem; padding:0;
   }
   .resume a {
     display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:14px 18px; border:1px solid var(--line); border-radius:12px;
-    background:var(--soft); transition:border-color .12s, background .12s;
+    padding:1rem 0.2rem; border:0; border-bottom:1px solid var(--gold-soft);
+    background:transparent; border-radius:0; transition:color .25s var(--ease);
   }
-  .resume a:hover { border-color:var(--ink); background:var(--bg); }
-  .resume .kicker { font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); font-weight:600; }
-  .resume .title { font-weight:600; margin-top:2px; }
-  .resume .go { color:var(--muted); font-size:.85rem; font-weight:500; white-space:nowrap; }
+  .resume a:hover { border-color:var(--gold); background:transparent; }
+  .resume .kicker { font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); font-weight:500; }
+  .resume .title { font-weight:500; margin-top:2px; }
+  .resume .go { color:var(--muted); font-size:.85rem; font-weight:400; white-space:nowrap; }
 
   @media (max-width:900px) {
     .navedge.prev { left:8px; }
     .navedge.next { right:8px; }
   }
   @media (max-width:680px) {
-    /* Phone type scale: desktop sizes/leading are too large on a narrow
-       column, so scale down here (users can still override via Aa). */
-    :root {
-      --ar-size:1.68rem; --ar-lh:2.35; --wbw-gap:14px;
-      --en-size:1.05rem; --en-lh:1.7; --ur-size:1rem; --ur-gloss-size:0.68rem; --ur-lh:1.95;
-    }
-    .parallel { grid-template-columns:1fr; gap:22px; }
+    .parallel { grid-template-columns:1fr; gap:0; }
     .parallel:not(.single) { display:flex; flex-direction:column; }
     .parallel:not(.single) .ar-col { order:1; }
-    .parallel:not(.single) .en-col { order:2; }
+    .parallel:not(.single) .en-col {
+      order:2; margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--rule);
+    }
     .shelf a { grid-template-columns:1fr; }
     .shelf .side { text-align:left; }
-    .navedge { width:38px; height:38px; opacity:.85; }
+    .navedge { width:28px; height:28px; opacity:.45; }
     .brand .tag { display:none; }
     .settings { left:8px; right:8px; }
     .settings-grid { grid-template-columns:1fr; }
     .settings-theme { margin-left:0; }
     .locator { min-height:auto; }
-    .locator .in { gap:8px; }
+    .locator .in { gap:4px; padding:4px 1rem; }
     .locator.compact .loc-home { display:none; }
-    .locator.compact .badge-quiet { display:none; }
-    .loc-select { max-width:100%; flex:1 1 140px; }
+    .loc-select { max-width:100%; flex:1 1 120px; }
     #hadithJump, #bookJump { max-width:none; }
-    .dock .player {
-      grid-template-columns:auto auto auto 1fr auto auto;
-      border-radius:18px;
+    #reader { padding-bottom:92px; }
+    .topbar .in { padding:0 1rem; gap:4px; }
+    .iconbtn { min-width:28px; height:28px; padding:0 8px; font-size:.74rem; }
+    .stage { padding:2rem 1rem 3.5rem; }
+    .dock {
+      bottom:0.95rem; min-width:calc(100% - 20px); max-width:calc(100% - 20px);
+      padding:0.4rem 0.55rem calc(0.4rem + env(safe-area-inset-bottom));
     }
-    #reader { padding-bottom:130px; }
-    .topbar .in { padding:0 10px; gap:6px; }
-    .iconbtn { min-width:34px; height:34px; padding:0 8px; font-size:.74rem; }
-    .stage { padding:28px 18px 42px; }
-    .dock { padding:0 8px 8px; }
-    .dock .player { padding:10px; gap:7px; }
-    .dock-meta { grid-column:1 / -1; }
-    .time { font-size:.64rem; }
+    .dock .player { gap:0.35rem; }
+    .time { font-size:.64rem; min-width:64px; }
+    .play { width:44px; height:44px; }
   }
   @media (max-width:480px) {
-    :root { --header-h:52px; --loc-h:48px; }
-    .topbar .in { gap:5px; padding:0 8px; }
-    .brand .name { font-size:.9rem; }
-    .iconbtn { min-width:0; height:34px; padding:0 8px; font-size:.72rem; }
-    #landing { padding:30px 12px 72px; }
-    .stage { padding-left:34px; padding-right:34px; }
-    .navedge { width:32px; height:32px; }
-    .navedge.prev { left:2px; }
-    .navedge.next { right:2px; }
-    .settings { left:4px; right:4px; max-height:calc(100vh - 64px); overflow:auto; }
-    .settings .in { padding:10px; }
-    .setting-section.wide { grid-template-columns:1fr; }
-    .setting-section.wide h3 { grid-column:1; }
-    .dock { padding-left:6px; padding-right:6px; }
-    .dock .player { grid-template-columns:auto auto auto minmax(80px,1fr) auto; gap:6px; padding:8px; }
-    .dock-meta { gap:6px; }
-    .dock-more-wrap { grid-column:5; }
-    .time { grid-column:1 / -1; min-width:0; text-align:center; }
-    .play { width:38px; height:38px; }
-    .skip { width:32px; height:32px; }
-    .arabic { overflow-wrap:anywhere; }
+    .dock .player { grid-template-columns:auto 1fr auto auto; }
+    .time { min-width:56px; }
   }
   @media (min-width:681px) {
     .loc-summary { display:none !important; }
@@ -525,17 +653,25 @@
   }
 </style>
 </head>
-<body>
+<body data-view="landing" data-mode="receive">
 <header class="topbar">
   <div class="in">
     <div class="brand" id="home" title="All collections">
-      <span class="name">Hadith WBW</span>
-      <span class="tag">read &amp; listen · word by word</span>
+      <span class="name">hadith<span class="dot">.</span>to</span>
     </div>
     <div class="sp"></div>
-    <button class="iconbtn" id="wbwBtn" title="Word-by-word gloss: off / English / Urdu / transliteration / both">Words</button>
-    <button class="iconbtn" id="parallelBtn" title="Show the full translation alongside the Arabic">Translation</button>
-    <button class="iconbtn" id="gear" title="Text size and appearance" aria-label="Text size and appearance" aria-expanded="false">Aa</button>
+    <button class="iconbtn landing-only" id="gear" title="Text size and appearance" aria-label="Text size and appearance" aria-expanded="false">Aa</button>
+    <button type="button" class="mode-link reader-only" id="readingModeBtn" aria-pressed="false" title="Show word gloss and translation">Study</button>
+    <div class="reader-tools reader-only" id="readerTools">
+      <button type="button" class="iconbtn" id="readerMoreBtn" aria-label="Reading options" aria-expanded="false" aria-haspopup="true">⋯</button>
+      <div class="reader-tools-panel" id="readerToolsPanel" role="menu" aria-label="Reading options">
+        <button type="button" class="rt-item" id="rtWbw">Word gloss<span class="sub" id="rtWbwSub">Off</span></button>
+        <button type="button" class="rt-item" id="rtParallel">Translation column<span class="sub" id="rtParallelSub">Hidden</span></button>
+        <button type="button" class="rt-item" id="rtAppearance">Appearance…</button>
+      </div>
+    </div>
+    <button class="hidden" id="wbwBtn" aria-hidden="true" tabindex="-1">Gloss</button>
+    <button class="hidden" id="parallelBtn" aria-hidden="true" tabindex="-1">Layout</button>
     <div class="settings" id="settings" role="dialog" aria-label="Display settings">
       <div class="in">
         <div class="settings-head"><strong>Reading appearance</strong><span>Saved on this device</span></div>
@@ -557,7 +693,7 @@
           </section>
         </div>
         <div class="settings-foot">
-          <label>Arabic type <select id="arFont"><option value="uthmani">Uthmani Naskh</option><option value="scheherazade">Scheherazade</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
+          <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="uthmani">Uthmani Naskh</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
           <button class="settings-reset" id="settingsReset" type="button">Reset reading style</button>
           <div class="settings-theme theme">Theme <b data-t="light" class="on">Light</b><b data-t="sepia">Sepia</b><b data-t="dark">Dark</b></div>
         </div>
@@ -568,16 +704,16 @@
 
 <div id="landing">
   <div class="hero">
-    <div class="ar" lang="ar" dir="rtl">الحديث</div>
-    <div class="en">Read &amp; listen — word by word</div>
-    <div class="sub">Forty collections with audio · Muwatta with glosses</div>
+    <div class="ornament" aria-hidden="true"></div>
+    <h1 class="hero-brand">hadith<span>.</span>to</h1>
   </div>
   <div class="resume" id="resume"></div>
   <div class="shelf" id="cards"></div>
-  <div class="disc">
-    Audio provenance is shown in the player. Historical recordings use acoustic word alignment;
-    generated supplements are explicitly labelled. Cross-references use sunnah.com numbering.
-  </div>
+  <section class="methodology" id="methodology" aria-labelledby="methodology-title">
+    <h2 id="methodology-title">Methodology</h2>
+    <p><strong>Human qārī audio.</strong> Where a major collection has synced playback (Bukhari, Muslim, Abi Dawud, and others as alignment lands), the voice is a real opensource / internet recitation. Words are timestamped to the Arabic text — including HUSX tokens where that corpus is used.</p>
+    <p><strong>Synthetic Forties.</strong> An-Nawawi’s Forty, the Forty Hadith Qudsi, and Shah Waliullah’s Forty use synthetically generated audio with word timings. They are not recordings of a qārī and are not opensource internet recitations.</p>
+  </section>
 </div>
 
 <div id="reader" class="hidden">
@@ -590,8 +726,6 @@
         <select class="loc-select hidden" id="bookJump" title="Book"></select>
         <select class="loc-select" id="hadithJump" title="Hadith"></select>
       </div>
-      <div class="sp"></div>
-      <span class="badge-quiet hidden" id="textBadge">Text only</span>
     </div>
   </div>
 
@@ -608,20 +742,21 @@
 
   <div class="dock hidden" id="dock">
     <div class="player">
-      <div class="dock-meta">
-        <span class="dock-label" id="dockLabel">Hadith</span>
-        <span class="dock-draft" id="dockSource">Audio</span>
-      </div>
-      <button type="button" class="skip" id="skipBack" aria-label="Back 10 seconds">−10</button>
       <button class="play" id="playBtn" aria-label="Play">
         <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </button>
-      <button type="button" class="skip" id="skipFwd" aria-label="Forward 10 seconds">+10</button>
       <div class="track" id="track" role="slider" tabindex="0" aria-label="Audio progress" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="0:00 / 0:00"><div class="fill" id="fill"></div></div>
       <span class="time" id="timeEl">0:00 / 0:00</span>
       <div class="dock-more-wrap">
         <button type="button" class="dock-more-btn" id="dockMoreBtn" aria-label="More playback options" aria-expanded="false" aria-haspopup="true">⋯</button>
         <div class="dock-more-panel" id="dockMorePanel" role="menu" aria-label="Playback options">
+          <div class="dock-more-section">
+            <span class="dock-more-label">Skip</span>
+            <div class="dock-skips">
+              <button type="button" class="skip" id="skipBack" aria-label="Back 10 seconds">−10</button>
+              <button type="button" class="skip" id="skipFwd" aria-label="Forward 10 seconds">+10</button>
+            </div>
+          </div>
           <div class="dock-more-section">
             <span class="dock-more-label">Speed</span>
             <div class="rates" id="rates">
@@ -637,6 +772,9 @@
               <button type="button" class="mode" id="repeatBtn" aria-pressed="false" title="Loop this hadith">Repeat</button>
             </div>
           </div>
+          <div class="dock-more-section">
+            <p class="dock-draft-note" id="dockSource">Synthetic audio · not a qārī recording</p>
+          </div>
         </div>
       </div>
     </div>
@@ -649,7 +787,7 @@ function publicHadithUrl(slug, n){ return `${SITE_ORIGIN}/#${slug}:${n}`; }
 function setPublicMetadata(title, slug=null, n=null){
   document.title = title;
   const url = slug && n ? publicHadithUrl(slug, n) : `${SITE_ORIGIN}/`;
-  document.querySelector('link[rel="canonical"]')?.setAttribute("href", `${SITE_ORIGIN}/`);
+  document.querySelector('link[rel="canonical"]')?.setAttribute("href", url);
   document.querySelector('meta[property="og:url"]')?.setAttribute("content", url);
   document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
 }
@@ -663,59 +801,37 @@ function trackSiteEvent(name, data={}){
 addEventListener("error", () => trackSiteEvent("reader_runtime_error", { source:"window" }));
 addEventListener("unhandledrejection", () => trackSiteEvent("reader_runtime_error", { source:"promise" }));
 const COLLECTIONS = [
-  { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true },
-  { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true },
-  { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true },
-  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
+  { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:true },
+  { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
+  { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true, synthetic:true },
+  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:false, books:true },
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
-  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7357, start:"93", audio:true, books:true },
+  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
-  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
-  { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:true, books:true },
-  { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
+  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:false, books:true },
+  { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:false, books:true },
+  { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:false, books:true },
 ];
+function shelfAudioMeta(c){
+  if (c.synthetic) return "synthetic audio";
+  if (c.audio) return "human qārī · read & listen";
+  return "word-by-word";
+}
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
 const BUKHARI_BOOK_NAMES = {
   1:"Revelation",2:"Belief",3:"Knowledge",4:"Ablutions (Wudu')",5:"Bathing (Ghusl)",6:"Menstrual Periods",7:"Dry Ablution (Tayammum)",8:"Prayers (Salat)",9:"Times of Prayer",10:"Call to Prayer (Adhaan)",11:"Friday Prayer",12:"Fear Prayer",13:"The Two Festivals (Eids)",14:"Witr Prayer",15:"Prayer for Rain (Istisqaa)",16:"Eclipses",17:"Prostration during Qur'an Recital",18:"Shortening the Prayers",19:"Night Prayer (Tahajjud)",20:"Virtues of the Mosques of Makkah and Madinah",21:"Actions while Praying",22:"Forgetfulness in Prayer",23:"Funerals",24:"Zakat",25:"Hajj",26:"Umrah",27:"Pilgrims Prevented from Completing Hajj",28:"Hunting while on Pilgrimage",29:"Virtues of Madinah",30:"Fasting",31:"Night Prayer in Ramadan (Taraweeh)",32:"Virtues of the Night of Qadr",33:"Retreat in the Mosque (I'tikaf)",34:"Sales and Trade",35:"Advance Payment (Salam)",36:"Pre-emption (Shuf'a)",37:"Hiring",38:"Transfer of Debt (Hawala)",39:"Guarantees (Kafalah)",40:"Representation and Agency",41:"Agriculture",42:"Distribution of Water",43:"Loans and Bankruptcy",44:"Disputes",45:"Lost Property",46:"Oppressions",47:"Partnership",48:"Mortgaging",49:"Manumission of Slaves",50:"Contracts of Manumission",51:"Gifts",52:"Witnesses",53:"Peacemaking",54:"Conditions",55:"Wills and Testaments",56:"Striving in Allah's Cause (Jihad)",57:"One-fifth of Booty (Khumus)",58:"Jizyah and Treaties",59:"Beginning of Creation",60:"Prophets",61:"Virtues of the Prophet and Companions",62:"Companions of the Prophet",63:"Merits of the Ansar",64:"Military Expeditions",65:"Prophetic Commentary on the Qur'an",66:"Virtues of the Qur'an",67:"Marriage",68:"Divorce",69:"Supporting the Family",70:"Food and Meals",71:"Aqiqah",72:"Hunting and Slaughtering",73:"Eid Sacrifice",74:"Drinks",75:"Patients",76:"Medicine",77:"Dress",78:"Good Manners (Adab)",79:"Asking Permission",80:"Supplications",81:"Heart-Softening Narrations (Riqaq)",82:"Divine Will (Qadar)",83:"Oaths and Vows",84:"Expiation for Broken Oaths",85:"Inheritance",86:"Legal Punishments",87:"Blood Money",88:"Apostates",89:"Coercion",90:"Legal Stratagems",91:"Interpretation of Dreams",92:"Afflictions and the End of the World",93:"Judgments",94:"Wishes",95:"Accepting Reliable Reports",96:"Holding Fast to Qur'an and Sunnah",97:"Oneness of Allah (Tawheed)"
 };
 // Bukhari recordings and their CTC forced-alignment maps live in public R2.
 // A report remains readable without either asset while its alignment is pending.
-const CDN_ORIGIN = "https://cdn.hadith.to";
-function isCdnUrl(url){ return typeof url === "string" && url.startsWith(CDN_ORIGIN); }
-function fetchCdn(url, init){ return fetch(url, isCdnUrl(url) ? { ...init, cache: "force-cache" } : init); }
+const BUKHARI_R2 = "https://pub-4c1d62290e264660b4061d58417926be.r2.dev";
 const bukhariTimingCache = {};
-const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {}, malik: {}, tirmidhi: {}, ibnmajah: {}, nasai: {} };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "malik", "tirmidhi", "ibnmajah", "nasai"]);
-const isnadGlossPools = {};
-const ISNAD_POOL_SLUGS = new Set(["bukhari", "malik", "tirmidhi", "muslim", "abudawud", "ibnmajah"]);
+const bookTimingCache = { bukhari: bukhariTimingCache, abudawud: {}, muslim: {} };
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim"]);
+let bukhariIsnadPool;
 
-// Gate: isnad word-pool JSON is large (~1–2 MiB); defer until study WBW is active.
-function needsIsnadGlossPool(){
-  return glossMode === "study" && wbw !== "off";
-}
-
-async function getIsnadGlossPool(slug){
-  if (!ISNAD_POOL_SLUGS.has(slug)) return null;
-  if (!isnadGlossPools[slug]) isnadGlossPools[slug] = jopt(`${slug}-isnad-word-pool.json`);
-  return isnadGlossPools[slug];
-}
-
-async function applyIsnadPoolGlosses(slug, tokens, baseGloss, spans){
-  if (!needsIsnadGlossPool()) return;
-  const pool = await getIsnadGlossPool(slug);
-  if (!pool?.words) return;
-  const G = baseGloss?.glosses || {};
-  tokens.forEach((token, i) => {
-    if (G[token.id]?.en) return;
-    const fromPool = pool.words[normalizeArabicWord(token.text)];
-    if (!fromPool?.en) return;
-    G[token.id] = fromPool;
-    const span = spans[i];
-    if (!span) return;
-    span.querySelector(".g-en").textContent = fromPool.en || "";
-    span.querySelector(".g-ur").textContent = fromPool.ur || "";
-    span.querySelector(".g-tr").textContent = fromPool.transliteration || "";
-  });
+async function getBukhariIsnadPool(){
+  if (!bukhariIsnadPool) bukhariIsnadPool = jopt("bukhari-isnad-word-pool.json");
+  return bukhariIsnadPool;
 }
 
 function normalizeArabicWord(text){
@@ -758,17 +874,21 @@ function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
   return mapped;
 }
 
-let lastStudyGloss = null;
 function buildMeaningColumn(englishTranslation="", urduTranslation=""){
-  if (urduTranslation) ensureUrduFont();
   const col = document.createElement("div"); col.className = "en-col meaning-col";
   const languages = document.createElement("div"); languages.className = "meaning-languages";
   const enSection = document.createElement("section"); enSection.className = "meaning-section";
-  const enDiv = document.createElement("div"); enDiv.className = "english"; enDiv.lang = "en"; enDiv.dir = "ltr";
+  enSection.innerHTML = `<div class="col-label">English translation</div>`;
+  const enDiv = document.createElement("div"); enDiv.className = "english";
+  enDiv.lang = "en";
+  enDiv.dir = "ltr";
   enDiv.textContent = englishTranslation || "Official English translation unavailable.";
   enSection.appendChild(enDiv);
   const urSection = document.createElement("section"); urSection.className = "meaning-section";
-  const urDiv = document.createElement("div"); urDiv.className = "urdu"; urDiv.lang = "ur"; urDiv.dir = "rtl";
+  urSection.innerHTML = `<div class="col-label" style="text-align:right">اردو ترجمہ</div>`;
+  const urDiv = document.createElement("div"); urDiv.className = "urdu";
+  urDiv.lang = "ur";
+  urDiv.dir = "rtl";
   urDiv.textContent = urduTranslation || "سرکاری اردو ترجمہ دستیاب نہیں۔";
   urSection.appendChild(urDiv);
   languages.append(enSection, urSection); col.appendChild(languages);
@@ -780,20 +900,20 @@ function honorificPartGloss(tokens, index){
     {
       words:["صلي", "الله", "عليه", "وسلم"],
       glosses:[
-        { en:"may Allah bless", ur:"اللہ رحمت فرمائے", transliteration:"ṣallā", pos:"V", features:{} },
-        { en:"Allah", ur:"اللہ", transliteration:"Allāh", pos:"PN", features:{} },
-        { en:"upon him", ur:"اس پر", transliteration:"ʿalayhi", pos:"P", features:{} },
-        { en:"and grant him peace", ur:"اور سلامتی بھیجے", transliteration:"wa-sallam", pos:"V", features:{} },
+        { en:"may Allah bless", transliteration:"ṣallā", pos:"V", features:{} },
+        { en:"Allah", transliteration:"Allāh", pos:"PN", features:{} },
+        { en:"upon him", transliteration:"ʿalayhi", pos:"P", features:{} },
+        { en:"and grant him peace", transliteration:"wa-sallam", pos:"V", features:{} },
       ],
     },
     {
       words:["صلي", "الله", "عليه", "و", "سلم"],
       glosses:[
-        { en:"may Allah bless", ur:"اللہ رحمت فرمائے", transliteration:"ṣallā", pos:"V", features:{} },
-        { en:"Allah", ur:"اللہ", transliteration:"Allāh", pos:"PN", features:{} },
-        { en:"upon him", ur:"اس پر", transliteration:"ʿalayhi", pos:"P", features:{} },
-        { en:"and", ur:"اور", transliteration:"wa", pos:"C", features:{} },
-        { en:"grant him peace", ur:"سلامتی بھیجے", transliteration:"sallam", pos:"V", features:{} },
+        { en:"may Allah bless", transliteration:"ṣallā", pos:"V", features:{} },
+        { en:"Allah", transliteration:"Allāh", pos:"PN", features:{} },
+        { en:"upon him", transliteration:"ʿalayhi", pos:"P", features:{} },
+        { en:"and", transliteration:"wa", pos:"C", features:{} },
+        { en:"grant him peace", transliteration:"sallam", pos:"V", features:{} },
       ],
     },
   ];
@@ -823,8 +943,8 @@ function honorificPartGloss(tokens, index){
 
 async function getBukhariTiming(n){
   if (!(n in bukhariTimingCache)) {
-    const url = `${CDN_ORIGIN}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
-    bukhariTimingCache[n] = fetchCdn(url)
+    const url = `${BUKHARI_R2}/bukhari-timings/n${String(n).padStart(4, "0")}.json`;
+    bukhariTimingCache[n] = fetch(url)
       .then(r => r.ok ? r.json() : null)
       .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
       .catch(() => null)
@@ -846,11 +966,11 @@ async function getBookTiming(slug, n){
       const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
       const urls = local
         ? [`../qc/muslim-full/timings/${localStem}`, `../qc/muslim-full/generated-timings/${localStem}`]
-        : [`${CDN_ORIGIN}/muslim-timings/${remoteStem}`];
+        : [`${BUKHARI_R2}/muslim-timings/${remoteStem}`];
       cache[n] = (async () => {
         for (const url of urls) {
           try {
-            const response = await fetchCdn(url);
+            const response = await fetch(url);
             if (!response.ok) continue;
             const data = await response.json();
             if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) {
@@ -860,66 +980,31 @@ async function getBookTiming(slug, n){
           } catch {}
         }
         return null;
-      })().then(data => {
-        if (!data) delete cache[n];
-        return data;
-      });
+      })();
     } else {
-      const prefix = slug === "bukhari" ? "bukhari-timings" : `${slug}-timings`;
-      const stem = String(n).padStart(4, "0");
-      const local = ["malik", "tirmidhi", "ibnmajah", "nasai"].includes(slug)
-        && (location.hostname === "127.0.0.1" || location.hostname === "localhost");
-      const localBase = slug === "malik" ? "muwatta-full"
-        : slug === "nasai" ? "nasai-app-ready-full"
-        : `${slug}-full`;
-      // Local qc/ is only reachable when the HTTP root is above public/ (e.g. C:\Users\Dv).
-      // Always keep CDN as fallback so serving from public/ still works.
-      const urls = local
-        ? [`../qc/${localBase}/timings/n${stem}.json`, `../qc/${localBase}/generated-timings/n${stem}.json`, `${CDN_ORIGIN}/${prefix}/n${stem}.json`]
-        : [`${CDN_ORIGIN}/${prefix}/n${stem}.json`];
-      cache[n] = (async () => {
-        for (const url of urls) {
-          try {
-            const response = await fetchCdn(url);
-            if (!response.ok) continue;
-            const data = await response.json();
-            if (Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart))) return data;
-          } catch {}
-        }
-        return null;
-      })().then(data => {
-        if (!data) delete cache[n];
-        return data;
-      });
+      const prefix = slug === "bukhari" ? "bukhari-timings" : "abudawud-timings";
+      const url = `${BUKHARI_R2}/${prefix}/n${String(n).padStart(4, "0")}.json`;
+      cache[n] = fetch(url)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
+        .catch(() => null)
+        .then(data => {
+          if (!data) delete cache[n];
+          return data;
+        });
     }
   }
   return cache[n];
 }
 
-function bookAudioUrls(slug, n, timing){
-  if (slug === "malik" || slug === "tirmidhi" || slug === "ibnmajah" || slug === "nasai") {
-    const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
-    const stem = String(n).padStart(4, "0");
-    const file = timing.audio || `${stem}.mp3`;
-    const cdn = `${CDN_ORIGIN}/${slug}/${file}`;
-    if (!local) return [cdn];
-    const localBase = slug === "malik" ? "muwatta-full"
-      : slug === "nasai" ? "nasai-app-ready-full"
-      : `${slug}-full`;
-    const folder = timing.synthetic ? "generated-clips" : "clips";
-    return [`../qc/${localBase}/${folder}/${file}`, cdn];
-  }
-  if (slug !== "muslim") return [`${CDN_ORIGIN}/${slug}/${String(n).padStart(4, "0")}.mp3`];
+function bookAudioUrl(slug, n, timing){
+  if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${String(n).padStart(4, "0")}.mp3`;
   const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   const generated = Boolean(timing.synthetic);
-  const cdn = `${CDN_ORIGIN}/muslim/${timing.audio}`;
-  if (!local) return [cdn];
-  return [generated
+  if (local) return generated
     ? `../qc/muslim-full/generated-clips/${timing.audio}`
-    : `../qc/muslim-full/clips/${timing.audio}`, cdn];
-}
-function bookAudioUrl(slug, n, timing){
-  return bookAudioUrls(slug, n, timing)[0];
+    : `../qc/muslim-full/clips/${timing.audio}`;
+  return `${BUKHARI_R2}/muslim/${timing.audio}`;
 }
 
 function effectiveTimingTokens(timing){
@@ -934,128 +1019,30 @@ const store = {
   get:(k,d)=>{ try { return JSON.parse(localStorage.getItem("malti:"+k)) ?? d; } catch { return d; } },
   set:(k,v)=> localStorage.setItem("malti:"+k, JSON.stringify(v)),
 };
-const j = async (u) => {
-  const response = await fetch(u);
-  if (!response.ok) throw new Error(String(response.status));
-  return response.json();
-};
+const j = async (u) => (await fetch(u, { cache:"no-cache" })).json();
 const jopt = async (u) => { try { return await j(u); } catch { return null; } };
-const jPinned = async (u) => {
-  const response = await fetch(u, { cache:"force-cache" });
-  if (!response.ok) throw new Error(String(response.status));
-  return response.json();
-};
-const jPinnedOpt = async (u) => { try { return await jPinned(u); } catch { return null; } };
-const compactGlossCache = {};
-const lazyGlossCache = {};
-async function compressedJson(u){
-  const response = await fetch(u);
-  if (!response.ok) throw new Error(`Gloss asset ${response.status}`);
-  const bytes = new Uint8Array(await response.arrayBuffer());
-  let jsonBytes = bytes;
-  if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
-    if (!("DecompressionStream" in window)) throw new Error("This browser cannot decode compact gloss data");
-    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
-    jsonBytes = new Uint8Array(await new Response(stream).arrayBuffer());
-  }
-  return JSON.parse(new TextDecoder().decode(jsonBytes));
-}
-async function fetchLazyGloss(slug, n){
-  const key = `${slug}:${n}`;
-  if (!lazyGlossCache[key]) {
-    lazyGlossCache[key] = (async () => {
-      for (const path of [`gloss-lazy/${slug}/${n}.json.gz`, `gloss-lazy/${slug}/${n}.json`, `gloss/${slug}-${n}.json`]) {
-        try {
-          const data = path.endsWith(".gz") ? await compressedJson(path) : await j(path);
-          if (data && (data.glosses || data.meta)) return data;
-        } catch {}
-      }
-      return null;
-    })();
-  }
-  return lazyGlossCache[key];
-}
-async function ensureCompactGloss(slug){
-  if (!compactGlossCache[slug]) {
-    compactGlossCache[slug] = Promise.all([
-      compressedJson(`gloss-compact/${slug}-pool.json.gz`),
-      compressedJson(`gloss-compact/${slug}-bundle.json.gz`),
-    ]).then(([pool, bundle]) => ({
-      values: pool.entries.map(entry => entry.value),
-      reports: new Map(bundle.reports.map(report => [String(report.report), report])),
-    })).catch(error => {
-      delete compactGlossCache[slug];
-      throw error;
-    });
-  }
-  return compactGlossCache[slug];
-}
-async function getGlossFromCompact(slug, n){
-  const compact = await ensureCompactGloss(slug);
-  const report = compact.reports.get(String(n));
-  if (!report) return null;
-  const glosses = Object.fromEntries(report.tokenRefs.map(([tokenId, poolId]) => [tokenId, compact.values[poolId]]));
-  return { ...report.meta, glosses };
-}
-async function getGloss(slug, n){
-  try {
-    const lazy = await fetchLazyGloss(slug, n);
-    if (lazy) return lazy;
-    return await getGlossFromCompact(slug, n);
-  } catch {
-    return null;
-  }
-}
-function fortyRecitationAudioUrls(corpus, pad){
-  const local = `recitation/${corpus}.${pad}.mp3`;
-  return [`${CDN_ORIGIN}/recitation/${corpus}.${pad}.mp3`, local];
-}
 const fmt = s => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 
 /* ---------- settings ---------- */
 /* Independent size axes — each control only writes its own CSS vars */
 let enSz = store.get("ensz", 1.15);
-let arSz = store.get("arsz", 2);
-let urSz = store.get("ursz", 1.02);
-// --ur-size now drives the Urdu paragraph (not the per-word gloss); migrate the
-// old conflated default (0.8) up to a readable paragraph size.
-if (urSz === 0.8) urSz = 1.02;
+let arSz = store.get("arsz", 1.9);
+let urSz = store.get("ursz", 0.8);
 let spSz = store.get("spsz", 18);
-let arLine = store.get("arlh", 2.75);
+let arLine = store.get("arlh", 2.55);
 let enLine = store.get("enlh", 1.85);
-let urLine = store.get("urlh", 1.95);
-let glossSz = store.get("glosssz", .64);
+let urLine = store.get("urlh", 1.9);
+let glossSz = store.get("glosssz", .72);
 let wordPad = store.get("wordpad", 7);
-let arFont = store.get("arfont", "uthmani");
+let arFont = store.get("arfont", "scheherazade");
 const AR_FONTS = {
   uthmani:'"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif',
-  scheherazade:'"Scheherazade New",Scheherazade,serif',
+  scheherazade:'"Scheherazade New",Scheherazade,"Traditional Arabic",serif',
   amiri:'Amiri,"Times New Roman",serif',
   notoNaskh:'"Noto Naskh Arabic",serif',
   arefRuqaa:'"Aref Ruqaa",serif',
   reemKufi:'"Reem Kufi",sans-serif',
 };
-const LAZY_AR_FONT_URLS = {
-  amiri:"https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap",
-  notoNaskh:"https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&display=swap",
-  arefRuqaa:"https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap",
-  reemKufi:"https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;600;700&display=swap",
-};
-const injectedFontSheets = new Set(["boot"]);
-function injectFontSheet(key, href){
-  if (injectedFontSheets.has(key)) return;
-  injectedFontSheets.add(key);
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = href;
-  document.head.appendChild(link);
-}
-function ensureArabicFontChoice(fontKey){
-  if (LAZY_AR_FONT_URLS[fontKey]) injectFontSheet(fontKey, LAZY_AR_FONT_URLS[fontKey]);
-}
-function ensureUrduFont(){
-  injectFontSheet("urdu", "https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600&display=swap");
-}
 // migrate old "font" step if present once
 (() => {
   const legacy = store.get("font", null);
@@ -1066,25 +1053,16 @@ function ensureUrduFont(){
 })();
 function applyFont(){
   const r = document.documentElement.style;
-  // Responsive vars: write an inline override only when the user has changed the
-  // setting from its desktop default; otherwise clear it so the CSS default
-  // (including the mobile @media scale) applies. Desktop defaults must match the
-  // :root values below.
-  const resp = (name, val, def, unit="") =>
-    Math.abs(val - def) < 1e-9 ? r.removeProperty(name) : r.setProperty(name, val + unit);
-  resp("--ar-size", arSz, 2, "rem");
-  resp("--ar-lh", arLine, 2.75);
-  resp("--wbw-gap", spSz, 18, "px");
-  resp("--en-size", enSz, 1.15, "rem");
-  resp("--en-lh", enLine, 1.85);
-  resp("--ur-size", urSz, 1.02, "rem");
-  resp("--ur-lh", urLine, 1.95);
-  // Non-responsive vars: always apply.
+  r.setProperty("--en-size", enSz + "rem");
   r.setProperty("--en-gloss-size", glossSz + "rem");
-  r.setProperty("--ur-gloss-size", (glossSz + 0.1) + "rem"); // Nastaliq reads better a touch larger
+  r.setProperty("--ar-size", arSz + "rem");
+  r.setProperty("--ur-size", urSz + "rem");
+  r.setProperty("--wbw-gap", spSz + "px");
+  r.setProperty("--ar-lh", arLine);
+  r.setProperty("--en-lh", enLine);
+  r.setProperty("--ur-lh", urLine);
   r.setProperty("--word-pad", wordPad + "px");
-  ensureArabicFontChoice(arFont);
-  r.setProperty("--ar-font", AR_FONTS[arFont] || AR_FONTS.uthmani);
+  r.setProperty("--ar-font", AR_FONTS[arFont] || AR_FONTS.scheherazade);
   store.set("ensz", enSz); store.set("arsz", arSz); store.set("ursz", urSz); store.set("spsz", spSz);
   store.set("arlh", arLine); store.set("enlh", enLine); store.set("urlh", urLine); store.set("glosssz", glossSz); store.set("wordpad", wordPad); store.set("arfont", arFont);
   const controls = {
@@ -1114,7 +1092,7 @@ function applyFont(){
 });
 document.getElementById("arFont").onchange = e => { arFont = e.target.value; applyFont(); };
 document.getElementById("settingsReset").onclick = () => {
-  enSz = 1.15; arSz = 2; urSz = 1.02; spSz = 20; arLine = 2.75; enLine = 1.85; urLine = 1.95; glossSz = .64; wordPad = 7; arFont = "uthmani"; applyFont();
+  enSz = 1.08; arSz = 1.95; urSz = .8; spSz = 18; arLine = 2.45; enLine = 1.75; urLine = 1.9; glossSz = .72; wordPad = 6; arFont = "scheherazade"; applyFont();
 };
 function applyTheme(t){
   document.documentElement.dataset.theme = t; store.set("theme", t);
@@ -1134,29 +1112,94 @@ document.addEventListener("click", (e) => {
   if (settingsEl.contains(e.target) || gearBtn.contains(e.target)) return;
   setSettingsOpen(false);
 });
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") setSettingsOpen(false); });
+
+const readerMoreBtn = document.getElementById("readerMoreBtn");
+const readerToolsPanel = document.getElementById("readerToolsPanel");
+function setReaderToolsOpen(open){
+  readerToolsPanel.classList.toggle("open", open);
+  readerMoreBtn.setAttribute("aria-expanded", open ? "true" : "false");
+}
+readerMoreBtn.onclick = (e) => {
+  e.stopPropagation();
+  setReaderToolsOpen(!readerToolsPanel.classList.contains("open"));
+};
+document.getElementById("rtWbw").onclick = () => {
+  if (typeof readingMode !== "undefined" && readingMode === "receive") setReadingMode("study", true);
+  document.getElementById("wbwBtn").click();
+  syncReaderToolsUI();
+};
+document.getElementById("rtParallel").onclick = () => {
+  if (typeof readingMode !== "undefined" && readingMode === "receive") setReadingMode("study", true);
+  document.getElementById("parallelBtn").click();
+  syncReaderToolsUI();
+};
+document.getElementById("rtAppearance").onclick = (e) => {
+  e.stopPropagation();
+  setReaderToolsOpen(false);
+  setSettingsOpen(true);
+};
+function syncReaderToolsUI(){
+  const wbwSub = { off:"Off", en:"English", ur:"Urdu", both:"EN + Urdu" };
+  document.getElementById("rtWbw").classList.toggle("on", wbw !== "off");
+  document.getElementById("rtWbwSub").textContent = wbwSub[wbw] || "Off";
+  document.getElementById("rtParallel").classList.toggle("on", !single);
+  document.getElementById("rtParallelSub").textContent = single ? "Hidden" : "Shown";
+}
+document.addEventListener("click", (e) => {
+  if (readerToolsPanel.classList.contains("open") &&
+      !readerToolsPanel.contains(e.target) && e.target !== readerMoreBtn) {
+    setReaderToolsOpen(false);
+  }
+});
+
+const dockMoreBtn = document.getElementById("dockMoreBtn");
+const dockMorePanel = document.getElementById("dockMorePanel");
+if (dockMoreBtn && dockMorePanel) {
+  dockMoreBtn.onclick = (e) => {
+    e.stopPropagation();
+    const open = dockMorePanel.classList.toggle("open");
+    dockMoreBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  document.addEventListener("click", (e) => {
+    if (!dockMorePanel.classList.contains("open")) return;
+    if (!dockMorePanel.contains(e.target) && e.target !== dockMoreBtn) {
+      dockMorePanel.classList.remove("open");
+      dockMoreBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  setSettingsOpen(false);
+  setReaderToolsOpen(false);
+  if (dockMorePanel) {
+    dockMorePanel.classList.remove("open");
+    dockMoreBtn.setAttribute("aria-expanded", "false");
+  }
+});
 
 let single = store.get("single", false);
 function applyParallel(){
   document.querySelectorAll(".parallel").forEach(p => p.classList.toggle("single", single));
   document.getElementById("parallelBtn").classList.toggle("on", !single);
   store.set("single", single);
+  syncReaderToolsUI();
 }
 document.getElementById("parallelBtn").onclick = () => { single = !single; applyParallel(); };
 
-const WBW = ["off","en","ur","tr","both"];
-const WBWLBL = { off:"Words", en:"EN", ur:"اردو", tr:"ABC", both:"EN·اردو" };
+const WBW = ["off","en","ur","both"];
+const WBWLBL = { off:"Gloss", en:"EN", ur:"اردو", both:"EN·اردو" };
 let wbw = "off";
-let glossMode = "audio"; // "audio" | "study"
+let glossMode = "audio"; // "audio" | "study" — tied to readingMode
 function wbwStoreKey(){ return glossMode === "study" ? "wbwStudy" : "wbwAudio"; }
 function wbwDefault(){ return glossMode === "study" ? "en" : "off"; }
 function applyWbw(persist=true){
-  if (wbw === "ur" || wbw === "both") ensureUrduFont();
   document.body.dataset.wbw = wbw;
   const b = document.getElementById("wbwBtn");
   b.textContent = WBWLBL[wbw];
   b.classList.toggle("on", wbw !== "off");
   if (persist) store.set(wbwStoreKey(), wbw);
+  syncReaderToolsUI();
 }
 function setGlossMode(mode){
   glossMode = mode;
@@ -1164,14 +1207,37 @@ function setGlossMode(mode){
   applyWbw(false);
 }
 document.getElementById("wbwBtn").onclick = () => {
+  if (readingMode === "receive") setReadingMode("study", true);
   wbw = WBW[(WBW.indexOf(wbw)+1) % WBW.length];
   applyWbw(true);
-  if (needsIsnadGlossPool() && state.slug && ISNAD_POOL_SLUGS.has(state.slug) && activeSpans.length) {
-    applyIsnadPoolGlosses(state.slug, currentTokens, lastStudyGloss, activeSpans);
-  }
 };
+
+/* Receive (default) ↔ Study — persist optional preference */
+let readingMode = store.get("readingMode", "receive"); // "receive" | "study"
+function applyReadingMode(persist=true){
+  document.body.dataset.mode = readingMode;
+  setGlossMode(readingMode === "study" ? "study" : "audio");
+  const btn = document.getElementById("readingModeBtn");
+  if (btn) {
+    const isStudy = readingMode === "study";
+    btn.textContent = isStudy ? "Receive" : "Study";
+    btn.setAttribute("aria-pressed", isStudy ? "true" : "false");
+    btn.title = isStudy ? "Return to listening mode" : "Show word gloss and translation";
+  }
+  if (persist) store.set("readingMode", readingMode);
+  syncReaderToolsUI();
+}
+function setReadingMode(mode, persist=true){
+  readingMode = mode === "study" ? "study" : "receive";
+  applyReadingMode(persist);
+}
+document.getElementById("readingModeBtn").onclick = () => {
+  setReadingMode(readingMode === "receive" ? "study" : "receive", true);
+};
+
 applyFont(); applyTheme(store.get("theme","light")); applyParallel();
-setGlossMode("audio");
+applyReadingMode(false);
+syncReaderToolsUI();
 
 function shortCollectionName(col){
   return ({
@@ -1206,17 +1272,15 @@ function renderResume(){
 const cards = document.getElementById("cards");
 for (const c of COLLECTIONS) {
   const a = document.createElement("a");
-  a.href = `#${c.slug}:${c.start || 1}`;
+  a.href = `#${c.slug}:1`;
   a.innerHTML = `
     <div>
       <div class="ar">${c.ar}</div>
     </div>
     <div class="side">
       <div class="en">${c.en}</div>
-      <div class="meta">${c.count.toLocaleString()} hadith · ${c.audio ? "read & listen" : "word-by-word"}</div>
+      <div class="meta">${c.count.toLocaleString()} hadith · ${shelfAudioMeta(c)}</div>
     </div>`;
-  const ar = a.querySelector(".ar");
-  if (ar) { ar.lang = "ar"; ar.dir = "rtl"; }
   cards.appendChild(a);
 }
 renderResume();
@@ -1243,6 +1307,7 @@ const dock = document.getElementById("dock");
 
 function beginNavigation(){
   currentNavToken = ++navEpoch;
+  audioSessionToken = currentNavToken;
   return currentNavToken;
 }
 function isCurrentNavigation(token){
@@ -1255,7 +1320,7 @@ function refreshTrackA11y(){
   const duration = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
   const current = Number.isFinite(audio.currentTime) && audio.currentTime >= 0 ? audio.currentTime : 0;
   track.setAttribute("aria-valuemin", "0");
-  track.setAttribute("aria-valuemax", String(duration));
+  track.setAttribute("aria-valuemax", String(Math.max(duration, 0)));
   track.setAttribute("aria-valuenow", String(current));
   track.setAttribute("aria-valuetext", `${fmt(current)} / ${fmt(duration)}`);
 }
@@ -1292,8 +1357,15 @@ function cacheAudioBlobUrl(url, objectUrl){
     audioBlobUrls.delete(oldest);
   }
 }
+function revokeAudioBlobUrl(url){
+  const objectUrl = audioBlobUrls.get(url);
+  if (!objectUrl) return;
+  try { URL.revokeObjectURL(objectUrl); } catch {}
+  audioBlobUrls.delete(url);
+}
 
 function setPlayingUI(playing){
+  document.body.dataset.playing = playing ? "1" : "0";
   playBtn.innerHTML = playing
     ? `<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>`
     : `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
@@ -1307,8 +1379,9 @@ document.getElementById("skipFwd").onclick = () => {
   if (!audio.src) return;
   seekAudio((audio.currentTime || 0) + 10);
 };
-function updateDockLabel(col, n){
-  document.getElementById("dockLabel").textContent = `${shortCollectionName(col)} · ${n}`;
+function updateDockSource(text){
+  const el = document.getElementById("dockSource");
+  if (el) el.textContent = text;
 }
 
 /* Listen modes: Repeat one wins over Autoplay next when both are on */
@@ -1316,9 +1389,24 @@ let autoplayNext = store.get("autoplay", true);
 let repeatOne = store.get("repeat", false);
 let continuePlayAfterLoad = false;
 let autoplayAdvanceTimer = null;
-const AUTOPLAY_GAP_MS = 650;
+let endSilenceTimer = null;
+const AUTOPLAY_GAP_MS = 1600; // ~1.5–2s stillness before next
 const autoplayBtn = document.getElementById("autoplayBtn");
 const repeatBtn = document.getElementById("repeatBtn");
+function clearEndSilence(){
+  clearTimeout(autoplayAdvanceTimer);
+  autoplayAdvanceTimer = null;
+  clearTimeout(endSilenceTimer);
+  endSilenceTimer = null;
+  delete document.body.dataset.silence;
+}
+function beginEndSilence(){
+  clearEndSilence();
+  document.body.dataset.silence = "1";
+}
+function finishEndSilence(){
+  document.body.dataset.silence = "ready";
+}
 function syncListenModesUI(){
   autoplayBtn.classList.toggle("on", autoplayNext);
   autoplayBtn.setAttribute("aria-pressed", autoplayNext ? "true" : "false");
@@ -1338,8 +1426,7 @@ repeatBtn.onclick = () => {
 };
 
 audio.addEventListener("play", () => {
-  clearTimeout(autoplayAdvanceTimer);
-  autoplayAdvanceTimer = null;
+  clearEndSilence();
   setPlayingUI(true);
 });
 audio.addEventListener("pause", () => setPlayingUI(false));
@@ -1352,42 +1439,36 @@ audio.addEventListener("ended", () => {
     audio.play().catch(() => {});
     return;
   }
-  if (!autoplayNext || !state.slug || !bySlug[state.slug]?.audio) return;
+  // Hold stillness on current hadith; no snappy UI change during the gap
+  beginEndSilence();
   const next = state.nav?.next ?? null;
-  if (next == null) return;
-  clearTimeout(autoplayAdvanceTimer);
-  autoplayAdvanceTimer = setTimeout(() => {
-    continuePlayAfterLoad = true;
-    setHash(state.slug, next);
+  const canAdvance = Boolean(state.slug && bySlug[state.slug]?.audio && next != null);
+  endSilenceTimer = setTimeout(() => {
+    endSilenceTimer = null;
+    if (autoplayNext && canAdvance) {
+      continuePlayAfterLoad = true;
+      setHash(state.slug, next);
+      return;
+    }
+    finishEndSilence();
   }, AUTOPLAY_GAP_MS);
 });
 audio.addEventListener("loadedmetadata", () => {
+  if (audioSessionToken !== currentNavToken) return;
   syncPlaybackStatus();
 });
-track.addEventListener("click", e => {
+track.addEventListener("click", (e) => {
   const r = track.getBoundingClientRect();
   if (audio.duration) seekAudio((e.clientX - r.left) / r.width * audio.duration);
 });
-track.addEventListener("keydown", e => {
+track.addEventListener("pointerdown", (e) => {
   if (!audio.src) return;
-  const step = e.shiftKey ? 15 : 5;
-  let next = audio.currentTime || 0;
-  if (e.key === "ArrowLeft" || e.key === "ArrowDown" || e.key === "PageDown") next -= step;
-  else if (e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "PageUp") next += step;
-  else if (e.key === "Home") next = 0;
-  else if (e.key === "End") next = Number.isFinite(audio.duration) ? audio.duration : next;
-  else return;
-  e.preventDefault();
-  seekAudio(next);
-});
-track.addEventListener("pointerdown", e => {
-  if (!audio.src) return;
-  const move = evt => {
+  const move = (evt) => {
     const r = track.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (evt.clientX - r.left) / r.width));
     seekAudio(ratio * (Number.isFinite(audio.duration) ? audio.duration : 0));
   };
-  const up = evt => {
+  const up = (evt) => {
     track.releasePointerCapture?.(e.pointerId);
     track.removeEventListener("pointermove", move);
     track.removeEventListener("pointerup", up);
@@ -1400,35 +1481,31 @@ track.addEventListener("pointerdown", e => {
   track.addEventListener("pointercancel", up, { once:true });
   move(e);
 });
+track.addEventListener("keydown", (e) => {
+  if (!audio.src) return;
+  const step = e.shiftKey ? 15 : 5;
+  let next = audio.currentTime || 0;
+  if (e.key === "ArrowLeft" || e.key === "ArrowDown" || e.key === "PageDown") next -= step;
+  else if (e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "PageUp") next += step;
+  else if (e.key === "Home") next = 0;
+  else if (e.key === "End") next = Number.isFinite(audio.duration) ? audio.duration : next;
+  else return;
+  e.preventDefault();
+  seekAudio(next);
+});
 document.querySelectorAll("#rates button").forEach(b => {
   b.onclick = () => {
     audio.playbackRate = Number(b.dataset.r);
     document.querySelectorAll("#rates button").forEach(x => x.classList.toggle("on", x === b));
   };
 });
-const dockMoreBtn = document.getElementById("dockMoreBtn");
-const dockMorePanel = document.getElementById("dockMorePanel");
-if (dockMoreBtn && dockMorePanel) {
-  dockMoreBtn.onclick = (e) => {
-    e.stopPropagation();
-    const open = dockMorePanel.classList.toggle("open");
-    dockMoreBtn.setAttribute("aria-expanded", open ? "true" : "false");
-  };
-  document.addEventListener("click", (e) => {
-    if (!dockMorePanel.contains(e.target) && e.target !== dockMoreBtn) {
-      dockMorePanel.classList.remove("open");
-      dockMoreBtn.setAttribute("aria-expanded", "false");
-    }
-  });
-}
 function syncWordHighlight(t = audio.currentTime){
   if (!currentTokens.length) return;
   let idx = -1;
   for (let i = 0; i < currentTokens.length; i++) {
     const token = currentTokens[i];
     if (!isTimedToken(token)) continue;
-    if (t < token.start) break;
-    idx = i;
+    if (t >= token.start) idx = i; else break;
   }
   activeIdx = idx;
   activeSpans.forEach((s, i) => {
@@ -1442,59 +1519,49 @@ function syncWordHighlight(t = audio.currentTime){
 }
 audio.addEventListener("timeupdate", () => {
   if (audioSessionToken !== currentNavToken) return;
-  syncPlaybackStatus();
   const t = audio.currentTime;
-  if (activeIdx >= 0 && currentTokens[activeIdx] && isTimedToken(currentTokens[activeIdx]) &&
+  syncPlaybackStatus();
+  if (activeIdx >= 0 && currentTokens[activeIdx] &&
+      isTimedToken(currentTokens[activeIdx]) &&
       t >= currentTokens[activeIdx].start &&
       t <= currentTokens[activeIdx].end + 0.15) return;
   syncWordHighlight(t);
 });
 
-/** CDN: direct src (Range-friendly, no full-file fetch). Local/relative: blob for hosts without Accept-Ranges. */
-async function prepareAudio(urlOrUrls, navToken = currentNavToken){
-  const urls = Array.isArray(urlOrUrls) ? urlOrUrls.filter(Boolean) : [urlOrUrls];
-  const cachedHit = urls.find(url => audioLogicalUrl === url && audio.src);
-  if (cachedHit) {
+/** Blob-backed src so word seeks work even when the host lacks Accept-Ranges (e.g. python -m http.server). */
+async function prepareAudio(url, navToken = currentNavToken){
+  if (audioLogicalUrl === url && audio.src) {
     if (isCurrentNavigation(navToken)) syncPlaybackStatus();
     return;
   }
   audio.pause();
-  let url = null;
-  let src = null;
-  let lastError = null;
-  for (const candidate of urls) {
-    if (isCdnUrl(candidate)) {
-      url = candidate;
-      src = candidate;
-      break;
-    }
-    let obj = audioBlobUrls.get(candidate);
-    if (obj) { url = candidate; src = obj; break; }
-    try {
-      const res = await fetch(candidate);
-      if (!res.ok) { lastError = new Error(`audio ${res.status}`); continue; }
-      obj = URL.createObjectURL(await res.blob());
-      cacheAudioBlobUrl(candidate, obj);
-      url = candidate;
-      src = obj;
-      break;
-    } catch (err) {
-      lastError = err;
-    }
+  let obj = audioBlobUrls.get(url);
+  if (!obj) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`audio ${res.status}`);
+    obj = URL.createObjectURL(await res.blob());
+    cacheAudioBlobUrl(url, obj);
+  } else {
+    cacheAudioBlobUrl(url, obj);
   }
-  if (!url || !src) throw lastError || new Error("audio unavailable");
   if (!isCurrentNavigation(navToken)) return;
   audioLogicalUrl = url;
-  audioSessionToken = navToken;
-  audio.preload = isCdnUrl(url) ? "metadata" : "auto";
-  audio.src = src;
+  audio.src = obj;
   if (audio.readyState >= 1) {
     if (isCurrentNavigation(navToken)) syncPlaybackStatus();
     return;
   }
   await new Promise((resolve, reject) => {
-    audio.addEventListener("loadedmetadata", resolve, { once:true });
-    audio.addEventListener("error", () => reject(new Error("audio load failed")), { once:true });
+    const onLoad = () => {
+      if (!isCurrentNavigation(navToken)) return;
+      resolve();
+    };
+    const onError = () => {
+      if (!isCurrentNavigation(navToken)) return;
+      reject(new Error("audio load failed"));
+    };
+    audio.addEventListener("loadedmetadata", onLoad, { once:true });
+    audio.addEventListener("error", onError, { once:true });
   });
 }
 function playFrom(time){
@@ -1510,12 +1577,10 @@ function playFrom(time){
   else audio.addEventListener("loadedmetadata", start, { once:true });
 }
 function stopAudio(){
-  clearTimeout(autoplayAdvanceTimer);
-  autoplayAdvanceTimer = null;
+  clearEndSilence();
   audio.pause();
   try { audio.removeAttribute("src"); audio.load(); } catch {}
   audioLogicalUrl = null;
-  audioSessionToken = 0;
   fill.style.width = "0%";
   timeEl.textContent = "0:00 / 0:00";
   refreshTrackA11y();
@@ -1526,28 +1591,16 @@ function stopAudio(){
 /* ---------- caches ---------- */
 const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{}, officialTranslation:{} };
 
-let englishFillPromise;
-function ensureEnglishFill(){
-  // Supplementary English (sunnah.com) and Urdu (hadithapi.com) for reports the
-  // pinned edition leaves empty, matn-aligned. Loaded once; used only as a
-  // fallback when upstream is empty. See public/translations-fill.json.
-  if (!englishFillPromise) englishFillPromise = jopt("translations-fill.json").then(d => d?.entries || {});
-  return englishFillPromise;
-}
 async function ensureOfficialTranslations(slug, n){
   const key = `${slug}:${n}`;
   if (!cache.officialTranslation[key]) {
-    const immutableHadithApi = "df57907be35291c91ad6a6691180e22ca9920784";
-    const edition = language => `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@${immutableHadithApi}/editions/${language}-${slug}/${n}.json`;
+    const edition = language => `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/${language}-${slug}/${n}.json`;
     cache.officialTranslation[key] = Promise.all([
-      jPinnedOpt(edition("eng")),
-      jPinnedOpt(edition("urd")),
-      ensureEnglishFill(),
-    ]).then(([en, ur, fill]) => ({
-      en: (en?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "")
-        || (fill[key]?.en || ""),
-      ur: (ur?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "")
-        || (fill[key]?.ur || ""),
+      jopt(edition("eng")),
+      jopt(edition("urd")),
+    ]).then(([en, ur]) => ({
+      en: en?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "",
+      ur: ur?.hadiths?.find(h => Number(h.hadithnumber) === Number(n))?.text || "",
     }));
   }
   return cache.officialTranslation[key];
@@ -1559,16 +1612,7 @@ async function ensureFortySidecars(slug){
   return { trans: cache.trans[slug], sun: cache.sun[slug] };
 }
 async function ensureBookIndex(slug){
-  if (!cache.bookIndex[slug]) {
-    const idx = await j(`${slug}/index.json`);
-    if (slug === "muslim") {
-      idx.books = idx.books.filter(book => book.book >= 1);
-      for (const [report, book] of Object.entries(idx.reportBook || {})) {
-        if (book < 1) delete idx.reportBook[report];
-      }
-    }
-    cache.bookIndex[slug] = idx;
-  }
+  if (!cache.bookIndex[slug]) cache.bookIndex[slug] = await j(`${slug}/index.json`);
   return cache.bookIndex[slug];
 }
 async function ensureBookOf(slug, bk){
@@ -1589,11 +1633,7 @@ function reportsInBook(bookData){
   return bookData.hadith.map(h => h.n);
 }
 function neighborReport(list, n, dir){
-  // Report ids compare as strings: some collections store n as int (Muwatta),
-  // others as string; deep-link n is always a string. Match on String() so a
-  // type mismatch can't silently drop navigation to a cross-book fallback.
-  const key = String(n);
-  const i = list.findIndex(x => String(x) === key);
+  const i = list.indexOf(n);
   if (i < 0) return null;
   return list[i + dir] ?? null;
 }
@@ -1613,7 +1653,8 @@ function fillCollectionJump(){
   sel.value = state.slug;
   sel.onchange = () => {
     const col = bySlug[sel.value];
-    setHash(col.slug, col.start || 1);
+    if (col.books) setHash(col.slug, 1);
+    else setHash(col.slug, 1);
   };
 }
 
@@ -1678,12 +1719,14 @@ document.getElementById("prevBtn").onclick = () => {
   if (n != null) setHash(state.slug, n);
 };
 document.getElementById("nextBtn").onclick = () => {
+  if (document.body.dataset.silence === "1") return;
   const n = state.nav?.next ?? null;
   if (n != null) setHash(state.slug, n);
 };
 addEventListener("keydown", e => {
   if (document.getElementById("reader").classList.contains("hidden")) return;
   if (e.target.matches("input,textarea,select")) return;
+  if (document.body.dataset.silence === "1" && e.key === "ArrowRight") return;
   if (e.key === "ArrowLeft") document.getElementById("prevBtn").click();
   if (e.key === "ArrowRight") document.getElementById("nextBtn").click();
   if (e.key === " " && !document.getElementById("dock").classList.contains("hidden")) {
@@ -1716,11 +1759,7 @@ async function resolveBookNeighbors(slug, n, idx, currentBookNumber, currentBook
   const books = idx?.books || [];
   const bookPos = books.findIndex(b => Number(b.book) === Number(currentBookNumber));
   const hadithNumbers = (currentBookData?.hadith || []).map(h => h.n);
-  // Match on String(): Muwatta stores n as int while the deep-link n is a
-  // string, so a strict indexOf misses and nav falls back to cross-book
-  // boundaries (the Muwatta 1233 prev/next bug).
-  const key = String(n);
-  const i = hadithNumbers.findIndex(x => String(x) === key);
+  const i = hadithNumbers.indexOf(n);
   let prev = i > 0 ? hadithNumbers[i - 1] : null;
   let next = i >= 0 && i < hadithNumbers.length - 1 ? hadithNumbers[i + 1] : null;
   for (let pos = bookPos - 1; prev == null && pos >= 0; pos--) {
@@ -1788,11 +1827,10 @@ function buildArabic(tokens, gloss, clickable){
     }
     const first = tokens[i];
     const s = document.createElement("span"); s.className = "w" + (run > 1 ? " w-unit" : "");
-    s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span><span class="g-tr"></span>`;
+    s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span>`;
     s.querySelector(".t").textContent = text;
     s.querySelector(".g-en").textContent = g.en || "";
     s.querySelector(".g-ur").textContent = g.ur || "";
-    s.querySelector(".g-tr").textContent = g.transliteration || "";
     if (clickable && typeof first.start === "number") s.onclick = () => playFrom(first.start);
     attachLongPressGrammar(s, text, g);
     arDiv.append(s, document.createTextNode(" "));
@@ -1877,22 +1915,93 @@ function attachLongPressGrammar(span, text, g){
   span.addEventListener("contextmenu", (e) => e.preventDefault());
 }
 
+const VIEW_FADE_MS = 450;
+const STAGE_FADE_MS = 420;
+
+function prefersReducedMotion(){
+  return matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function motionWait(ms){
+  return prefersReducedMotion() ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+}
+async function fadeStageOut(){
+  const stage = document.getElementById("stage");
+  if (prefersReducedMotion()) return;
+  if (!stage.querySelector(".stage-head, .parallel, .refblock")) return;
+  stage.classList.add("is-fading");
+  await motionWait(STAGE_FADE_MS);
+}
+function revealStage(){
+  const stage = document.getElementById("stage");
+  stage.classList.remove("is-fading");
+  if (prefersReducedMotion()) return;
+  stage.classList.add("is-fading");
+  requestAnimationFrame(() => requestAnimationFrame(() => stage.classList.remove("is-fading")));
+}
+async function enterReaderView(){
+  const landing = document.getElementById("landing");
+  const reader = document.getElementById("reader");
+  document.body.dataset.view = "reader";
+  landing.classList.remove("hidden");
+  landing.classList.add("is-leaving");
+  reader.classList.remove("hidden");
+  if (prefersReducedMotion()) {
+    landing.classList.add("hidden");
+    landing.classList.remove("is-leaving");
+    reader.classList.add("is-in");
+    return;
+  }
+  await motionWait(VIEW_FADE_MS);
+  landing.classList.add("hidden");
+  landing.classList.remove("is-leaving");
+  requestAnimationFrame(() => reader.classList.add("is-in"));
+}
+async function leaveReaderView(){
+  const landing = document.getElementById("landing");
+  const reader = document.getElementById("reader");
+  reader.classList.remove("is-in");
+  dock.classList.remove("is-in");
+  if (prefersReducedMotion()) {
+    reader.classList.add("hidden");
+    landing.classList.remove("hidden");
+    landing.classList.remove("is-leaving");
+    return;
+  }
+  await motionWait(VIEW_FADE_MS);
+  reader.classList.add("hidden");
+  landing.classList.remove("hidden");
+  landing.classList.remove("is-leaving");
+}
+
+function showDock(){
+  dock.classList.remove("hidden");
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => dock.classList.add("is-in"));
+  });
+}
+function hideDock(){
+  dock.classList.remove("is-in");
+  dock.classList.add("hidden");
+}
+
 async function openForty(col, n, navToken = currentNavToken){
   stopAudio();
+  await fadeStageOut();
   const stage = document.getElementById("stage");
+  stage.classList.remove("is-fading");
   stage.innerHTML = `<div class="status" role="status" aria-live="polite">Loading hadith…</div>`;
   const pad = String(n).padStart(3, "0");
   const [{ trans, sun }, rec, gloss] = await Promise.all([
     ensureFortySidecars(col.slug),
     j(`recitation/${col.corpus}.${pad}.json`),
-    getGloss(col.slug, n),
+    jopt(`gloss/${col.slug}-${n}.json`),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
   const en = trans.translations.find(t => t.witness === rec.witness);
   const entry = sun.entries.find(e => e.witness === rec.witness);
 
   state = { slug: col.slug, n, book: null, seq: Array.from({ length: col.count }, (_, i) => i + 1), nav:{ prev:n > 1 ? n - 1 : null, next:n < col.count ? n + 1 : null } };
-  setGlossMode("audio");
+  applyReadingMode(false);
   rememberProgress(col.slug, n, null);
   fillCollectionJump();
   if (!(await fillBookJump(navToken))) return false;
@@ -1900,17 +2009,15 @@ async function openForty(col, n, navToken = currentNavToken){
   updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
-  document.getElementById("textBadge").classList.add("hidden");
-  dock.classList.remove("hidden");
-  updateDockLabel(col, n);
+  showDock();
+  updateDockSource("Synthetic audio · not a qārī recording");
   let audioAvailable = true;
   try {
-    await prepareAudio(fortyRecitationAudioUrls(col.corpus, pad), navToken);
+    await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`, navToken);
   } catch {
     if (!isCurrentNavigation(navToken)) return false;
     audioAvailable = false;
-    dock.classList.add("hidden");
-    document.getElementById("textBadge").classList.remove("hidden");
+    hideDock();
     trackSiteEvent("audio_unavailable", { collection:col.slug, report:String(n) });
   }
   if (!isCurrentNavigation(navToken)) return false;
@@ -1919,7 +2026,8 @@ async function openForty(col, n, navToken = currentNavToken){
   continuePlayAfterLoad = false;
 
   const wrap = document.createElement("div");
-  wrap.innerHTML = "";
+  wrap.innerHTML = `
+    <div class="stage-head"><div class="collection">${col.en}</div><div class="ref">${n}</div></div>`;
   if (!audioAvailable) {
     const notice = document.createElement("div");
     notice.className = "availability warn";
@@ -1930,9 +2038,7 @@ async function openForty(col, n, navToken = currentNavToken){
   par.className = "parallel" + (single ? " single" : "");
   const enCol = buildMeaningColumn(en ? en.matn : "", "");
   const arCol = document.createElement("div"); arCol.className = "ar-col";
-  arCol.lang = "ar";
-  arCol.dir = "rtl";
-  arCol.innerHTML = "";
+  arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
   const { arDiv, spans } = buildArabic(rec.tokens, gloss, true);
   activeSpans = spans;
   arCol.appendChild(arDiv);
@@ -1949,17 +2055,19 @@ async function openForty(col, n, navToken = currentNavToken){
   };
   rb.appendChild(copy);
   wrap.appendChild(rb);
-  const disc = document.createElement("div"); disc.className = "disc";
-  disc.textContent = "Recitation is synthesised (ElevenLabs); word timing from its alignment API — not a substitute for a qārī.";
+  const disc = document.createElement("div");
+  disc.className = "disc";
+  disc.textContent = "Synthetic audio with word timings — not a qārī recording or opensource internet recitation.";
   wrap.appendChild(disc);
 
   if (!isCurrentNavigation(navToken)) return false;
-  stage.innerHTML = ""; stage.appendChild(wrap);
   if (!isCurrentNavigation(navToken)) return false;
+  stage.innerHTML = ""; stage.appendChild(wrap);
+  revealStage();
   applyParallel();
-  setPublicMetadata(`${col.en} ${n} — Hadith WBW`, col.slug, n);
+  setPublicMetadata(`${col.en} ${n} — hadith.to`, col.slug, n);
   scrollTo(0, 0);
-  if (shouldContinue && audioAvailable) {
+  if (shouldContinue) {
     audio.currentTime = 0;
     syncWordHighlight(0);
     audio.play().catch(() => {});
@@ -1967,10 +2075,11 @@ async function openForty(col, n, navToken = currentNavToken){
 }
 
 async function openBookHadith(slug, n, navToken = currentNavToken){
-  const requestedN = String(n);
   stopAudio();
-  dock.classList.add("hidden");
+  await fadeStageOut();
+  hideDock();
   const stage = document.getElementById("stage");
+  stage.classList.remove("is-fading");
   stage.innerHTML = `<div class="status" role="status" aria-live="polite">Loading hadith…</div>`;
 
   const idx = await ensureBookIndex(slug);
@@ -1983,25 +2092,22 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     n = data0.hadith[0].n;
   }
   const bookData = await ensureBookOf(slug, bookMeta.book);
-  let h = bookData.hadith.find(x => String(x.n) === String(n));
+  let h = bookData.hadith.find(x => x.n === n);
   if (!h) { h = bookData.hadith[0]; n = h.n; }
-  if (!isCurrentNavigation(navToken)) return false;
-  if (String(n) !== requestedN) {
-    history.replaceState(null, "", `${location.pathname}${location.search}#${slug}:${n}`);
-  }
 
   const [gloss, timing, officialTranslation] = await Promise.all([
-    getGloss(slug, n),
+    jopt(`gloss/${slug}-${n}.json`),
     getBookTiming(slug, n),
     ensureOfficialTranslations(slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
+  const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
   let audioAvailable = hasSyncedAudio;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
   state = { slug, n, book: bookMeta.book, seq: reportsInBook(bookData), nav:{ prev:null, next:null } };
-  setGlossMode("study");
+  applyReadingMode(false);
   rememberProgress(slug, n, bookMeta.book);
   fillCollectionJump();
   if (!(await fillBookJump(navToken))) return false;
@@ -2011,18 +2117,17 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
-  document.getElementById("textBadge").classList.toggle("hidden", hasSyncedAudio);
-  dock.classList.toggle("hidden", !hasSyncedAudio);
+  if (hasSyncedAudio) showDock();
+  else hideDock();
   if (hasSyncedAudio) {
-    document.getElementById("dockSource").textContent = timing.synthetic ? "Generated supplement" : "Original recording";
-    updateDockLabel(bySlug[slug], n);
+    updateDockSource(timing.synthetic
+      ? "Synthetic gap-fill · not in the historical recording"
+      : "Human qārī · word-aligned highlighting");
     try {
-      await prepareAudio(bookAudioUrls(slug, n, timing), navToken);
+      await prepareAudio(bookAudioUrl(slug, n, timing), navToken);
     } catch {
-      if (!isCurrentNavigation(navToken)) return false;
       audioAvailable = false;
-      dock.classList.add("hidden");
-      document.getElementById("textBadge").classList.remove("hidden");
+      hideDock();
       trackSiteEvent("audio_unavailable", { collection:slug, report:String(n) });
     }
     if (!isCurrentNavigation(navToken)) return false;
@@ -2031,11 +2136,11 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
 
   const col = bySlug[slug];
   const wrap = document.createElement("div");
-  wrap.innerHTML = "";
+  wrap.innerHTML = `
+    <div class="stage-head"><div class="collection">${col.en}</div><div class="ref">${state.book ? `Book ${state.book} · ${n}` : n}</div></div>`;
   const timingTokens = hasSyncedAudio ? effectiveTimingTokens(timing) : [];
   const missingTimingCount = timingTokens.filter(token =>
-    /[ء-ي]/.test(token.text || "")
-    && (!Number.isFinite(token.start) || !Number.isFinite(token.end))
+    !Number.isFinite(token.start) || !Number.isFinite(token.end)
   ).length;
   if (!audioAvailable && hasSyncedAudio) {
     const notice = document.createElement("div");
@@ -2053,12 +2158,14 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     notice.textContent = `${missingTimingCount} word${missingTimingCount === 1 ? "" : "s"} could not be timed reliably and will not highlight during playback.`;
     wrap.appendChild(notice);
   }
+  if (h.isnad && !hasSyncedAudio) {
+    const is = document.createElement("div"); is.className = "isnad"; is.textContent = h.isnad;
+    wrap.appendChild(is);
+  }
   const par = document.createElement("div");
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
   const arCol = document.createElement("div"); arCol.className = "ar-col";
-  arCol.lang = "ar";
-  arCol.dir = "rtl";
-  arCol.innerHTML = "";
+  arCol.innerHTML = `<div class="col-label" style="text-align:right">${hasSyncedAudio ? "العربية · audio-synced word by word" : "العربية · word gloss"}</div>`;
   const tokens = hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
         id: `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
@@ -2075,15 +2182,13 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
       ...((gloss && gloss.glosses) || {}),
       ...alignedGlosses,
       ...Object.fromEntries(tokens.map((t, i) => {
-        const pool = t.gloss || honorificPartGloss(tokens, i);
+        const pool = t.gloss || honorificPartGloss(tokens, i) || isnadPool?.words?.[normalizeArabicWord(t.text)];
         return pool?.en ? [t.id, pool] : [t.id, null];
       }).filter(([, value]) => value)),
     },
   } : gloss;
-  lastStudyGloss = syncedGloss;
   const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
   if (hasSyncedAudio) activeSpans = spans;
-  if (hasSyncedAudio) applyIsnadPoolGlosses(slug, tokens, syncedGloss, spans);
   arCol.appendChild(arDiv);
   const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
   par.className = "parallel" + (single ? " single" : "");
@@ -2113,29 +2218,34 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const disc = document.createElement("div"); disc.className = "disc";
   disc.textContent = hasSyncedAudio
     ? (timing.synthetic
-      ? "Generated recitation — this canonical report is not present in the original recording. Synthetic audio is clearly separated from the historical source."
-      : "Full isnād and matn are aligned word by word to the recording. Timings are CTC forced-alignment estimates.")
+      ? "Synthetic gap-fill — this report is not in the historical qārī recording. Separated from opensource human audio."
+      : "Human qārī recording (opensource / internet), word-timestamped to the Arabic text. Timings are CTC forced-alignment estimates.")
     : "Word glosses are machine-suggested (English / Urdu). Independently reviewed where a review block is present.";
   wrap.appendChild(disc);
 
-  if (!isCurrentNavigation(navToken)) return false;
   stage.innerHTML = ""; stage.appendChild(wrap);
-  if (!isCurrentNavigation(navToken)) return false;
-  if (shouldContinue && audioAvailable) {
+  revealStage();
+  if (shouldContinue && hasSyncedAudio) {
     audio.currentTime = 0;
     syncWordHighlight(0);
     audio.play().catch(() => {});
   }
-  setPublicMetadata(`${shortCollectionName(col)} ${n} — Hadith WBW`, slug, n);
+  setPublicMetadata(`${shortCollectionName(col)} ${n} — hadith.to`, slug, n);
   scrollTo(0, 0);
 }
 
 async function openHadith(slug, n, navToken = currentNavToken){
   const col = bySlug[slug]; if (!col) return showLanding(navToken);
-  document.getElementById("landing").classList.add("hidden");
-  document.getElementById("reader").classList.remove("hidden");
+  if (document.body.dataset.view === "landing") await enterReaderView();
+  else {
+    document.body.dataset.view = "reader";
+    document.getElementById("landing").classList.add("hidden");
+    document.getElementById("reader").classList.remove("hidden");
+    document.getElementById("reader").classList.add("is-in");
+  }
+  syncReaderToolsUI();
   try {
-    if (col.books) await openBookHadith(slug, String(n || col.start || 1), navToken);
+    if (col.books) await openBookHadith(slug, String(n || 1), navToken);
     else {
       n = Number(n) || 1;
       if (n < 1) n = 1;
@@ -2149,13 +2259,15 @@ async function openHadith(slug, n, navToken = currentNavToken){
   }
 }
 
-function showLanding(navToken = currentNavToken){
+async function showLanding(navToken = currentNavToken){
   stopAudio();
   state = { slug:null, n:null, book:null, seq:[], nav:{ prev:null, next:null } };
-  document.getElementById("reader").classList.add("hidden");
-  document.getElementById("landing").classList.remove("hidden");
-  dock.classList.add("hidden");
-  setPublicMetadata("Hadith WBW — Read & Listen");
+  document.body.dataset.view = "landing";
+  setReaderToolsOpen(false);
+  setSettingsOpen(false);
+  await leaveReaderView();
+  hideDock();
+  setPublicMetadata("hadith.to — Read & Listen");
   renderResume();
   scrollTo(0, 0);
 }
@@ -2163,7 +2275,7 @@ function showLanding(navToken = currentNavToken){
 function route(){
   const navToken = beginNavigation();
   const m = location.hash.match(/^#([a-z0-9]+)(?::(\d+[a-z]?))?/i);
-  if (m && bySlug[m[1]]) openHadith(m[1], m[2] || bySlug[m[1]].start || 1, navToken);
+  if (m && bySlug[m[1]]) openHadith(m[1], m[2] || 1, navToken);
   else showLanding(navToken);
 }
 addEventListener("hashchange", route);
