@@ -167,6 +167,7 @@
   .setting:first-of-type { margin-top:0; }
   .setting label { color:var(--ink); font-weight:600; white-space:nowrap; }
   .setting output { color:var(--faint); font-variant-numeric:tabular-nums; text-align:right; font-size:.72rem; }
+  .setting-hint { grid-column:1 / -1; margin:2px 0 0; font-size:.68rem; color:var(--faint); line-height:1.35; }
   .setting input[type="range"] { grid-column:1 / -1; width:100%; height:22px; margin-top:2px; appearance:none; -webkit-appearance:none; background:transparent; cursor:pointer; }
   .setting input[type="range"]::-webkit-slider-runnable-track { height:8px; border:1px solid var(--line); border-radius:999px; background:var(--bg); }
   .setting input[type="range"]::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:16px; height:16px; margin-top:-5px; border:2px solid var(--bg); border-radius:50%; background:var(--ink); }
@@ -381,7 +382,7 @@
   body[data-wbw="en"] .arabic,
   body[data-wbw="ur"] .arabic,
   body[data-wbw="both"] .arabic {
-    display:flex; flex-wrap:wrap; gap:var(--wbw-gap) 4px; line-height:1.7;
+    display:flex; flex-wrap:wrap; gap:var(--wbw-gap); line-height:1.7;
     font-size:inherit;
   }
   body[data-wbw="en"] .arabic span.w,
@@ -415,10 +416,18 @@
   body[data-mode="receive"] .parallel .en-col { display:none !important; }
   body[data-mode="receive"] .arabic {
     display:block; flex-wrap:unset; gap:unset; line-height:var(--ar-lh);
+    word-spacing: calc(var(--wbw-gap) * 0.08);
   }
   body[data-mode="receive"] .arabic span.w {
     display:inline; flex-direction:unset; align-items:unset;
-    padding:0 2px;
+    padding:0 calc(var(--wbw-gap) * 0.12);
+  }
+  /* Study mode with gloss off: continuous Arabic still respects word spacing */
+  body[data-mode="study"][data-wbw="off"] .arabic {
+    word-spacing: calc(var(--wbw-gap) * 0.08);
+  }
+  body[data-mode="study"][data-wbw="off"] .arabic span.w {
+    padding:0 calc(var(--wbw-gap) * 0.12);
   }
   body[data-mode="receive"] .arabic span.w .g-en,
   body[data-mode="receive"] .arabic span.w .g-ur { display:none !important; }
@@ -681,6 +690,8 @@
           <section class="setting-section"><h3>Arabic</h3>
           <div class="setting"><label for="arSize">Arabic size</label><input id="arSize" type="range" min="1.1" max="3.4" step="0.1"><output id="arSizeOut"></output></div>
           <div class="setting"><label for="arLine">Arabic lines</label><input id="arLine" type="range" min="1.55" max="3.2" step="0.05"><output id="arLineOut"></output></div>
+          <div class="setting"><label for="wordGap">Space between words</label><input id="wordGap" type="range" min="4" max="96" step="2" aria-describedby="wordGapHint"><output id="wordGapOut"></output></div>
+          <p id="wordGapHint" class="setting-hint">Gap between Arabic words in Receive and Study</p>
           </section>
           <section class="setting-section"><h3>Translations</h3>
           <div class="setting"><label for="enSize">English size</label><input id="enSize" type="range" min="0.9" max="1.7" step="0.05"><output id="enSizeOut"></output></div>
@@ -688,8 +699,7 @@
           <div class="setting"><label for="urSize">Urdu size</label><input id="urSize" type="range" min="0.55" max="1.6" step="0.05"><output id="urSizeOut"></output></div>
           <div class="setting"><label for="urLine">Urdu lines</label><input id="urLine" type="range" min="1.35" max="2.6" step="0.05"><output id="urLineOut"></output></div>
           </section>
-          <section class="setting-section wide"><h3>Arabic word spacing &amp; gloss</h3>
-          <div class="setting"><label for="wordGap">Arabic word gap</label><input id="wordGap" type="range" min="4" max="96" step="2"><output id="wordGapOut"></output></div>
+          <section class="setting-section wide"><h3>Gloss chips</h3>
           <div class="setting"><label for="glossSize">Gloss size</label><input id="glossSize" type="range" min="0.5" max="1.2" step="0.05"><output id="glossSizeOut"></output></div>
           <div class="setting"><label for="wordPad">Word padding</label><input id="wordPad" type="range" min="3" max="16" step="1"><output id="wordPadOut"></output></div>
           </section>
@@ -774,9 +784,6 @@
               <button type="button" class="mode" id="repeatBtn" aria-pressed="false" title="Loop this hadith">Repeat</button>
             </div>
           </div>
-          <div class="dock-more-section">
-            <p class="dock-draft-note" id="dockSource">Synthetic audio · not a qārī recording</p>
-          </div>
         </div>
       </div>
     </div>
@@ -815,9 +822,8 @@ const COLLECTIONS = [
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
 ];
 function shelfAudioMeta(c){
-  if (c.synthetic) return "synthetic audio";
-  if (c.audio) return "human qārī · read & listen";
-  return "word-by-word";
+  if (c.audio) return "read & listen";
+  return "read";
 }
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
 const BUKHARI_BOOK_NAMES = {
@@ -995,7 +1001,9 @@ async function getBookTiming(slug, n){
       const url = `${BUKHARI_R2}/${slug}-timings/n${String(n).padStart(4, "0")}.json`;
       cache[n] = fetch(url)
         .then(r => r.ok ? r.json() : null)
-        .then(data => Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) && Number.isFinite(t.end)) ? data : null)
+        .then(data => Array.isArray(data?.tokens) && data.tokens.some(t =>
+          Number.isFinite(t.start) || Number.isFinite(t.displayStart)
+        ) ? data : null)
         .catch(() => null)
         .then(data => {
           if (!data) delete cache[n];
@@ -1007,13 +1015,15 @@ async function getBookTiming(slug, n){
 }
 
 function bookAudioUrl(slug, n, timing){
-  if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${String(n).padStart(4, "0")}.mp3`;
+  // Prefer sidecar audio filename (shared clips e.g. nasai 352/353 → 0352.mp3).
+  const file = timing?.audio || `${String(n).padStart(4, "0")}.mp3`;
+  if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${file}`;
   const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
-  const generated = Boolean(timing.synthetic);
+  const generated = Boolean(timing?.synthetic);
   if (local) return generated
-    ? `../qc/muslim-full/generated-clips/${timing.audio}`
-    : `../qc/muslim-full/clips/${timing.audio}`;
-  return `${BUKHARI_R2}/muslim/${timing.audio}`;
+    ? `../qc/muslim-full/generated-clips/${file}`
+    : `../qc/muslim-full/clips/${file}`;
+  return `${BUKHARI_R2}/muslim/${file}`;
 }
 
 function effectiveTimingTokens(timing){
@@ -1388,11 +1398,6 @@ document.getElementById("skipFwd").onclick = () => {
   if (!audio.src) return;
   seekAudio((audio.currentTime || 0) + 10);
 };
-function updateDockSource(text){
-  const el = document.getElementById("dockSource");
-  if (el) el.textContent = text;
-}
-
 /* Listen modes: Repeat one wins over Autoplay next when both are on */
 let autoplayNext = store.get("autoplay", true);
 let repeatOne = store.get("repeat", false);
@@ -2019,7 +2024,6 @@ async function openForty(col, n, navToken = currentNavToken){
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
   showDock();
-  updateDockSource("Synthetic audio · not a qārī recording");
   let audioAvailable = true;
   try {
     await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`, navToken);
@@ -2064,10 +2068,6 @@ async function openForty(col, n, navToken = currentNavToken){
   };
   rb.appendChild(copy);
   wrap.appendChild(rb);
-  const disc = document.createElement("div");
-  disc.className = "disc";
-  disc.textContent = "Synthetic audio with word timings — not a qārī recording or opensource internet recitation.";
-  wrap.appendChild(disc);
 
   if (!isCurrentNavigation(navToken)) return false;
   if (!isCurrentNavigation(navToken)) return false;
@@ -2129,9 +2129,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (hasSyncedAudio) showDock();
   else hideDock();
   if (hasSyncedAudio) {
-    updateDockSource(timing.synthetic
-      ? "Synthetic gap-fill · not in the historical recording"
-      : "Human qārī · word-aligned highlighting");
     try {
       await prepareAudio(bookAudioUrl(slug, n, timing), navToken);
     } catch {
@@ -2147,10 +2144,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const wrap = document.createElement("div");
   wrap.innerHTML = `
     <div class="stage-head"><div class="collection">${col.en}</div><div class="ref">${state.book ? `Book ${state.book} · ${n}` : n}</div></div>`;
-  const timingTokens = hasSyncedAudio ? effectiveTimingTokens(timing) : [];
-  const missingTimingCount = timingTokens.filter(token =>
-    !Number.isFinite(token.start) || !Number.isFinite(token.end)
-  ).length;
   if (!audioAvailable && hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability warn";
@@ -2161,23 +2154,15 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     notice.className = "availability";
     notice.textContent = "Audio and word timestamps are not available for this report yet.";
     wrap.appendChild(notice);
-  } else if (missingTimingCount) {
-    const notice = document.createElement("div");
-    notice.className = "availability";
-    notice.textContent = `${missingTimingCount} word${missingTimingCount === 1 ? "" : "s"} could not be timed reliably and will not highlight during playback.`;
-    wrap.appendChild(notice);
   }
-  if (h.isnad && !hasSyncedAudio) {
-    const is = document.createElement("div"); is.className = "isnad"; is.textContent = h.isnad;
-    wrap.appendChild(is);
-  }
+  // One continuous Arabic token stream only — never a separate arrow-isnad strip.
   const par = document.createElement("div");
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
   const arCol = document.createElement("div"); arCol.className = "ar-col";
-  arCol.innerHTML = `<div class="col-label" style="text-align:right">${hasSyncedAudio ? "العربية · audio-synced word by word" : "العربية · word gloss"}</div>`;
+  arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
   const tokens = hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
-        id: `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
+        id: t.id || `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
         text: t.text,
         start: t.start,
         end: t.end,
@@ -2224,13 +2209,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   };
   rb.appendChild(copy);
   wrap.appendChild(rb);
-  const disc = document.createElement("div"); disc.className = "disc";
-  disc.textContent = hasSyncedAudio
-    ? (timing.synthetic
-      ? "Synthetic gap-fill — this report is not in the historical qārī recording. Separated from opensource human audio."
-      : "Human qārī recording (opensource / internet), word-timestamped to the Arabic text. Timings are CTC forced-alignment estimates.")
-    : "Word glosses are machine-suggested (English / Urdu). Independently reviewed where a review block is present.";
-  wrap.appendChild(disc);
 
   stage.innerHTML = ""; stage.appendChild(wrap);
   revealStage();
