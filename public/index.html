@@ -810,16 +810,16 @@ function trackSiteEvent(name, data={}){
 addEventListener("error", () => trackSiteEvent("reader_runtime_error", { source:"window" }));
 addEventListener("unhandledrejection", () => trackSiteEvent("reader_runtime_error", { source:"promise" }));
 const COLLECTIONS = [
-  { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:true },
-  { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
-  { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true, synthetic:true },
-  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:true, books:true },
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
+  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
+  { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:true },
+  { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
+  { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true, synthetic:true },
 ];
 function shelfAudioMeta(c){
   if (c.audio) return "read & listen";
