@@ -15,6 +15,16 @@
       "has": [{ "type": "host", "value": "hadithaudio.vercel.app" }],
       "destination": "https://www.hadith.to/:path*",
       "permanent": true
+    },
+    {
+      "source": "/h/:collection/:id",
+      "destination": "/?c=:collection&n=:id",
+      "permanent": true
+    },
+    {
+      "source": "/h/:collection/:id/",
+      "destination": "/?c=:collection&n=:id",
+      "permanent": true
     }
   ],
   "headers": [

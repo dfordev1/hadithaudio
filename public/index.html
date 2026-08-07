@@ -2330,6 +2330,14 @@ function route(){
   if (m && bySlug[m[1]]) openHadith(m[1], m[2] || 1, navToken);
   else showLanding(navToken);
 }
+// Legacy /h/:collection/:id SEO URLs redirect here as ?c=&n= — fold into hash.
+(function adoptLegacyHadithQuery(){
+  const q = new URLSearchParams(location.search);
+  const c = q.get("c");
+  const n = q.get("n");
+  if (!c || !n || !/^[a-z0-9]+$/i.test(c) || !/^\d+[a-z]?$/i.test(n)) return;
+  history.replaceState(null, "", `/#${c}:${n}`);
+})();
 addEventListener("hashchange", route);
 route();
 </script>
