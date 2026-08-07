@@ -792,6 +792,7 @@
 
 <script>
 const SITE_ORIGIN = "https://www.hadith.to";
+const RECITATION_CDN = "https://cdn.hadith.to/recitation";
 function publicHadithUrl(slug, n){ return `${SITE_ORIGIN}/#${slug}:${n}`; }
 function setPublicMetadata(title, slug=null, n=null){
   document.title = title;
@@ -2086,7 +2087,7 @@ async function openForty(col, n, navToken = currentNavToken){
   showDock();
   let audioAvailable = true;
   try {
-    await prepareAudio(`recitation/${col.corpus}.${pad}.mp3`, navToken);
+    await prepareAudio(`${RECITATION_CDN}/${col.corpus}.${pad}.mp3`, navToken);
   } catch {
     if (!isCurrentNavigation(navToken)) return false;
     audioAvailable = false;
