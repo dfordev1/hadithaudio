@@ -64,6 +64,7 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--replace", action="store_true")
     parser.add_argument("--verify-only", action="store_true")
+    parser.add_argument("--corpus", help="Limit files to this corpus prefix, e.g. nawawi-arbain")
     args = parser.parse_args()
     load_env(args.env_file)
 
@@ -74,7 +75,8 @@ def main() -> int:
     if not token or not account:
         raise SystemExit("Missing CF_API_TOKEN and/or CF_ACCOUNT_ID")
 
-    local_files = sorted(RECITATION_DIR.glob("*.mp3"))
+    pattern = f"{args.corpus}.*.mp3" if args.corpus else "*.mp3"
+    local_files = sorted(RECITATION_DIR.glob(pattern))
     if not local_files:
         raise SystemExit(f"No MP3 files in {RECITATION_DIR}")
 
