@@ -724,7 +724,7 @@
   <section class="methodology" id="methodology" aria-labelledby="methodology-title">
     <h2 id="methodology-title">Methodology</h2>
     <p><strong>Human qārī audio.</strong> Where a major collection has synced playback (Bukhari, Muslim, Abi Dawud, and others as alignment lands), the voice is a real opensource / internet recitation. Words are timestamped to the Arabic text — including HUSX tokens where that corpus is used.</p>
-    <p><strong>Synthetic Forties.</strong> An-Nawawi’s Forty, the Forty Hadith Qudsi, and Shah Waliullah’s Forty use synthetically generated audio with word timings. They are not recordings of a qārī and are not opensource internet recitations.</p>
+    <p><strong>Forty-hadith audio.</strong> An-Nawawi’s Forty now uses a human Arabic recitation with synchronized full-text playback. The Forty Hadith Qudsi and Shah Waliullah’s Forty currently use synthetic audio with word timings.</p>
   </section>
 </div>
 
@@ -818,7 +818,7 @@ const COLLECTIONS = [
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:true, books:true },
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
-  { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:true },
+  { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:false },
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true, synthetic:true },
 ];
@@ -2087,7 +2087,8 @@ async function openForty(col, n, navToken = currentNavToken){
   showDock();
   let audioAvailable = true;
   try {
-    await prepareAudio(`${RECITATION_CDN}/${col.corpus}.${pad}.mp3`, navToken);
+    const audioVersion = encodeURIComponent(`${rec.qusxAudio || "recitation"}-${rec.duration || "0"}`);
+    await prepareAudio(`${RECITATION_CDN}/${col.corpus}.${pad}.mp3?v=${audioVersion}`, navToken);
   } catch {
     if (!isCurrentNavigation(navToken)) return false;
     audioAvailable = false;
