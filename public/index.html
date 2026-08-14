@@ -818,6 +818,7 @@ const COLLECTIONS = [
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:true, books:true },
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
+  { slug:"riyad", corpus:"riyad-as-salihin", ar:"رياض الصالحين", en:"Riyad as-Salihin", count:1896, audio:true, books:true, synthetic:"mixed" },
   { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:false },
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true, synthetic:true },
@@ -862,8 +863,9 @@ const bookTimingCache = {
   tirmidhi: {},
   ibnmajah: {},
   malik: {},
+  riyad: {},
 };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "nasai", "tirmidhi", "ibnmajah", "malik"]);
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "nasai", "tirmidhi", "ibnmajah", "malik", "riyad"]);
 let bukhariIsnadPool;
 
 async function getBukhariIsnadPool(){
@@ -1666,6 +1668,12 @@ const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{}, officialTranslation:{
 
 async function ensureOfficialTranslations(slug, n){
   const key = `${slug}:${n}`;
+  if (slug === "riyad") {
+    if (!cache.officialTranslation.riyad) cache.officialTranslation.riyad = j("translation/riyad.json");
+    const local = await cache.officialTranslation.riyad;
+    const row = local.translations.find(item => Number(item.n) === Number(n));
+    return { en:row?.en || "", ur:row?.ur || "" };
+  }
   if (!cache.officialTranslation[key]) {
     const edition = language => `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/${language}-${slug}/${n}.json`;
     cache.officialTranslation[key] = Promise.all([
@@ -2221,6 +2229,12 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     notice.textContent = "Audio and word timestamps are not available for this report yet.";
     wrap.appendChild(notice);
   }
+  if (timing?.synthetic) {
+    const notice = document.createElement("div");
+    notice.className = "availability warn";
+    notice.textContent = timing.disclosure || "Generated recitation; this report is omitted from the supplied original audiobook.";
+    wrap.appendChild(notice);
+  }
   // One continuous Arabic token stream only — never a separate arrow-isnad strip.
   const par = document.createElement("div");
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
@@ -2299,7 +2313,7 @@ async function openHadith(slug, n, navToken = currentNavToken){
   }
   syncReaderToolsUI();
   try {
-    if (col.books) await openBookHadith(slug, String(n || 1), navToken);
+    if (col.books) await openBookHadith(slug, Number(n) || 1, navToken);
     else {
       n = Number(n) || 1;
       if (n < 1) n = 1;
