@@ -819,6 +819,7 @@ const COLLECTIONS = [
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
   { slug:"riyad", corpus:"riyad-as-salihin", ar:"رياض الصالحين", en:"Riyad as-Salihin", count:1896, audio:true, books:true, synthetic:"mixed" },
+  { slug:"musnad-ahmad", corpus:"musnad-ahmad", ar:"مسند أحمد", en:"Musnad Ahmad", count:27648, audio:true, books:true, synthetic:false },
   { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:false },
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
   { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true, synthetic:true },
@@ -864,8 +865,9 @@ const bookTimingCache = {
   ibnmajah: {},
   malik: {},
   riyad: {},
+  "musnad-ahmad": {},
 };
-const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "nasai", "tirmidhi", "ibnmajah", "malik", "riyad"]);
+const syncedBookCollections = new Set(["bukhari", "abudawud", "muslim", "nasai", "tirmidhi", "ibnmajah", "malik", "riyad", "musnad-ahmad"]);
 let bukhariIsnadPool;
 
 async function getBukhariIsnadPool(){
@@ -997,6 +999,20 @@ async function getBukhariTiming(n){
 
 async function getBookTiming(slug, n){
   if (!syncedBookCollections.has(slug)) return null;
+  if (slug === "musnad-ahmad") {
+    const cache = bookTimingCache[slug];
+    if (!(n in cache)) {
+      const stem = `r${String(n).padStart(5, "0")}.json`;
+      const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+      const url = local
+        ? `../../musnad-ahmad-r2-staging-20260816-v1/timings/${stem}`
+        : `https://cdn.hadith.to/musnad-ahmad-timings/${stem}`;
+      cache[n] = fetch(url).then(r => r.ok ? r.json() : null).then(data =>
+        Array.isArray(data?.tokens) && data.tokens.some(t => Number.isFinite(t.start) || Number.isFinite(t.displayStart)) ? data : null
+      ).catch(() => null);
+    }
+    return cache[n];
+  }
   const cache = bookTimingCache[slug];
   if (!(n in cache)) {
     if (slug === "muslim") {
@@ -1038,6 +1054,13 @@ async function getBookTiming(slug, n){
 }
 
 function bookAudioUrl(slug, n, timing){
+  if (slug === "musnad-ahmad") {
+    const file = timing?.audio || `r${String(n).padStart(5, "0")}.ogg`;
+    const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+    return local
+      ? `../../musnad-ahmad-r2-staging-20260816-v1/audio/${file}`
+      : `https://cdn.hadith.to/musnad-ahmad/${file}`;
+  }
   // Prefer sidecar audio filename (shared clips e.g. nasai 352/353 → 0352.mp3).
   const file = timing?.audio || `${String(n).padStart(4, "0")}.mp3`;
   if (slug !== "muslim") return `${BUKHARI_R2}/${slug}/${file}`;
@@ -1672,6 +1695,12 @@ async function ensureOfficialTranslations(slug, n){
     if (!cache.officialTranslation.riyad) cache.officialTranslation.riyad = j("translation/riyad.json");
     const local = await cache.officialTranslation.riyad;
     const row = local.translations.find(item => Number(item.n) === Number(n));
+    return { en:row?.en || "", ur:row?.ur || "" };
+  }
+  if (slug === "musnad-ahmad") {
+    if (!cache.officialTranslation[slug]) cache.officialTranslation[slug] = jopt("translation/musnad-ahmad.json");
+    const local = await cache.officialTranslation[slug];
+    const row = local?.translations?.find(item => Number(item.n) === Number(n));
     return { en:row?.en || "", ur:row?.ur || "" };
   }
   if (!cache.officialTranslation[key]) {
@@ -2342,7 +2371,7 @@ async function showLanding(navToken = currentNavToken){
 
 function route(){
   const navToken = beginNavigation();
-  const m = location.hash.match(/^#([a-z0-9]+)(?::(\d+[a-z]?))?/i);
+  const m = location.hash.match(/^#([a-z0-9-]+)(?::(\d+[a-z]?))?/i);
   if (m && bySlug[m[1]]) openHadith(m[1], m[2] || 1, navToken);
   else showLanding(navToken);
 }
