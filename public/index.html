@@ -842,6 +842,35 @@ const BOOK_SECTION_NAMES = {
   malik: {1:"The Times of Prayer",2:"Purity",3:"Prayer",4:"Forgetfulness in Prayer",5:"Jumu'a",6:"Prayer in Ramadan",7:"Tahajjud",8:"Prayer in Congregation",9:"Shortening the Prayer",10:"The Two 'Ids",11:"The Fear Prayer",12:"The Eclipse Prayer",13:"Asking for Rain",14:"The Qibla",15:"The Qur'an",16:"Burials",17:"Zakat",18:"Fasting",19:"I'tikaf in Ramadan",20:"Hajj",21:"Jihad",22:"Vows and Oaths",23:"Sacrificial Animals",24:"Slaughtering Animals",25:"Game",26:"The 'Aqiqa",27:"Fara'id",28:"Marriage",29:"Divorce",30:"Suckling",31:"Business Transactions",32:"Qirad",33:"Sharecropping",34:"Renting Land",35:"Pre-emption in Property",36:"Judgements",37:"Wills and Testaments",38:"Setting Free and Wala'",39:"The Mukatab",40:"The Mudabbar",41:"Hudud",42:"Drinks",43:"Blood-Money",44:"The Oath of Qasama",45:"Madina",46:"The Decree",47:"Good Character",48:"Dress",49:"The Description of the Prophet, may Allah Bless Him and Grant Him Peace",50:"The Evil Eye",51:"Hair",52:"Visions",53:"Greetings",54:"General Subjects",55:"The Oath of Allegiance",56:"Speech",57:"Jahannam",58:"Sadaqa",59:"Knowledge",60:"The Supplication of the Unjustly Wronged",61:"The Names of the Prophet, may Allah Bless Him and Grant Him Peace"},
 };
 
+// Musnad Ahmad is arranged by companion/region, while the static JSON files are
+// merely 1,000-record transport chunks. Keep those concepts separate in the UI.
+const MUSNAD_AHMAD_SECTIONS = [
+  [1,"مسند أبي بكر الصديق"],[82,"مسند عمر بن الخطاب"],[399,"مسند عثمان بن عفان"],
+  [562,"مسند علي بن أبي طالب"],[1381,"مسند طلحة بن عبيد الله"],[1405,"مسند الزبير بن العوام"],
+  [1439,"مسند سعد بن أبي وقاص"],[1625,"مسند سعيد بن زيد"],[1655,"حديث عبد الرحمن بن عوف"],
+  [1690,"حديث أبي عبيدة بن الجراح"],[1702,"حديث عبد الرحمن بن أبي بكر"],[1714,"حديث زيد بن خارجة"],
+  [1715,"حديث الحارث بن خزيمة"],[1716,"حديث سعد مولى أبي بكر"],[1718,"مسند أهل البيت"],
+  [1763,"مسند بني هاشم"],[1791,"مسند الفضل بن عباس"],[1838,"مسند عبد الله بن عباس"],
+  [3548,"مسند عبد الله بن مسعود"],[6477,"مسند عبد الله بن عمرو بن العاص"],[7104,"مسند أبي رمثة"],
+  [7119,"مسند أبي هريرة"],[10985,"مسند أبي سعيد الخدري"],[11941,"مسند أنس بن مالك"],
+  [14112,"مسند جابر بن عبد الله"],[15300,"مسند المكيين"],[16090,"مسند المدنيين"],
+  [16812,"مسند الشاميين"],[18089,"مسند الكوفيين"],[19763,"مسند البصريين"],
+  [21084,"مسند الأنصار"],[24010,"مسند عائشة"],[26413,"مسند النساء"]
+];
+function musnadAhmadSection(n){
+  let section = MUSNAD_AHMAD_SECTIONS[0][1];
+  for (const [from, title] of MUSNAD_AHMAD_SECTIONS) {
+    if (Number(n) < from) break;
+    section = title;
+  }
+  return section;
+}
+function musnadPartSections(from, to){
+  const first = musnadAhmadSection(from);
+  const last = musnadAhmadSection(to);
+  return first === last ? first : `${first} ← ${last}`;
+}
+
 function bookTitle(slug, book){
   if (book == null || book === "") return "";
   const map = BOOK_SECTION_NAMES[slug];
@@ -849,6 +878,7 @@ function bookTitle(slug, book){
   return map[book] || map[String(book)] || "";
 }
 function bookLabel(slug, book){
+  if (slug === "musnad-ahmad") return `Part ${book}`;
   const title = bookTitle(slug, book);
   return title ? `Book ${book} · ${title}` : `Book ${book}`;
 }
@@ -1326,7 +1356,9 @@ function renderResume(){
   const r = store.get("resume", null);
   if (!r || !bySlug[r.slug]) { box.style.display = "none"; box.innerHTML = ""; return; }
   const col = bySlug[r.slug];
-  const label = col.books && r.book
+  const label = r.slug === "musnad-ahmad"
+    ? `${shortCollectionName(col)} · ${musnadAhmadSection(r.n)} · ${r.n}`
+    : col.books && r.book
     ? `${shortCollectionName(col)} · ${bookLabel(col.slug, r.book)} · ${r.n}`
     : `${shortCollectionName(col)} · ${r.n}`;
   box.style.display = "block";
@@ -1776,6 +1808,9 @@ async function fillBookJump(navToken = currentNavToken){
   if (!isCurrentNavigation(navToken)) return false;
   sel.classList.remove("hidden");
   sel.innerHTML = idx.books.map(b => {
+    if (col.slug === "musnad-ahmad") {
+      return `<option value="${b.book}">Part ${b.book} · ${musnadPartSections(b.from, b.to)} · ${b.count}</option>`;
+    }
     const title = b.title || bookTitle(col.slug, b.book);
     return `<option value="${b.book}">Book ${b.book}${title ? ` · ${title}` : ""} · ${b.count}</option>`;
   }).join("");
@@ -2245,8 +2280,11 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
 
   const col = bySlug[slug];
   const wrap = document.createElement("div");
+  const reference = slug === "musnad-ahmad"
+    ? `${musnadAhmadSection(n)} · ${n}`
+    : state.book ? `${bookLabel(slug, state.book)} · ${n}` : n;
   wrap.innerHTML = `
-    <div class="stage-head"><div class="collection">${col.en}</div><div class="ref">${state.book ? `${bookLabel(slug, state.book)} · ${n}` : n}</div></div>`;
+    <div class="stage-head"><div class="collection">${col.en}</div><div class="ref">${reference}</div></div>`;
   if (!audioAvailable && hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability warn";
