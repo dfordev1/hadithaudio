@@ -282,6 +282,15 @@
   }
   .methodology p:last-child { margin-bottom:0; }
   .methodology strong { color:var(--muted); font-weight:600; }
+  .site-footer {
+    margin-top:2rem; padding:1.1rem 0 0; border-top:1px solid var(--rule);
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    color:var(--faint); font-size:.76rem;
+  }
+  .site-footer a {
+    color:var(--muted); text-decoration:none; font-weight:600;
+  }
+  .site-footer a:hover { color:var(--accent); text-decoration:underline; }
   .disc {
     margin:2rem 0 0; color:var(--faint); font-size:.72rem; line-height:1.65;
     text-align:left; max-width:36rem;
@@ -487,6 +496,22 @@
     font-size:.76rem; margin-top:10px; padding:0; font-weight:500;
   }
   .copy:hover { color:var(--ink); }
+
+  .report-dialog { width:min(460px,calc(100% - 28px)); border:1px solid var(--line); border-radius:7px; padding:0; color:var(--ink); background:var(--bg); box-shadow:0 18px 55px #0004; }
+  .report-dialog::backdrop { background:#17150f66; }
+  .report-form { padding:1.25rem; display:grid; gap:.9rem; }
+  .report-form h2 { margin:0; font-size:1.25rem; }
+  .report-form .report-context { color:var(--muted); font-size:.86rem; }
+  .report-form label { display:grid; gap:.35rem; font-size:.86rem; font-weight:650; }
+  .report-form select,.report-form textarea { width:100%; box-sizing:border-box; padding:.7rem; border:1px solid var(--line); border-radius:5px; color:var(--ink); background:var(--soft); font:inherit; }
+  .report-form textarea { min-height:105px; resize:vertical; }
+  .report-actions { display:flex; justify-content:flex-end; gap:.55rem; }
+  .report-actions button { border:1px solid var(--line); border-radius:5px; padding:.55rem .8rem; background:transparent; color:var(--muted); font:inherit; cursor:pointer; }
+  .report-actions .primary { background:var(--soft); color:var(--ink); border-color:var(--line); font-weight:600; }
+  .report-message { min-height:1.2em; color:var(--muted); font-size:.86rem; }
+  .report-inline { display:flex; justify-content:center; padding:.7rem 0 0; }
+  .report-inline button { border:0; padding:.2rem .35rem; color:var(--faint); background:transparent; font:inherit; font-size:.74rem; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+  .report-inline button:hover { color:var(--ink); }
 
   /* Edge prev / next — quiet persistent nav (no bounce / no CTA) */
   .navedge {
@@ -726,6 +751,10 @@
     <p><strong>Human qārī audio.</strong> Where a major collection has synced playback (Bukhari, Muslim, Abi Dawud, and others as alignment lands), the voice is a real opensource / internet recitation. Words are timestamped to the Arabic text — including HUSX tokens where that corpus is used.</p>
     <p><strong>Forty-hadith audio.</strong> An-Nawawi’s Forty now uses a human Arabic recitation with synchronized full-text playback. The Forty Hadith Qudsi and Shah Waliullah’s Forty currently use synthetic audio with word timings.</p>
   </section>
+  <footer class="site-footer">
+    <span>hadith.to</span>
+    <a href="https://api.hadith.to/v1" target="_blank" rel="noopener">API &amp; developer documentation ↗</a>
+  </footer>
 </div>
 
 <div id="reader" class="hidden">
@@ -790,9 +819,38 @@
   </div>
 </div>
 
+<dialog class="report-dialog" id="reportDialog">
+  <form class="report-form" id="reportForm" method="dialog">
+    <h2>Report an error</h2>
+    <div class="report-context" id="reportContext"></div>
+    <label>What is wrong?
+      <select id="reportType" required>
+        <option value="arabic_text">Wrong Arabic text</option>
+        <option value="audio_unavailable">Audio does not play</option>
+        <option value="wrong_audio">Audio belongs to another hadith</option>
+        <option value="audio_cut">Audio is missing or cut</option>
+        <option value="word_timing">Word highlighting or timing</option>
+        <option value="metadata">Book, chapter, or hadith number</option>
+        <option value="translation">Translation error</option>
+        <option value="other">Other problem</option>
+      </select>
+    </label>
+    <label>Severity
+      <select id="reportSeverity"><option value="normal">Normal</option><option value="low">Minor</option><option value="high">Serious</option><option value="critical">Critical</option></select>
+    </label>
+    <label>Details <span style="font-weight:400;color:var(--muted)">(optional)</span>
+      <textarea id="reportNote" maxlength="2000" placeholder="Briefly describe the problem…"></textarea>
+    </label>
+    <input id="reportWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <div class="report-message" id="reportMessage" role="status" aria-live="polite"></div>
+    <div class="report-actions"><button type="button" id="reportCancel">Cancel</button><button type="submit" class="primary" id="reportSubmit">Send report</button></div>
+  </form>
+</dialog>
+
 <script>
 const SITE_ORIGIN = "https://www.hadith.to";
 const RECITATION_CDN = "https://cdn.hadith.to/recitation";
+const REPORTS_API = "https://hadith-error-reports.quran-wbw.workers.dev";
 function publicHadithUrl(slug, n){ return `${SITE_ORIGIN}/#${slug}:${n}`; }
 function setPublicMetadata(title, slug=null, n=null){
   document.title = title;
@@ -810,6 +868,70 @@ function trackSiteEvent(name, data={}){
 }
 addEventListener("error", () => trackSiteEvent("reader_runtime_error", { source:"window" }));
 addEventListener("unhandledrejection", () => trackSiteEvent("reader_runtime_error", { source:"promise" }));
+
+function reportTimingUrl(slug, n){
+  const col = bySlug[slug];
+  if (col && !col.books) return `${SITE_ORIGIN}/recitation/${col.corpus}.${String(n).padStart(3,"0")}.json`;
+  const stem = slug === "musnad-ahmad" ? `r${String(n).padStart(5,"0")}` : `n${String(n).padStart(4,"0")}`;
+  return slug === "musnad-ahmad"
+    ? `https://cdn.hadith.to/musnad-ahmad-timings/${stem}.json`
+    : `https://cdn.hadith.to/${slug}-timings/${stem}.json`;
+}
+function openReportDialog(){
+  setReaderToolsOpen(false);
+  const col = bySlug[state.slug];
+  if (!col || !state.n) return;
+  const token = activeIdx >= 0 ? currentTokens[activeIdx] : null;
+  document.getElementById("reportContext").textContent = `${col.en} · Hadith ${state.n}${token?.text ? ` · ${token.text} at ${fmt(audio.currentTime || 0)}` : ""}`;
+  document.getElementById("reportMessage").textContent = "";
+  document.getElementById("reportDialog").showModal();
+}
+document.getElementById("reportCancel").onclick = () => document.getElementById("reportDialog").close();
+document.getElementById("reportForm").onsubmit = async (event) => {
+  event.preventDefault();
+  const message = document.getElementById("reportMessage");
+  const submit = document.getElementById("reportSubmit");
+  message.textContent = "Sending…"; submit.disabled = true;
+  try {
+    const tokenIndex = activeIdx >= 0 ? activeIdx : currentTokens.findIndex(t => isTimedToken(t) && (audio.currentTime || 0) >= t.start && (audio.currentTime || 0) <= t.end + .15);
+    const token = tokenIndex >= 0 ? currentTokens[tokenIndex] : null;
+    const context = tokenIndex >= 0 ? currentTokens.slice(Math.max(0,tokenIndex-3),tokenIndex+4).map(t => ({id:t.id||"",text:t.text||"",start:t.start,end:t.end})) : [];
+    const response = await fetch(`${REPORTS_API}/v1/reports`, {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        collection:state.slug, hadithNumber:state.n, bookNumber:state.book || null,
+        errorType:document.getElementById("reportType").value,
+        severity:document.getElementById("reportSeverity").value,
+        note:document.getElementById("reportNote").value,
+        website:document.getElementById("reportWebsite").value,
+        pageUrl:publicHadithUrl(state.slug,state.n),
+        audioUrl:audioLogicalUrl || null,
+        timingUrl:reportTimingUrl(state.slug,state.n),
+        playbackTime:Number.isFinite(audio.currentTime) ? audio.currentTime : null,
+        tokenId:token?.id || null, tokenText:token?.text || null,
+        tokenStart:token?.start ?? null, tokenEnd:token?.end ?? null,
+        context,
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || "Could not send report");
+    message.textContent = `Thank you. Report ${result.reportId.slice(0,8)} was received.`;
+    document.getElementById("reportNote").value = "";
+    trackSiteEvent("error_report_sent", { collection:state.slug, report:String(state.n), type:document.getElementById("reportType").value });
+    setTimeout(() => document.getElementById("reportDialog").close(), 1600);
+  } catch (error) { message.textContent = `${error.message}. Please try again.`; }
+  finally { submit.disabled = false; }
+};
+function appendReportAction(parent){
+  const area = document.createElement("div");
+  area.className = "report-inline";
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = "Report an error";
+  button.onclick = openReportDialog;
+  area.appendChild(button);
+  parent.appendChild(area);
+}
 const COLLECTIONS = [
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
@@ -2208,6 +2330,7 @@ async function openForty(col, n, navToken = currentNavToken){
   };
   rb.appendChild(copy);
   wrap.appendChild(rb);
+  appendReportAction(wrap);
 
   if (!isCurrentNavigation(navToken)) return false;
   if (!isCurrentNavigation(navToken)) return false;
@@ -2361,6 +2484,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   };
   rb.appendChild(copy);
   wrap.appendChild(rb);
+  appendReportAction(wrap);
 
   stage.innerHTML = ""; stage.appendChild(wrap);
   revealStage();
