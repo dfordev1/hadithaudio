@@ -2242,7 +2242,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     n = data0.hadith[0].n;
   }
   const bookData = await ensureBookOf(slug, bookMeta.book);
-  let h = bookData.hadith.find(x => x.n === n);
+  let h = bookData.hadith.find(x => String(x.n) === String(n));
   if (!h) { h = bookData.hadith[0]; n = h.n; }
 
   const [gloss, timing, officialTranslation] = await Promise.all([
