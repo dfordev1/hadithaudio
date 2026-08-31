@@ -1911,7 +1911,7 @@ async function resolveBookNeighbors(slug, n, idx, currentBookNumber, currentBook
   const books = idx?.books || [];
   const bookPos = books.findIndex(b => Number(b.book) === Number(currentBookNumber));
   const hadithNumbers = (currentBookData?.hadith || []).map(h => h.n);
-  const i = hadithNumbers.indexOf(n);
+  const i = hadithNumbers.findIndex(value => String(value) === String(n));
   let prev = i > 0 ? hadithNumbers[i - 1] : null;
   let next = i >= 0 && i < hadithNumbers.length - 1 ? hadithNumbers[i + 1] : null;
   for (let pos = bookPos - 1; prev == null && pos >= 0; pos--) {
