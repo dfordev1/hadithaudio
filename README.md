@@ -4,14 +4,17 @@ A lightweight static reader for the Forty Hadith of an-Nawawi: synced Arabic
 recitation with word-level highlighting, English translation side by side, and
 cross-references that deep-link to sunnah.com.
 
-No framework, no build step — a single `public/index.html` over static JSON and
-audio. Deployed through Vercel at **www.hadith.to**.
+No client framework — a static HTML reader with a small CSS and JavaScript UI layer
+over static JSON and audio. Deployed through Vercel at **www.hadith.to**.
 
 ## What's here
 
 | path | |
 |---|---|
-| `public/index.html` | the whole app (one file, no dependencies) |
+| `public/index.html` | reader, collection loading, and audio playback |
+| `public/reader-ui.css` | responsive sacred reading theme |
+| `public/reader-ui.js` | library tabs, saved passages, search, and focused reading |
+| `public/fonts/` | bundled Source Serif 4 and Scheherazade New, with SIL OFL licences |
 | `public/recitation/` | 42 hadith: `.mp3` recitation + `.json` word-timing map |
 | `public/translation/en.json` | English sidecar, aligned per report |
 | `public/refs/nawawi.json` | cross-collection reference map (Bukhari, Muslim) |
@@ -31,6 +34,19 @@ versioned there, presentation here.
 - **Deep links** — `#nawawi40:13` addresses one hadith, shareable.
 - **Reader settings** — text size, light / sepia / dark, saved locally.
 - **sunnah.com cross-references** with their published numbering.
+
+## Website UI
+
+The collection library uses a stone palette, bronze accents, Source Serif 4, and
+Scheherazade New. Light, sepia, and dark themes share the same responsive layout.
+Reading mode keeps Arabic central; Show meaning reveals the selected English or
+Urdu translation. Study retains the existing word gloss and parallel controls.
+
+Saved passages and appearance preferences stay on the device. Recent passages
+and phrase search cover passages opened during the current session; exact hadith
+number lookup uses the selected collection's existing data. Focus, copy, and
+previous/next controls operate on the current real passage. The corpus, source
+references, recitation URLs, and audio timing pipeline are unchanged.
 
 ## Provenance & attribution
 

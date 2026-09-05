@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://www.hadith.to/social-card.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Scheherazade+New:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#eef1f3; --bg-deep:#e3e8ec; --ink:#10131a; --ink-soft:#2a3038;
@@ -688,14 +688,19 @@
     .locator .loc-panel { display:contents !important; }
   }
 </style>
+<link rel="stylesheet" href="/reader-ui.css?v=sacred-20260905">
+<meta name="hadith-ui-version" content="sacred-2026-09-05">
 </head>
 <body data-view="landing" data-mode="receive">
+<a class="skip-link" id="skipToContent" href="#landing">Skip to content</a>
 <header class="topbar">
   <div class="in">
-    <div class="brand" id="home" title="All collections">
+    <button type="button" class="brand" id="home" title="All collections" aria-label="All collections">
       <span class="name">hadith<span class="dot">.</span>to</span>
-    </div>
+    </button>
     <div class="sp"></div>
+    <button type="button" class="iconbtn" id="openSearch" title="Search hadith" aria-label="Search hadith"></button>
+    <button type="button" class="iconbtn landing-only" id="openSaved" title="Saved passages" aria-label="Saved passages"></button>
     <button class="iconbtn landing-only" id="gear" title="Text size and appearance" aria-label="Text size and appearance" aria-expanded="false">Aa</button>
     <button type="button" class="mode-link reader-only" id="readingModeBtn" aria-pressed="false" title="Show word gloss and translation">Study</button>
     <div class="reader-tools reader-only" id="readerTools">
@@ -704,6 +709,8 @@
         <button type="button" class="rt-item" id="rtWbw">Word gloss<span class="sub" id="rtWbwSub">Off</span></button>
         <button type="button" class="rt-item" id="rtParallel">Translation column<span class="sub" id="rtParallelSub">Hidden</span></button>
         <button type="button" class="rt-item" id="rtAppearance">Appearance…</button>
+        <button type="button" class="rt-item" id="rtSaved">Saved passages</button>
+        <button type="button" class="rt-item" id="rtFocus">Focused reader</button>
       </div>
     </div>
     <button class="hidden" id="wbwBtn" aria-hidden="true" tabindex="-1">Gloss</button>
@@ -716,7 +723,7 @@
           <div class="setting"><label for="arSize">Arabic size</label><input id="arSize" type="range" min="1.1" max="3.4" step="0.1"><output id="arSizeOut"></output></div>
           <div class="setting"><label for="arLine">Arabic lines</label><input id="arLine" type="range" min="1.55" max="3.2" step="0.05"><output id="arLineOut"></output></div>
           <div class="setting"><label for="wordGap">Space between words</label><input id="wordGap" type="range" min="4" max="96" step="2" aria-describedby="wordGapHint"><output id="wordGapOut"></output></div>
-          <p id="wordGapHint" class="setting-hint">Gap between Arabic words in Receive and Study</p>
+          <p id="wordGapHint" class="setting-hint">Gap between Arabic words in Reading and Study</p>
           </section>
           <section class="setting-section"><h3>Translations</h3>
           <div class="setting"><label for="enSize">English size</label><input id="enSize" type="range" min="0.9" max="1.7" step="0.05"><output id="enSizeOut"></output></div>
@@ -732,20 +739,51 @@
         <div class="settings-foot">
           <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="uthmani">Uthmani Naskh</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
           <button class="settings-reset" id="settingsReset" type="button">Reset reading style</button>
-          <div class="settings-theme theme">Theme <b data-t="light" class="on">Light</b><b data-t="sepia">Sepia</b><b data-t="dark">Dark</b></div>
+          <div class="settings-theme theme">Theme <button type="button" data-t="light" class="on" aria-pressed="true">Light</button><button type="button" data-t="sepia" aria-pressed="false">Sepia</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div>
         </div>
       </div>
     </div>
   </div>
 </header>
 
-<div id="landing">
+<main id="landing" tabindex="-1">
   <div class="hero">
     <div class="ornament" aria-hidden="true"></div>
     <h1 class="hero-brand">hadith<span>.</span>to</h1>
   </div>
   <div class="resume" id="resume"></div>
-  <div class="shelf" id="cards"></div>
+  <div class="home-tabs" role="tablist" aria-label="Your library">
+    <button type="button" id="collectionsTab" data-home-tab="collections" role="tab" aria-selected="true" aria-controls="cards">Collections</button>
+    <button type="button" id="savedTab" data-home-tab="saved" role="tab" aria-selected="false" aria-controls="savedPanel" tabindex="-1">Saved<span class="saved-count" id="savedCount"></span></button>
+    <button type="button" id="recentTab" data-home-tab="recent" role="tab" aria-selected="false" aria-controls="recentPanel" tabindex="-1">Recent</button>
+  </div>
+  <div class="shelf-filters" id="shelfFilters" role="group" aria-label="Filter collections">
+    <button type="button" data-shelf-filter="all" aria-pressed="true">All collections</button>
+    <button type="button" data-shelf-filter="six" aria-pressed="false">The six books</button>
+    <button type="button" data-shelf-filter="forty" aria-pressed="false">The forties</button>
+    <button type="button" data-shelf-filter="other" aria-pressed="false">Other collections</button>
+  </div>
+  <div class="shelf" id="cards" role="tabpanel" aria-labelledby="collectionsTab"></div>
+  <div class="saved-list" id="savedPanel" role="tabpanel" aria-labelledby="savedTab" hidden></div>
+  <div class="saved-list" id="recentPanel" role="tabpanel" aria-labelledby="recentTab" hidden></div>
+  <section class="search-page" id="searchPanel" aria-labelledby="searchTitle" hidden>
+    <h1 id="searchTitle">Find a passage.</h1>
+    <form id="searchForm" role="search">
+      <label for="searchInput">Search hadith</label>
+      <div class="search-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+        <input id="searchInput" type="search" placeholder="A hadith number, word, or phrase…" autocomplete="off" aria-describedby="searchHint">
+        <button type="button" id="clearSearch" aria-label="Clear search">×</button>
+      </div>
+      <div class="search-options">
+        <select id="searchCollection" aria-label="Search collection"></select>
+        <button type="submit" id="openNumber" hidden>Open hadith →</button>
+      </div>
+      <p class="search-hint" id="searchHint">Enter an exact hadith number to open it in a collection. Search words and phrases in passages you’ve opened this session.</p>
+    </form>
+    <p class="search-status" id="searchStatus" role="status" aria-live="polite"></p>
+    <div class="search-results" id="searchResults"></div>
+  </section>
   <section class="methodology" id="methodology" aria-labelledby="methodology-title">
     <h2 id="methodology-title">Methodology</h2>
     <p><strong>Human qārī audio.</strong> Where a major collection has synced playback (Bukhari, Muslim, Abi Dawud, and others as alignment lands), the voice is a real opensource / internet recitation. Words are timestamped to the Arabic text — including HUSX tokens where that corpus is used.</p>
@@ -755,9 +793,9 @@
     <span>hadith.to</span>
     <a href="https://api.hadith.to/v1" target="_blank" rel="noopener">API &amp; developer documentation ↗</a>
   </footer>
-</div>
+</main>
 
-<div id="reader" class="hidden">
+<main id="reader" class="hidden">
   <div class="locator compact" id="locator">
     <div class="in">
       <button class="loc-home" id="back">‹ Collections</button>
@@ -777,7 +815,7 @@
     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
   </button>
 
-  <div class="stage" id="stage">
+  <div class="stage" id="stage" tabindex="-1">
     <div class="status" role="status" aria-live="polite">Loading hadith…</div>
   </div>
 
@@ -817,7 +855,10 @@
       </div>
     </div>
   </div>
-</div>
+</main>
+
+<button type="button" class="focus-exit" id="focusExit" hidden>Exit focused reader · Esc</button>
+<div class="ui-toast" id="uiToast" role="status" aria-live="polite" hidden></div>
 
 <dialog class="report-dialog" id="reportDialog">
   <form class="report-form" id="reportForm" method="dialog">
@@ -1236,7 +1277,7 @@ function effectiveTimingTokens(timing){
 
 const store = {
   get:(k,d)=>{ try { return JSON.parse(localStorage.getItem("malti:"+k)) ?? d; } catch { return d; } },
-  set:(k,v)=> localStorage.setItem("malti:"+k, JSON.stringify(v)),
+  set:(k,v)=>{ try { localStorage.setItem("malti:"+k, JSON.stringify(v)); return true; } catch { return false; } },
 };
 const j = async (u) => (await fetch(u, { cache:"no-cache" })).json();
 const jopt = async (u) => { try { return await j(u); } catch { return null; } };
@@ -1244,15 +1285,15 @@ const fmt = s => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${String(Math.floor(s%
 
 /* ---------- settings ---------- */
 /* Independent size axes — each control only writes its own CSS vars */
-let enSz = store.get("ensz", 1.15);
-let arSz = store.get("arsz", 1.9);
+let enSz = store.get("ensz", 1.05);
+let arSz = store.get("arsz", 2.1);
 let urSz = store.get("ursz", 0.8);
 let spSz = store.get("spsz", 18);
-let arLine = store.get("arlh", 2.55);
-let enLine = store.get("enlh", 1.85);
+let arLine = store.get("arlh", 2.35);
+let enLine = store.get("enlh", 1.75);
 let urLine = store.get("urlh", 1.9);
-let glossSz = store.get("glosssz", .72);
-let wordPad = store.get("wordpad", 7);
+let glossSz = store.get("glosssz", .85);
+let wordPad = store.get("wordpad", 6);
 let arFont = store.get("arfont", "scheherazade");
 const AR_FONTS = {
   uthmani:'"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif',
@@ -1311,13 +1352,16 @@ function applyFont(){
 });
 document.getElementById("arFont").onchange = e => { arFont = e.target.value; applyFont(); };
 document.getElementById("settingsReset").onclick = () => {
-  enSz = 1.08; arSz = 1.95; urSz = .8; spSz = 18; arLine = 2.45; enLine = 1.75; urLine = 1.9; glossSz = .72; wordPad = 6; arFont = "scheherazade"; applyFont();
+  enSz = 1.05; arSz = 2.1; urSz = .8; spSz = 18; arLine = 2.35; enLine = 1.75; urLine = 1.9; glossSz = .85; wordPad = 6; arFont = "scheherazade"; applyFont();
 };
 function applyTheme(t){
   document.documentElement.dataset.theme = t; store.set("theme", t);
-  document.querySelectorAll(".theme b").forEach(b => b.classList.toggle("on", b.dataset.t === t));
+  document.querySelectorAll(".theme [data-t]").forEach(b => {
+    b.classList.toggle("on", b.dataset.t === t);
+    b.setAttribute("aria-pressed", String(b.dataset.t === t));
+  });
 }
-document.querySelectorAll(".theme b").forEach(b => b.onclick = () => applyTheme(b.dataset.t));
+document.querySelectorAll(".theme [data-t]").forEach(b => b.onclick = () => applyTheme(b.dataset.t));
 const gearBtn = document.getElementById("gear");
 const settingsEl = document.getElementById("settings");
 function setSettingsOpen(open){
@@ -1439,7 +1483,7 @@ function applyReadingMode(persist=true){
   const btn = document.getElementById("readingModeBtn");
   if (btn) {
     const isStudy = readingMode === "study";
-    btn.textContent = isStudy ? "Receive" : "Study";
+    btn.textContent = isStudy ? "Reading" : "Study";
     btn.setAttribute("aria-pressed", isStudy ? "true" : "false");
     btn.title = isStudy ? "Return to listening mode" : "Show word gloss and translation";
   }
@@ -1494,13 +1538,14 @@ const cards = document.getElementById("cards");
 for (const c of COLLECTIONS) {
   const a = document.createElement("a");
   a.href = `#${c.slug}:1`;
+  a.dataset.collection = c.slug;
   a.innerHTML = `
     <div>
-      <div class="ar">${c.ar}</div>
-    </div>
-    <div class="side">
       <div class="en">${c.en}</div>
       <div class="meta">${c.count.toLocaleString()} hadith · ${shelfAudioMeta(c)}</div>
+    </div>
+    <div class="side">
+      <div class="ar" lang="ar" dir="rtl">${c.ar}</div>
     </div>`;
   cards.appendChild(a);
 }
@@ -1587,6 +1632,7 @@ function revokeAudioBlobUrl(url){
 
 function setPlayingUI(playing){
   document.body.dataset.playing = playing ? "1" : "0";
+  playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
   playBtn.innerHTML = playing
     ? `<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>`
     : `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
@@ -1999,7 +2045,8 @@ document.getElementById("nextBtn").onclick = () => {
 };
 addEventListener("keydown", e => {
   if (document.getElementById("reader").classList.contains("hidden")) return;
-  if (e.target.matches("input,textarea,select")) return;
+  if (e.defaultPrevented || e.target.closest("input,textarea,select,button,a,[role=slider],[role=button],[contenteditable=true],dialog")) return;
+  if (settingsEl.classList.contains("open") || readerToolsPanel.classList.contains("open") || dockMorePanel.classList.contains("open")) return;
   if (document.body.dataset.silence === "1" && e.key === "ArrowRight") return;
   if (e.key === "ArrowLeft") document.getElementById("prevBtn").click();
   if (e.key === "ArrowRight") document.getElementById("nextBtn").click();
@@ -2208,6 +2255,7 @@ async function fadeStageOut(){
 function revealStage(){
   const stage = document.getElementById("stage");
   stage.classList.remove("is-fading");
+  dispatchEvent(new Event("hadith:rendered"));
   if (prefersReducedMotion()) return;
   stage.classList.add("is-fading");
   requestAnimationFrame(() => requestAnimationFrame(() => stage.classList.remove("is-fading")));
@@ -2367,6 +2415,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const bookData = await ensureBookOf(slug, bookMeta.book);
   let h = bookData.hadith.find(x => String(x.n) === String(n));
   if (!h) { h = bookData.hadith[0]; n = h.n; }
+  n = h.n;
 
   const [gloss, timing, officialTranslation] = await Promise.all([
     jopt(`gloss/${slug}-${n}.json`),
@@ -2509,7 +2558,7 @@ async function openHadith(slug, n, navToken = currentNavToken){
   }
   syncReaderToolsUI();
   try {
-    if (col.books) await openBookHadith(slug, Number(n) || 1, navToken);
+    if (col.books) await openBookHadith(slug, String(n || 1).toLowerCase(), navToken);
     else {
       n = Number(n) || 1;
       if (n < 1) n = 1;
@@ -2534,6 +2583,7 @@ async function showLanding(navToken = currentNavToken){
   setPublicMetadata("hadith.to — Read & Listen");
   renderResume();
   scrollTo(0, 0);
+  dispatchEvent(new Event("hadith:landing"));
 }
 
 function route(){
@@ -2553,6 +2603,7 @@ function route(){
 addEventListener("hashchange", route);
 route();
 </script>
+<script src="/reader-ui.js?v=sacred-20260905"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
