@@ -177,10 +177,41 @@
     }
     return searchData.get(slug);
   }
-  function appendSearchRecord(record, language) {
+  function appendArabicSnippet(element, text, matchStart, queryLength) {
+    const words = text.trim().split(/\s+/).filter(word => normalize(word));
+    let first = 0;
+    let last = 0;
+    if (matchStart >= 0) {
+      let offset = 0;
+      const matchEnd = matchStart + queryLength;
+      for (const [index, word] of words.entries()) {
+        const end = offset + normalize(word).length;
+        if (end <= matchStart) first = index + 1;
+        if (offset < matchEnd) last = index + 1;
+        else break;
+        offset = end + 1;
+      }
+    }
+    const start = Math.max(0, first - 3);
+    const end = Math.min(words.length, matchStart < 0 ? 8 : last + 3);
+    const before = words.slice(start, first).join(" ");
+    const after = words.slice(last, end).join(" ");
+    if (start > 0) element.append("… ");
+    if (before) element.append(before + " ");
+    if (last > first) {
+      const highlight = document.createElement("mark");
+      highlight.textContent = words.slice(first, last).join(" ");
+      element.append(highlight);
+      if (after) element.append(" ");
+    }
+    if (after) element.append(after);
+    if (end < words.length) element.append(" …");
+  }
+  function appendSearchRecord(record, language, arabicMatch, queryLength) {
     const link = document.createElement("a"); link.className = "search-result"; link.href = `#${refKey(record)}`;
     const reference = document.createElement("strong"); reference.textContent = `${bySlug[record.slug].en} · Hadith ${record.n}`;
-    const arabic = document.createElement("p"); arabic.className = "ar"; arabic.lang = "ar"; arabic.dir = "rtl"; arabic.textContent = record.arabic.split(/\s+/).slice(0,24).join(" ");
+    const arabic = document.createElement("p"); arabic.className = "ar"; arabic.lang = "ar"; arabic.dir = "rtl";
+    appendArabicSnippet(arabic, record.arabic, arabicMatch, queryLength);
     const meaning = document.createElement("p"); meaning.className = "en"; meaning.lang = language;
     meaning.dir = language === "ur" ? "rtl" : "ltr";
     meaning.textContent = (language === "ur" ? record.urdu : record.english).slice(0,240);
@@ -206,9 +237,10 @@
         for (const [n, arabic, english, urdu] of records) {
           const matchesEnglish = normalize(english).includes(query);
           const matchesUrdu = normalize(urdu).includes(query);
-          if (!matchesEnglish && !matchesUrdu && !normalize(arabic).includes(query)) continue;
+          const arabicMatch = normalize(arabic).indexOf(query);
+          if (!matchesEnglish && !matchesUrdu && arabicMatch < 0) continue;
           if (++total <= maxSearchResults) {
-            appendSearchRecord({slug,n,arabic,english,urdu}, matchesUrdu && !matchesEnglish ? "ur" : "en");
+            appendSearchRecord({slug,n,arabic,english,urdu}, matchesUrdu && !matchesEnglish ? "ur" : "en", arabicMatch, query.length);
           }
         }
         $("searchStatus").textContent = total > maxSearchResults
