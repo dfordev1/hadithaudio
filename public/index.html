@@ -849,6 +849,7 @@
             <div class="dock-modes">
               <button type="button" class="mode" id="autoplayBtn" aria-pressed="true" title="Play the next hadith when this one ends">Autoplay</button>
               <button type="button" class="mode" id="repeatBtn" aria-pressed="false" title="Loop this hadith">Repeat</button>
+              <button type="button" class="mode" id="wordOnlyBtn" aria-pressed="false" title="Play only the tapped Arabic word">Word only</button>
             </div>
           </div>
         </div>
@@ -1605,6 +1606,10 @@ function clampTime(next){
 }
 function seekAudio(next){
   if (!audio.src) return;
+  if (wordEnd !== null) {
+    clearWordPlayback();
+    armAudioEndedListener();
+  }
   const time = clampTime(next);
   audio.currentTime = time;
   syncWordHighlight(time);
@@ -1638,6 +1643,8 @@ function setPlayingUI(playing){
     : `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
 }
 playBtn.onclick = () => {
+  ++playRequestToken;
+  clearWordPlayback();
   armAudioEndedListener();
   if (audio.paused) audio.play().catch(() => {});
   else audio.pause();
@@ -1657,12 +1664,28 @@ function listenFlag(key, fallback){
 }
 let autoplayNext = listenFlag("autoplay", true);
 let repeatOne = listenFlag("repeat", false);
+let wordOnly = listenFlag("wordOnly", false);
+let wordEnd = null;
+let wordPlaybackTimer;
 let continuePlayAfterLoad = false;
 let ignoreAudioEnded = false;
 let endSilenceTimer = null;
 const AUTOPLAY_GAP_MS = 1600; // ~1.5–2s stillness before next
 const autoplayBtn = document.getElementById("autoplayBtn");
 const repeatBtn = document.getElementById("repeatBtn");
+const wordOnlyBtn = document.getElementById("wordOnlyBtn");
+function clearWordPlayback(){
+  clearInterval(wordPlaybackTimer);
+  wordEnd = null;
+}
+function stopAtWordEnd(){
+  if (wordEnd === null || audio.seeking || audio.currentTime < wordEnd) return;
+  const end = wordEnd;
+  clearWordPlayback();
+  audio.pause();
+  audio.currentTime = end;
+  syncPlaybackStatus();
+}
 function clearEndSilence(){
   clearTimeout(endSilenceTimer);
   endSilenceTimer = null;
@@ -1681,6 +1704,8 @@ function syncListenModesUI(){
   autoplayBtn.setAttribute("aria-pressed", autoplayNext ? "true" : "false");
   repeatBtn.classList.toggle("on", repeatOne);
   repeatBtn.setAttribute("aria-pressed", repeatOne ? "true" : "false");
+  wordOnlyBtn.classList.toggle("on", wordOnly);
+  wordOnlyBtn.setAttribute("aria-pressed", String(wordOnly));
 }
 syncListenModesUI();
 if (autoplayBtn) autoplayBtn.onclick = () => {
@@ -1695,12 +1720,21 @@ if (repeatBtn) repeatBtn.onclick = () => {
   store.set("repeat", repeatOne);
   syncListenModesUI();
 };
+wordOnlyBtn.onclick = () => {
+  wordOnly = !wordOnly;
+  store.set("wordOnly", wordOnly);
+  syncListenModesUI();
+};
 
 audio.addEventListener("play", () => {
   clearEndSilence();
   setPlayingUI(true);
 });
-audio.addEventListener("pause", () => setPlayingUI(false));
+audio.addEventListener("pause", () => {
+  if (!audio.paused) return;
+  clearWordPlayback();
+  setPlayingUI(false);
+});
 audio.addEventListener("ended", () => {
   setPlayingUI(false);
   // Ignore emptied/reload/`src` reassignment ends — those were replaying as "Repeat"
@@ -1807,6 +1841,7 @@ function syncWordHighlight(t = audio.currentTime){
 }
 audio.addEventListener("timeupdate", () => {
   if (audioSessionToken !== currentNavToken) return;
+  stopAtWordEnd();
   const t = audio.currentTime;
   syncPlaybackStatus();
   if (activeIdx >= 0 && currentTokens[activeIdx] &&
@@ -1862,20 +1897,32 @@ async function prepareAudio(url, navToken = currentNavToken){
 function armAudioEndedListener(navToken = currentNavToken){
   if (isCurrentNavigation(navToken)) ignoreAudioEnded = false;
 }
-function playFrom(time){
+function playFrom(time, end){
+  if (wordOnly && (!Number.isFinite(end) || end <= time)) return;
+  clearWordPlayback();
   const requestToken = ++playRequestToken;
   const navToken = currentNavToken;
   const start = () => {
     if (requestToken !== playRequestToken || navToken !== currentNavToken) return;
-    armAudioEndedListener(navToken);
+    if (wordOnly && (!Number.isFinite(end) || end <= time)) return;
+    if (wordOnly) {
+      ignoreAudioEnded = true;
+      wordEnd = clampTime(end);
+      wordPlaybackTimer = setInterval(stopAtWordEnd, 20);
+    } else {
+      armAudioEndedListener(navToken);
+    }
     audio.currentTime = time;
     syncWordHighlight(time);
-    audio.play().catch(() => {});
+    audio.play().catch(() => {
+      if (requestToken === playRequestToken) clearWordPlayback();
+    });
   };
   if (audio.readyState >= 1) start();
   else audio.addEventListener("loadedmetadata", start, { once:true });
 }
 function stopAudio(){
+  clearWordPlayback();
   clearEndSilence();
   ignoreAudioEnded = true;
   audio.pause();
@@ -2152,7 +2199,10 @@ function buildArabic(tokens, gloss, clickable){
     s.querySelector(".t").textContent = text;
     s.querySelector(".g-en").textContent = g.en || "";
     s.querySelector(".g-ur").textContent = g.ur || "";
-    if (clickable && typeof first.start === "number") s.onclick = () => playFrom(first.start);
+    if (clickable && Number.isFinite(first.start)) {
+      const last = tokens[i + run - 1];
+      s.onclick = () => playFrom(first.start, last.end);
+    }
     attachLongPressGrammar(s, text, g);
     arDiv.append(s, document.createTextNode(" "));
     for (let k = 0; k < run; k++) spans.push(s); // keep index alignment for audio highlight
