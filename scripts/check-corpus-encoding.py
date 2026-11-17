@@ -5,14 +5,10 @@ A U+FFFD marks a byte lost in an encoding conversion. It silently corrupts a
 canonical word, and because glosses are keyed by token id rather than by text a
 corrupted token can still carry a gloss, so nothing downstream reports it.
 
-76 occurrences already exist and are inherited from upstream
-fawazahmed0/hadith-api (verified identical at the pinned commit and at tag 1),
-so this check works against a recorded baseline: it fails on anything new, and
-also fails when a baseline entry disappears without the baseline being updated,
-so genuine repairs stay deliberate and reviewed.
+Known upstream occurrences are recorded in a baseline. The check fails on
+new findings and on removals that have not been reflected in the baseline.
 
-Repairs must come from an identified reliable edition with provenance recorded
-(handoff section 18). Do not guess replacements from context.
+Record the source for each deliberate repair before updating the baseline.
 
 Usage:
     python scripts/check-corpus-encoding.py
@@ -27,7 +23,10 @@ import os
 import sys
 
 FFFD = "�"
-COLLECTIONS = ["bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah", "malik"]
+COLLECTIONS = (
+    "bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah",
+    "malik", "riyad", "musnad-ahmad",
+)
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUBLIC_DIR = os.path.join(REPO_ROOT, "public")
 BASELINE_PATH = os.path.join(REPO_ROOT, "qc", "corpus-encoding-baseline.json")

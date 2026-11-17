@@ -20,3 +20,5 @@ jobs:
         run: python scripts/check-repository-size.py
       - name: Validate compact gloss manifest
         run: python scripts/validate-compact-gloss-data.py
+      - name: Check Arabic corpus encoding
+        run: python scripts/check-corpus-encoding.py
