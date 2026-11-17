@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "python scripts/build-gloss-lazy.py --if-missing",
+  "buildCommand": "python scripts/build-gloss-lazy.py --if-missing && python scripts/build-search.py",
   "outputDirectory": "public",
   "cleanUrls": true,
   "redirects": [

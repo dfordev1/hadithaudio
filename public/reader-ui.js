@@ -17,13 +17,13 @@
   const validRef = ref => ref && typeof ref.slug === "string" && Object.hasOwn(bySlug, ref.slug) && /^\d+[a-z]?$/i.test(String(ref.n));
   const rawSaved = store.get("savedHadith", []);
   let saved = Array.isArray(rawSaved) ? rawSaved.filter(validRef).map(r => ({slug:r.slug, n:String(r.n)})) : [];
-  const opened = new Map();
   let recent = [];
   let searchEpoch = 0;
+  let searchTimer;
   let toastTimer;
   let focusReturn = null;
   const six = new Set(["bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah"]);
-  const normalize = text => String(text).normalize("NFKC").toLowerCase().replace(/[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed\u0640]/g, "").replace(/[أإآٱ]/g, "ا").trim();
+  const normalize = text => String(text).normalize("NFKC").toLowerCase().replace(/[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed\u0640]/g, "").replace(/[أإآٱ]/g, "ا").replace(/\s+/g, " ").trim();
   function announce(message) {
     const toast = $("uiToast"); toast.textContent = message; toast.hidden = false;
     clearTimeout(toastTimer); toastTimer = setTimeout(() => { toast.hidden = true; }, 2400);
@@ -134,9 +134,6 @@
     if (!validRef(state) || !$("stage").querySelector(".arabic")) return;
     const ref = {slug:state.slug,n:String(state.n)}, key = refKey(ref);
     recent = [ref, ...recent.filter(r => refKey(r) !== key)].slice(0,50);
-    const record = { ...ref, arabic:[...$("stage").querySelectorAll(".arabic .t")].map(x => x.textContent).join(" "),
-      english:$("stage").querySelector(".english")?.textContent || "", urdu:$("stage").querySelector(".urdu")?.textContent || "" };
-    opened.set(key, record);
     if ($("stage").querySelector(".reading-actions")) { syncSaveButtons(); return; }
     document.body.dataset.showMeaning = "false";
     const actions = document.createElement("div"); actions.className = "reading-actions";
@@ -163,22 +160,66 @@
   }
 
   const searchCollection = $("searchCollection");
+  const searchData = new Map();
+  const maxSearchResults = 50;
   COLLECTIONS.forEach(c => { const option = document.createElement("option"); option.value = c.slug; option.textContent = c.en; searchCollection.append(option); });
-  function appendSearchRecord(record) {
+  function loadSearchData(slug) {
+    if (!searchData.has(slug)) {
+      const data = fetch("/search-data/" + slug + ".json.gz").then(response => {
+        if (!response.ok) throw new Error("Search data request failed");
+        const stream = response.body.pipeThrough(new DecompressionStream("gzip"));
+        return new Response(stream).json();
+      }).catch(error => {
+        searchData.delete(slug);
+        throw error;
+      });
+      searchData.set(slug, data);
+    }
+    return searchData.get(slug);
+  }
+  function appendSearchRecord(record, language) {
     const link = document.createElement("a"); link.className = "search-result"; link.href = `#${refKey(record)}`;
     const reference = document.createElement("strong"); reference.textContent = `${bySlug[record.slug].en} · Hadith ${record.n}`;
     const arabic = document.createElement("p"); arabic.className = "ar"; arabic.lang = "ar"; arabic.dir = "rtl"; arabic.textContent = record.arabic.split(/\s+/).slice(0,24).join(" ");
-    const meaning = document.createElement("p"); meaning.className = "en"; meaning.textContent = record.english.slice(0,240);
-    link.append(reference,arabic,meaning); $("searchResults").append(link);
+    const meaning = document.createElement("p"); meaning.className = "en"; meaning.lang = language;
+    meaning.dir = language === "ur" ? "rtl" : "ltr";
+    meaning.textContent = (language === "ur" ? record.urdu : record.english).slice(0,240);
+    link.append(reference,arabic);
+    if (meaning.textContent) link.append(meaning);
+    $("searchResults").append(link);
   }
   function renderSearch() {
-    ++searchEpoch; $("openNumber").disabled = false;
+    clearTimeout(searchTimer);
+    const epoch = ++searchEpoch;
+    $("openNumber").disabled = false;
     const query = normalize($("searchInput").value), slug = searchCollection.value;
     const exact = /^\d+[a-z]?$/i.test(query); $("openNumber").hidden = !exact;
     $("searchResults").replaceChildren();
-    const results = [...opened.values()].filter(r => r.slug === slug && (!query || (exact ? String(r.n).toLowerCase() === query : normalize([r.arabic,r.english,r.urdu,r.n].join(" ")).includes(query))));
-    results.forEach(appendSearchRecord);
-    $("searchStatus").textContent = exact ? `Open hadith ${query} in ${bySlug[slug].en}.` : results.length ? `${results.length} matching ${results.length === 1 ? "passage" : "passages"}` : query ? "No matches in the passages opened this session. Use an exact hadith number to search the collection." : "Passages opened this session will appear here.";
+    $("searchStatus").textContent = exact ? "Open hadith " + query + " in " + bySlug[slug].en + "." : "";
+    if (!query || exact) return;
+    searchTimer = setTimeout(async () => {
+      $("searchStatus").textContent = "Searching " + bySlug[slug].en + "…";
+      try {
+        const records = await loadSearchData(slug);
+        if (epoch !== searchEpoch || location.hash !== "#search") return;
+        let total = 0;
+        for (const [n, arabic, english, urdu] of records) {
+          const matchesEnglish = normalize(english).includes(query);
+          const matchesUrdu = normalize(urdu).includes(query);
+          if (!matchesEnglish && !matchesUrdu && !normalize(arabic).includes(query)) continue;
+          if (++total <= maxSearchResults) {
+            appendSearchRecord({slug,n,arabic,english,urdu}, matchesUrdu && !matchesEnglish ? "ur" : "en");
+          }
+        }
+        $("searchStatus").textContent = total > maxSearchResults
+          ? "Showing the first " + maxSearchResults + " of " + total + " matches. Refine your search to narrow the results."
+          : total === 1 ? "1 matching passage" : total ? total + " matching passages" : "No matching passages in " + bySlug[slug].en + ".";
+      } catch {
+        if (epoch === searchEpoch && location.hash === "#search") {
+          $("searchStatus").textContent = "Could not load search data. Check your connection and try again.";
+        }
+      }
+    }, 180);
   }
   $("searchInput").oninput = renderSearch; searchCollection.onchange = renderSearch;
   $("clearSearch").onclick = () => { $("searchInput").value = ""; renderSearch(); $("searchInput").focus(); };
@@ -198,7 +239,7 @@
     } catch { if(epoch === searchEpoch) $("searchStatus").textContent = "Could not load the collection. Check your connection and try again."; }
     finally { if(epoch === searchEpoch) $("openNumber").disabled = false; }
   };
-  addEventListener("hashchange", () => { ++searchEpoch; closeFocus(false); homePanel(); });
+  addEventListener("hashchange", () => { clearTimeout(searchTimer); ++searchEpoch; closeFocus(false); homePanel(); });
   addEventListener("hadith:landing", () => { if(location.hash === "#search") $("searchInput").focus(); });
   addEventListener("hadith:rendered", decorateReader);
   addEventListener("keydown", e => {

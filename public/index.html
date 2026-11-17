@@ -779,7 +779,7 @@
         <select id="searchCollection" aria-label="Search collection"></select>
         <button type="submit" id="openNumber" hidden>Open hadith →</button>
       </div>
-      <p class="search-hint" id="searchHint">Enter an exact hadith number to open it in a collection. Search words and phrases in passages you’ve opened this session.</p>
+      <p class="search-hint" id="searchHint">Search the selected collection by hadith number, Arabic text, or available translation.</p>
     </form>
     <p class="search-status" id="searchStatus" role="status" aria-live="polite"></p>
     <div class="search-results" id="searchResults"></div>
@@ -2603,7 +2603,7 @@ function route(){
 addEventListener("hashchange", route);
 route();
 </script>
-<script src="/reader-ui.js?v=sacred-20260905"></script>
+<script src="/reader-ui.js?v=collection-search"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
