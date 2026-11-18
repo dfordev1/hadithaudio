@@ -8,8 +8,8 @@
 <meta name="theme-color" content="#eef1f3">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://www.hadith.to/">
-<link rel="icon" href="/favicon-stacked.png" type="image/png" sizes="64x64">
-<link rel="icon" href="/favicon-stacked.svg" type="image/svg+xml" sizes="any">
+<link rel="icon" href="/favicon-stacked.png?v=flat-gold" type="image/png" sizes="64x64">
+<link rel="icon" href="/favicon-stacked.svg?v=flat-gold" type="image/svg+xml" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="hadith.to">
@@ -167,7 +167,7 @@
   .settings select { background:var(--soft); border:1px solid var(--rule); border-radius:2px; color:var(--ink); padding:6px 8px; font-size:.78rem; }
   .settings-reset { border:1px solid var(--rule); background:transparent; color:var(--muted); border-radius:2px; padding:6px 9px; cursor:pointer; font-size:.76rem; }
   .settings-reset:hover { background:var(--soft); color:var(--ink); }
-  .settings-theme { margin-left:auto; display:flex; gap:4px; align-items:center; font-size:.76rem; }
+  .settings-theme { display:flex; gap:4px; align-items:center; font-size:.76rem; border-bottom:1px solid var(--line); margin-bottom:12px; padding-bottom:12px; }
   .settings-theme .theme b { margin:0; }
   .settings .theme b {
     cursor:pointer; padding:5px 12px; border:1px solid var(--rule);
@@ -646,7 +646,6 @@
     .brand .tag { display:none; }
     .settings { left:8px; right:8px; }
     .settings-grid { grid-template-columns:1fr; }
-    .settings-theme { margin-left:0; }
     .locator { min-height:auto; }
     .locator .in { gap:4px; padding:4px 1rem; }
     .locator.compact .loc-home { display:none; }
@@ -703,6 +702,7 @@
     <div class="settings" id="settings" role="dialog" aria-label="Display settings">
       <div class="in">
         <div class="settings-head"><strong>Reading appearance</strong><span>Saved on this device</span></div>
+        <div class="settings-theme theme">Theme <button type="button" data-t="light" class="on" aria-pressed="true">Light</button><button type="button" data-t="sepia" aria-pressed="false">Sepia</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div>
         <div class="settings-grid">
           <section class="setting-section"><h3>Arabic</h3>
           <div class="setting"><label for="arSize">Arabic size</label><input id="arSize" type="range" min="1.1" max="3.4" step="0.1"><output id="arSizeOut"></output></div>
@@ -724,7 +724,6 @@
         <div class="settings-foot">
           <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="uthmani">Uthmani Naskh</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
           <button class="settings-reset" id="settingsReset" type="button">Reset reading style</button>
-          <div class="settings-theme theme">Theme <button type="button" data-t="light" class="on" aria-pressed="true">Light</button><button type="button" data-t="sepia" aria-pressed="false">Sepia</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div>
         </div>
       </div>
     </div>
