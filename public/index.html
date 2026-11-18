@@ -790,6 +790,11 @@
     <p><strong>Human qārī audio.</strong> Where a major collection has synced playback (Bukhari, Muslim, Abi Dawud, and others as alignment lands), the voice is a real opensource / internet recitation. Words are timestamped to the Arabic text — including HUSX tokens where that corpus is used.</p>
     <p><strong>Forty-hadith audio.</strong> An-Nawawi’s Forty now uses a human Arabic recitation with synchronized full-text playback. The Forty Hadith Qudsi and Shah Waliullah’s Forty currently use synthetic audio with word timings.</p>
   </section>
+  <section class="methodology" id="arabicWordLibrary" aria-labelledby="arabicWordLibraryTitle">
+    <h2 id="arabicWordLibraryTitle">Arabic books with synchronized audio</h2>
+    <p class="library-intro">Additional books and word-level timing files are published as an open catalog. Audio is loaded only from an authorized source listed by each book.</p>
+    <div id="arabicWordLibraryList" class="shelf" aria-live="polite"><p class="search-status">Loading the book catalog…</p></div>
+  </section>
   <footer class="site-footer">
     <span>hadith.to</span>
     <a href="https://api.hadith.to/v1" target="_blank" rel="noopener">API &amp; developer documentation ↗</a>
@@ -2660,7 +2665,9 @@ function route(){
 addEventListener("hashchange", route);
 route();
 </script>
+<script src="/arabic-word-library.js?v=1" defer></script>
 <script src="/reader-ui.js?v=arabic-search-snippets"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
+
