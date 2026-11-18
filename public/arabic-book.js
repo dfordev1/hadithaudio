@@ -6,6 +6,28 @@
   const status = document.getElementById('status');
   const book = document.getElementById('book');
   const timed = [];
+  const chapters = document.getElementById('chapters');
+  const follow = document.getElementById('follow');
+  const theme = document.getElementById('theme');
+  const aqidahParts = [["المقدمة وتوحيد الله",298],["النبوة والقرآن ورؤية الله",326],["الإسراء والمعراج والشفاعة",63],["الميثاق والقضاء والقدر",361],["الإيمان وأهل القبلة والكبائر",321],["العبادة والجماعة وولاة الأمور",141],["الموت والبعث والآخرة",306],["الصحابة والسلف والأولياء",213],["أشراط الساعة والخاتمة",141]];
+  try { theme.value = JSON.parse(localStorage.getItem('malti:theme')) || 'light'; } catch {}
+  if (!theme.value) theme.value = 'light';
+  document.documentElement.dataset.theme = theme.value;
+  theme.addEventListener('change', () => {
+    document.documentElement.dataset.theme = theme.value;
+    try { localStorage.setItem('malti:theme', JSON.stringify(theme.value)); } catch {}
+  });
+  chapters.addEventListener('change', () => {
+    document.getElementById(chapters.value)?.scrollIntoView({ block: 'start' });
+  });
+  function chapter(label) {
+    const heading = document.createElement('h2');
+    heading.className = 'book-chapter';
+    heading.id = 'chapter-' + (chapters.options.length + 1);
+    heading.textContent = label;
+    chapters.add(new Option(label, heading.id));
+    book.append(heading);
+  }
   let active;
   async function json(url) {
     const response = await fetch(url);
@@ -31,23 +53,31 @@
     appendWords(row, words);
     book.append(row);
   }
+  function prose(words) {
+    let start = 0;
+    for (let end = 1; end <= words.length; end++) {
+      if (end === words.length || (end - start >= 55 && /[.!؟:]$/.test(words[end - 1].text)) || end - start >= 95) {
+        paragraph(words.slice(start, end));
+        start = end;
+      }
+    }
+  }
   function render(data) {
     if (Array.isArray(data)) {
-      let start = 0;
-      for (let end = 1; end <= data.length; end++) {
-        if (end === data.length || (end - start >= 55 && /[.!؟:]$/.test(data[end - 1].text)) || end - start >= 95) {
-          paragraph(data.slice(start, end));
-          start = end;
-        }
+      let offset = 0;
+      for (const [label, count] of aqidahParts) {
+        chapter(label);
+        prose(data.slice(offset, offset + count));
+        offset += count;
       }
+      if (offset < data.length) prose(data.slice(offset));
     } else {
       for (const part of data.parts) {
-        const heading = document.createElement('h2');
-        heading.textContent = part.title;
-        book.append(heading);
+        chapter(part.title);
         for (const row of part.rows) if (row.kind !== 'chapter') paragraph(row.words);
       }
     }
+    chapters.disabled = !chapters.options.length;
     timed.sort((a, b) => a.start - b.start);
   }
   function highlight() {
@@ -64,6 +94,12 @@
     active?.classList.remove('active');
     active = next;
     active?.classList.add('active');
+    if (active && follow.checked && !audio.paused) {
+      const bounds = active.getBoundingClientRect();
+      const top = document.querySelector('.book-header').getBoundingClientRect().bottom;
+      const bottom = document.querySelector('.book-dock').getBoundingClientRect().top;
+      if (bounds.top < top || bounds.bottom > bottom) active.scrollIntoView({ block: 'center' });
+    }
   }
   audio.addEventListener('timeupdate', highlight);
   audio.addEventListener('seeked', highlight);
