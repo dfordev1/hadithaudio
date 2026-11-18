@@ -8,8 +8,7 @@
 <meta name="theme-color" content="#eef1f3">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://www.hadith.to/">
-<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
-<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="/hadith-calligraphy.svg" type="image/svg+xml" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="hadith.to">
@@ -224,7 +223,7 @@
 
   /* Landing — brand-first composition like sacred-demo */
   #landing {
-    max-width:42rem; margin:0 auto; padding:2rem 1.35rem 5rem;
+    max-width:42rem; margin:0 auto; padding:.5rem 1.35rem 5rem;
     min-height:calc(100vh - var(--header-h));
     display:flex; flex-direction:column;
     transition:opacity var(--dur-view) var(--ease);
@@ -234,18 +233,16 @@
   }
   .hero {
     text-align:center;
-    padding:clamp(3.5rem, 12vh, 6.5rem) 0 2.75rem;
-    margin-bottom:0;
+    padding:.5rem 0;
   }
-  .hero .ornament {
-    width:72px; height:1px; margin:0 auto 1.75rem;
-    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  .hero-calligraphy {
+    width:clamp(6rem, 20vw, 7rem); aspect-ratio:499 / 414;
+    margin:0 auto;
+    background:#adc0da;
+    mask:url("/hadith-calligraphy.svg") center / contain no-repeat;
   }
-  .hero-brand {
-    font-size:clamp(2.6rem, 8vw, 4.2rem); font-weight:600;
-    letter-spacing:-.03em; color:var(--ink); line-height:1;
-  }
-  .hero-brand span { color:var(--gold); font-weight:400; }
+  :root[data-theme="dark"] .hero-calligraphy { background:#414951; }
+  :root[data-theme="sepia"] .hero-calligraphy { background:#bfb196; }
   .shelf { display:grid; gap:0; margin-top:0.5rem; }
   .shelf a {
     display:grid; grid-template-columns:1fr auto; gap:12px 20px; align-items:center;
@@ -737,8 +734,7 @@
 
 <main id="landing" tabindex="-1">
   <div class="hero">
-    <div class="ornament" aria-hidden="true"></div>
-    <h1 class="hero-brand">hadith<span>.</span>to</h1>
+    <h1 class="hero-calligraphy" aria-label="Hadith.to"></h1>
   </div>
   <div class="resume" id="resume"></div>
   <div class="home-tabs" role="tablist" aria-label="Your library">
