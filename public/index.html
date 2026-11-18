@@ -83,18 +83,9 @@
   /* Top brand bar — quiet; on landing it yields to the hero brand */
   .topbar {
     position:sticky; top:0; z-index:40;
-    background:rgba(238,241,243,.82); backdrop-filter:blur(10px);
-    border-bottom:1px solid transparent; height:var(--header-h);
-    transition:background var(--dur-view) var(--ease), border-color var(--dur-view) var(--ease);
+    background:var(--bg);
+    border-bottom:1px solid var(--line); height:var(--header-h);
   }
-  :root[data-theme="dark"] .topbar { background:rgba(18,22,28,.86); }
-  :root[data-theme="sepia"] .topbar { background:rgba(235,232,226,.88); }
-  body[data-view="landing"] .topbar {
-    background:transparent; backdrop-filter:none; border-bottom-color:transparent;
-  }
-  :root[data-theme="dark"] body[data-view="landing"] .topbar,
-  :root[data-theme="sepia"] body[data-view="landing"] .topbar { background:transparent; }
-  body[data-view="reader"] .topbar { border-bottom-color:transparent; }
   .topbar .in {
     max-width:42rem; margin:0 auto; height:100%;
     display:flex; align-items:center; gap:8px; padding:0 1.35rem;
@@ -124,7 +115,7 @@
   .reader-tools { position:relative; flex:none; }
   .reader-tools-panel {
     position:absolute; right:0; top:calc(100% + 6px); min-width:168px;
-    padding:6px; background:var(--dock); border:1px solid var(--rule);
+    padding:6px; background:var(--bg); border:1px solid var(--rule);
     border-radius:2px; z-index:56;
     opacity:0; visibility:hidden; pointer-events:none;
     transition:opacity .2s var(--ease), visibility .2s;
@@ -145,7 +136,7 @@
   .settings {
     position:absolute; left:12px; right:12px; top:calc(100% + 8px);
     max-width:42rem; margin-left:auto; margin-right:auto;
-    background:var(--dock); border:1px solid var(--rule); border-radius:2px;
+    background:var(--bg); border:1px solid var(--rule); border-radius:2px;
     z-index:55;
     opacity:0; visibility:hidden; pointer-events:none;
     transition:opacity .2s var(--ease), visibility .2s;
@@ -188,11 +179,9 @@
   /* Locator — quiet book/hadith picker */
   .locator {
     position:sticky; top:var(--header-h); z-index:35;
-    background:rgba(238,241,243,.72); backdrop-filter:blur(8px);
+    background:var(--bg);
     border-bottom:1px solid var(--gold-soft); min-height:var(--loc-h);
   }
-  :root[data-theme="dark"] .locator { background:rgba(18,22,28,.82); }
-  :root[data-theme="sepia"] .locator { background:rgba(235,232,226,.84); }
   .locator .in {
     max-width:42rem; margin:0 auto; padding:6px 1.35rem;
     display:flex; align-items:center; gap:6px; flex-wrap:wrap;
