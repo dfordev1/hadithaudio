@@ -106,6 +106,69 @@
 .book-dock audio{display:block;width:100%;height:42px;color-scheme:light}
 :root[data-theme=dark] .book-dock audio{color-scheme:dark}
 .book-dock label,#status{font-size:.9rem;color:var(--muted)}
+  .dock {
+    position:fixed; left:50%; bottom:1.35rem; transform:translateX(-50%);
+    z-index:45; width:auto; min-width:min(280px, calc(100% - 24px));
+    max-width:min(420px, calc(100% - 24px));
+    padding:0.45rem 0.7rem calc(0.45rem + env(safe-area-inset-bottom));
+    background:var(--dock); border:1px solid var(--rule);
+    backdrop-filter:blur(10px); pointer-events:none;
+    opacity:0; transition:opacity var(--dur-view) var(--ease);
+  }
+  .dock.is-in { opacity:1; }
+  .dock.hidden { opacity:0 !important; pointer-events:none; }
+  .dock .player {
+    pointer-events:auto; max-width:none; margin:0;
+    display:grid; grid-template-columns:auto 1fr auto auto;
+    gap:0.45rem; align-items:center;
+    padding:0;
+  }
+  .skip {
+    flex:none; width:36px; height:36px; border-radius:0; border:0;
+    background:transparent; color:var(--ink-soft); cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:.62rem; font-weight:600; font-variant-numeric:tabular-nums;
+    transition:color .2s ease;
+  }
+  .skip:hover { background:transparent; color:var(--ink); }
+  .play {
+    flex:none; width:48px; height:48px; border-radius:0; border:0;
+    background:transparent; color:var(--ink); cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    transition:color .2s ease;
+  }
+  .play:hover { color:var(--gold); }
+  .play svg { width:20px; height:20px; fill:currentColor; }
+  .track {
+    flex:1; height:16px; background:transparent; border-radius:0;
+    cursor:pointer; position:relative; min-width:48px; touch-action:pan-y;
+  }
+  .track::before {
+    content:""; position:absolute; left:0; right:0; top:50%; height:1px;
+    background:var(--rule); transform:translateY(-50%); pointer-events:none;
+  }
+  .track:focus-visible {
+    outline:1px solid var(--gold);
+    outline-offset:4px;
+  }
+  .track .fill {
+    position:absolute; left:0; top:50%; bottom:auto; height:1px; width:0;
+    background:var(--gold); border-radius:0; transform:translateY(-50%);
+  }
+  .time {
+    flex:none; font-size:.72rem; color:var(--faint);
+    font-variant-numeric:tabular-nums; min-width:72px; text-align:right;
+  }
+
+.book-main h1{font-size:clamp(1.85rem,4vw,2.3rem)}
+#book{font-size:var(--book-size,1.65rem);line-height:1.95}
+.book-dock{bottom:.75rem;width:min(33rem,calc(100% - 24px));max-width:none;pointer-events:auto}
+.book-dock .player{grid-template-columns:auto minmax(0,1fr) auto}
+.book-dock #seek{width:100%;accent-color:var(--gold);min-width:0}
+.book-dock .time{min-width:0;white-space:nowrap}
+.book-dock .options{display:flex;justify-content:space-between;gap:.5rem}
+.book-dock #audio{display:none}
+.book-tools label{display:flex;align-items:center;gap:.2rem;white-space:nowrap;color:var(--muted);font-size:.8rem}
 </style>
 </head>
 <body data-view="reader">
@@ -113,14 +176,21 @@
   <div class="in"><a class="brand" href="/#arabicWordLibrary"><span class="mark"></span><span class="name">hadith<span class="dot">.</span>to</span></a>
   <div class="book-tools" dir="rtl">
     <select id="chapters" aria-label="الفصول" disabled></select>
+    <label>الخط <select id="font-size"><option value="1.4">صغير</option><option value="1.65" selected>متوسط</option><option value="2">كبير</option></select></label>
     <select id="theme" aria-label="المظهر"><option value="light">فاتح</option><option value="dark">داكن</option><option value="sepia">ورقي</option></select>
   </div></div>
 </header>
 <main class="book-main"><h1 id="title"></h1><p id="status" role="status">جارٍ تحميل الكتاب…</p><article id="book"></article></main>
-<footer class="book-dock"><div class="in">
-  <audio controls preload="metadata" id="audio" aria-label="التسجيل الصوتي"></audio>
-  <label><input type="checkbox" id="follow" checked> متابعة القراءة</label>
-</div></footer>
-<script src="/arabic-book.js?v=chapters" defer></script>
+<footer class="book-dock dock is-in">
+  <audio preload="none" id="audio"></audio>
+  <div class="player" dir="ltr">
+    <button class="play" id="play" type="button" aria-label="تشغيل" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path id="play-icon" d="M8 5v14l11-7z"/></svg></button>
+    <input id="seek" type="range" min="0" max="1" step="0.1" value="0" aria-label="موضع التشغيل" disabled>
+    <span id="time" class="time">0:00</span>
+  </div>
+  <div class="options"><label><input type="checkbox" id="follow" checked> متابعة القراءة</label><a id="audio-link" hidden>ملف الصوت</a></div>
+  <p id="audio-error" role="status" hidden></p>
+</footer>
+<script src="/arabic-book.js?v=audio-dock" defer></script>
 </body>
 </html>

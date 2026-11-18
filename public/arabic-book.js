@@ -9,6 +9,45 @@
   const chapters = document.getElementById('chapters');
   const follow = document.getElementById('follow');
   const theme = document.getElementById('theme');
+  const size = document.getElementById('font-size');
+  const play = document.getElementById('play');
+  const playIcon = document.getElementById('play-icon');
+  const seek = document.getElementById('seek');
+  const clock = document.getElementById('time');
+  const audioError = document.getElementById('audio-error');
+  const audioLink = document.getElementById('audio-link');
+  try { size.value = localStorage.getItem('malti:arabic-book-size') || '1.65'; } catch {}
+  if (!size.value) size.value = '1.65';
+  function applySize() { book.style.setProperty('--book-size', size.value + 'rem'); }
+  applySize();
+  size.addEventListener('change', () => {
+    applySize();
+    try { localStorage.setItem('malti:arabic-book-size', size.value); } catch {}
+  });
+  function updatePlayer() {
+    const paused = audio.paused;
+    play.setAttribute('aria-label', paused ? 'تشغيل' : 'إيقاف مؤقت');
+    playIcon.setAttribute('d', paused ? 'M8 5v14l11-7z' : 'M7 5h4v14H7zm6 0h4v14h-4z');
+    seek.disabled = !Number.isFinite(audio.duration);
+    if (!seek.disabled) seek.max = audio.duration;
+    seek.value = audio.currentTime;
+    const seconds = Math.floor(audio.currentTime);
+    clock.textContent = Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0');
+  }
+  function showAudioError() {
+    audioError.hidden = false;
+    audioError.textContent = 'تعذّر تشغيل الصوت. أعد المحاولة أو افتح ملف الصوت.';
+  }
+  function startAudio() {
+    audioError.hidden = true;
+    if (audio.error) audio.load();
+    audio.play().catch(error => { if (error.name !== 'AbortError') showAudioError(); });
+  }
+  play.addEventListener('click', () => { if (audio.paused) startAudio(); else audio.pause(); });
+  seek.addEventListener('input', () => { audio.currentTime = Number(seek.value); });
+  for (const event of ['play', 'pause', 'ended', 'timeupdate', 'durationchange', 'seeked']) {
+    audio.addEventListener(event, updatePlayer);
+  }
   const aqidahParts = [["المقدمة وتوحيد الله",298],["النبوة والقرآن ورؤية الله",326],["الإسراء والمعراج والشفاعة",63],["الميثاق والقضاء والقدر",361],["الإيمان وأهل القبلة والكبائر",321],["العبادة والجماعة وولاة الأمور",141],["الموت والبعث والآخرة",306],["الصحابة والسلف والأولياء",213],["أشراط الساعة والخاتمة",141]];
   try { theme.value = JSON.parse(localStorage.getItem('malti:theme')) || 'light'; } catch {}
   if (!theme.value) theme.value = 'light';
@@ -103,12 +142,12 @@
   }
   audio.addEventListener('timeupdate', highlight);
   audio.addEventListener('seeked', highlight);
-  audio.addEventListener('error', () => { status.textContent = 'تعذّر تحميل التسجيل الصوتي.'; });
+  audio.addEventListener('error', showAudioError);
   book.addEventListener('click', event => {
     const word = event.target.closest('button.word');
     if (!word) return;
     audio.currentTime = Number(word.dataset.start);
-    audio.play().catch(() => {});
+    startAudio();
   });
   async function load() {
     const catalog = await json(base + 'library.json');
@@ -116,10 +155,14 @@
     if (!entry) throw new Error('Unknown book');
     title.textContent = entry.titleArabic;
     document.title = entry.titleArabic + ' | Hadith.to';
+    const media = '/api/arabic-book-audio?book=' + encodeURIComponent(id);
+    audio.src = media;
+    audioLink.href = media;
+    audioLink.hidden = false;
+    play.disabled = false;
     const data = await json(base + 'timings/' + encodeURIComponent(id) + '.json');
     render(data);
     status.textContent = '';
-    audio.src = entry.audio;
   }
   load().catch(() => { status.textContent = 'تعذّر تحميل الكتاب. حاول تحديث الصفحة.'; });
 })();
