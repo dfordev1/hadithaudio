@@ -289,7 +289,8 @@
   }
   #reader.is-in { opacity:1; }
   #reader .stage {
-    max-width:40rem; margin:0 auto; padding:1.85rem clamp(1.5rem, 5vw, 2.25rem) 4.5rem;
+    max-width:40rem; margin:0 auto;
+    padding:clamp(2.4rem, 5vh, 3.25rem) clamp(2rem, 5vw, 2.25rem) 8rem;
     position:relative;
     transition:opacity var(--dur-fade) var(--ease);
   }
@@ -499,25 +500,28 @@
   .report-inline button { border:0; padding:.2rem .35rem; color:var(--faint); background:transparent; font:inherit; font-size:.74rem; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
   .report-inline button:hover { color:var(--ink); }
 
-  /* Edge prev / next — quiet persistent nav (no bounce / no CTA) */
+  /* Previous and next stay legible beside the passage. */
   .navedge {
     position:fixed; top:50%; transform:translateY(-50%);
-    width:32px; height:32px; border-radius:0; border:0;
-    background:transparent; color:var(--faint); cursor:pointer;
+    width:40px; height:40px; border-radius:4px; border:1px solid var(--rule);
+    background:var(--bg); color:var(--ink-soft); cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    z-index:25; opacity:.38;
+    z-index:25;
     transition:opacity .45s var(--ease), color .45s var(--ease);
   }
-  .navedge:hover { background:transparent; color:var(--ink); opacity:.85; }
-  .navedge:disabled { opacity:.12; cursor:default; pointer-events:none; }
+  .navedge:hover { background:var(--soft); color:var(--ink); }
+  .navedge:disabled { opacity:.42; cursor:default; pointer-events:none; }
   .navedge.prev { left:max(12px, calc(50% - 400px)); }
   .navedge.next { right:max(12px, calc(50% - 400px)); }
-  .navedge svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
-  /* End silence: hush next until stillness settles */
-  body[data-silence="1"] .navedge.next { opacity:.14; pointer-events:none; }
-  body[data-silence="ready"] .navedge.next:not(:disabled) { opacity:.55; }
+  .navedge svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  body[data-silence="1"] .navedge.next:not(:disabled) { opacity:.72; pointer-events:none; }
+  #reader .mobile-page-nav button { color:var(--ink-soft); }
 
-  /* Sticky audio dock — calm floating bar (demo spirit) */
+  #reader:has(.dock.is-in:not(.hidden))::after {
+    content:""; position:fixed; inset:auto 0 0; z-index:44; pointer-events:none;
+    height:calc(7rem + env(safe-area-inset-bottom));
+    background:linear-gradient(to bottom, transparent, var(--bg-deep) 14px);
+  }
   .dock {
     position:fixed; left:50%; bottom:1.35rem; transform:translateX(-50%);
     z-index:45; width:auto; min-width:min(280px, calc(100% - 24px));
@@ -643,7 +647,9 @@
     }
     .shelf a { grid-template-columns:1fr; }
     .shelf .side { text-align:left; }
-    .navedge { width:28px; height:28px; opacity:.45; }
+    .navedge { width:30px; height:36px; }
+    .navedge.prev { left:2px; }
+    .navedge.next { right:2px; }
     .brand .tag { display:none; }
     .settings { left:8px; right:8px; }
     .settings-grid { grid-template-columns:1fr; }
@@ -659,6 +665,7 @@
       bottom:0.95rem; min-width:calc(100% - 20px); max-width:calc(100% - 20px);
       padding:0.4rem 0.55rem calc(0.4rem + env(safe-area-inset-bottom));
     }
+    #reader:has(.dock.is-in:not(.hidden))::after { height:calc(6.75rem + env(safe-area-inset-bottom)); }
     .dock .player { gap:0.35rem; }
     .time { font-size:.64rem; min-width:64px; }
     .play { width:44px; height:44px; }
