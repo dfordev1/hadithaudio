@@ -90,7 +90,13 @@
     display:flex; align-items:center; gap:8px; padding:0 1.35rem;
     position:relative;
   }
-  .brand { cursor:pointer; display:flex; flex-direction:column; line-height:1.15; min-width:0; }
+  .brand { cursor:pointer; display:flex; align-items:center; gap:7px; line-height:1.15; min-width:0; min-height:36px; }
+  .brand .mark {
+    width:22px; height:22px; flex:none;
+    background:#896130;
+    mask:url("/favicon-stacked.svg?v=flat-gold") center / contain no-repeat;
+  }
+  :root[data-theme="dark"] .brand .mark { background:#f2bd51; }
   .brand .name { font-weight:600; font-size:.82rem; letter-spacing:-.01em; color:var(--faint);
     transition:color .18s var(--ease-quick), opacity var(--dur-view) var(--ease); }
   .brand .name .dot { color:var(--gold); font-weight:400; }
@@ -197,12 +203,6 @@
   }
   .loc-btn:hover, .loc-select:hover { background:var(--soft); }
   .loc-btn.on { background:var(--soft); color:var(--ink); }
-  .loc-home {
-    border:0; background:transparent; color:var(--faint); font-size:.76rem;
-    cursor:pointer; padding:6px 2px; font-weight:400;
-    transition:color .25s var(--ease);
-  }
-  .loc-home:hover { color:var(--ink); }
   .loc-summary {
     display:none; appearance:none; background:transparent; border:0;
     color:var(--ink); font-size:.84rem; font-weight:600;
@@ -289,7 +289,7 @@
   }
   #reader.is-in { opacity:1; }
   #reader .stage {
-    max-width:40rem; margin:0 auto; padding:1.3rem clamp(1.5rem, 5vw, 2.25rem) 4.5rem;
+    max-width:40rem; margin:0 auto; padding:1.85rem clamp(1.5rem, 5vw, 2.25rem) 4.5rem;
     position:relative;
     transition:opacity var(--dur-fade) var(--ease);
   }
@@ -649,7 +649,6 @@
     .settings-grid { grid-template-columns:1fr; }
     .locator { min-height:auto; }
     .locator .in { gap:4px; padding:4px 1rem; }
-    .locator.compact .loc-home { display:none; }
     .locator .loc-panel { min-width:0; }
     .loc-select { min-width:0; max-width:100%; flex:1 1 120px; }
     #hadithJump, #bookJump { max-width:none; }
@@ -671,7 +670,6 @@
   @media (min-width:681px) {
     .loc-summary { display:none !important; }
     .locator .in { flex-wrap:nowrap; }
-    .locator .loc-home { flex:none; }
     .locator .loc-panel {
       display:flex !important; align-items:center; gap:6px;
       flex:1 1 auto; min-width:0; padding-top:0; flex-wrap:nowrap;
@@ -689,7 +687,8 @@
 <a class="skip-link" id="skipToContent" href="#landing">Skip to content</a>
 <header class="topbar">
   <div class="in">
-    <button type="button" class="brand" id="home" title="All collections" aria-label="All collections">
+    <button type="button" class="brand" id="home" title="All collections" aria-label="Hadith.to — All collections">
+      <span class="mark" aria-hidden="true"></span>
       <span class="name">hadith<span class="dot">.</span>to</span>
     </button>
     <div class="sp"></div>
@@ -791,7 +790,6 @@
 <main id="reader" class="hidden">
   <div class="locator compact" id="locator">
     <div class="in">
-      <button class="loc-home" id="back">‹ Collections</button>
       <button type="button" class="loc-summary" id="locSummary" aria-expanded="false">Jump…</button>
       <div class="loc-panel" id="locPanel">
         <select class="loc-select" id="collJump" title="Collection"></select>
@@ -1545,7 +1543,6 @@ for (const c of COLLECTIONS) {
 }
 renderResume();
 document.getElementById("home").onclick = () => { location.hash = ""; };
-document.getElementById("back").onclick = () => { location.hash = ""; };
 
 /* ---------- audio engine (one sticky player) ---------- */
 const audio = new Audio(); audio.preload = "auto";
