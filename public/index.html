@@ -288,12 +288,13 @@
     transition:opacity var(--dur-view) var(--ease);
   }
   #reader.is-in { opacity:1; }
-  .stage {
-    max-width:42rem; margin:0 auto; padding:2.5rem 1.35rem 4.5rem;
+  #reader .stage {
+    max-width:40rem; margin:0 auto; padding:1.3rem clamp(1.5rem, 5vw, 2.25rem) 4.5rem;
     position:relative;
     transition:opacity var(--dur-fade) var(--ease);
   }
   .stage.is-fading { opacity:0; }
+  body:not([data-focus="true"]) .stage-head { display:none; }
   .stage-head {
     display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
     margin-bottom:1.75rem; padding-bottom:0.9rem;
@@ -409,7 +410,7 @@
   }
   body[data-mode="receive"] .parallel .en-col { display:none !important; }
   body[data-mode="receive"] .arabic {
-    display:block; flex-wrap:unset; gap:unset; line-height:var(--ar-lh);
+    display:block; flex-wrap:unset; gap:unset; line-height:calc(var(--ar-lh) * .88);
     word-spacing: calc(var(--wbw-gap) * 0.08);
   }
   body[data-mode="receive"] .arabic span.w {
@@ -649,12 +650,12 @@
     .locator { min-height:auto; }
     .locator .in { gap:4px; padding:4px 1rem; }
     .locator.compact .loc-home { display:none; }
-    .loc-select { max-width:100%; flex:1 1 120px; }
+    .locator .loc-panel { min-width:0; }
+    .loc-select { min-width:0; max-width:100%; flex:1 1 120px; }
     #hadithJump, #bookJump { max-width:none; }
     #reader { padding-bottom:92px; }
     .topbar .in { padding:0 1rem; gap:4px; }
     .iconbtn { min-width:28px; height:28px; padding:0 8px; font-size:.74rem; }
-    .stage { padding:2rem 1rem 3.5rem; }
     .dock {
       bottom:0.95rem; min-width:calc(100% - 20px); max-width:calc(100% - 20px);
       padding:0.4rem 0.55rem calc(0.4rem + env(safe-area-inset-bottom));
@@ -669,7 +670,16 @@
   }
   @media (min-width:681px) {
     .loc-summary { display:none !important; }
-    .locator .loc-panel { display:contents !important; }
+    .locator .in { flex-wrap:nowrap; }
+    .locator .loc-home { flex:none; }
+    .locator .loc-panel {
+      display:flex !important; align-items:center; gap:6px;
+      flex:1 1 auto; min-width:0; padding-top:0; flex-wrap:nowrap;
+    }
+    .locator .loc-select { min-width:0; text-overflow:ellipsis; }
+    #collJump { flex:0 1 15rem; }
+    #bookJump { flex:0 1 19rem; }
+    #hadithJump { flex:0 0 6rem; }
   }
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
