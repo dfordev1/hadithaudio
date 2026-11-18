@@ -245,13 +245,17 @@
   }
   .hero {
     text-align:center;
-    padding:clamp(3.5rem, 12vh, 6.5rem) 0 2.75rem;
+    padding:clamp(1.5rem, 5vh, 3rem) 0 2rem;
     margin-bottom:0;
   }
-  .hero .ornament {
-    width:72px; height:1px; margin:0 auto 1.75rem;
-    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  .hero-calligraphy {
+    width:clamp(9rem, 32vw, 13rem); aspect-ratio:499 / 414;
+    margin:0 auto .65rem;
+    background:#adc0da;
+    mask:url("/hadith-calligraphy.svg") center / contain no-repeat;
   }
+  :root[data-theme="dark"] .hero-calligraphy { background:#414951; }
+  :root[data-theme="sepia"] .hero-calligraphy { background:#bfb196; }
   .hero-brand {
     font-size:clamp(2.6rem, 8vw, 4.2rem); font-weight:600;
     letter-spacing:-.03em; color:var(--ink); line-height:1;
@@ -748,7 +752,7 @@
 
 <main id="landing" tabindex="-1">
   <div class="hero">
-    <div class="ornament" aria-hidden="true"></div>
+    <div class="hero-calligraphy" aria-hidden="true"></div>
     <h1 class="hero-brand">hadith<span>.</span>to</h1>
   </div>
   <div class="resume" id="resume"></div>
