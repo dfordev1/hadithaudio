@@ -81,7 +81,7 @@
 
   /* Top brand bar — quiet; on landing it yields to the hero brand */
   .topbar {
-    position:sticky; top:0; z-index:40;
+    position:relative; z-index:40;
     background:var(--bg);
     border-bottom:1px solid var(--line); height:var(--header-h);
   }
@@ -131,7 +131,7 @@
   .rt-item.on { font-weight:600; }
   .rt-item .sub { display:block; font-size:.68rem; color:var(--faint); font-weight:400; margin-top:1px; }
 
-  /* AA panel overlays below header — must NOT share space with sticky locator */
+  /* Appearance panel overlays the content below the header. */
   .settings {
     position:absolute; left:12px; right:12px; top:calc(100% + 8px);
     max-width:42rem; margin-left:auto; margin-right:auto;
@@ -177,7 +177,6 @@
 
   /* Locator — quiet book/hadith picker */
   .locator {
-    position:sticky; top:var(--header-h); z-index:35;
     background:var(--bg);
     border-bottom:1px solid var(--gold-soft); min-height:var(--loc-h);
   }
