@@ -1,5 +1,5 @@
 (() => {
-  const catalogUrl = "https://cdn.jsdelivr.net/gh/playorbitt/arabic-word-reader@main/library.json";
+  const catalogUrl = "https://raw.githubusercontent.com/playorbitt/arabic-word-reader/main/library.json";
   const list = document.getElementById("arabicWordLibraryList");
   if (!list) return;
   const esc = value => String(value ?? "").replace(/[&<>\\"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\\":"&quot;","'":"&#39;"}[c]));
