@@ -108,6 +108,18 @@ article{margin-top:1.8rem;padding-top:1.8rem;border-top:1px solid var(--rule)}
   .title{margin-top:1.6rem}
   article{margin-top:2rem}
 }
+.hadith-arrows button{
+  position:fixed;top:50%;transform:translateY(-50%);z-index:3;
+  inline-size:2.75rem;block-size:2.75rem;border:1px solid var(--rule);
+  border-radius:50%;background:var(--bg);color:var(--ink);
+  font-size:1.65rem;line-height:1;box-shadow:0 3px 12px #0002;
+  display:grid;place-items:center;cursor:pointer
+}
+.hadith-arrows button:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.hadith-arrows button:disabled{opacity:.25;cursor:default}
+#prev{right:max(.25rem,calc((100vw - 49rem)/2))}
+#next{left:max(.25rem,calc((100vw - 49rem)/2))}
+@media (max-width:49rem){article{padding-inline:1.85rem}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <main><header class="bar"><a class="brand" href="https://hadith.to/" dir="ltr">Hadith.to</a><div class="tools">
@@ -119,7 +131,8 @@ article{margin-top:1.8rem;padding-top:1.8rem;border-top:1px solid var(--rule)}
 </div></details></div></header>
 <h1 class="title">الشمائل المحمدية</h1><hr class="rule">
 <div class="locate"><select id="chapter-jump" aria-label="الباب"></select>
-<div class="step"><button id="prev" aria-label="الحديث السابق">›</button><select id="jump" aria-label="رقم الحديث"></select><button id="next" aria-label="الحديث التالي">‹</button></div></div>
+<div class="step"><select id="jump" aria-label="رقم الحديث"></select></div></div>
+<nav class="hadith-arrows" aria-label="التنقل بين الأحاديث"><button type="button" id="prev" aria-label="الحديث السابق" title="الحديث السابق">›</button><button type="button" id="next" aria-label="الحديث التالي" title="الحديث التالي">‹</button></nav>
 <article><h2 id="chapter"></h2><p id="text"></p></article></main>
 <footer id="player" class="player" aria-label="مشغل الحديث">
 <input id="seek" type="range" aria-label="موضع الصوت في الحديث" min="0" max="1000" value="0">
