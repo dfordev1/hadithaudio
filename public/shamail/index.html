@@ -161,8 +161,10 @@ records.forEach((row,i)=>{
 function show(){
   const row=records[index];
   player.pause(); clip=row.audio; active=[]; followed=null;
-  if(clip){player.src=clip.url;setRate();}
-  else {player.removeAttribute('src');player.load();}
+  if(clip){
+    if(player.getAttribute('src')!==clip.url) player.src=clip.url;
+    setRate();
+  }
   get('play').disabled=!clip;
   setPlayButton(false);
   get('seek').value=0;
