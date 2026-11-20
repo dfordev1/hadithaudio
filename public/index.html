@@ -920,6 +920,7 @@ addEventListener("error", () => trackSiteEvent("reader_runtime_error", { source:
 addEventListener("unhandledrejection", () => trackSiteEvent("reader_runtime_error", { source:"promise" }));
 
 function reportTimingUrl(slug, n){
+  if (slug === "darimi") return `${SITE_ORIGIN}/darimi/book-${state.book}.json`;
   const col = bySlug[slug];
   if (col && !col.books) return `${SITE_ORIGIN}/recitation/${col.corpus}.${String(n).padStart(3,"0")}.json`;
   const stem = slug === "musnad-ahmad" ? `r${String(n).padStart(5,"0")}` : `n${String(n).padStart(4,"0")}`;
@@ -990,6 +991,7 @@ const COLLECTIONS = [
   { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:true, books:true },
   { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
   { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
+  { slug:"darimi", corpus:"darimi", ar:"سنن الدارمي", en:"Sunan al-Darimi", count:3535, audio:true, books:true },
   { slug:"riyad", corpus:"riyad-as-salihin", ar:"رياض الصالحين", en:"Riyad as-Salihin", count:1896, audio:true, books:true, synthetic:"mixed" },
   { slug:"musnad-ahmad", corpus:"musnad-ahmad", ar:"مسند أحمد", en:"Musnad Ahmad", count:27648, audio:true, books:true, synthetic:false },
   { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:false },
@@ -1046,12 +1048,14 @@ function musnadPartSections(from, to){
 }
 
 function bookTitle(slug, book){
+  if (slug === "darimi") return cache.bookIndex.darimi?.books.find(b => b.book === Number(book))?.title || "";
   if (book == null || book === "") return "";
   const map = BOOK_SECTION_NAMES[slug];
   if (!map) return "";
   return map[book] || map[String(book)] || "";
 }
 function bookLabel(slug, book){
+  if (slug === "darimi") return bookTitle(slug, book);
   if (slug === "musnad-ahmad") return `Part ${book}`;
   const title = bookTitle(slug, book);
   return title ? `Book ${book} · ${title}` : `Book ${book}`;
@@ -1258,6 +1262,7 @@ async function getBookTiming(slug, n){
 }
 
 function bookAudioUrl(slug, n, timing){
+  if (slug === "darimi") return timing.audio;
   if (slug === "musnad-ahmad") {
     const file = timing?.audio || `r${String(n).padStart(5, "0")}.ogg`;
     const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
@@ -2044,6 +2049,11 @@ async function fillBookJump(navToken = currentNavToken){
     if (col.slug === "musnad-ahmad") {
       return `<option value="${b.book}">Part ${b.book} · ${musnadPartSections(b.from, b.to)} · ${b.count}</option>`;
     }
+    if (col.slug === "darimi") {
+      const option = new Option([b.section === b.title ? "" : b.section, b.title, b.count].filter(Boolean).join(" · "), b.book);
+      option.setAttribute("value", b.book);
+      return option.outerHTML;
+    }
     const title = b.title || bookTitle(col.slug, b.book);
     return `<option value="${b.book}">Book ${b.book}${title ? ` · ${title}` : ""} · ${b.count}</option>`;
   }).join("");
@@ -2211,6 +2221,7 @@ function buildArabic(tokens, gloss, clickable){
     const first = tokens[i];
     const s = document.createElement("span"); s.className = "w" + (run > 1 ? " w-unit" : "");
     s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span>`;
+    if (first.estimated) s.title = "Approximate word timing";
     s.querySelector(".t").textContent = text;
     s.querySelector(".g-en").textContent = g.en || "";
     s.querySelector(".g-ur").textContent = g.ur || "";
@@ -2483,9 +2494,9 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   n = h.n;
 
   const [gloss, timing, officialTranslation] = await Promise.all([
-    jopt(`gloss/${slug}-${n}.json`),
-    getBookTiming(slug, n),
-    ensureOfficialTranslations(slug, n),
+    slug === "darimi" ? null : jopt(`gloss/${slug}-${n}.json`),
+    slug === "darimi" ? (h.clip ? { audio:`darimi/clips/${h.clip}.mp3`, tokens:h.tokens } : null) : getBookTiming(slug, n),
+    slug === "darimi" ? {} : ensureOfficialTranslations(slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
   const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
@@ -2555,6 +2566,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
         text: t.text,
         start: t.start,
         end: t.end,
+        estimated: t.estimated,
         gloss: t.gloss || null,
       }))
     : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
@@ -2582,7 +2594,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const row = document.createElement("div"); row.className = "refrow";
   row.innerHTML = `<span class="lbl">Reference</span>`;
   const a = document.createElement("a");
-  a.href = `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
+  a.href = slug === "darimi" ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
   a.textContent = `${slug}:${n}`;
   row.appendChild(a); rb.appendChild(row);
   if (!gloss) {

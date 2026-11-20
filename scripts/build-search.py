@@ -14,7 +14,7 @@ FORTY = {
 }
 BOOK_COLLECTIONS = (
     "bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah",
-    "malik", "riyad", "musnad-ahmad",
+    "malik", "riyad", "musnad-ahmad", "darimi",
 )
 
 
@@ -42,7 +42,9 @@ def edition(slug, language, upstream):
 
 
 def book_records(slug):
-    if slug in {"riyad", "musnad-ahmad"}:
+    if slug == "darimi":
+        english, urdu = {}, {}
+    elif slug in {"riyad", "musnad-ahmad"}:
         translations = read_json(PUBLIC / "translation" / f"{slug}.json")["translations"]
         english = {str(row["n"]): row.get("en", "") for row in translations}
         urdu = {str(row["n"]): row.get("ur", "") for row in translations}
