@@ -2608,6 +2608,12 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     try { await navigator.clipboard.writeText(url); copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy link", 1200); }
     catch { prompt("Copy link:", url); }
   };
+  if (slug === "darimi") {
+    const source = document.createElement("div");
+    source.className = "refrow";
+    source.innerHTML = '<span class="lbl">Audio source</span><a href="https://rawy.net/library" target="_blank" rel="noopener">Rawy Library · مكتبة الراوي</a>';
+    rb.appendChild(source);
+  }
   rb.appendChild(copy);
   wrap.appendChild(rb);
   appendReportAction(wrap);
