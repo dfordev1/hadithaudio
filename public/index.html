@@ -1102,7 +1102,8 @@ function appendReportAction(parent){
 const COLLECTIONS = [
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   {slug:"ibn-khuzaymah", corpus:"ibn-khuzaymah", en:"Sahih Ibn Khuzaymah", ar:"صحيح ابن خزيمة", count:3282, books:true, audio:true},
-  {slug:"al-ilmam", corpus:"al-ilmam", en:"Al-Ilmam bi-Ahadith al-Ahkam", ar:"الإلمام بأحاديث الأحكام", count:1629, books:true, audio:true},
+  {slug:"al-ilmam", corpus:"al-ilmam", en:"Al-Ilmam bi-Ahadith al-Ahkam", ar:"الإلمام بأحاديث الأحكام", count:1274, books:true, audio:true},
+  {slug:"bulugh-al-maram", corpus:"bulugh-al-maram", en:"Bulugh al-Maram", ar:"بلوغ المرام من أدلة الأحكام", count:1573, books:true, audio:true},
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
@@ -1168,14 +1169,14 @@ function musnadPartSections(from, to){
 }
 
 function bookTitle(slug, book){
-  if (slug === "darimi" || slug === "umdat-al-ahkam" || slug === "al-ilmam") return cache.bookIndex[slug]?.books.find(b => b.book === Number(book))?.title || "";
+  if (slug === "darimi" || slug === "umdat-al-ahkam" || slug === "al-ilmam" || slug === "bulugh-al-maram" || slug === "bulugh-al-maram") return cache.bookIndex[slug]?.books.find(b => b.book === Number(book))?.title || "";
   if (book == null || book === "") return "";
   const map = BOOK_SECTION_NAMES[slug];
   if (!map) return "";
   return map[book] || map[String(book)] || "";
 }
 function bookLabel(slug, book){
-  if (slug === "darimi" || slug === "umdat-al-ahkam" || slug === "al-ilmam") return bookTitle(slug, book);
+  if (slug === "darimi" || slug === "umdat-al-ahkam" || slug === "al-ilmam" || slug === "bulugh-al-maram" || slug === "bulugh-al-maram") return bookTitle(slug, book);
   if (slug === "musnad-ahmad") return `Part ${book}`;
   const title = bookTitle(slug, book);
   return title ? `Book ${book} · ${title}` : `Book ${book}`;
@@ -1382,7 +1383,7 @@ async function getBookTiming(slug, n){
 }
 
 function bookAudioUrl(slug, n, timing){
-  if (slug === "umdat-al-ahkam" || slug === "al-ilmam") {
+  if (slug === "umdat-al-ahkam" || slug === "al-ilmam" || slug === "bulugh-al-maram") {
     const base = cache.bookIndex[slug]?.audioBase;
     if (!base || !timing?.audio) throw new Error("Book audio URL not configured");
     return new URL(timing.audio, base.endsWith("/") ? base : base + "/").href;
@@ -1739,7 +1740,7 @@ function isTimedToken(token){
   return Number.isFinite(token?.start) && Number.isFinite(token?.end);
 }
 function audioWindow(){
- const s=(state.slug==="umdat-al-ahkam"||state.slug==="ibn-khuzaymah"||state.slug==="al-ilmam")?umdatAudioSegment:null;
+ const s=(state.slug==="umdat-al-ahkam"||state.slug==="ibn-khuzaymah"||state.slug==="al-ilmam"||state.slug==="bulugh-al-maram")?umdatAudioSegment:null;
  if(s&&Number.isFinite(s.start)&&Number.isFinite(s.end)&&s.end>s.start)return {start:s.start,end:s.end,duration:s.end-s.start};
  const d=Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:0;
  return {start:0,end:d,duration:d};
@@ -2029,7 +2030,7 @@ async function prepareAudio(url, navToken = currentNavToken){
   }
   audio.pause();
   // Stream the shared audiobook rather than fetching its entire MP3 into memory.
-  if (state.slug === "umdat-al-ahkam" || state.slug === "ibn-khuzaymah" || state.slug === "al-ilmam") {
+  if (state.slug === "umdat-al-ahkam" || state.slug === "ibn-khuzaymah" || state.slug === "al-ilmam" || state.slug === "bulugh-al-maram") {
     if (!isCurrentNavigation(navToken)) return;
     // Khuzaymah: never block or remove the dock while a remote recording loads.
     // Mobile Safari may defer metadata until the user presses Play.
@@ -2260,7 +2261,7 @@ async function loadKhuzaymah(){
   cache.bookIndex[slug] = {books,reportBook};
 }
 async function ensureBookIndex(slug){
-  if (slug === "al-ilmam" && !cache.bookIndex[slug]) {
+  if ((slug === "al-ilmam" || slug === "bulugh-al-maram") && !cache.bookIndex[slug]) {
     cache.bookIndex[slug] = await jgz(`${slug}/index.json.gz`);
   }
   if (slug === "ibn-khuzaymah" && !cache.bookIndex[slug]) {
@@ -2273,7 +2274,7 @@ async function ensureBookIndex(slug){
 }
 async function ensureBookOf(slug, bk){
   if (!cache.bookOf[slug]) cache.bookOf[slug] = {};
-  if (!cache.bookOf[slug][bk]) cache.bookOf[slug][bk] = slug === "al-ilmam"
+  if (!cache.bookOf[slug][bk]) cache.bookOf[slug][bk] = (slug === "al-ilmam" || slug === "bulugh-al-maram")
     ? await jgz(`${slug}/book-${bk}.json.gz`) : await j(`${slug}/book-${bk}.json`);
   return cache.bookOf[slug][bk];
 }
@@ -2946,19 +2947,19 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
     slug === "ibn-khuzaymah" && h.recitation
       ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:reportWords.map((w,i)=>({text:h.tokens[i]?.text||"",start:w[1]>=0?w[1]/100:NaN,end:w[2]>=0?w[2]/100:NaN}))}
-      : (slug === "umdat-al-ahkam" || slug === "al-ilmam")
+      : (slug === "umdat-al-ahkam" || slug === "al-ilmam" || slug === "bulugh-al-maram")
       ? (h.src?.f && Array.isArray(h.tokens) ? {
           audio:h.src.f, segmentStart:h.src.s, segmentEnd:h.src.e,
           tokens:h.tokens.map(t => ({...t, start:t.start + h.src.s, end:t.end + h.src.s}))
         } : null)
       : slug === "darimi" ? (h.clip ? { audio:`darimi/clips/${h.clip}.mp3`, tokens:h.tokens } : null) : getBookTiming(slug, n),
-    slug === "ibn-khuzaymah" ? {en:h.en} : (slug === "darimi" || slug === "al-ilmam") ? {} : ensureOfficialTranslations(slug, n),
+    slug === "ibn-khuzaymah" ? {en:h.en} : (slug === "darimi" || slug === "al-ilmam" || slug === "bulugh-al-maram") ? {} : ensureOfficialTranslations(slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
   const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
   let audioAvailable = hasSyncedAudio;
-  umdatAudioSegment = (slug === "umdat-al-ahkam" || slug === "ibn-khuzaymah" || slug === "al-ilmam") && timing
+  umdatAudioSegment = (slug === "umdat-al-ahkam" || slug === "ibn-khuzaymah" || slug === "al-ilmam" || slug === "bulugh-al-maram") && timing
     ? {start:timing.segmentStart, end:timing.segmentEnd} : null;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
@@ -3069,7 +3070,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const row = document.createElement("div"); row.className = "refrow";
   row.innerHTML = `<span class="lbl">Reference</span>`;
   const a = document.createElement("a");
-  a.href = slug === "al-ilmam" ? "https://rawy.net/book/12105" : (slug === "darimi" || slug === "ibn-khuzaymah") ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
+  a.href = slug === "al-ilmam" ? "https://rawy.net/book/12105" : slug === "bulugh-al-maram" ? "https://rawy.net/book/17561" : (slug === "darimi" || slug === "ibn-khuzaymah") ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
   a.textContent = `${slug}:${n}`;
   row.appendChild(a); rb.appendChild(row);
   if (!gloss) {
@@ -3083,10 +3084,10 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     try { await navigator.clipboard.writeText(url); copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy link", 1200); }
     catch { prompt("Copy link:", url); }
   };
-  if (slug === "darimi" || slug === "al-ilmam") {
+  if (slug === "darimi" || slug === "al-ilmam" || slug === "bulugh-al-maram") {
     const source = document.createElement("div");
     source.className = "refrow";
-    const url = slug === "al-ilmam" ? "https://rawy.net/book/12105" : "https://rawy.net/library";
+    const url = slug === "al-ilmam" ? "https://rawy.net/book/12105" : slug === "bulugh-al-maram" ? "https://rawy.net/book/17561" : "https://rawy.net/library";
     source.innerHTML = `<span class="lbl">Audio source</span><a href="${url}" target="_blank" rel="noopener">Rawy · مكتبة الراوي</a>`;
     rb.appendChild(source);
   }
@@ -3097,7 +3098,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   stage.innerHTML = ""; stage.appendChild(wrap);
   revealStage();
   if (shouldContinue && hasSyncedAudio && audioAvailable) {
-    const start=(slug==="umdat-al-ahkam"||slug==="al-ilmam")?(umdatAudioSegment?.start??0):0;
+    const start=(slug==="umdat-al-ahkam"||slug==="al-ilmam"||slug==="bulugh-al-maram")?(umdatAudioSegment?.start??0):0;
     audio.currentTime=start;
     syncWordHighlight(start);
     const p = audio.play();
