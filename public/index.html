@@ -986,6 +986,7 @@ function appendReportAction(parent){
 const COLLECTIONS = [
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   {slug:"ibn-khuzaymah", corpus:"ibn-khuzaymah", en:"Sahih Ibn Khuzaymah", ar:"صحيح ابن خزيمة", count:3282, books:true, audio:true},
+  {slug:"umdat-al-ahkam", corpus:"umdat-al-ahkam", en:"Umdat al-Ahkam", ar:"عمدة الأحكام", count:414, books:true, audio:false},
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
@@ -1049,14 +1050,14 @@ function musnadPartSections(from, to){
 }
 
 function bookTitle(slug, book){
-  if (slug === "darimi") return cache.bookIndex.darimi?.books.find(b => b.book === Number(book))?.title || "";
+  if (slug === "darimi" || slug === "umdat-al-ahkam") return cache.bookIndex[slug]?.books.find(b => b.book === Number(book))?.title || "";
   if (book == null || book === "") return "";
   const map = BOOK_SECTION_NAMES[slug];
   if (!map) return "";
   return map[book] || map[String(book)] || "";
 }
 function bookLabel(slug, book){
-  if (slug === "darimi") return bookTitle(slug, book);
+  if (slug === "darimi" || slug === "umdat-al-ahkam") return bookTitle(slug, book);
   if (slug === "musnad-ahmad") return `Part ${book}`;
   const title = bookTitle(slug, book);
   return title ? `Book ${book} · ${title}` : `Book ${book}`;
@@ -1964,6 +1965,7 @@ function stopAudio(){
 const cache = { trans:{}, sun:{}, bookIndex:{}, bookOf:{}, officialTranslation:{} };
 
 async function ensureOfficialTranslations(slug, n){
+  if (slug === "umdat-al-ahkam") return {en:"",ur:""};
   const key = `${slug}:${n}`;
   if (slug === "riyad") {
     if (!cache.officialTranslation.riyad) cache.officialTranslation.riyad = j("translation/riyad.json");
@@ -2556,7 +2558,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   let reportControls;
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
-    slug === "darimi" ? (h.clip ? { audio:`darimi/clips/${h.clip}.mp3`, tokens:h.tokens } : null) : getBookTiming(slug, n),
+    slug === "umdat-al-ahkam" ? null : slug === "darimi" ? (h.clip ? { audio:`darimi/clips/${h.clip}.mp3`, tokens:h.tokens } : null) : getBookTiming(slug, n),
     slug === "ibn-khuzaymah" ? {en:h.en} : slug === "darimi" ? {} : ensureOfficialTranslations(slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
