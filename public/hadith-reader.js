@@ -1880,6 +1880,8 @@ async function openManagedHadith(col, record, navToken) {
 }
 
 async function openHadith(slug, n, navToken = currentNavToken){
+  const stage = document.getElementById("stage");
+  if (stage && !stage.querySelector(".status")) stage.innerHTML = `<div class="status" role="status" aria-live="polite">Loading hadith…</div>`;
   const col = bySlug[slug]; if (!col) return showLanding(navToken);
   if (document.body.dataset.view === "landing") await enterReaderView();
   else {
