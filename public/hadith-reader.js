@@ -686,6 +686,15 @@ for (const c of COLLECTIONS) {
   cards.appendChild(a);
 }
 renderResume();
+cards.addEventListener("click", (event) => {
+  const link = event.target.closest("a[data-collection]");
+  if (!link) return;
+  event.preventDefault();
+  const hash = link.getAttribute("href");
+  if (!hash) return;
+  if (location.hash === hash) route();
+  else location.hash = hash.slice(1);
+});
 document.getElementById("home").onclick = () => { location.hash = ""; };
 
 /* ---------- audio engine (one sticky player) ---------- */
