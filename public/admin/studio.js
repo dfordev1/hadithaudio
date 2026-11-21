@@ -48,15 +48,18 @@ async function send(path, { method="GET", body, type="application/json", auth=tr
   throw new Error(error.message || error.msg || error.error_description || "Request failed ("+response.status+")");
 }
 
-async function objectKey(id) {
-  const params = new URLSearchParams({select:"object_key",id:"eq."+id});
+async function versionBody(id) {
+  const params = new URLSearchParams({select:"object_key,document",id:"eq."+id});
   const [row] = await send("/rest/v1/cms_versions?"+params).then(response => response.json());
   if (!row) throw new Error("Version unavailable.");
-  return row.object_key.split("/").map(encodeURIComponent).join("/");
+  return {document:row.document,key:row.object_key?.split("/").map(encodeURIComponent).join("/")};
 }
 
 async function request(action, { method="GET", body, type="application/json", query={} } = {}) {
-  if (action==="asset") return send("/storage/v1/object/authenticated/hadith-cms/"+await objectKey(query.id));
+  if (action==="asset") {
+    const version = await versionBody(query.id);
+    return version.key ? send("/storage/v1/object/authenticated/hadith-cms/"+version.key) : Response.json(version.document);
+  }
   if (action==="stage") {
     const key=session.user.id+"/"+crypto.randomUUID()+"/"+query.path.split("/").at(-1);
     await send("/storage/v1/object/hadith-cms/"+key,{method,type,body});
@@ -472,7 +475,8 @@ async function showPreview() {
   if (!selected.size) throw new Error("Select at least one draft version to preview.");
   preview = Object.fromEntries(await Promise.all(Array.from(selected.values(), async change => {
     if (!change.version) return [change.path,null];
-    const key = await objectKey(change.version);
+    const {key,document} = await versionBody(change.version);
+    if (!key) return [change.path,"data:application/json,"+encodeURIComponent(JSON.stringify(document))];
     const result = await send("/storage/v1/object/sign/hadith-cms/"+key,{
       method:"POST",body:{expiresIn:900},
     }).then(response => response.json());
@@ -507,6 +511,7 @@ function resetSession() {
   versions=[];
   openDocument=null;
   reportIndex=-1;
+  window.hadithLibraryReset?.();
   $("site-form").reset();
   $("site-pages").replaceChildren();
   $("document").value="";
@@ -530,6 +535,7 @@ $("login").onsubmit=run(async event => {
     if (!member) throw new Error("This account is not a Studio member.");
     await refresh();
     await loadSite();
+    await window.hadithLibraryOpen?.();
     $("identity").textContent=member.email+" · "+member.role;
     $("workspace").hidden=$("logout").hidden=false;
     $("login-panel").hidden=true;

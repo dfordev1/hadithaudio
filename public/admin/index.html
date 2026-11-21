@@ -7,7 +7,9 @@
 <meta name="referrer" content="no-referrer">
 <title>Hadith.to Studio</title>
 <link rel="stylesheet" href="/admin/studio.css">
+<script src="/cms-content.js" defer></script>
 <script src="/admin/studio.js" defer></script>
+<script src="/admin/library.js" defer></script>
 </head>
 <body>
 <header><div><a class="brand" href="/admin/">Hadith.to <span>Studio</span></a></div><nav><a href="/">Open reader ↗</a><button id="logout" hidden>Sign out</button></nav></header>
@@ -24,6 +26,46 @@
 <div id="workspace" hidden>
 <h1>Content studio</h1>
 <p id="identity"></p>
+<section>
+<h2>Library</h2>
+<label>Collection <select id="library-collection"></select></label>
+<div class="grid">
+<form id="library-details">
+<h3>Collection and books</h3>
+<label>Collection address <input name="slug" maxlength="64" required></label>
+<label>English title <input name="en" maxlength="150" required></label>
+<label>Arabic title <input name="ar" dir="rtl" maxlength="150" required></label>
+<div id="library-books"></div>
+<div class="actions"><button type="button" id="library-add-book">Add book</button><button class="primary">Save collection draft</button></div>
+</form>
+<form id="library-report">
+<h3>Hadith</h3>
+<div class="actions"><label>Hadith number <input name="n" required maxlength="10" placeholder="1"></label><button type="button" id="library-open-report">Load hadith</button></div>
+<label>Book <select name="book"></select></label>
+<label>Arabic text <textarea name="ar" dir="rtl" required rows="5" maxlength="40000"></textarea></label>
+<label>English translation <textarea name="en" rows="3" maxlength="40000"></textarea></label>
+<label>Urdu translation <textarea name="ur" dir="rtl" rows="3" maxlength="40000"></textarea></label>
+<label>Source link <input name="source" type="url"></label>
+<label>Recitation URL or uploaded asset path <input name="audio" placeholder="https://… or /recitation/…"></label>
+<label><span><input name="reuseAudio" type="checkbox"> Keep existing recitation and its alignment</span></label>
+<label>Word times JSON <input name="timing" type="file" accept=".json,application/json"></label>
+<p class="hint" id="library-timing"></p>
+<div class="actions"><button type="button" id="library-clear-timing">Remove timestamps</button><button class="primary">Save hadith draft</button></div>
+</form>
+</div>
+<details>
+<summary>Bulk import collection and hadith</summary>
+<form id="library-import">
+<label>Content JSON <input name="file" type="file" accept=".json,application/json" required></label>
+<p class="hint">Import up to 999 hadith with one collection. A file contains a collection object and a reports array.</p>
+<button>Stage collection import</button>
+</form>
+</details>
+<template id="library-book-template"><fieldset><legend>Book</legend>
+<label>Number <input name="number" type="number" min="1" required></label>
+<label>Title <input name="title" maxlength="150" required></label>
+<button type="button" data-remove>Remove book</button></fieldset></template>
+</section>
 <section>
 <h2>Website</h2>
 <form id="site-form">

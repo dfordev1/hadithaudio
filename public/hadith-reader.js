@@ -86,21 +86,7 @@ function appendReportAction(parent){
 const htmlText = value => String(value).replace(/[&<>"']/g, char => ({
   "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;",
 })[char]);
-const COLLECTIONS = [
-  { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
-  { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
-  { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
-  { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
-  { slug:"nasai", corpus:"nasai", ar:"سنن النسائي", en:"Sunan an-Nasa'i", count:5679, audio:true, books:true },
-  { slug:"ibnmajah", corpus:"ibnmajah", ar:"سنن ابن ماجه", en:"Sunan Ibn Majah", count:4338, audio:true, books:true },
-  { slug:"malik", corpus:"malik", ar:"موطأ مالك", en:"Muwatta Malik", count:1829, audio:true, books:true },
-  { slug:"darimi", corpus:"darimi", ar:"سنن الدارمي", en:"Sunan al-Darimi", count:3535, audio:true, books:true },
-  { slug:"riyad", corpus:"riyad-as-salihin", ar:"رياض الصالحين", en:"Riyad as-Salihin", count:1896, audio:true, books:true, synthetic:"mixed" },
-  { slug:"musnad-ahmad", corpus:"musnad-ahmad", ar:"مسند أحمد", en:"Musnad Ahmad", count:27648, audio:true, books:true, synthetic:false },
-  { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:false },
-  { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
-  { slug:"shahwaliullah40", corpus:"shahwaliullah-arbain", ar:"أربعون شاه ولي الله الدهلوي", en:"Forty Hadith of Shah Waliullah Dehlawi", count:40, audio:true, synthetic:true },
-];
+const COLLECTIONS = window.HadithContent.bundled.map(item => ({...item}));
 const catalogFields = item => item && /^[a-z0-9][a-z0-9_-]{0,63}$/.test(item.slug) &&
   !Object.hasOwn(Object.prototype, item.slug) && typeof item.corpus === "string" &&
   /^[a-z0-9][a-z0-9_-]{0,63}$/.test(item.corpus) &&
@@ -121,6 +107,14 @@ if (Array.isArray(window.hadithCmsCatalog)) {
 function shelfAudioMeta(c){
   if (c.audio) return "read & listen";
   return "read";
+}
+for (const item of window.hadithManagedLibrary?.values() || []) {
+  const existing = COLLECTIONS.find(col => col.slug === item.slug);
+  if (existing) Object.assign(existing,{en:item.en,ar:item.ar});
+  else {
+    const numbers = window.hadithManagedNumbers(item.slug);
+    if (numbers.length) COLLECTIONS.push({...item,count:numbers.length,audio:true,books:false,managed:true});
+  }
 }
 const bySlug = Object.fromEntries(COLLECTIONS.map(c => [c.slug, c]));
 const BUKHARI_BOOK_NAMES = {
@@ -679,7 +673,7 @@ function renderResume(){
 const cards = document.getElementById("cards");
 for (const c of COLLECTIONS) {
   const a = document.createElement("a");
-  a.href = `#${c.slug}:1`;
+  a.href = `#${c.slug}:${c.managed ? window.hadithManagedNumbers(c.slug)[0] : 1}`;
   a.dataset.collection = c.slug;
   a.innerHTML = `
     <div>
@@ -992,7 +986,7 @@ audio.addEventListener("timeupdate", () => {
 });
 
 /** Blob-backed src so word seeks work even when the host lacks Accept-Ranges (e.g. python -m http.server). */
-async function prepareAudio(url, navToken = currentNavToken){
+async function prepareAudio(url, navToken = currentNavToken, direct = false){
   // Stay deaf to `ended` until the caller finishes seek/play setup.
   // Cached blob reassignment can restore an old end position and re-fire `ended`,
   // which Autoplay was treating as a finished track (looked like Repeat).
@@ -1003,7 +997,7 @@ async function prepareAudio(url, navToken = currentNavToken){
     return;
   }
   audio.pause();
-  const stream = window.hadithCmsStream?.(url);
+  const stream = direct ? url : window.hadithCmsStream?.(url);
   let obj = stream || audioBlobUrls.get(url);
   if (!obj) {
     const res = await fetch(url);
@@ -1022,15 +1016,23 @@ async function prepareAudio(url, navToken = currentNavToken){
     return;
   }
   await new Promise((resolve, reject) => {
+    const cleanup = () => {
+      clearTimeout(timeout);
+      audio.removeEventListener("loadedmetadata",onLoad);
+      audio.removeEventListener("error",onError);
+    };
     const onLoad = () => {
-      if (!isCurrentNavigation(navToken)) return;
+      cleanup();
+      if (!isCurrentNavigation(navToken)) { resolve(); return; }
       try { audio.currentTime = 0; } catch {}
       resolve();
     };
     const onError = () => {
-      if (!isCurrentNavigation(navToken)) return;
+      cleanup();
+      if (!isCurrentNavigation(navToken)) { resolve(); return; }
       reject(new Error("audio load failed"));
     };
+    const timeout = setTimeout(onError,15000);
     audio.addEventListener("loadedmetadata", onLoad, { once:true });
     audio.addEventListener("error", onError, { once:true });
   });
@@ -1192,7 +1194,7 @@ function fillHadithJump(){
   const sel = document.getElementById("hadithJump");
   sel.innerHTML = state.seq.map(n => `<option value="${htmlText(n)}">Hadith ${htmlText(n)}</option>`).join("");
   sel.value = String(state.n);
-  sel.onchange = () => setHash(state.slug, bySlug[state.slug].books ? sel.value : Number(sel.value));
+  sel.onchange = () => setHash(state.slug, bySlug[state.slug].books || bySlug[state.slug].managed || /[a-z]$/.test(sel.value) ? sel.value : Number(sel.value));
 }
 
 function updateLocSummary(){
@@ -1754,6 +1756,129 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   scrollTo(0, 0);
 }
 
+async function openManagedHadith(col, record, navToken) {
+  const {slug,n} = record;
+  stopAudio();
+  hideDock();
+  await fadeStageOut();
+  if (!isCurrentNavigation(navToken)) return;
+  const index = col.books ? await ensureBookIndex(slug).catch(() => null) : null;
+  const bookMeta = index ? bookForReport(index,n) : null;
+  const bookData = bookMeta ? await ensureBookOf(slug,bookMeta.book).catch(() => null) : null;
+  if (!isCurrentNavigation(navToken)) return;
+  const managed = window.hadithManagedNumbers(slug);
+  const inCurrentBook = bookData ? reportsInBook(bookData) : [];
+  const bundled = col.managed || col.books ? inCurrentBook : Array.from({length:col.count},(_,i) => String(i+1));
+  const seq = [...new Set([...bundled.map(String),...managed,n])].sort((a,b) => a.localeCompare(b,undefined,{numeric:true}));
+  const position = seq.indexOf(n);
+  state = {slug,n,book:record.book ?? bookMeta?.book ?? null,seq,
+    nav:{prev:seq[position-1] ?? null,next:seq[position+1] ?? null}};
+  if (bookData && bookMeta) {
+    const neighbors = await resolveBookNeighbors(slug,n,index,bookMeta.book,bookData);
+    if (!isCurrentNavigation(navToken)) return;
+    if (state.nav.prev === null) state.nav.prev = neighbors.prev;
+    if (state.nav.next === null) state.nav.next = neighbors.next;
+  }
+  rememberProgress(slug,n,state.book);
+  fillCollectionJump();
+  const jump = document.getElementById("bookJump");
+  if (bookMeta) {
+    if (!(await fillBookJump(navToken))) return;
+  } else if (col.managed && window.hadithManagedLibrary.get(slug)?.books.length) {
+    const books = window.hadithManagedLibrary.get(slug).books;
+    const entries = await window.hadithManagedSearch(slug).catch(() => new Map());
+    if (!isCurrentNavigation(navToken)) return;
+    const firstReports = new Map();
+    for (const number of managed) {
+      const book = entries.get(number)?.[4];
+      if (book && !firstReports.has(book)) firstReports.set(book,number);
+    }
+    jump.replaceChildren(new Option("Choose book",""),...books.filter(book => firstReports.has(book.number))
+      .map(book => new Option(book.title,String(book.number))));
+    jump.value = String(record.book || "");
+    jump.classList.toggle("hidden",firstReports.size === 0);
+    jump.onchange = () => { if (jump.value) setHash(slug,firstReports.get(Number(jump.value))); };
+  } else jump.classList.add("hidden");
+  fillHadithJump();
+  updateNavEdges();
+  applyReadingMode(false);
+
+  let audioUrl = record.audio;
+  let timing = record.words;
+  if (!audioUrl && record.reuseAudio && col.books) {
+    const h = bookData?.hadith.find(item => String(item.n) === n);
+    const legacyTiming = slug === "darimi" && h?.clip ? {audio:"darimi/clips/"+h.clip+".mp3",tokens:h.tokens} : await getBookTiming(slug,n);
+    if (!isCurrentNavigation(navToken)) return;
+    if (legacyTiming) {
+      audioUrl = bookAudioUrl(slug,n,legacyTiming);
+      timing = effectiveTimingTokens(legacyTiming);
+    }
+  }
+  const textWords = record.ar.split(/\s+/);
+  const canSync = audioUrl && timing.length > 0 &&
+    (record.reuseAudio && !record.audio || normalizeArabicWord(timing.map(word => word.text).join(" ")) === normalizeArabicWord(record.ar));
+  const tokens = (canSync ? timing : textWords.map(text => ({text})))
+    .map((word,i) => ({...word,id:"cms:"+slug+":"+n+":"+i}));
+  const wrap = document.createElement("div");
+  const title = document.createElement("div");
+  title.className = "stage-head";
+  const collection = document.createElement("div");
+  collection.className = "collection";
+  collection.textContent = col.en;
+  const ref = document.createElement("div");
+  ref.className = "ref";
+  const book = window.hadithManagedLibrary.get(slug)?.books.find(item => item.number === record.book);
+  ref.textContent = book ? book.title + " · " + n : n;
+  title.append(collection,ref);
+  wrap.append(title);
+  const parallel = document.createElement("div");
+  parallel.className = "parallel" + (single ? " single" : "");
+  const arabic = document.createElement("div");
+  arabic.className = "ar-col";
+  const {arDiv,spans} = buildArabic(tokens,null,Boolean(canSync));
+  arabic.append(arDiv);
+  parallel.append(buildMeaningColumn(record.en,record.ur),arabic);
+  wrap.append(parallel);
+  const references = document.createElement("div");
+  references.className = "refblock";
+  if (record.source) {
+    const link = document.createElement("a");
+    link.href = record.source;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = "Source";
+    references.append(link);
+  }
+  wrap.append(references);
+  appendReportAction(wrap);
+  const stage = document.getElementById("stage");
+  stage.replaceChildren(wrap);
+  currentTokens = canSync ? tokens : [];
+  activeSpans = canSync ? spans : [];
+  revealStage();
+  applyParallel();
+  setPublicMetadata(col.en+" "+n+" — hadith.to",slug,n);
+  scrollTo(0,0);
+  const continueAudio = continuePlayAfterLoad;
+  continuePlayAfterLoad = false;
+  if (audioUrl) {
+    showDock();
+    try {
+      await prepareAudio(audioUrl,navToken,Boolean(record.audio?.startsWith("https:")));
+      if (!isCurrentNavigation(navToken)) return;
+      armAudioEndedListener(navToken);
+      if (continueAudio) await audio.play().catch(() => {});
+    } catch {
+      if (!isCurrentNavigation(navToken)) return;
+      hideDock();
+      const notice = document.createElement("p");
+      notice.className = "availability warn";
+      notice.textContent = "Recitation is temporarily unavailable.";
+      wrap.append(notice);
+    }
+  }
+}
+
 async function openHadith(slug, n, navToken = currentNavToken){
   const col = bySlug[slug]; if (!col) return showLanding(navToken);
   if (document.body.dataset.view === "landing") await enterReaderView();
@@ -1765,6 +1890,15 @@ async function openHadith(slug, n, navToken = currentNavToken){
   }
   syncReaderToolsUI();
   try {
+    const number = String(n || 1).toLowerCase();
+    const managed = await window.hadithManagedReport?.(slug,number).catch(() => null);
+    if (!isCurrentNavigation(navToken)) return;
+    if (managed) return await openManagedHadith(col,window.HadithContent.report(managed),navToken);
+    if (col.managed) {
+      const first = window.hadithManagedNumbers(slug)[0];
+      if (first && !n) return setHash(slug,first);
+      throw new Error("Hadith not found");
+    }
     if (col.books) await openBookHadith(slug, String(n || 1).toLowerCase(), navToken);
     else {
       n = Number(n) || 1;
