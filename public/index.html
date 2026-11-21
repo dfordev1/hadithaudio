@@ -755,22 +755,34 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
 @media(max-width:680px){.dock{left:12px;right:12px;bottom:12px;transform:none;width:auto;max-width:none;padding:12px 12px calc(12px + env(safe-area-inset-bottom));border-radius:18px}}
 
 #chapterBrowse{max-width:50vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#chapterDialog{position:fixed;inset:0;margin:auto;width:min(520px,calc(100vw - 20px));max-width:none;max-height:82dvh;padding:0;background:var(--bg);color:var(--ink);border:1px solid var(--rule);border-radius:18px;box-shadow:0 20px 80px #0008}
-#chapterDialog::backdrop{background:#000a}
+#chapterDialog,#musnadDialog{position:fixed;inset:0;margin:auto;width:min(520px,calc(100vw - 20px));max-width:none;max-height:82dvh;padding:0;background:var(--bg);color:var(--ink);border:1px solid var(--rule);border-radius:18px;box-shadow:0 20px 80px #0008}
+#chapterDialog::backdrop,#musnadDialog::backdrop{background:#000a}
 .chapter-inner{display:flex;flex-direction:column;max-height:82dvh}
 .chapter-inner header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--rule)}
-#chapterClose{width:44px;height:44px;border:0;border-radius:50%;background:var(--soft);color:var(--ink)}
+#chapterClose,#musnadClose{width:44px;height:44px;border:0;border-radius:50%;background:var(--soft);color:var(--ink)}
 .chapter-book-label{display:block;margin:12px 16px 4px;font-size:.7rem;letter-spacing:.05em;color:var(--muted)}
-#chapterSection{display:block;margin:0 16px;width:calc(100% - 32px);padding:11px;border:1px solid var(--rule);border-radius:10px;background:var(--soft);color:var(--ink);font-size:16px;min-height:48px}
-#chapterSearch{margin:12px 16px;width:calc(100% - 32px);padding:12px;border:1px solid var(--rule);border-radius:10px;background:var(--soft);color:var(--ink);font-size:16px}
-#chapterList{overflow-y:auto;padding:0 12px 16px;overscroll-behavior:contain}
+#chapterSection,#musnadGroup{display:block;margin:0 16px;width:calc(100% - 32px);padding:11px;border:1px solid var(--rule);border-radius:10px;background:var(--soft);color:var(--ink);font-size:16px;min-height:48px}
+#chapterSearch,#musnadSearch{margin:12px 16px;width:calc(100% - 32px);padding:12px;border:1px solid var(--rule);border-radius:10px;background:var(--soft);color:var(--ink);font-size:16px}
+#chapterList,#musnadList{overflow-y:auto;padding:0 12px 16px;overscroll-behavior:contain}
 .chapter-empty{padding:16px;color:var(--muted)}
-#chapterList h3{position:sticky;top:0;background:var(--bg);padding:12px 10px;font-family:var(--ar-font);color:var(--gold);border-bottom:1px solid var(--rule)}
+#chapterList h3,#musnadList h3{position:sticky;top:0;background:var(--bg);padding:12px 10px;font-family:var(--ar-font);color:var(--gold);border-bottom:1px solid var(--rule)}
 .chapter-item{display:flex;flex-direction:column;gap:5px;width:100%;min-height:60px;padding:14px 12px;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);text-align:start}
 .chapter-item[aria-current="true"]{background:var(--soft);border-inline-start:3px solid var(--gold)}
 .chapter-item span{width:100%;font:1.35rem/1.6 var(--ar-font);text-align:right}
 .chapter-item small{color:var(--muted);font-size:.75rem}
-@media(max-width:680px){#chapterDialog{margin:auto 0 0;width:100%;max-height:86dvh;border-radius:18px 18px 0 0}.chapter-inner{max-height:86dvh;padding-bottom:env(safe-area-inset-bottom)}}
+@media(max-width:680px){#chapterDialog,#musnadDialog{margin:auto 0 0;width:100%;max-height:86dvh;border-radius:18px 18px 0 0}.chapter-inner{max-height:86dvh;padding-bottom:env(safe-area-inset-bottom)}}
+
+#musnadBrowse{max-width:min(54vw,360px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#musnadList{flex:1;min-height:0}
+.musnad-row .musnad-english{font-family:inherit;font-size:.83rem;line-height:1.5;color:var(--muted);text-align:start;direction:ltr}
+.musnad-row .musnad-only-en{font-family:inherit;font-size:.96rem;line-height:1.5;text-align:start;direction:ltr}
+.musnad-row .musnad-count{font-size:.75rem;color:var(--muted);direction:ltr}
+.musnad-jump{margin:0 16px 12px}
+.musnad-jump>label{display:block;font-size:.72rem;margin:0 0 6px;color:var(--muted)}
+.musnad-jump>div{display:flex;gap:8px}
+.musnad-jump input{min-width:0;flex:1;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--soft);color:var(--ink);font-size:16px}
+.musnad-jump button{min-width:64px;padding:9px 16px;background:var(--soft);border:1px solid var(--rule);border-radius:10px;color:var(--ink);font-weight:600}
+#musnadJumpError{display:block;min-height:1em;padding-top:3px;color:var(--muted);font-size:.7rem}
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
 <meta name="hadith-ui-version" content="sacred-2026-09-05">
@@ -893,13 +905,27 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
       <button type="button" class="loc-summary" id="locSummary" aria-expanded="false">Jump…</button>
       <div class="loc-panel" id="locPanel">
         <select class="loc-select" id="collJump" title="Collection"></select>
-        <select class="loc-select hidden" id="bookJump" title="Book"></select><button type="button" class="loc-select hidden" id="chapterBrowse" aria-haspopup="dialog" aria-controls="chapterDialog">Chapters</button>
+        <select class="loc-select hidden" id="bookJump" title="Book"></select><button type="button" class="loc-select hidden" id="chapterBrowse" aria-haspopup="dialog" aria-controls="chapterDialog">Chapters</button><button type="button" class="loc-select hidden" id="musnadBrowse" aria-haspopup="dialog" aria-controls="musnadDialog">Narrators</button><button type="button" class="loc-select hidden" id="musnadHadithJump" aria-haspopup="dialog" aria-controls="musnadDialog">Hadith #</button>
         <select class="loc-select" id="hadithJump" title="Hadith"></select>
       </div>
     </div>
   </div>
 
   <dialog id="chapterDialog" aria-label="Book chapters"><div class="chapter-inner"><header><strong id="chapterDialogTitle">Chapters</strong><button id="chapterClose" aria-label="Close">✕</button></header><label class="chapter-book-label" for="chapterSection">Book · الكتاب</label><select id="chapterSection" aria-label="Darimi book"></select><input id="chapterSearch" type="search" aria-label="Search chapters across all books" placeholder="Search all chapters · ابحث عن باب" /><div id="chapterList"></div></div></dialog>
+  <dialog id="musnadDialog" aria-label="Musnad Ahmad group and narrator navigation">
+    <div class="chapter-inner">
+      <header><strong>مسند الإمام أحمد · Narrators</strong><button type="button" id="musnadClose" aria-label="Close narrator browser">✕</button></header>
+      <label class="chapter-book-label" for="musnadGroup">Group · المجموعة</label>
+      <select id="musnadGroup" aria-label="Musnad group"></select>
+      <input id="musnadSearch" type="search" aria-label="Search narrators in Arabic or English" placeholder="Search narrators · ابحث عن الراوي" autocomplete="off">
+      <form id="musnadJumpForm" class="musnad-jump">
+        <label for="musnadJumpNumber">Hadith number</label>
+        <div><input id="musnadJumpNumber" type="number" inputmode="numeric" min="1" max="27648" required aria-describedby="musnadJumpError" placeholder="1–27,648"><button type="submit">Go</button></div>
+        <small id="musnadJumpError" role="status" aria-live="polite"></small>
+      </form>
+      <div id="musnadList" aria-label="Narrators and sections"></div>
+    </div>
+  </dialog>
   <button class="navedge prev" id="prevBtn" aria-label="Previous hadith" disabled>
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
@@ -1116,12 +1142,13 @@ function musnadAhmadMeta(n){
   return match;
 }
 function musnadAhmadSection(n){
-  return musnadAhmadMeta(n)?.sectionAr || "مسند أحمد";
+  const meta=musnadAhmadMeta(n);
+  return meta?.sectionAr||meta?.sectionEn||"مسند أحمد";
 }
 function musnadAhmadReference(n){
   const meta = musnadAhmadMeta(n);
   if (!meta) return `مسند أحمد · ${n}`;
-  const labels = [meta.groupAr, meta.sectionAr].filter(Boolean);
+  const labels = [meta.groupAr, meta.sectionAr||meta.sectionEn].filter(Boolean);
   if (labels.length === 2 && labels[0] === labels[1]) labels.shift();
   return `${labels.join(" · ")} · ${n}`;
 }
@@ -2339,15 +2366,134 @@ chapterBrowse.onclick=()=>{
 };
 document.getElementById("chapterClose").onclick=()=>chapterDialog.close();
 chapterDialog.addEventListener("click",e=>{if(e.target===chapterDialog)chapterDialog.close();});
+
+// The 28 Musnad parts are transport chunks, not narrator or chapter divisions.
+// Build a separate, ordered navigation model from the canonical section boundaries.
+// English names are used only when the source has no Arabic name; never guess one.
+function buildMusnadNavigation(sections, total){
+  const groups=new Map(), entries=[];
+  let currentGroup=null;
+  for(let i=0;i<sections.length;i++){
+    const s=sections[i];
+    const first=Number(s.from);
+    const end=i+1<sections.length?Number(sections[i+1].from)-1:total;
+    if(!Number.isInteger(first)||!Number.isInteger(end)||first<1||end<first||end>total)throw new Error("Invalid Musnad section boundary");
+    const groupAr=String(s.groupAr||"").trim(),groupEn=String(s.groupEn||"").trim();
+    if(groupAr||groupEn){
+      const key=groupAr||groupEn;
+      if(!currentGroup||currentGroup.key!==key)currentGroup={key,ar:groupAr,en:groupEn};
+    }else if(!currentGroup){
+      currentGroup={key:"ungrouped",ar:"",en:"Unclassified section"};
+    }
+    if(!groups.has(currentGroup.key))groups.set(currentGroup.key,{...currentGroup,count:0});
+    groups.get(currentGroup.key).count++;
+    entries.push({from:first,to:end,count:end-first+1,groupKey:currentGroup.key,groupAr:currentGroup.ar,groupEn:currentGroup.en,sectionAr:String(s.sectionAr||"").trim(),sectionEn:String(s.sectionEn||"").trim(),chapterId:s.chapterId});
+  }
+  return {groups,entries};
+}
+function musnadSearchText(value){
+  return String(value||"").toLowerCase().normalize("NFKC").replace(/[\u064b-\u065f\u0670\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").trim();
+}
+const musnadBrowse=document.getElementById("musnadBrowse");
+const musnadDialog=document.getElementById("musnadDialog");
+const musnadGroup=document.getElementById("musnadGroup");
+const musnadSearch=document.getElementById("musnadSearch");
+const musnadList=document.getElementById("musnadList");
+const musnadJumpNumber=document.getElementById("musnadJumpNumber");
+const musnadJumpError=document.getElementById("musnadJumpError");
+let musnadNavigation=null;
+function musnadActiveEntry(n){
+  return musnadNavigation?.entries.find(e=>e.from<=Number(n)&&e.to>=Number(n))||null;
+}
+function renderMusnadNavigation(){
+  if(!musnadNavigation)return;
+  const query=musnadSearchText(musnadSearch.value),selected=musnadGroup.value;
+  musnadList.replaceChildren();
+  let lastGroup=null,found=0;
+  const current=musnadActiveEntry(state.n);
+  for(const item of musnadNavigation.entries){
+    const group=musnadNavigation.groups.get(item.groupKey);
+    if(!query&&item.groupKey!==selected)continue;
+    if(query&&!musnadSearchText([item.sectionAr,item.sectionEn,group.ar,group.en,item.from,item.to].join(" ")).includes(query))continue;
+    if(query&&lastGroup!==item.groupKey){
+      const title=document.createElement("h3");title.textContent=group.ar||group.en;musnadList.append(title);
+      lastGroup=item.groupKey;
+    }
+    const button=document.createElement("button");
+    button.type="button";button.className="chapter-item musnad-row";
+    button.setAttribute("aria-current",item===current?"true":"false");
+    button.setAttribute("aria-label",(item.sectionAr||item.sectionEn||"Unnamed section")+"; Hadith "+item.from+" to "+item.to);
+    const name=document.createElement("span");
+    if(item.sectionAr){name.textContent=item.sectionAr;name.dir="rtl";name.lang="ar";}
+    else{name.textContent=item.sectionEn||"Unnamed section";name.className="musnad-only-en";name.dir="ltr";}
+    button.append(name);
+    if(item.sectionAr&&item.sectionEn){
+      const english=document.createElement("span");english.className="musnad-english";
+      english.textContent=item.sectionEn;button.append(english);
+    }
+    const range=document.createElement("small");range.className="musnad-count";
+    range.textContent="Hadith "+item.from.toLocaleString("en-US")+"–"+item.to.toLocaleString("en-US")+" · "+item.count.toLocaleString("en-US");
+    button.append(range);
+    button.onclick=()=>{musnadDialog.close();if(state.slug==="musnad-ahmad")setHash("musnad-ahmad",item.from);};
+    musnadList.append(button);found++;
+  }
+  if(!found){const p=document.createElement("p");p.className="chapter-empty";p.textContent="No matching narrators or sections";musnadList.append(p);}
+}
+function openMusnadNavigation(){
+  const active=musnadActiveEntry(state.n);
+  musnadGroup.replaceChildren();
+  for(const group of musnadNavigation.groups.values()){
+    const opt=new Option([group.ar,group.en].filter(Boolean).join(" · "),group.key);
+    musnadGroup.add(opt);
+  }
+  musnadGroup.value=active?.groupKey||musnadNavigation.groups.keys().next().value||"";
+  musnadSearch.value="";
+  musnadJumpNumber.value=String(state.n||"");
+  musnadJumpError.textContent="";
+  renderMusnadNavigation();
+  musnadDialog.showModal();
+  musnadList.querySelector('[aria-current="true"]')?.scrollIntoView({block:"center"});
+}
+musnadBrowse.onclick=openMusnadNavigation;
+const musnadHadithJump=document.getElementById("musnadHadithJump");
+musnadHadithJump.onclick=()=>{openMusnadNavigation();musnadJumpNumber.focus();musnadJumpNumber.select();};
+musnadGroup.onchange=()=>{musnadSearch.value="";renderMusnadNavigation();musnadList.scrollTop=0;};
+musnadSearch.oninput=()=>{renderMusnadNavigation();musnadList.scrollTop=0;};
+document.getElementById("musnadClose").onclick=()=>musnadDialog.close();
+musnadDialog.addEventListener("click",e=>{if(e.target===musnadDialog)musnadDialog.close();});
+document.getElementById("musnadJumpForm").onsubmit=e=>{
+  e.preventDefault();
+  const n=Number(musnadJumpNumber.value);
+  const total=bySlug["musnad-ahmad"].count;
+  if(!Number.isInteger(n)||n<1||n>total){
+    musnadJumpError.textContent="Enter a number from 1 to "+total.toLocaleString("en-US");
+    return;
+  }
+  if(state.slug!=="musnad-ahmad")return;
+  musnadDialog.close();
+  setHash("musnad-ahmad",n);
+};
 async function fillBookJump(navToken = currentNavToken){
   const sel = document.getElementById("bookJump");
   const col = bySlug[state.slug];
-  if (!col.books) { sel.classList.add("hidden"); chapterBrowse.classList.add("hidden"); return true; }
+  if (!col.books) { sel.classList.add("hidden"); chapterBrowse.classList.add("hidden"); musnadBrowse.classList.add("hidden"); return true; }
   const idx = await ensureBookIndex(col.slug);
   if (!isCurrentNavigation(navToken)) return false;
   const usesChapterBrowser=col.slug==="darimi"||col.slug==="umdat-al-ahkam";
-  sel.classList.toggle("hidden",usesChapterBrowser);
+  const usesMusnadBrowser=col.slug==="musnad-ahmad";
+  sel.classList.toggle("hidden",usesChapterBrowser||usesMusnadBrowser);
   chapterBrowse.classList.toggle("hidden",!usesChapterBrowser);
+  musnadBrowse.classList.toggle("hidden",!usesMusnadBrowser);
+  if(usesMusnadBrowser){
+    if(!musnadNavigation)musnadNavigation=buildMusnadNavigation(idx.sections||[],col.count);
+    const current=musnadActiveEntry(state.n);
+    const name=current?.sectionAr||current?.sectionEn||"Browse narrators";
+    musnadBrowse.textContent=name;
+    musnadBrowse.title=name;
+    musnadBrowse.setAttribute("aria-label","Browse Musnad Ahmad narrators. Current: "+name);
+    sel.replaceChildren();
+    return true;
+  }
   if(usesChapterBrowser){
     chapterCollectionSlug=col.slug;
     document.getElementById("chapterDialogTitle").textContent=col.ar+" · Chapters";
@@ -2379,6 +2525,16 @@ async function fillBookJump(navToken = currentNavToken){
 
 function fillHadithJump(){
   const sel = document.getElementById("hadithJump");
+  const musnad=state.slug==="musnad-ahmad";
+  sel.classList.toggle("hidden",musnad);
+  musnadHadithJump.classList.toggle("hidden",!musnad);
+  if(musnad){
+    // The transport part may split a narrator's section; use a global jump field instead.
+    sel.replaceChildren();
+    musnadHadithJump.textContent="Hadith "+state.n;
+    musnadHadithJump.setAttribute("aria-label","Go to hadith number, current "+state.n);
+    return;
+  }
   sel.innerHTML = state.seq.map(n => `<option value="${n}">Hadith ${n}</option>`).join("");
   sel.value = String(state.n);
   sel.onchange = () => setHash(state.slug, bySlug[state.slug].books ? sel.value : Number(sel.value));
