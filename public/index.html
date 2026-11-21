@@ -1102,6 +1102,7 @@ function appendReportAction(parent){
 const COLLECTIONS = [
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   {slug:"ibn-khuzaymah", corpus:"ibn-khuzaymah", en:"Sahih Ibn Khuzaymah", ar:"صحيح ابن خزيمة", count:3282, books:true, audio:true},
+  {slug:"al-ilmam", corpus:"al-ilmam", en:"Al-Ilmam bi-Ahadith al-Ahkam", ar:"الإلمام بأحاديث الأحكام", count:1629, books:true, audio:true},
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
@@ -1111,7 +1112,6 @@ const COLLECTIONS = [
   { slug:"darimi", corpus:"darimi", ar:"سنن الدارمي", en:"Sunan al-Darimi", count:3535, audio:true, books:true },
   { slug:"riyad", corpus:"riyad-as-salihin", ar:"رياض الصالحين", en:"Riyad as-Salihin", count:1896, audio:true, books:true, synthetic:"mixed" },
   {slug:"umdat-al-ahkam", corpus:"umdat-al-ahkam", en:"Umdat al-Ahkam", ar:"عمدة الأحكام", count:414, books:true, audio:true},
-  {slug:"al-ilmam", corpus:"al-ilmam", en:"Al-Ilmam bi-Ahadith al-Ahkam", ar:"الإلمام بأحاديث الأحكام", count:1629, books:true, audio:true},
   { slug:"musnad-ahmad", corpus:"musnad-ahmad", ar:"مسند أحمد", en:"Musnad Ahmad", count:27648, audio:true, books:true, synthetic:false },
   { slug:"nawawi40", corpus:"nawawi-arbain", ar:"الأربعون النووية", en:"An-Nawawi's Forty Hadith", count:42, audio:true, synthetic:false },
   { slug:"qudsi40", corpus:"qudsi-arbain", ar:"الأربعون القدسية", en:"The Forty Hadith Qudsi", count:40, audio:true, synthetic:true },
@@ -1687,7 +1687,7 @@ function renderResume(){
 
 /* ---------- landing ---------- */
 const cards = document.getElementById("cards");
-const shelfCollections = COLLECTIONS.filter(c => c.slug !== "ibn-khuzaymah");
+const shelfCollections = COLLECTIONS;
 shelfCollections.splice(shelfCollections.findIndex(c => c.slug === "riyad") + 1, 0, {
   slug:"shamail", href:"/shamail/", en:"Ash-Shamail al-Muhammadiyah", ar:"الشمائل المحمدية", count:417, chapterCount:56, audio:true
 });
