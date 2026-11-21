@@ -165,11 +165,8 @@
   COLLECTIONS.forEach(c => { const option = document.createElement("option"); option.value = c.slug; option.textContent = c.en; searchCollection.append(option); });
   function loadSearchData(slug) {
     if (!searchData.has(slug)) {
-      const jsonPath = "/search-data/" + slug + ".json";
-      const managed = window.hadithCmsHasAsset?.(jsonPath);
-      const data = fetch(managed ? jsonPath : jsonPath + ".gz").then(response => {
+      const data = fetch("/search-data/" + slug + ".json.gz").then(response => {
         if (!response.ok) throw new Error("Search data request failed");
-        if (managed) return response.json();
         const stream = response.body.pipeThrough(new DecompressionStream("gzip"));
         return new Response(stream).json();
       }).catch(error => {
@@ -234,13 +231,7 @@
     searchTimer = setTimeout(async () => {
       $("searchStatus").textContent = "Searching " + bySlug[slug].en + "…";
       try {
-        const [bundled,managed] = await Promise.all([
-          loadSearchData(slug).catch(error => { if (!bySlug[slug].managed) throw error; return []; }),
-          window.hadithManagedSearch(slug).catch(error => { if (bySlug[slug].managed) throw error; return new Map(); }),
-        ]);
-        const byNumber = new Map(bundled.map(record => [String(record[0]),record]));
-        for (const [number,record] of managed) byNumber.set(number,record);
-        const records = byNumber.values();
+        const records = await loadSearchData(slug);
         if (epoch !== searchEpoch || location.hash !== "#search") return;
         let total = 0;
         for (const [n, arabic, english, urdu] of records) {
@@ -270,8 +261,7 @@
     const epoch = ++searchEpoch; $("openNumber").disabled = true; $("searchStatus").textContent = "Finding hadith…";
     try {
       const col = bySlug[slug]; let found;
-      if(window.hadithManagedNumbers(slug).includes(n)) found = n;
-      else if(col.books) {
+      if(col.books) {
         const idx = await ensureBookIndex(slug), book = bookForReport(idx,n);
         if(book) { const data = await ensureBookOf(slug,book.book); found = data.hadith.find(h => String(h.n).toLowerCase() === n)?.n; }
       } else if(/^\d+$/.test(n) && Number(n) >= 1 && Number(n) <= col.count) found = Number(n);
