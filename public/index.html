@@ -2336,41 +2336,6 @@ function revealStage(){
   stage.classList.add("is-fading");
   requestAnimationFrame(() => requestAnimationFrame(() => stage.classList.remove("is-fading")));
 }
-async function enterReaderView(){
-  const landing = document.getElementById("landing");
-  const reader = document.getElementById("reader");
-  document.body.dataset.view = "reader";
-  landing.classList.remove("hidden");
-  landing.classList.add("is-leaving");
-  reader.classList.remove("hidden");
-  if (prefersReducedMotion()) {
-    landing.classList.add("hidden");
-    landing.classList.remove("is-leaving");
-    reader.classList.add("is-in");
-    return;
-  }
-  await motionWait(VIEW_FADE_MS);
-  landing.classList.add("hidden");
-  landing.classList.remove("is-leaving");
-  requestAnimationFrame(() => reader.classList.add("is-in"));
-}
-async function leaveReaderView(){
-  const landing = document.getElementById("landing");
-  const reader = document.getElementById("reader");
-  reader.classList.remove("is-in");
-  dock.classList.remove("is-in");
-  if (prefersReducedMotion()) {
-    reader.classList.add("hidden");
-    landing.classList.remove("hidden");
-    landing.classList.remove("is-leaving");
-    return;
-  }
-  await motionWait(VIEW_FADE_MS);
-  reader.classList.add("hidden");
-  landing.classList.remove("hidden");
-  landing.classList.remove("is-leaving");
-}
-
 function showDock(){
   dock.classList.remove("hidden");
   requestAnimationFrame(() => {
@@ -2632,13 +2597,11 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
 
 async function openHadith(slug, n, navToken = currentNavToken){
   const col = bySlug[slug]; if (!col) return showLanding(navToken);
-  if (document.body.dataset.view === "landing") await enterReaderView();
-  else {
-    document.body.dataset.view = "reader";
-    document.getElementById("landing").classList.add("hidden");
-    document.getElementById("reader").classList.remove("hidden");
-    document.getElementById("reader").classList.add("is-in");
-  }
+  document.body.dataset.view = "reader";
+  document.getElementById("landing").classList.add("hidden");
+  const reader = document.getElementById("reader");
+  reader.classList.remove("hidden");
+  reader.classList.add("is-in");
   syncReaderToolsUI();
   try {
     if (col.books) await openBookHadith(slug, String(n || 1).toLowerCase(), navToken);
@@ -2661,7 +2624,10 @@ async function showLanding(navToken = currentNavToken){
   document.body.dataset.view = "landing";
   setReaderToolsOpen(false);
   setSettingsOpen(false);
-  await leaveReaderView();
+  const reader = document.getElementById("reader");
+  reader.classList.remove("is-in");
+  reader.classList.add("hidden");
+  document.getElementById("landing").classList.remove("hidden");
   hideDock();
   setPublicMetadata("Read, Listen & Study Hadith");
   renderResume();
