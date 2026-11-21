@@ -694,6 +694,58 @@
 .report-audio-range{flex:1;min-width:0;accent-color:var(--ink);height:32px;cursor:pointer}
 .report-audio-clock{flex:none;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
 @media(max-width:480px){.report-audio-player{gap:8px;padding:10px}.report-audio-clock{font-size:12px}}
+
+/* Shamail-inspired experiment: presentation only. All application scripts remain unchanged. */
+:root {
+ --bg:#f7f2e7;--bg-deep:#f7f2e7;--ink:#241f18;--ink-soft:#3d352b;
+ --muted:#746957;--faint:#9a8a71;--line:#ddd2bc;--rule:#ddd2bc;
+ --soft:#f0e9dc;--gold:#9a6f32;--gold-soft:rgba(154,111,50,.23);
+ --dock:rgba(247,242,231,.96);--hl-bg:rgba(154,111,50,.10);
+ --ui-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+ --ar-font:"Scheherazade New","Noto Naskh Arabic",serif;
+ --header-h:54px;--loc-h:54px;
+}
+:root[data-theme="sepia"]{--bg:#ece0c6;--bg-deep:#ece0c6;--ink:#2e2516;--ink-soft:#42341f;--muted:#77654c;--faint:#8a775a;--line:#d2c19c;--rule:#d2c19c;--soft:#e5d6b7;--dock:rgba(236,224,198,.96)}
+:root[data-theme="dark"]{--bg:#171613;--bg-deep:#171613;--ink:#ece2cf;--ink-soft:#d9ccb6;--muted:#a69a86;--faint:#8c8273;--line:#332f28;--rule:#332f28;--soft:#24221e;--gold:#d9b075;--gold-soft:rgba(217,176,117,.23);--dock:rgba(23,22,19,.96)}
+body,:root[data-theme="dark"] body{background:var(--bg);background-attachment:scroll;font-family:var(--ui-font);line-height:1.6}
+.topbar{border-bottom:1px solid var(--rule);background:var(--bg)}
+.topbar .in{max-width:46rem;padding-inline:1.25rem}
+.brand .name{font-family:var(--ui-font);font-size:.82rem;letter-spacing:.025em;color:var(--muted)}
+.iconbtn{border-radius:999px;min-width:38px;min-height:38px}
+.iconbtn:hover,.iconbtn.on{background:var(--soft)}
+.locator{background:var(--bg);border-bottom:1px solid var(--rule)}
+.locator .in{max-width:46rem;justify-content:center;gap:6px;padding:9px 1rem}
+.loc-select,.loc-btn{font-family:var(--ui-font);font-size:.8rem;font-weight:500;border-radius:8px;color:var(--ink);padding:8px 10px}
+.loc-select:hover,.loc-btn:hover{background:var(--soft)}
+.stage-head{border:0;padding:0;margin:0 auto 2.4rem;max-width:40rem;justify-content:center;text-align:center;flex-wrap:wrap}
+.stage-head .collection{font-family:var(--ui-font);font-size:.72rem;letter-spacing:.13em;color:var(--gold);font-weight:600}
+.stage-head .ref{font-family:var(--ui-font);font-size:.72rem;color:var(--faint)}
+.parallel{gap:40px}
+.parallel.single{max-width:40rem;margin-inline:auto}
+.ar-col{min-width:0}
+.arabic,.ar-text,.ar-col .ar{font-family:var(--ar-font);color:var(--ink)}
+.col-label{color:var(--faint)}
+.navedge{border:1px solid var(--rule);border-radius:999px;background:var(--bg);color:var(--muted);box-shadow:none}
+.navedge:hover{background:var(--soft);color:var(--ink)}
+.dock{background:var(--dock);border:1px solid var(--rule);border-radius:18px;box-shadow:0 12px 38px rgba(0,0,0,.08);backdrop-filter:blur(18px)}
+.settings,.reader-tools-panel{background:var(--bg);border-color:var(--rule);border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,.1)}
+.setting-section{border-radius:10px;background:var(--soft)}
+.report-audio-player{background:var(--bg);border-color:var(--rule)}
+.report-audio-play{background:var(--ink);color:var(--bg)}
+.report-audio-range{accent-color:var(--gold)}
+button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(max-width:680px){
+ :root{--header-h:52px;--loc-h:50px}
+ .topbar .in{padding-inline:1rem}
+ .locator .in{padding:7px .65rem;gap:3px}
+ .loc-select,.loc-btn{max-width:45vw;font-size:.78rem;padding:8px 5px}
+ .stage-head{margin-bottom:1.8rem}
+ .parallel{gap:24px}
+ .navedge{width:34px;height:40px}
+ .dock{width:calc(100% - 24px);max-width:420px;bottom:calc(10px + env(safe-area-inset-bottom));border-radius:16px}
+ .report-audio-player{margin:22px 0}
+}
+
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
 <meta name="hadith-ui-version" content="sacred-2026-09-05">
