@@ -688,6 +688,12 @@
     #bookJump { flex:0 1 19rem; }
     #hadithJump { flex:0 0 6rem; }
   }
+
+.report-audio-player{display:flex;align-items:center;gap:12px;padding:14px;margin:22px 0;border:1px solid var(--rule);border-radius:12px;background:var(--bg);direction:ltr}
+.report-audio-play{flex:none;min-width:65px;padding:10px 12px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:600}
+.report-audio-range{flex:1;min-width:0;accent-color:var(--ink);height:32px;cursor:pointer}
+.report-audio-clock{flex:none;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+@media(max-width:480px){.report-audio-player{gap:8px;padding:10px}.report-audio-clock{font-size:12px}}
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
 <meta name="hadith-ui-version" content="sacred-2026-09-05">
@@ -1615,9 +1621,14 @@ function isCurrentNavigation(token){
 function isTimedToken(token){
   return Number.isFinite(token?.start) && Number.isFinite(token?.end);
 }
+function audioWindow(){
+ const s=state.slug==="umdat-al-ahkam"?umdatAudioSegment:null;
+ if(s&&Number.isFinite(s.start)&&Number.isFinite(s.end)&&s.end>s.start)return {start:s.start,end:s.end,duration:s.end-s.start};
+ const d=Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:0;
+ return {start:0,end:d,duration:d};
+}
 function refreshTrackA11y(){
-  const duration = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
-  const current = Number.isFinite(audio.currentTime) && audio.currentTime >= 0 ? audio.currentTime : 0;
+  const w=audioWindow(),duration=w.duration,current=Math.max(0,Math.min(w.duration,(audio.currentTime||0)-w.start));
   track.setAttribute("aria-valuemin", "0");
   track.setAttribute("aria-valuemax", String(Math.max(duration, 0)));
   track.setAttribute("aria-valuenow", String(current));
@@ -1625,16 +1636,13 @@ function refreshTrackA11y(){
 }
 function syncPlaybackStatus(){
   if (audioSessionToken !== currentNavToken) return;
-  if (audio.duration) {
-    fill.style.width = (Math.max(0, audio.currentTime) / audio.duration * 100) + "%";
-    timeEl.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
-  }
+  const w=audioWindow();
+  if(w.duration){const t=Math.max(0,Math.min(w.duration,(audio.currentTime||0)-w.start));fill.style.width=(t/w.duration*100)+"%";timeEl.textContent=`${fmt(t)} / ${fmt(w.duration)}`;}
   refreshTrackA11y();
 }
 function clampTime(next){
-  if (!Number.isFinite(next) || next < 0) return 0;
-  if (Number.isFinite(audio.duration) && audio.duration > 0) return Math.min(audio.duration, next);
-  return next;
+  const w=audioWindow();
+  return Number.isFinite(next)?Math.max(w.start,Math.min(w.end||Infinity,next)):w.start;
 }
 function seekAudio(next){
   if (!audio.src) return;
@@ -1678,7 +1686,7 @@ playBtn.onclick = () => {
   ++playRequestToken;
   clearWordPlayback();
   armAudioEndedListener();
-  if (audio.paused) audio.play().catch(() => {});
+  if (audio.paused) {const w=audioWindow();if(state.slug==="umdat-al-ahkam"&&(audio.currentTime<w.start||audio.currentTime>=w.end-0.05))seekAudio(w.start);audio.play().catch(()=>{});}
   else audio.pause();
 };
 document.getElementById("skipBack").onclick = () => {
@@ -1814,14 +1822,14 @@ audio.addEventListener("loadedmetadata", () => {
 });
 track.addEventListener("click", (e) => {
   const r = track.getBoundingClientRect();
-  if (audio.duration) seekAudio((e.clientX - r.left) / r.width * audio.duration);
+  const w=audioWindow();if(w.duration)seekAudio(w.start+Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*w.duration);
 });
 track.addEventListener("pointerdown", (e) => {
   if (!audio.src) return;
   const move = (evt) => {
     const r = track.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (evt.clientX - r.left) / r.width));
-    seekAudio(ratio * (Number.isFinite(audio.duration) ? audio.duration : 0));
+    const w=audioWindow();seekAudio(w.start+ratio*w.duration);
   };
   const up = (evt) => {
     track.releasePointerCapture?.(e.pointerId);
@@ -1842,8 +1850,8 @@ track.addEventListener("keydown", (e) => {
   let next = audio.currentTime || 0;
   if (e.key === "ArrowLeft" || e.key === "ArrowDown" || e.key === "PageDown") next -= step;
   else if (e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "PageUp") next += step;
-  else if (e.key === "Home") next = 0;
-  else if (e.key === "End") next = Number.isFinite(audio.duration) ? audio.duration : next;
+  else if (e.key === "Home") next = audioWindow().start;
+  else if (e.key === "End") next = audioWindow().end;
   else return;
   e.preventDefault();
   seekAudio(next);
@@ -2088,6 +2096,7 @@ function mountReportPlayer(box, recitation, words, spans) {
     if (word[1] >= 0) spans[i].onclick = () => play(Math.max(start, word[1] / 100));
   });
   closeReportPlayer = () => { closed = true; cancelAnimationFrame(frame); media.pause(); media.removeAttribute("src"); media.load(); };
+  box.classList.add("report-audio-player");button.className="report-audio-play";range.className="report-audio-range";clock.className="report-audio-clock";
   box.append(button, range, clock, media);
   paint();
 }
@@ -2536,6 +2545,7 @@ async function openForty(col, n, navToken = currentNavToken){
   arCol.appendChild(arDiv);
   par.append(enCol, arCol);
   wrap.appendChild(par);
+  if(reportControls)wrap.appendChild(reportControls);
 
   const rb = document.createElement("div"); rb.className = "refblock";
   renderRefs(rb, entry, en);
@@ -2648,7 +2658,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     wrap.appendChild(notice);
   } else if (h.recitation) {
     reportControls = document.createElement("div");
-    wrap.appendChild(reportControls);
   } else if (!hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability";
@@ -2730,8 +2739,9 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   stage.innerHTML = ""; stage.appendChild(wrap);
   revealStage();
   if (shouldContinue && hasSyncedAudio && audioAvailable) {
-    audio.currentTime = 0;
-    syncWordHighlight(0);
+    const start=slug==="umdat-al-ahkam"?(umdatAudioSegment?.start??0):0;
+    audio.currentTime=start;
+    syncWordHighlight(start);
     const p = audio.play();
     Promise.resolve(p).catch(() => {}).finally(() => armAudioEndedListener(navToken));
   }
