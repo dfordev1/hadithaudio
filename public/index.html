@@ -2612,7 +2612,9 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   } else if (!hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability";
-    notice.textContent = "Audio and word timestamps are not available for this report yet.";
+    notice.textContent = slug === "umdat-al-ahkam"
+      ? "Word-level timestamps are included in this collection, but audio playback is unavailable until the referenced recording is hosted."
+      : "Audio and word timestamps are not available for this report yet.";
     wrap.appendChild(notice);
   }
   if (timing?.synthetic) {
