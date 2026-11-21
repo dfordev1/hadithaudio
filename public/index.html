@@ -2941,7 +2941,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!h) { h = bookData.hadith[0]; n = h.n; }
   n = h.n;
 
-  const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
+  const reportWords = slug === "ibn-khuzaymah" && h.recitation && h.sourceIntegrity?.timingAlignment !== "none" ? await khuzaymahWords(n) : [];
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
     slug === "ibn-khuzaymah" && h.recitation
