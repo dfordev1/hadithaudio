@@ -746,6 +746,13 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
  .report-audio-player{margin:22px 0}
 }
 
+
+/* Unified, touch-friendly reading dock — shared by every collection. */
+.dock{width:min(430px,calc(100vw - 24px));min-width:0;max-width:none;padding:12px 14px calc(12px + env(safe-area-inset-bottom));border-radius:20px;background:var(--dock);border:1px solid var(--rule);box-shadow:0 12px 40px rgba(0,0,0,.13)}
+.dock .player{min-width:0}
+.dock .track{touch-action:none}
+.dock .play{flex-shrink:0}
+@media(max-width:680px){.dock{left:12px;right:12px;bottom:12px;transform:none;width:auto;max-width:none;padding:12px 12px calc(12px + env(safe-area-inset-bottom));border-radius:18px}}
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
 <meta name="hadith-ui-version" content="sacred-2026-09-05">
@@ -1674,7 +1681,7 @@ function isTimedToken(token){
   return Number.isFinite(token?.start) && Number.isFinite(token?.end);
 }
 function audioWindow(){
- const s=state.slug==="umdat-al-ahkam"?umdatAudioSegment:null;
+ const s=(state.slug==="umdat-al-ahkam"||state.slug==="ibn-khuzaymah")?umdatAudioSegment:null;
  if(s&&Number.isFinite(s.start)&&Number.isFinite(s.end)&&s.end>s.start)return {start:s.start,end:s.end,duration:s.end-s.start};
  const d=Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:0;
  return {start:0,end:d,duration:d};
@@ -1738,7 +1745,7 @@ playBtn.onclick = () => {
   ++playRequestToken;
   clearWordPlayback();
   armAudioEndedListener();
-  if (audio.paused) {const w=audioWindow();if(state.slug==="umdat-al-ahkam"&&(audio.currentTime<w.start||audio.currentTime>=w.end-0.05))seekAudio(w.start);audio.play().catch(()=>{});}
+  if (audio.paused) {const w=audioWindow();if(umdatAudioSegment&&(audio.currentTime<w.start||audio.currentTime>=w.end-0.05))seekAudio(w.start);audio.play().catch(()=>{});}
   else audio.pause();
 };
 document.getElementById("skipBack").onclick = () => {
@@ -1835,7 +1842,7 @@ audio.addEventListener("ended", () => {
   // Precedence: explicit Repeat one loops; else Autoplay advances to a different hadith
   if (repeatOne === true) {
     ignoreAudioEnded = true;
-    const restart = state.slug === "umdat-al-ahkam" ? (umdatAudioSegment?.start ?? 0) : 0;
+    const restart = umdatAudioSegment?.start ?? 0;
     audio.currentTime = restart;
     syncWordHighlight(restart);
     fill.style.width = "0%";
@@ -1935,7 +1942,7 @@ function syncWordHighlight(t = audio.currentTime){
 audio.addEventListener("timeupdate", () => {
   if (audioSessionToken !== currentNavToken) return;
   stopAtWordEnd();
-  if (state.slug === "umdat-al-ahkam" && umdatAudioSegment && !audio.paused &&
+  if (umdatAudioSegment && !audio.paused &&
       audio.currentTime >= umdatAudioSegment.end) {
     audio.pause();
     audio.currentTime = umdatAudioSegment.end;
@@ -1964,7 +1971,7 @@ async function prepareAudio(url, navToken = currentNavToken){
   }
   audio.pause();
   // Stream the shared audiobook rather than fetching its entire MP3 into memory.
-  if (state.slug === "umdat-al-ahkam") {
+  if (state.slug === "umdat-al-ahkam" || state.slug === "ibn-khuzaymah") {
     if (!isCurrentNavigation(navToken)) return;
     audioLogicalUrl = url;
     audio.src = url;
@@ -2597,7 +2604,6 @@ async function openForty(col, n, navToken = currentNavToken){
   arCol.appendChild(arDiv);
   par.append(enCol, arCol);
   wrap.appendChild(par);
-  if(reportControls)wrap.appendChild(reportControls);
 
   const rb = document.createElement("div"); rb.className = "refblock";
   renderRefs(rb, entry, en);
@@ -2619,7 +2625,7 @@ async function openForty(col, n, navToken = currentNavToken){
   setPublicMetadata(`${col.en} ${n} — hadith.to`, col.slug, n);
   scrollTo(0, 0);
   if (shouldContinue && audioAvailable) {
-    const start = slug === "umdat-al-ahkam" ? (umdatAudioSegment?.start ?? 0) : 0;
+    const start = umdatAudioSegment?.start ?? 0;
     audio.currentTime = start;
     syncWordHighlight(start);
     const p = audio.play();
@@ -2649,11 +2655,12 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!h) { h = bookData.hadith[0]; n = h.n; }
   n = h.n;
 
-  const reportWords = h.recitation ? await khuzaymahWords(n) : [];
-  let reportControls;
+  const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
-    slug === "umdat-al-ahkam"
+    slug === "ibn-khuzaymah" && h.recitation
+      ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:reportWords.map((w,i)=>({text:h.tokens[i]?.text||"",start:w[1]>=0?w[1]/100:NaN,end:w[2]>=0?w[2]/100:NaN}))}
+      : slug === "umdat-al-ahkam"
       ? (h.src?.f && Array.isArray(h.tokens) ? {
           audio:h.src.f, segmentStart:h.src.s, segmentEnd:h.src.e,
           tokens:h.tokens.map(t => ({...t, start:t.start + h.src.s, end:t.end + h.src.s}))
@@ -2665,7 +2672,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
   let audioAvailable = hasSyncedAudio;
-  umdatAudioSegment = slug === "umdat-al-ahkam" && timing
+  umdatAudioSegment = (slug === "umdat-al-ahkam" || slug === "ibn-khuzaymah") && timing
     ? {start:timing.segmentStart, end:timing.segmentEnd} : null;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
@@ -2684,7 +2691,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   else hideDock();
   if (hasSyncedAudio) {
     try {
-      await prepareAudio(bookAudioUrl(slug, n, timing), navToken);
+      await prepareAudio(slug === "ibn-khuzaymah" ? timing.audio : bookAudioUrl(slug, n, timing), navToken);
     } catch {
       audioAvailable = false;
       hideDock();
@@ -2708,8 +2715,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     notice.className = "availability warn";
     notice.textContent = "Audio is temporarily unavailable. The aligned Arabic text and translations remain readable.";
     wrap.appendChild(notice);
-  } else if (h.recitation) {
-    reportControls = document.createElement("div");
   } else if (!hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability";
@@ -2752,8 +2757,15 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     },
   } : gloss;
   const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
-  if (reportControls) mountReportPlayer(reportControls, h.recitation, reportWords, spans);
-  if (hasSyncedAudio) activeSpans = spans;
+  if (hasSyncedAudio) {
+    activeSpans = spans;
+    if (slug === "ibn-khuzaymah") reportWords.forEach((w,i)=>{
+      if (w[1] >= 0 && spans[i]) spans[i].onclick = () => {
+        seekAudio(Math.max(umdatAudioSegment?.start ?? 0, w[1]/100));
+        audio.play().catch(()=>{});
+      };
+    });
+  }
   arCol.appendChild(arDiv);
   const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
   par.className = "parallel" + (single ? " single" : "");
