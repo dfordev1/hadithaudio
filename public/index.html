@@ -257,6 +257,12 @@
   .shelf .en { font-weight:500; font-size:.9rem; transition:color .25s var(--ease); }
   .shelf .meta { color:var(--faint); font-size:.74rem; margin-top:3px; font-weight:400; }
   .shelf .side { text-align:right; }
+  /* Arabic classics sit with the reading library, before editorial notes. */
+  .arabic-classics { margin:2.1rem 0 0; }
+  .arabic-classics h2 { margin:0 0 .35rem; font-size:.78rem; letter-spacing:.05em; font-weight:600; text-transform:uppercase; color:var(--muted); }
+  .arabic-classics .library-intro { color:var(--faint); font-size:.78rem; line-height:1.65; margin:0 0 .8rem; max-width:36rem; }
+  .arabic-classics .shelf { margin-top:0; }
+  .arabic-classics .shelf a { width:100%; }
   .methodology {
     margin:2.75rem 0 0; padding-top:1.75rem; border-top:1px solid var(--rule);
   }
@@ -880,18 +886,18 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
     <p class="search-status" id="searchStatus" role="status" aria-live="polite"></p>
     <div class="search-results" id="searchResults"></div>
   </section>
+  <section class="arabic-classics" id="arabicWordLibrary" aria-labelledby="arabicWordLibraryTitle">
+    <h2 id="arabicWordLibraryTitle">Arabic classics</h2>
+    <p class="library-intro">Classical Arabic texts with word-synchronized audio. Each book identifies its recording source.</p>
+    <div id="arabicWordLibraryList" class="shelf" aria-live="polite">
+      <a href="/arabic-book.html?book=aqidah-tahawiyyah" class="library-book"><div><div class="en">Al-ʿAqīdah al-Ṭaḥāwiyyah</div><div class="meta">Arabic text · word-level sync</div></div><div class="side"><div class="ar" lang="ar" dir="rtl">العقيدة الطحاوية</div></div></a>
+      <a href="/arabic-book.html?book=alfiyyah-ibn-malik" class="library-book"><div><div class="en">Alfiyyat Ibn Mālik</div><div class="meta">Arabic text · word-level sync</div></div><div class="side"><div class="ar" lang="ar" dir="rtl">ألفية ابن مالك</div></div></a>
+    </div>
+  </section>
   <section class="methodology" id="methodology" aria-labelledby="methodology-title">
     <h2 id="methodology-title">Methodology</h2>
     <p><strong>Human qārī audio.</strong> Where a major collection has synced playback (Bukhari, Muslim, Abi Dawud, and others as alignment lands), the voice is a real opensource / internet recitation. Words are timestamped to the Arabic text — including HUSX tokens where that corpus is used.</p>
     <p><strong>Forty-hadith audio.</strong> An-Nawawi’s Forty now uses a human Arabic recitation with synchronized full-text playback. The Forty Hadith Qudsi and Shah Waliullah’s Forty currently use synthetic audio with word timings.</p>
-  </section>
-  <section class="methodology" id="arabicWordLibrary" aria-labelledby="arabicWordLibraryTitle">
-    <h2 id="arabicWordLibraryTitle">Arabic books with synchronized audio</h2>
-    <p class="library-intro">Additional books and word-level timing files are published as an open catalog. Audio is loaded only from an authorized source listed by each book.</p>
-    <div id="arabicWordLibraryList" class="shelf" aria-live="polite">
-      <a href="/arabic-book.html?book=aqidah-tahawiyyah" target="_blank" rel="noopener" class="library-book"><div><div class="ar" lang="ar" dir="rtl">العقيدة الطحاوية</div><div class="en">Al-ʿAqīdah al-Ṭaḥāwiyyah</div><div class="meta">word-level sync</div></div><div class="side">Open ↗</div></a>
-      <a href="/arabic-book.html?book=alfiyyah-ibn-malik" target="_blank" rel="noopener" class="library-book"><div><div class="ar" lang="ar" dir="rtl">ألفية ابن مالك</div><div class="en">Alfiyyat Ibn Mālik</div><div class="meta">word-level sync</div></div><div class="side">Open ↗</div></a>
-    </div>
   </section>
   <footer class="site-footer">
     <span>hadith.to</span>
