@@ -3,6 +3,7 @@
   const nativeFetch = window.fetch.bind(window);
   let assets = {};
   let preview = {};
+  let streams = {};
   async function previewAssets() {
     if (!new URLSearchParams(location.search).has("cms-preview") || parent === window) return {};
     return new Promise(resolve => {
@@ -40,6 +41,16 @@
       document.head.append(element);
     });
   }
+  window.hadithCmsStream = input => {
+    const url = new URL(input, location.href);
+    if (url.origin !== location.origin && !["www.hadith.to","cdn.hadith.to"].includes(url.hostname)) return null;
+    const path = url.pathname.slice(1);
+    if (!Object.hasOwn(streams,path)) return null;
+    try {
+      const stream = new URL(streams[path]);
+      return stream.protocol==="https:" && !stream.username && !stream.password ? stream.href : null;
+    } catch { return null; }
+  };
   window.hadithCmsCatalog = [];
   window.hadithCmsHasAsset = input => assetUrl(input) !== input;
   async function readManifest() {
@@ -62,6 +73,16 @@
     preview = await previewAssets();
     try {
       await readManifest();
+      const streamMap = assetUrl("/cms/streams.json");
+      if (streamMap !== "/cms/streams.json") {
+        try {
+          const response = await nativeFetch(streamMap,{signal:AbortSignal.timeout(2500)});
+          if (response.ok) {
+            const value = await response.json();
+            if (value && typeof value === "object" && !Array.isArray(value)) streams = value;
+          }
+        } catch (error) { console.warn("Hadith stream map could not load:",error.message); }
+      }
       if (assetUrl("/cms/collections.json") !== "/cms/collections.json") {
         const catalog = await nativeFetch(assetUrl("/cms/collections.json"), { signal: AbortSignal.timeout(2500) });
         if (catalog.ok) window.hadithCmsCatalog = await catalog.json();
