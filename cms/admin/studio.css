@@ -1,0 +1,32 @@
+:root{color-scheme:light;--ink:#1d2a28;--muted:#4e615c;--paper:#f7f6ef;--panel:#fffefa;--edge:#d6ded6;--accent:#185b48;--focus:#1a7962;font:16px/1.55 system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink)}
+[hidden]{display:none!important}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem;padding:1rem clamp(1rem,5vw,5rem);border-bottom:1px solid var(--edge);background:var(--panel)}
+nav,.actions{display:flex;align-items:end;flex-wrap:wrap;gap:.65rem}
+.brand{font:700 1.35rem Georgia,serif;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent);margin-left:.35rem}
+main{max-width:1280px;margin:auto;padding:1.25rem clamp(1rem,4vw,3rem) 4rem}
+section{margin:0 0 1rem;padding:clamp(.9rem,2vw,1.5rem);border:1px solid var(--edge);border-radius:13px;background:var(--panel);min-width:0}
+.grid{display:grid;grid-template-columns:1.6fr 1fr;gap:1rem}
+h1,h2{font-family:Georgia,serif;line-height:1.2;margin:.25rem 0 1rem}
+label{display:grid;gap:.25rem;margin:.7rem 0}
+input,textarea,button{font:inherit;max-width:100%;padding:.5rem .65rem;border:1px solid #9bab9f;border-radius:7px;background:var(--panel);color:inherit}
+textarea{resize:vertical;font-family:ui-monospace,monospace;width:100%}
+button{cursor:pointer;font-weight:650}
+button:disabled{cursor:wait;opacity:.52}
+.primary{background:var(--accent);color:white;border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+a{color:var(--accent)}
+.table{overflow:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;text-align:left}
+th,td{padding:.6rem;border-bottom:1px solid var(--edge);white-space:nowrap}
+td button{margin-inline-end:.35rem}
+.hint,#identity{color:var(--muted)}
+#status[data-error]{color:#9a2d23;font-weight:650}
+#bulk-import{margin-top:1.5rem;border-top:1px solid var(--edge);padding-top:1rem}
+#history li{margin:.6rem 0}
+#history button{margin-inline-start:.65rem}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+
+#preview-frame{display:block;width:100%;height:650px;border:1px solid var(--edge);border-radius:7px;margin-top:1rem}

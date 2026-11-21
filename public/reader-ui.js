@@ -165,8 +165,11 @@
   COLLECTIONS.forEach(c => { const option = document.createElement("option"); option.value = c.slug; option.textContent = c.en; searchCollection.append(option); });
   function loadSearchData(slug) {
     if (!searchData.has(slug)) {
-      const data = fetch("/search-data/" + slug + ".json.gz").then(response => {
+      const jsonPath = "/search-data/" + slug + ".json";
+      const managed = window.hadithCmsHasAsset?.(jsonPath);
+      const data = fetch(managed ? jsonPath : jsonPath + ".gz").then(response => {
         if (!response.ok) throw new Error("Search data request failed");
+        if (managed) return response.json();
         const stream = response.body.pipeThrough(new DecompressionStream("gzip"));
         return new Response(stream).json();
       }).catch(error => {

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Hadith.to Studio</title>
+<link rel="stylesheet" href="/admin/studio.css">
+<script src="/admin/studio.js" defer></script>
+</head>
+<body>
+<header><div><a class="brand" href="/admin/">Hadith.to <span>Studio</span></a></div><nav><a href="/">Open reader ↗</a><a href="/cdn-cgi/access/logout">Sign out</a></nav></header>
+<main>
+<p id="status" role="status" aria-live="polite">Connecting to the CMS…</p>
+<div id="workspace" hidden>
+<h1>Content studio</h1>
+<p id="identity"></p>
+<div class="grid">
+<section>
+<h2>Content editor</h2>
+<label>Reader asset path <input id="path" list="paths" placeholder="translation/en.json" maxlength="240"></label>
+<datalist id="paths"></datalist>
+<div class="actions">
+<button id="open">Open JSON</button>
+<button id="catalog">Collection catalog</button>
+</div>
+<div class="actions" id="report-tools" hidden>
+<label>Hadith number <input id="report-number" placeholder="1"></label>
+<button id="open-report">Edit one hadith</button>
+<button id="whole-document" hidden>Whole asset</button>
+</div>
+<label id="document-label">JSON content <textarea id="document" spellcheck="false" rows="13" dir="auto"></textarea></label>
+<button class="primary" id="save">Save draft</button>
+</section>
+<section>
+<h2>Asset imports</h2>
+<form id="single-import">
+<label>Asset path <input name="path" placeholder="recitation/nawawi-arbain.001.mp3" required></label>
+<label>Asset file <input name="file" type="file" required></label>
+<button>Stage file</button>
+</form>
+<form id="bulk-import">
+<label>Content folder <input name="files" type="file" webkitdirectory multiple required></label>
+<p class="hint">Keep the reader’s relative paths inside the selected folder. Files first become private drafts.</p>
+<button>Stage folder</button>
+</form>
+</section>
+</div>
+<section>
+<h2>Versions and publishing</h2>
+<div class="actions"><label>Filter asset paths <input id="filter" placeholder="Search versions"></label><button id="reload">Refresh</button></div>
+<div class="table"><table><thead><tr><th scope="col">Asset</th><th scope="col">Version</th><th scope="col">State</th><th scope="col">Actions</th></tr></thead><tbody id="versions"></tbody></table></div>
+<div class="actions"><button id="more" hidden>Load more versions</button><button class="primary" id="publish" hidden>Publish selected</button><button id="preview-selected">Preview selected</button></div>
+</section>
+<section id="preview-panel" hidden>
+<h2>Reader preview</h2>
+<label>Hadith address <input id="preview-address" value="nawawi40:1" pattern="[a-z0-9_-]+:[0-9]+[a-z]?"></label>
+<div class="actions"><button id="preview-load">Load preview</button><button id="preview-close">Close preview</button></div>
+<iframe id="preview-frame" title="Hadith reader draft preview" referrerpolicy="no-referrer"></iframe>
+</section>
+<section>
+<h2>Release history</h2>
+<ol id="history"></ol>
+</section>
+</div>
+</main>
+</body>
+</html>
