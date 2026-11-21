@@ -2240,6 +2240,8 @@ async function loadKhuzaymah(){
   const response = await fetch("/ibn-khuzaymah/records.gz");
   if (!response.ok) throw new Error("Could not load Ibn Khuzaymah");
   const rows = await new Response(response.body.pipeThrough(new DecompressionStream("gzip"))).json();
+  const repairData = await jopt("ibn-khuzaymah/source-text-repairs.json");
+  const textRepairs = repairData?.records || {};
   const books = [], reportBook = {}, sections = {};
   for (const [n,title,chain,text,en,recitation] of rows) {
     let book = books[books.length-1];
@@ -2251,10 +2253,12 @@ async function loadKhuzaymah(){
     book.count++;
     book.to = Number(n);
     reportBook[n] = book.book;
-    const restoredText = Number(n)===1 && String(text||"").trim().endsWith("ثُمَّ قَالَ")
-      ? text+" "+KHUZAYMAH_1_COMPLETION : text;
-    const tokens = [chain,restoredText].filter(Boolean).join(" ").trim().split(/\s+/).map((text,i)=>({text,id:slug+"-"+n+"-"+i}));
-    sections[book.book].hadith.push({n,tokens,en,recitation});
+    const repair = textRepairs[String(n)] || null;
+    const restoredText = repair?.text || (Number(n)===1 && String(text||"").trim().endsWith("ثُمَّ قَالَ")
+      ? text+" "+KHUZAYMAH_1_COMPLETION : text);
+    const restoredChain = repair?.chain || chain;
+    const tokens = [restoredChain,restoredText].filter(Boolean).join(" ").trim().split(/\s+/).map((text,i)=>({text,id:slug+"-"+n+"-"+i}));
+    sections[book.book].hadith.push({n,tokens,en:repair?.en || en,recitation,sourceIntegrity:repair});
   }
   cache.bookOf[slug] = sections;
   cache.bookIndex[slug] = {books,reportBook};
@@ -3026,11 +3030,14 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   // The source text, not the (potentially shorter) audio alignment, owns the
   // complete narration. Untimed tail words remain readable without fake timings.
   const tokens = slug === "ibn-khuzaymah"
-    ? h.tokens.map((t,i) => ({
-        ...t,
-        start: reportWords[i]?.[1] >= 0 ? reportWords[i][1]/100 : NaN,
-        end: reportWords[i]?.[2] >= 0 ? reportWords[i][2]/100 : NaN,
-      }))
+    ? h.tokens.map((t,i) => {
+        const wordTiming = h.sourceIntegrity?.timingAlignment === "none" ? null : reportWords[i];
+        return {
+          ...t,
+          start: wordTiming?.[1] >= 0 ? wordTiming[1]/100 : NaN,
+          end: wordTiming?.[2] >= 0 ? wordTiming[2]/100 : NaN,
+        };
+      })
     : hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
         id: t.id || `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
@@ -3074,6 +3081,17 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     sourceLink.target = "_blank";
     sourceLink.rel = "noopener";
     sourceLink.textContent = "Printed source: Sahih Ibn Khuzaymah, hadith 1";
+    arCol.appendChild(sourceLink);
+  } else if (slug === "ibn-khuzaymah" && h.sourceIntegrity) {
+    const attribution = document.createElement("p");
+    attribution.className = "availability";
+    attribution.textContent = h.sourceIntegrity.notice || "The source narration is restored; audio timing remains limited to the available recording excerpt.";
+    arCol.appendChild(attribution);
+    const sourceLink = document.createElement("a");
+    sourceLink.href = h.sourceIntegrity.sourceUrl;
+    sourceLink.target = "_blank";
+    sourceLink.rel = "noopener";
+    sourceLink.textContent = h.sourceIntegrity.sourceLabel || h.sourceIntegrity.printedReference;
     arCol.appendChild(sourceLink);
   }
   const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
