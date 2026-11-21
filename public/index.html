@@ -764,7 +764,7 @@
     <button type="button" data-shelf-filter="forty" aria-pressed="false">The forties</button>
     <button type="button" data-shelf-filter="other" aria-pressed="false">Other collections</button>
   </div>
-  <div class="shelf" id="cards" role="tabpanel" aria-labelledby="collectionsTab"><a href="/ibn-khuzaymah.html" data-collection="ibn-khuzaymah"><div><div class="en">Sahih Ibn Khuzaymah</div><div class="meta">3,282 hadith · read &amp; listen</div></div><div class="side"><div class="ar" lang="ar" dir="rtl">صحيح ابن خزيمة</div></div></a></div>
+  <div class="shelf" id="cards" role="tabpanel" aria-labelledby="collectionsTab"></div>
   <div class="saved-list" id="savedPanel" role="tabpanel" aria-labelledby="savedTab" hidden></div>
   <div class="saved-list" id="recentPanel" role="tabpanel" aria-labelledby="recentTab" hidden></div>
   <section class="search-page" id="searchPanel" aria-labelledby="searchTitle" hidden>
@@ -984,6 +984,7 @@ function appendReportAction(parent){
   parent.appendChild(area);
 }
 const COLLECTIONS = [
+  {slug:"ibn-khuzaymah", corpus:"ibn-khuzaymah", en:"Sahih Ibn Khuzaymah", ar:"صحيح ابن خزيمة", count:3282, books:true, audio:true},
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
@@ -1989,7 +1990,34 @@ async function ensureFortySidecars(slug){
   if (!cache.sun[slug]) cache.sun[slug] = await j(`sunnah/${slug}.json`);
   return { trans: cache.trans[slug], sun: cache.sun[slug] };
 }
+let khuzaymahLoad;
+async function loadKhuzaymah(){
+  const slug = "ibn-khuzaymah";
+  const response = await fetch("/ibn-khuzaymah/records.gz");
+  if (!response.ok) throw new Error("Could not load Ibn Khuzaymah");
+  const rows = await new Response(response.body.pipeThrough(new DecompressionStream("gzip"))).json();
+  const books = [], reportBook = {}, sections = {};
+  for (const [n,title,chain,text,en,recitation] of rows) {
+    let book = books[books.length-1];
+    if (!book || book.title !== title) {
+      book = {book:books.length+1,title,from:Number(n),to:Number(n),count:0};
+      books.push(book);
+      sections[book.book] = {hadith:[]};
+    }
+    book.count++;
+    book.to = Number(n);
+    reportBook[n] = book.book;
+    const tokens = [chain,text].filter(Boolean).join(" ").trim().split(/\s+/).map((text,i)=>({text,id:slug+"-"+n+"-"+i}));
+    sections[book.book].hadith.push({n,tokens,en,recitation});
+  }
+  cache.bookOf[slug] = sections;
+  cache.bookIndex[slug] = {books,reportBook};
+}
 async function ensureBookIndex(slug){
+  if (slug === "ibn-khuzaymah" && !cache.bookIndex[slug]) {
+    khuzaymahLoad ||= loadKhuzaymah().catch(error=>{khuzaymahLoad=null; throw error;});
+    await khuzaymahLoad;
+  }
   if (!cache.bookIndex[slug]) cache.bookIndex[slug] = await j(`${slug}/index.json`);
   if (slug === "musnad-ahmad") musnadAhmadSections = cache.bookIndex[slug].sections || [];
   return cache.bookIndex[slug];
@@ -2458,9 +2486,9 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   n = h.n;
 
   const [gloss, timing, officialTranslation] = await Promise.all([
-    slug === "darimi" ? null : jopt(`gloss/${slug}-${n}.json`),
+    slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
     slug === "darimi" ? (h.clip ? { audio:`darimi/clips/${h.clip}.mp3`, tokens:h.tokens } : null) : getBookTiming(slug, n),
-    slug === "darimi" ? {} : ensureOfficialTranslations(slug, n),
+    slug === "ibn-khuzaymah" ? {en:h.en} : slug === "darimi" ? {} : ensureOfficialTranslations(slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
   const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
@@ -2507,6 +2535,13 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     notice.className = "availability warn";
     notice.textContent = "Audio is temporarily unavailable. The aligned Arabic text and translations remain readable.";
     wrap.appendChild(notice);
+  } else if (h.recitation) {
+    const [url,start,end] = h.recitation;
+    const player = document.createElement("audio");
+    player.controls = true;
+    player.preload = "none";
+    player.src = url+"#t="+start+","+end;
+    wrap.appendChild(player);
   } else if (!hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability";
@@ -2558,7 +2593,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const row = document.createElement("div"); row.className = "refrow";
   row.innerHTML = `<span class="lbl">Reference</span>`;
   const a = document.createElement("a");
-  a.href = slug === "darimi" ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
+  a.href = (slug === "darimi" || slug === "ibn-khuzaymah") ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
   a.textContent = `${slug}:${n}`;
   row.appendChild(a); rb.appendChild(row);
   if (!gloss) {
