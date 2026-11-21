@@ -1571,7 +1571,6 @@ for (const c of COLLECTIONS) {
     </div>`;
   cards.appendChild(a);
 }
-renderResume();
 document.getElementById("home").onclick = () => { location.hash = ""; };
 
 /* ---------- audio engine (one sticky player) ---------- */
@@ -2649,6 +2648,7 @@ function route(){
   if (!c || !n || !/^[a-z0-9]+$/i.test(c) || !/^\d+[a-z]?$/i.test(n)) return;
   history.replaceState(null, "", `/#${c}:${n}`);
 })();
+renderResume();
 addEventListener("hashchange", route);
 route();
 </script>
