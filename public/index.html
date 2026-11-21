@@ -1558,14 +1558,18 @@ function renderResume(){
 
 /* ---------- landing ---------- */
 const cards = document.getElementById("cards");
-for (const c of COLLECTIONS) {
+const shelfCollections = COLLECTIONS.filter(c => c.slug !== "ibn-khuzaymah");
+shelfCollections.splice(shelfCollections.findIndex(c => c.slug === "riyad") + 1, 0, {
+  slug:"shamail", href:"/shamail/", en:"Ash-Shamail al-Muhammadiyah", ar:"الشمائل المحمدية"
+});
+for (const c of shelfCollections) {
   const a = document.createElement("a");
-  a.href = `#${c.slug}:1`;
+  a.href = c.href || `#${c.slug}:1`;
   a.dataset.collection = c.slug;
   a.innerHTML = `
     <div>
       <div class="en">${c.en}</div>
-      <div class="meta">${c.count.toLocaleString()} hadith · ${shelfAudioMeta(c)}</div>
+      <div class="meta">${c.count ? c.count.toLocaleString() + " hadith · " + shelfAudioMeta(c) : "Read collection"}</div>
     </div>
     <div class="side">
       <div class="ar" lang="ar" dir="rtl">${c.ar}</div>
@@ -2750,7 +2754,7 @@ addEventListener("hashchange", route);
 route();
 </script>
 <script src="/arabic-word-library.js?v=2" defer></script>
-<script src="/reader-ui.js?v=arabic-search-snippets"></script>
+<script src="/reader-ui.js?v=shamail-shelf"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

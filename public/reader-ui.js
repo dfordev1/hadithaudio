@@ -92,7 +92,7 @@
     const filter = b.dataset.shelfFilter;
     document.querySelectorAll("[data-shelf-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === b)));
     [...$("cards").children].forEach(a => {
-      const c = bySlug[a.dataset.collection];
+      const c = bySlug[a.dataset.collection] || {slug:a.dataset.collection, books:true};
       a.hidden = filter === "six" ? !six.has(c.slug) : filter === "forty" ? !!c.books : filter === "other" ? six.has(c.slug) || !c.books : false;
     });
   }; });
