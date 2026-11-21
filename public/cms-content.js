@@ -19,7 +19,7 @@
   const numberPattern = /^[1-9][0-9]{0,8}[a-z]?$/;
   const safeNames = /[<>&"\u0000-\u001f]/;
   const string = (value, max) => typeof value === "string" ? value.trim().slice(0,max) : "";
-  const positive = value => Number.isSafeInteger(Number(value)) && Number(value) > 0 ? Number(value) : null;
+  const positive = value => Number.isSafeInteger(Number(value)) && Number(value) >= 0 ? Number(value) : null;
 
   function https(value) {
     if (!value) return "";
@@ -37,7 +37,7 @@
     const books = value.books.map(book => {
       const number = positive(book.number);
       const title = string(book.title,150);
-      if (!number || !title || seen.has(number)) throw new Error("Each book needs a unique positive number and title.");
+      if (number === null || !title || seen.has(number)) throw new Error("Each book needs a unique nonnegative number and title.");
       seen.add(number);
       return {number,title};
     }).sort((a,b) => a.number-b.number);
@@ -49,7 +49,7 @@
     const ar = string(value?.ar,40000);
     const book = value.book === "" || value.book == null ? null : positive(value.book);
     if (!slugPattern.test(slug) || Object.hasOwn(Object.prototype,slug) || !numberPattern.test(n) || !ar ||
-        (value.book && !book)) throw new Error("Enter a valid collection, hadith number, Arabic text, and book number if applicable.");
+        (value.book !== "" && value.book != null && book === null)) throw new Error("Enter a valid collection, hadith number, Arabic text, and book number if applicable.");
     const words = Array.isArray(value.words) ? value.words : [];
     let previous = 0;
     const timing = words.map(word => {
