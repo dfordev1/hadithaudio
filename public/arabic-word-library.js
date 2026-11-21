@@ -14,7 +14,7 @@
         const en = esc(book.titleEnglish || book.subtitle || "Arabic word-synchronized book");
         const sync = book.sync === "word" ? "word-level sync" : book.sync === "sentence" ? "sentence sync" : "text only";
         const href = "/arabic-book.html?book=" + encodeURIComponent(book.id);
-        return '<a href="' + esc(href) + '" target="_blank" rel="noopener" class="library-book"><div><div class="ar">' + title + '</div><div class="en">' + en + '</div><div class="meta">' + esc(sync) + (book.chapters ? " · chapters" : "") + '</div></div><div class="side">Open ↗</div></a>';
+        return '<a href="' + esc(href) + '" class="library-book"><div><div class="en">' + en + '</div><div class="meta">Arabic text · ' + esc(sync) + (book.chapters ? " · chapters" : "") + '</div></div><div class="side"><div class="ar" lang="ar" dir="rtl">' + title + '</div></div></a>';
       }).join("");
     })
     .catch(() => { /* Keep the books already rendered by the page. */ });
