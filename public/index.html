@@ -2231,11 +2231,17 @@ function mountReportPlayer(box, recitation, words, spans) {
   paint();
 }
 
+// Audio alignment may cover only an excerpt of the printed report.
+// Sahih Ibn Khuzaymah 1: verified continuation, IslamWeb vol. 1 / hadith 1.
+// Preserve the existing opening textual variant of the source dataset.
+const KHUZAYMAH_1_COMPLETION = "حَدَّثَنِي عُمَرُ بْنُ الْخَطَّابِ قَالَ : بَيْنَمَا نَحْنُ جُلُوسٌ عِنْدَ رَسُولِ اللَّهِ ﷺ فِي أُنَاسٍ ، إِذْ جَاءَ رَجُلٌ لَيْسَ عَلَيْهِ سَحْنَاءُ سَفَرٍ ، وَلَيْسَ مِنْ أَهْلِ الْبَلَدِ ، يَتَخَطَّى حَتَّى وَرَدَ ، فَجَلَسَ بَيْنَ يَدَيْ رَسُولِ اللَّهِ ﷺ ، فَقَالَ : يَا مُحَمَّدُ ! مَا الْإِسْلَامُ ؟ قَالَ : «الْإِسْلَامُ أَنْ تَشْهَدَ أَنْ لَا إِلَهَ إِلَّا اللَّهُ ، وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ ، وَأَنْ تُقِيمَ الصَّلَاةَ ، وَتُؤْتِيَ الزَّكَاةَ ، وَتَحُجَّ الْبَيْتَ وَتَعْتَمِرَ ، وَتَغْتَسِلَ مِنَ الْجَنَابَةِ ، وَأَنْ تُتِمَّ الْوُضُوءَ ، وَتَصُومَ رَمَضَانَ» . قَالَ : فَإِذَا فَعَلْتُ ذَلِكَ فَأَنَا مُسْلِمٌ ؟ قَالَ : «نَعَمْ» . قَالَ : صَدَقْتَ . وَذَكَرَ الْحَدِيثَ بِطُولِهِ فِي السُّؤَالِ عَنِ الْإِيمَانِ وَالْإِحْسَانِ وَالسَّاعَةِ .";
 async function loadKhuzaymah(){
   const slug = "ibn-khuzaymah";
   const response = await fetch("/ibn-khuzaymah/records.gz");
   if (!response.ok) throw new Error("Could not load Ibn Khuzaymah");
   const rows = await new Response(response.body.pipeThrough(new DecompressionStream("gzip"))).json();
+  const repairData = await jopt("ibn-khuzaymah/source-text-repairs.json");
+  const textRepairs = repairData?.records || {};
   const books = [], reportBook = {}, sections = {};
   for (const [n,title,chain,text,en,recitation] of rows) {
     let book = books[books.length-1];
@@ -2247,8 +2253,12 @@ async function loadKhuzaymah(){
     book.count++;
     book.to = Number(n);
     reportBook[n] = book.book;
-    const tokens = [chain,text].filter(Boolean).join(" ").trim().split(/\s+/).map((text,i)=>({text,id:slug+"-"+n+"-"+i}));
-    sections[book.book].hadith.push({n,tokens,en,recitation});
+    const repair = textRepairs[String(n)] || null;
+    const restoredText = repair?.text || (Number(n)===1 && String(text||"").trim().endsWith("ثُمَّ قَالَ")
+      ? text+" "+KHUZAYMAH_1_COMPLETION : text);
+    const restoredChain = repair?.chain || chain;
+    const tokens = [restoredChain,restoredText].filter(Boolean).join(" ").trim().split(/\s+/).map((text,i)=>({text,id:slug+"-"+n+"-"+i}));
+    sections[book.book].hadith.push({n,tokens,en:repair?.en || en,recitation,sourceIntegrity:repair});
   }
   cache.bookOf[slug] = sections;
   cache.bookIndex[slug] = {books,reportBook};
@@ -2931,7 +2941,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!h) { h = bookData.hadith[0]; n = h.n; }
   n = h.n;
 
-  const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
+  const reportWords = slug === "ibn-khuzaymah" && h.recitation && h.sourceIntegrity?.timingAlignment !== "none" ? await khuzaymahWords(n) : [];
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
     slug === "ibn-khuzaymah" && h.recitation
@@ -3017,7 +3027,18 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
-  const tokens = hasSyncedAudio
+  // The source text, not the (potentially shorter) audio alignment, owns the
+  // complete narration. Untimed tail words remain readable without fake timings.
+  const tokens = slug === "ibn-khuzaymah"
+    ? h.tokens.map((t,i) => {
+        const wordTiming = h.sourceIntegrity?.timingAlignment === "none" ? null : reportWords[i];
+        return {
+          ...t,
+          start: wordTiming?.[1] >= 0 ? wordTiming[1]/100 : NaN,
+          end: wordTiming?.[2] >= 0 ? wordTiming[2]/100 : NaN,
+        };
+      })
+    : hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
         id: t.id || `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
         text: t.text,
@@ -3050,6 +3071,29 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     });
   }
   arCol.appendChild(arDiv);
+  if (slug === "ibn-khuzaymah" && Number(n)===1) {
+    const attribution = document.createElement("p");
+    attribution.className = "availability";
+    attribution.textContent = "The complete printed narration is shown. The synchronized recording covers only the available excerpt; later words have no audio timings. Opening textual variants remain as imported.";
+    arCol.appendChild(attribution);
+    const sourceLink = document.createElement("a");
+    sourceLink.href = "https://islamweb.net/ar/library/content/75/1/";
+    sourceLink.target = "_blank";
+    sourceLink.rel = "noopener";
+    sourceLink.textContent = "Printed source: Sahih Ibn Khuzaymah, hadith 1";
+    arCol.appendChild(sourceLink);
+  } else if (slug === "ibn-khuzaymah" && h.sourceIntegrity) {
+    const attribution = document.createElement("p");
+    attribution.className = "availability";
+    attribution.textContent = h.sourceIntegrity.notice || "The source narration is restored; audio timing remains limited to the available recording excerpt.";
+    arCol.appendChild(attribution);
+    const sourceLink = document.createElement("a");
+    sourceLink.href = h.sourceIntegrity.sourceUrl;
+    sourceLink.target = "_blank";
+    sourceLink.rel = "noopener";
+    sourceLink.textContent = h.sourceIntegrity.sourceLabel || h.sourceIntegrity.printedReference;
+    arCol.appendChild(sourceLink);
+  }
   const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
   par.className = "parallel" + (single ? " single" : "");
   par.append(meaningCol, arCol);
