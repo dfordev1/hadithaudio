@@ -24,6 +24,27 @@
 <div id="workspace" hidden>
 <h1>Content studio</h1>
 <p id="identity"></p>
+<section>
+<h2>Website</h2>
+<form id="site-form">
+<label>Homepage heading <input name="heading" maxlength="120"></label>
+<label>Homepage introduction <textarea name="intro" rows="3" maxlength="2000"></textarea></label>
+<label>Browser title <input name="title" maxlength="120"></label>
+<label>Search description <textarea name="description" rows="2" maxlength="300"></textarea></label>
+<h3>Pages</h3>
+<div id="site-pages"></div>
+<div class="actions"><button type="button" id="site-add-page">Add page</button><button type="button" id="site-load">Load saved website</button><button class="primary">Save website draft</button></div>
+<p class="hint">Pages marked for navigation appear on the homepage in the order shown. Preview the draft before publishing.</p>
+</form>
+<template id="site-page-template"><fieldset>
+<legend>Page</legend>
+<label>Address slug <input name="slug" required maxlength="64" pattern="[a-z0-9]+(?:-[a-z0-9]+)*"></label>
+<label>Page title <input name="pageTitle" required maxlength="120"></label>
+<label>Page content <textarea name="body" rows="5" maxlength="24000" required></textarea></label>
+<label><span><input type="checkbox" name="nav"> Show in navigation</span></label>
+<div class="actions"><button type="button" data-move="up">Move up</button><button type="button" data-move="down">Move down</button><button type="button" data-remove>Remove page</button></div>
+</fieldset></template>
+</section>
 <div class="grid">
 <section>
 <h2>Content editor</h2>
@@ -70,7 +91,7 @@
 </section>
 <section id="preview-panel" hidden>
 <h2>Reader preview</h2>
-<label>Hadith address <input id="preview-address" value="nawawi40:1" pattern="[a-z0-9_-]+:[0-9]+[a-z]?"></label>
+<label>Hadith address <input id="preview-address" placeholder="Home, nawawi40:1, or page:about"></label>
 <div class="actions"><button id="preview-load">Load preview</button><button id="preview-close">Close preview</button></div>
 <iframe id="preview-frame" title="Hadith reader draft preview" referrerpolicy="no-referrer"></iframe>
 </section>

@@ -406,6 +406,60 @@ $("link-import").onsubmit = run(async event => {
   status("Staged " + completed + " copied file(s) and " + entries.filter(entry => entry.mode === "stream").length + " streaming link(s).");
 });
 
+const SITE_PATH = "cms/site.json";
+
+function sitePage(value = {}) {
+  const row = $("site-page-template").content.firstElementChild.cloneNode(true);
+  row.querySelector('[name="slug"]').value = value.slug || "";
+  row.querySelector('[name="pageTitle"]').value = value.title || "";
+  row.querySelector('[name="body"]').value = value.body || "";
+  row.querySelector('[name="nav"]').checked = value.nav === true;
+  row.querySelector("[data-remove]").onclick = () => row.remove();
+  row.querySelector('[data-move="up"]').onclick = () => {
+    if (row.previousElementSibling) row.previousElementSibling.before(row);
+  };
+  row.querySelector('[data-move="down"]').onclick = () => {
+    if (row.nextElementSibling) row.before(row.nextElementSibling);
+  };
+  $("site-pages").append(row);
+}
+
+async function loadSite() {
+  const change = selected.get(SITE_PATH);
+  const id = change ? change.version : live.get(SITE_PATH);
+  const site = id ? await request("asset", { query:{ id } }).then(response => response.json()) : {};
+  for (const field of ["heading", "intro", "title", "description"]) {
+    $("site-form").elements[field].value = typeof site[field] === "string" ? site[field] : "";
+  }
+  $("site-pages").replaceChildren();
+  if (Array.isArray(site.pages)) site.pages.forEach(sitePage);
+}
+
+$("site-add-page").onclick = () => {
+  sitePage();
+  $("site-pages").lastElementChild.querySelector("input").focus();
+};
+$("site-load").onclick = run(async () => { await loadSite(); status("Loaded website content."); });
+$("site-form").onsubmit = run(async event => {
+  const form = new FormData(event.currentTarget);
+  const value = Object.fromEntries(["heading","intro","title","description"].map(key => [key,String(form.get(key)).trim()]));
+  const slugs = new Set();
+  value.pages = Array.from($("site-pages").children, row => {
+    const slug = row.querySelector('[name="slug"]').value.trim();
+    const title = row.querySelector('[name="pageTitle"]').value.trim();
+    const body = row.querySelector('[name="body"]').value.trim();
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || slugs.has(slug) || !title || !body) {
+      throw new Error("Every page needs a unique address, title, and content.");
+    }
+    slugs.add(slug);
+    return { slug,title,body,nav:row.querySelector('[name="nav"]').checked };
+  });
+  await stage(SITE_PATH,new Blob([JSON.stringify(value)],{type:mimeTypes.json}));
+  await loadVersions(true);
+  $("preview-address").value = "";
+  status("Website draft saved. Preview or publish the selected version.");
+});
+
 function closePreview() {
   preview = {};
   $("preview-panel").hidden = true;
@@ -414,7 +468,7 @@ function closePreview() {
 
 async function showPreview() {
   const address = $("preview-address").value.trim();
-  if (!/^[a-z0-9_-]+:[0-9]+[a-z]?$/i.test(address)) throw new Error("Enter a hadith address such as nawawi40:1.");
+  if (address && !/^(?:[a-z0-9_-]+:[0-9]+[a-z]?|page:[a-z0-9]+(?:-[a-z0-9]+)*)$/i.test(address)) throw new Error("Leave blank for home, or enter nawawi40:1 or page:about.");
   if (!selected.size) throw new Error("Select at least one draft version to preview.");
   preview = Object.fromEntries(await Promise.all(Array.from(selected.values(), async change => {
     if (!change.version) return [change.path,null];
@@ -426,7 +480,7 @@ async function showPreview() {
     return [change.path,backend+"/storage/v1"+result.signedURL];
   })));
   $("preview-panel").hidden = false;
-  $("preview-frame").src = "/?cms-preview=1&preview=" + crypto.randomUUID() + "#" + address;
+  $("preview-frame").src = "/?cms-preview=1&preview=" + crypto.randomUUID() + (address.startsWith("page:") ? "&page="+encodeURIComponent(address.slice(5)) : address ? "#"+address : "");
   $("preview-panel").scrollIntoView({ behavior:"smooth" });
   status("Reader preview is ready.");
 }
@@ -453,6 +507,8 @@ function resetSession() {
   versions=[];
   openDocument=null;
   reportIndex=-1;
+  $("site-form").reset();
+  $("site-pages").replaceChildren();
   $("document").value="";
   $("path").value="";
   $("versions").replaceChildren();
@@ -473,6 +529,7 @@ $("login").onsubmit=run(async event => {
     [member]=await data("session");
     if (!member) throw new Error("This account is not a Studio member.");
     await refresh();
+    await loadSite();
     $("identity").textContent=member.email+" · "+member.role;
     $("workspace").hidden=$("logout").hidden=false;
     $("login-panel").hidden=true;
