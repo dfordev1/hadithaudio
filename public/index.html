@@ -2350,6 +2350,9 @@ async function fillBookJump(navToken = currentNavToken){
     const current=idx.books.find(b=>String(b.book)===String(state.book));
     darimiBrowse.textContent=current?.title||"Browse chapters";
     darimiBrowse.setAttribute("aria-label","Browse Darimi chapters. Current: "+(current?.title||"unknown"));
+    // Darimi uses the dedicated book/chapter browser; do not create thousands of hidden native options.
+    sel.replaceChildren();
+    return true;
   }
   sel.innerHTML = idx.books.map(b => {
     if (col.slug === "musnad-ahmad") {
