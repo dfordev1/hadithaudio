@@ -984,8 +984,8 @@ function appendReportAction(parent){
   parent.appendChild(area);
 }
 const COLLECTIONS = [
-  {slug:"ibn-khuzaymah", corpus:"ibn-khuzaymah", en:"Sahih Ibn Khuzaymah", ar:"صحيح ابن خزيمة", count:3282, books:true, audio:true},
   { slug:"bukhari", corpus:"bukhari", ar:"صحيح البخاري", en:"Sahih al-Bukhari", count:7580, audio:true, books:true },
+  {slug:"ibn-khuzaymah", corpus:"ibn-khuzaymah", en:"Sahih Ibn Khuzaymah", ar:"صحيح ابن خزيمة", count:3282, books:true, audio:true},
   { slug:"muslim", corpus:"muslim", ar:"صحيح مسلم", en:"Sahih Muslim", count:7360, audio:true, books:true },
   { slug:"abudawud", corpus:"abudawud", ar:"سنن أبي داود", en:"Sunan Abi Dawud", count:5274, audio:true, books:true },
   { slug:"tirmidhi", corpus:"tirmidhi", ar:"جامع الترمذي", en:"Jami at-Tirmidhi", count:3924, audio:true, books:true },
@@ -1593,6 +1593,7 @@ const track = document.getElementById("track");
 const dock = document.getElementById("dock");
 
 function beginNavigation(){
+  if (closeReportPlayer) { closeReportPlayer(); closeReportPlayer = null; }
   currentNavToken = ++navEpoch;
   audioSessionToken = currentNavToken;
   return currentNavToken;
@@ -1991,6 +1992,68 @@ async function ensureFortySidecars(slug){
   return { trans: cache.trans[slug], sun: cache.sun[slug] };
 }
 let khuzaymahLoad;
+const khuzaymahWordGroups = new Map();
+async function khuzaymahWords(n) {
+  const group = Math.floor(Number(n) / 256);
+  if (!khuzaymahWordGroups.has(group)) {
+    const pending = fetch("/ibn-khuzaymah/words-" + group + ".gz").then(response => {
+      if (!response.ok) throw Error("Word timings unavailable");
+      return new Response(response.body.pipeThrough(new DecompressionStream("gzip"))).json();
+    }).catch(() => { khuzaymahWordGroups.delete(group); return {}; });
+    khuzaymahWordGroups.set(group, pending);
+  }
+  return (await khuzaymahWordGroups.get(group))[n] || [];
+}
+let closeReportPlayer;
+function mountReportPlayer(box, recitation, words, spans) {
+  const [url, start, end] = recitation;
+  const media = document.createElement("audio");
+  media.preload = "none";
+  media.src = url + "#t=" + start + "," + end;
+  const button = document.createElement("button");
+  button.textContent = "Play";
+  const range = document.createElement("input");
+  range.type = "range";
+  range.min = 0; range.max = end - start; range.step = 0.01; range.value = 0;
+  range.setAttribute("aria-label", "Hadith playback position");
+  const clock = document.createElement("span");
+  const format = t => Math.floor(t / 60) + ":" + String(Math.floor(t % 60)).padStart(2, "0");
+  let frame, active, closed = false;
+  function paint() {
+    const t = media.currentTime;
+    const position = Math.max(0, Math.min(end - start, t - start));
+    range.value = position;
+    clock.textContent = format(position) + " / " + format(end - start);
+    const index = words.findIndex(w => w[1] >= 0 && t * 100 >= w[1] && t * 100 < w[2]);
+    const next = !media.paused && t < end ? spans[index] : null;
+    if (active !== next) {
+      active?.classList.remove("active"); next?.classList.add("active"); active = next;
+    }
+    if (t >= end && !media.paused) media.pause();
+  }
+  function tick() {
+    paint();
+    if (!closed && !media.paused) frame = requestAnimationFrame(tick);
+  }
+  async function play(t) {
+    if (closed) return;
+    media.currentTime = t;
+    try { await media.play(); }
+    catch { if (!closed) clock.textContent = "Audio unavailable"; }
+  }
+  button.onclick = () => media.paused ? play(media.currentTime >= start && media.currentTime < end - 0.025 ? media.currentTime : start) : media.pause();
+  range.oninput = () => { media.currentTime = start + Number(range.value); paint(); };
+  media.onplaying = () => { button.textContent = "Pause"; cancelAnimationFrame(frame); tick(); };
+  media.onpause = () => { button.textContent = "Play"; cancelAnimationFrame(frame); paint(); };
+  media.ontimeupdate = paint;
+  words.forEach((word, i) => {
+    if (word[1] >= 0) spans[i].onclick = () => play(Math.max(start, word[1] / 100));
+  });
+  closeReportPlayer = () => { closed = true; cancelAnimationFrame(frame); media.pause(); media.removeAttribute("src"); media.load(); };
+  box.append(button, range, clock, media);
+  paint();
+}
+
 async function loadKhuzaymah(){
   const slug = "ibn-khuzaymah";
   const response = await fetch("/ibn-khuzaymah/records.gz");
@@ -2485,6 +2548,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!h) { h = bookData.hadith[0]; n = h.n; }
   n = h.n;
 
+  const reportWords = h.recitation ? await khuzaymahWords(n) : [];
+  let reportControls;
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
     slug === "darimi" ? (h.clip ? { audio:`darimi/clips/${h.clip}.mp3`, tokens:h.tokens } : null) : getBookTiming(slug, n),
@@ -2536,12 +2601,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     notice.textContent = "Audio is temporarily unavailable. The aligned Arabic text and translations remain readable.";
     wrap.appendChild(notice);
   } else if (h.recitation) {
-    const [url,start,end] = h.recitation;
-    const player = document.createElement("audio");
-    player.controls = true;
-    player.preload = "none";
-    player.src = url+"#t="+start+","+end;
-    wrap.appendChild(player);
+    reportControls = document.createElement("div");
+    wrap.appendChild(reportControls);
   } else if (!hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability";
@@ -2568,7 +2629,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
         estimated: t.estimated,
         gloss: t.gloss || null,
       }))
-    : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
+    : reportWords.length ? reportWords.map(([text], i) => ({id:slug+"-"+n+"-"+i, text})) : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
   const alignedGlosses = hasSyncedAudio ? alignOriginalGlosses(tokens, h.tokens, gloss) : {};
   const syncedGloss = hasSyncedAudio ? {
     ...(gloss || {}),
@@ -2582,6 +2643,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     },
   } : gloss;
   const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
+  if (reportControls) mountReportPlayer(reportControls, h.recitation, reportWords, spans);
   if (hasSyncedAudio) activeSpans = spans;
   arCol.appendChild(arDiv);
   const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
