@@ -200,13 +200,12 @@
     await script("/hadith-reader.js");
     await script("/reader-ui.js?v=arabic-search-snippets");
     await script("/arabic-word-library.js?v=2");
-
     void loadCmsEnhancements();
   }
 
   async function loadCmsEnhancements() {
-    preview = await previewAssets();
     try {
+      preview = await previewAssets();
       await readManifest();
       const streamMap = assetUrl("/cms/streams.json");
       if (streamMap !== "/cms/streams.json") {
@@ -222,7 +221,7 @@
         if (catalog.ok) window.hadithCmsCatalog = await catalog.json();
       }
     } catch (error) {
-      console.warn("Hadith CMS catalog could not load:",error.message);
+      console.warn("Hadith CMS could not load:",error.message);
     }
     await loadSite().catch(error => {
       console.warn("Hadith website content could not load:",error.message);
