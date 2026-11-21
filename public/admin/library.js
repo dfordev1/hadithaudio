@@ -13,6 +13,9 @@
     const id = versionAt(path);
     return id ? request("asset",{query:{id}}).then(response => response.json()) : null;
   }
+  const readBaseline = path => send("/rest/v1/cms_baseline?"+new URLSearchParams({
+    select:"document",path:"eq."+path,limit:1,
+  })).then(result=>result.json()).then(rows=>rows[0]?.document || null);
   async function bundled(path, optional = false) {
     const id = versionAt(path);
     const response = id ? await request("asset",{query:{id}}) : await fetch("/"+path);
@@ -48,7 +51,7 @@
   }
   function addBook(book = {}) {
     const row = $("library-book-template").content.firstElementChild.cloneNode(true);
-    row.querySelector('[name="number"]').value = book.number || "";
+    row.querySelector('[name="number"]').value = book.number ?? "";
     row.querySelector('[name="title"]').value = book.title || "";
     row.querySelector("[data-remove]").onclick = () => row.remove();
     bookList.append(row);
@@ -70,6 +73,11 @@
   window.hadithLibraryOpen = async () => {
     current.clear();
     for (const item of model.bundled) current.set(item.slug,{...item,books:[]});
+    const baseline = await send("/rest/v1/cms_baseline?select=document&path=like.cms%2Flibrary%2F*&order=path").then(response=>response.json());
+    for (const {document} of baseline) {
+      const item = model.collection(document);
+      current.set(item.slug,item);
+    }
     const paths = new Set([...live.keys(),...selected.keys()]);
     await Promise.all(Array.from(paths).filter(path => /^cms\/library\/[a-z0-9_-]+[.]json$/.test(path)).map(async path => {
       const raw = await read(path);
@@ -141,7 +149,8 @@
   $("library-open-report").onclick = run(async () => {
     const slug = picker.value, n = reportForm.elements.n.value.trim().toLowerCase();
     if (!slug || !model.numberPattern.test(n)) throw new Error("Choose a collection and enter a hadith number.");
-    const record = await read(model.reportPath(slug,n)) || await legacyReport(slug,n);
+    const path = model.reportPath(slug,n);
+    const record = await read(path) || await readBaseline(path) || await legacyReport(slug,n);
     for (const field of ["book","ar","en","ur","audio","source"]) reportForm.elements[field].value = record?.[field] ?? "";
     reportForm.elements.reuseAudio.checked = record?.reuseAudio === true;
     reportForm.elements.timing.value = "";
@@ -158,7 +167,7 @@
       if (!Array.isArray(timing)) throw new Error("Word times must be an array or a tokens list.");
     }
     const item = model.report({...Object.fromEntries(form),slug:picker.value,words:timing,reuseAudio:reportForm.elements.reuseAudio.checked});
-    if (item.book && !current.get(item.slug)?.books.some(book => book.number === item.book)) throw new Error("Add the book to this collection first.");
+    if (item.book !== null && !current.get(item.slug)?.books.some(book => book.number === item.book)) throw new Error("Add the book to this collection first.");
     await stageDocument(model.reportPath(item.slug,item.n),item);
     setWords(item.words);
     $("preview-address").value=item.slug+":"+item.n;
@@ -174,7 +183,7 @@
     const ids = new Set();
     const records = source.reports.map(value => {
       const report = model.report({...value,slug:collection.slug});
-      if (ids.has(report.n) || (report.book && !collection.books.some(book => book.number === report.book))) {
+      if (ids.has(report.n) || (report.book !== null && !collection.books.some(book => book.number === report.book))) {
         throw new Error("Duplicate hadith number or unknown book: "+report.n);
       }
       ids.add(report.n);

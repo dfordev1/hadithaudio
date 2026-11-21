@@ -56,7 +56,7 @@
       if (!response.ok) throw new Error("Published search data is unavailable.");
       const rows = await response.json();
       if (!Array.isArray(rows)) throw new Error("Invalid published search data.");
-      for (const [path,n,ar,en,ur,book] of rows) if (!Object.hasOwn(preview,path)) records.set(String(n),[String(n),ar||"",en||"",ur||"",Number(book)||null]);
+      for (const [path,n,ar,en,ur,book] of rows) if (!Object.hasOwn(preview,path)) records.set(String(n),[String(n),ar||"",en||"",ur||"",book === null ? null : Number(book)]);
       if (rows.length < 200) break;
       after = rows.at(-1)[0];
     }
@@ -64,7 +64,7 @@
     for (const [path,url] of Object.entries(preview)) {
       if (!url || !path.startsWith(prefix)) continue;
       const draft = await readDocument(path);
-      records.set(String(draft.n),[String(draft.n),draft.ar||"",draft.en||"",draft.ur||"",draft.book||null]);
+      records.set(String(draft.n),[String(draft.n),draft.ar||"",draft.en||"",draft.ur||"",draft.book ?? null]);
     }
     return records;
   }

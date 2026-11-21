@@ -39,3 +39,18 @@ collections and reports continue to use the bundled content, so the migration
 can proceed a collection or a release at a time. Apply the structured editor
 database migration and deploy the updated public Edge Function before
 deploying the updated Studio and reader.
+
+## Existing corpus migration
+
+`scripts/prepare-cms-baseline.mjs` exports the repository corpus as newline-delimited
+records for the private `cms_baseline` table. It uses the deployment's pinned Darimi
+catalog and pinned translation revision. Install the Darimi catalog with
+`python scripts/install-darimi.py` before exporting all collections. Pass one or
+more collection slugs for a partial export.
+
+Studio loads migrated hadith by their original collection and number. A saved
+edit follows the same draft, preview, publish and rollback workflow as a new
+entry. Existing reader files and audio streams remain the public fallback until
+a replacement is published. Shama’il track offsets and raw word anchors are
+preserved in the baseline. Its original public audio reader continues to
+interpret those track ranges.
