@@ -69,6 +69,74 @@
     return current === override ? response : nativeFetch(current, options);
   }
 
+  async function loadSite() {
+    const path = "/cms/site.json";
+    const url = assetUrl(path);
+    if (url === path) return;
+    const response = await nativeFetch(url,{signal:AbortSignal.timeout(2500)});
+    if (!response.ok) return;
+    const site = await response.json();
+    if (!site || typeof site !== "object") return;
+    const clean = (value,max) => typeof value === "string" ? value.trim().slice(0,max) : "";
+    const heading = clean(site.heading,120);
+    const intro = clean(site.intro,2000);
+    const title = clean(site.title,120);
+    const description = clean(site.description,300);
+    const pages = (Array.isArray(site.pages) ? site.pages : []).filter(page => page &&
+      typeof page.slug === "string" && page.slug.length<=64 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(page.slug) &&
+      clean(page.title,120) && clean(page.body,24000));
+    const links = document.getElementById("site-navigation");
+    const query = new URLSearchParams(location.search);
+    if (query.has("cms-preview")) {
+      query.delete("page");
+    } else {
+      for (const key of Array.from(query.keys())) query.delete(key);
+    }
+    function pageUrl(slug) {
+      const params = new URLSearchParams(query);
+      if (slug) params.set("page",slug);
+      return "/"+(params.size ? "?"+params : "");
+    }
+    for (const page of pages.filter(item => item.nav === true)) {
+      const link = document.createElement("a");
+      link.href=pageUrl(page.slug);
+      link.textContent=clean(page.title,120);
+      links.append(link);
+    }
+    links.hidden=!links.childElementCount;
+    for (const [id,value] of [["site-heading",heading],["site-intro",intro]]) {
+      const element=document.getElementById(id);
+      element.textContent=value;
+      element.hidden=!value;
+    }
+    const requested=new URLSearchParams(location.search).get("page");
+    const page=pages.find(item => item.slug===requested);
+    const metadata=(name,value) => {
+      if (!value) return;
+      document.querySelector('meta[name="'+name+'"]')?.setAttribute("content",value);
+      document.querySelector('meta[property="og:'+name+'"]')?.setAttribute("content",value);
+    };
+    if (description) metadata("description",description);
+    if (page) {
+      document.getElementById("landing").hidden=true;
+      const content=document.getElementById("site-page");
+      document.getElementById("site-page-home").href=pageUrl();
+      document.getElementById("site-page-title").textContent=clean(page.title,120);
+      document.getElementById("site-page-body").textContent=clean(page.body,24000);
+      document.getElementById("skipToContent").href="#site-page";
+      content.hidden=false;
+      document.title=clean(page.title,120)+" | Hadith.to";
+      metadata("title",document.title);
+      metadata("description",clean(page.body,160));
+      const canonical = new URL("https://www.hadith.to/");
+      canonical.searchParams.set("page",page.slug);
+      document.querySelector('link[rel="canonical"]')?.setAttribute("href",canonical.href);
+      return true;
+    }
+    window.hadithCmsHomeTitle=title;
+    return false;
+  }
+
   async function bootstrap() {
     preview = await previewAssets();
     try {
@@ -90,6 +158,10 @@
     } catch (error) {
       console.warn("Hadith CMS could not load:", error.message);
     }
+    if (await loadSite().catch(error => {
+      console.warn("Hadith website content could not load:", error.message);
+      return false;
+    })) return;
     window.fetch = fetchWithOverrides;
     await script("/hadith-reader.js");
     await script("/reader-ui.js?v=arabic-search-snippets");

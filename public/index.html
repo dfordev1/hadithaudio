@@ -688,6 +688,10 @@
     #bookJump { flex:0 1 19rem; }
     #hadithJump { flex:0 0 6rem; }
   }
+  .site-page { max-width: 48rem; margin: 2rem auto; padding: 0 1.25rem 4rem; }
+  #site-page-body, #site-intro { white-space: pre-wrap; overflow-wrap: anywhere; }
+  #site-navigation:not([hidden]) { display: flex; gap: 1rem; flex-wrap: wrap; margin-block: 1rem; }
+  #landing[hidden], #site-page[hidden] { display: none; }
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
 <meta name="hadith-ui-version" content="sacred-2026-09-05">
@@ -752,6 +756,9 @@
   <div class="hero">
     <h1 class="hero-calligraphy" aria-label="Hadith.to"></h1>
   </div>
+  <h2 id="site-heading" hidden></h2>
+  <p id="site-intro" hidden></p>
+  <nav id="site-navigation" aria-label="Website" hidden></nav>
   <div class="resume" id="resume"></div>
   <div class="home-tabs" role="tablist" aria-label="Your library">
     <button type="button" id="collectionsTab" data-home-tab="collections" role="tab" aria-selected="true" aria-controls="cards">Collections</button>
@@ -804,6 +811,11 @@
   </footer>
 </main>
 
+<main id="site-page" class="site-page" tabindex="-1" hidden>
+  <a id="site-page-home" href="/">All collections</a>
+  <h1 id="site-page-title"></h1>
+  <div id="site-page-body"></div>
+</main>
 <main id="reader" class="hidden">
   <div class="locator compact" id="locator">
     <div class="in">

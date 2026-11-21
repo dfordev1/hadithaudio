@@ -1787,7 +1787,7 @@ async function showLanding(navToken = currentNavToken){
   setSettingsOpen(false);
   await leaveReaderView();
   hideDock();
-  setPublicMetadata("Read, Listen & Study Hadith");
+  setPublicMetadata(window.hadithCmsHomeTitle || "Read, Listen & Study Hadith");
   renderResume();
   scrollTo(0, 0);
   dispatchEvent(new Event("hadith:landing"));
