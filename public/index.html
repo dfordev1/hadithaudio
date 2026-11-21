@@ -905,7 +905,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
       <button type="button" class="loc-summary" id="locSummary" aria-expanded="false">Jump…</button>
       <div class="loc-panel" id="locPanel">
         <select class="loc-select" id="collJump" title="Collection"></select>
-        <select class="loc-select hidden" id="bookJump" title="Book"></select><button type="button" class="loc-select hidden" id="chapterBrowse" aria-haspopup="dialog" aria-controls="chapterDialog">Chapters</button><button type="button" class="loc-select hidden" id="musnadBrowse" aria-haspopup="dialog" aria-controls="musnadDialog">Narrators</button>
+        <select class="loc-select hidden" id="bookJump" title="Book"></select><button type="button" class="loc-select hidden" id="chapterBrowse" aria-haspopup="dialog" aria-controls="chapterDialog">Chapters</button><button type="button" class="loc-select hidden" id="musnadBrowse" aria-haspopup="dialog" aria-controls="musnadDialog">Narrators</button><button type="button" class="loc-select hidden" id="musnadHadithJump" aria-haspopup="dialog" aria-controls="musnadDialog">Hadith #</button>
         <select class="loc-select" id="hadithJump" title="Hadith"></select>
       </div>
     </div>
@@ -2455,6 +2455,8 @@ function openMusnadNavigation(){
   musnadList.querySelector('[aria-current="true"]')?.scrollIntoView({block:"center"});
 }
 musnadBrowse.onclick=openMusnadNavigation;
+const musnadHadithJump=document.getElementById("musnadHadithJump");
+musnadHadithJump.onclick=()=>{openMusnadNavigation();musnadJumpNumber.focus();musnadJumpNumber.select();};
 musnadGroup.onchange=()=>{musnadSearch.value="";renderMusnadNavigation();musnadList.scrollTop=0;};
 musnadSearch.oninput=()=>{renderMusnadNavigation();musnadList.scrollTop=0;};
 document.getElementById("musnadClose").onclick=()=>musnadDialog.close();
@@ -2523,6 +2525,16 @@ async function fillBookJump(navToken = currentNavToken){
 
 function fillHadithJump(){
   const sel = document.getElementById("hadithJump");
+  const musnad=state.slug==="musnad-ahmad";
+  sel.classList.toggle("hidden",musnad);
+  musnadHadithJump.classList.toggle("hidden",!musnad);
+  if(musnad){
+    // The transport part may split a narrator's section; use a global jump field instead.
+    sel.replaceChildren();
+    musnadHadithJump.textContent="Hadith "+state.n;
+    musnadHadithJump.setAttribute("aria-label","Go to hadith number, current "+state.n);
+    return;
+  }
   sel.innerHTML = state.seq.map(n => `<option value="${n}">Hadith ${n}</option>`).join("");
   sel.value = String(state.n);
   sel.onchange = () => setHash(state.slug, bySlug[state.slug].books ? sel.value : Number(sel.value));
