@@ -673,7 +673,7 @@ function renderResume(){
 const cards = document.getElementById("cards");
 for (const c of COLLECTIONS) {
   const a = document.createElement("a");
-  a.href = `#${c.slug}:${c.managed ? window.hadithManagedNumbers(c.slug)[0] : 1}`;
+  a.href = `/?c=${c.slug}&n=${c.managed ? window.hadithManagedNumbers(c.slug)[0] : 1}`;
   a.dataset.collection = c.slug;
   a.innerHTML = `
     <div>
@@ -686,15 +686,6 @@ for (const c of COLLECTIONS) {
   cards.appendChild(a);
 }
 renderResume();
-cards.addEventListener("click", (event) => {
-  const link = event.target.closest("a[data-collection]");
-  if (!link) return;
-  event.preventDefault();
-  const hash = link.getAttribute("href");
-  if (!hash) return;
-  if (location.hash === hash) route();
-  else location.hash = hash.slice(1);
-});
 document.getElementById("home").onclick = () => { location.hash = ""; };
 
 /* ---------- audio engine (one sticky player) ---------- */
@@ -1949,7 +1940,7 @@ function route(){
   const q = new URLSearchParams(location.search);
   const c = q.get("c");
   const n = q.get("n");
-  if (!c || !n || !/^[a-z0-9]+$/i.test(c) || !/^\d+[a-z]?$/i.test(n)) return;
+  if (!c || !n || !/^[a-z0-9_-]+$/i.test(c) || !/^\d+[a-z]?$/i.test(n)) return;
   history.replaceState(null, "", `/#${c}:${n}`);
 })();
 addEventListener("hashchange", route);
