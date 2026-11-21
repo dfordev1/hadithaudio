@@ -337,6 +337,75 @@ $("bulk-import").onsubmit = run(async event => {
   status("Staged " + completed + " files.");
 });
 
+function publicLink(value) {
+  const url = new URL(value);
+  if (url.protocol !== "https:" || url.username || url.password) throw new Error("Use a public HTTPS URL.");
+  return url.href;
+}
+
+$("link-import").onsubmit = run(async event => {
+  const input = JSON.parse(new FormData(event.currentTarget).get("links"));
+  if (!Array.isArray(input) || !input.length || input.length > 1000) throw new Error("Enter 1 to 1,000 link entries.");
+  const paths = new Set();
+  const entries = input.map(item => {
+    const path = typeof item?.path === "string" ? item.path.trim() : "";
+    const type = validatePath(path);
+    if (path === "cms/streams.json" || paths.has(path)) throw new Error("Reserved or duplicate path: " + path);
+    paths.add(path);
+    const mode = item.mode ?? "copy";
+    if (mode !== "copy" && (mode !== "stream" || !type.startsWith("audio/"))) {
+      throw new Error("Stream mode requires a direct audio file path.");
+    }
+    return { path, type, mode, url:publicLink(item.url) };
+  });
+  const streamPath = "cms/streams.json";
+  const latest = selected.get(streamPath)?.version ?? live.get(streamPath);
+  const streams = latest ? await request("asset", { query:{ id:latest } }).then(response => response.json()) : {};
+  if (!streams || typeof streams !== "object" || Array.isArray(streams)) throw new Error("Invalid existing stream map.");
+  let changed = false;
+  let completed = 0;
+  try {
+    for (const entry of entries) {
+      if (entry.mode === "stream") {
+        streams[entry.path] = entry.url;
+        changed = true;
+        continue;
+      }
+      status("Downloading " + entry.path + "…");
+      const response = await fetch(entry.url, {
+        credentials:"omit", referrerPolicy:"no-referrer", signal:AbortSignal.timeout(90000),
+      });
+      if (!response.ok || !response.body) throw new Error(entry.path + " returned HTTP " + response.status + ".");
+      publicLink(response.url);
+      const reader = response.body.getReader();
+      const limit = 50 * 1024 * 1024;
+      const chunks = [];
+      let count = 0;
+      try {
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          count += value.byteLength;
+          if (count > limit) throw new Error(entry.path + " exceeds 50 MiB.");
+          chunks.push(value);
+        }
+      } finally {
+        await reader.cancel().catch(() => {});
+      }
+      if (!count) throw new Error(entry.path + " is empty.");
+      await stage(entry.path, new Blob(chunks,{type:entry.type}));
+      completed++;
+      if (Object.hasOwn(streams,entry.path)) { delete streams[entry.path]; changed = true; }
+    }
+    if (changed) await stage(streamPath,new Blob([JSON.stringify(streams)],{type:mimeTypes.json}));
+  } catch (error) {
+    throw new Error(completed + " copied file(s) staged. " + (error instanceof TypeError ? "The source could not be fetched. Check that its server allows cross-origin downloads." : error.message));
+  } finally {
+    await loadVersions(true);
+  }
+  status("Staged " + completed + " copied file(s) and " + entries.filter(entry => entry.mode === "stream").length + " streaming link(s).");
+});
+
 function closePreview() {
   preview = {};
   $("preview-panel").hidden = true;

@@ -48,6 +48,13 @@
 <label>Asset file <input name="file" type="file" required></label>
 <button>Stage file</button>
 </form>
+<form id="link-import">
+<label>Import from links
+<textarea name="links" rows="6" required spellcheck="false" placeholder='[{"path":"recitation/example.mp3","url":"https://media.example/audio.mp3","mode":"stream"},{"path":"example-timings/n0001.json","url":"https://media.example/timings.json"}]'></textarea>
+</label>
+<p class="hint">Paste a JSON array of reader paths and public HTTPS URLs. Use stream for direct audio, or omit mode to copy the source file into the CMS.</p>
+<button>Stage links</button>
+</form>
 <form id="bulk-import">
 <label>Content folder <input name="files" type="file" webkitdirectory multiple required></label>
 <p class="hint">Keep the reader’s relative paths inside the selected folder. Files first become private drafts.</p>

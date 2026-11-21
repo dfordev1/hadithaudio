@@ -1003,13 +1003,14 @@ async function prepareAudio(url, navToken = currentNavToken){
     return;
   }
   audio.pause();
-  let obj = audioBlobUrls.get(url);
+  const stream = window.hadithCmsStream?.(url);
+  let obj = stream || audioBlobUrls.get(url);
   if (!obj) {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`audio ${res.status}`);
     obj = URL.createObjectURL(await res.blob());
     cacheAudioBlobUrl(url, obj);
-  } else {
+  } else if (!stream) {
     cacheAudioBlobUrl(url, obj);
   }
   if (!isCurrentNavigation(navToken)) return;
