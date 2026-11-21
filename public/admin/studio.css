@@ -11,7 +11,7 @@ section{margin:0 0 1rem;padding:clamp(.9rem,2vw,1.5rem);border:1px solid var(--e
 .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:1rem}
 h1,h2{font-family:Georgia,serif;line-height:1.2;margin:.25rem 0 1rem}
 label{display:grid;gap:.25rem;margin:.7rem 0}
-input,textarea,button{font:inherit;max-width:100%;padding:.5rem .65rem;border:1px solid #9bab9f;border-radius:7px;background:var(--panel);color:inherit}
+input,textarea,select,button{font:inherit;max-width:100%;padding:.5rem .65rem;border:1px solid #9bab9f;border-radius:7px;background:var(--panel);color:inherit}
 textarea{resize:vertical;font-family:ui-monospace,monospace;width:100%}
 button{cursor:pointer;font-weight:650}
 button:disabled{cursor:wait;opacity:.52}
@@ -30,3 +30,6 @@ td button{margin-inline-end:.35rem}
 @media(max-width:760px){.grid{grid-template-columns:1fr}}
 
 #preview-frame{display:block;width:100%;height:650px;border:1px solid var(--edge);border-radius:7px;margin-top:1rem}
+
+#library-books fieldset{margin-block:.7rem;border:1px solid var(--edge);border-radius:7px}
+#library-details,#library-report{min-width:0}

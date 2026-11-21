@@ -32,6 +32,63 @@
     if (!Object.hasOwn(assets, path)) return input;
     return api + new URLSearchParams({ view: "asset", path, version: assets[path] });
   }
+  const managedPaths = () => [...new Set([...Object.keys(assets),...Object.keys(preview)])]
+    .filter(path => !Object.hasOwn(preview,path) || preview[path]);
+
+  async function readDocument(path) {
+    const input = "/" + path;
+    const url = assetUrl(input);
+    if (url === input) return null;
+    const response = await fetchWithOverrides(input,{signal:AbortSignal.timeout(5000)});
+    if (!response.ok) throw new Error("Published document could not load.");
+    return response.json();
+  }
+
+  window.hadithManagedReport = (slug,n) => readDocument("cms/reports/"+slug+"/"+n+".json");
+  window.hadithManagedNumbers = slug => managedPaths().filter(path => path.startsWith("cms/reports/"+slug+"/"))
+    .map(path => path.split("/").at(-1).slice(0,-5)).sort((a,b) => a.localeCompare(b,undefined,{numeric:true}));
+  async function readReportIndex(slug) {
+    const records = new Map();
+    if (!window.hadithManagedNumbers(slug).length) return records;
+    let after = "";
+    for (;;) {
+      const response = await nativeFetch(api+new URLSearchParams({view:"reports",slug,after}),{signal:AbortSignal.timeout(10000)});
+      if (!response.ok) throw new Error("Published search data is unavailable.");
+      const rows = await response.json();
+      if (!Array.isArray(rows)) throw new Error("Invalid published search data.");
+      for (const [path,n,ar,en,ur,book] of rows) if (!Object.hasOwn(preview,path)) records.set(String(n),[String(n),ar||"",en||"",ur||"",Number(book)||null]);
+      if (rows.length < 200) break;
+      after = rows.at(-1)[0];
+    }
+    const prefix = "cms/reports/"+slug+"/";
+    for (const [path,url] of Object.entries(preview)) {
+      if (!url || !path.startsWith(prefix)) continue;
+      const draft = await readDocument(path);
+      records.set(String(draft.n),[String(draft.n),draft.ar||"",draft.en||"",draft.ur||"",draft.book||null]);
+    }
+    return records;
+  }
+
+  const indexCache = new Map();
+  window.hadithManagedSearch = slug => {
+    if (!indexCache.has(slug)) indexCache.set(slug,readReportIndex(slug).catch(error => {
+      indexCache.delete(slug);
+      throw error;
+    }));
+    return indexCache.get(slug);
+  };
+
+  async function loadLibrary() {
+    window.hadithManagedLibrary = new Map();
+    const paths = managedPaths().filter(path => /^cms\/library\/[a-z0-9_-]+[.]json$/.test(path));
+    await Promise.all(paths.map(async path => {
+      try {
+        const item = window.HadithContent.collection(await readDocument(path));
+        if (window.HadithContent.collectionPath(item.slug) === path) window.hadithManagedLibrary.set(item.slug,item);
+      } catch (error) { console.warn("Collection could not load:",error.message); }
+    }));
+  }
+
   function script(src) {
     return new Promise((resolve, reject) => {
       const element = document.createElement("script");
@@ -162,6 +219,8 @@
       console.warn("Hadith website content could not load:", error.message);
       return false;
     })) return;
+    await script("/cms-content.js");
+    await loadLibrary();
     window.fetch = fetchWithOverrides;
     await script("/hadith-reader.js");
     await script("/reader-ui.js?v=arabic-search-snippets");

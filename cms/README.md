@@ -13,3 +13,29 @@ Apply the Supabase migration before deploying the `hadith-cms` function. The pub
 Deploy the web files once to the existing reader host and visit `/admin/` to sign in. A published release updates reader content directly from Supabase. No Git commit or reader deployment is needed for subsequent content releases.
 
 Stage JSON, audio, and other assets at their reader-relative paths, then preview and publish the selected versions. Publishers can restore earlier versions from release history or reset a published path to its bundled asset.
+
+## Structured library editor
+
+Open **Library** to edit collection titles and books, then load a hadith by its
+existing number. New and edited hadith are stored as structured PostgreSQL
+documents with their Arabic, English, Urdu, source link, audio, and word timing.
+Publishing updates reader and search data from the same release. Existing public
+hadith addresses continue to work during migration.
+
+Use **Bulk import collection and hadith** to stage a collection and up to 999
+reports for one release. An import file has a `collection` with `slug`, `en`,
+`ar`, and `books` (number/title pairs), and `reports` with `n`, `ar` and
+optional `book`, `en`, `ur`, `source`, `audio`, and `words`. Word timings
+contain `text`, `start`, and `end` in seconds.
+
+Generate a migration file for the existing Nawawi collection with:
+
+```sh
+node scripts/export-cms-collection.mjs nawawi40 > nawawi-import.json
+```
+
+Use Studio to preview the staged collection before publishing. Untouched
+collections and reports continue to use the bundled content, so the migration
+can proceed a collection or a release at a time. Apply the structured editor
+database migration and deploy the updated public Edge Function before
+deploying the updated Studio and reader.

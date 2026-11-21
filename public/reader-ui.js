@@ -234,7 +234,13 @@
     searchTimer = setTimeout(async () => {
       $("searchStatus").textContent = "Searching " + bySlug[slug].en + "…";
       try {
-        const records = await loadSearchData(slug);
+        const [bundled,managed] = await Promise.all([
+          loadSearchData(slug).catch(error => { if (!bySlug[slug].managed) throw error; return []; }),
+          window.hadithManagedSearch(slug).catch(error => { if (bySlug[slug].managed) throw error; return new Map(); }),
+        ]);
+        const byNumber = new Map(bundled.map(record => [String(record[0]),record]));
+        for (const [number,record] of managed) byNumber.set(number,record);
+        const records = byNumber.values();
         if (epoch !== searchEpoch || location.hash !== "#search") return;
         let total = 0;
         for (const [n, arabic, english, urdu] of records) {
@@ -264,7 +270,8 @@
     const epoch = ++searchEpoch; $("openNumber").disabled = true; $("searchStatus").textContent = "Finding hadith…";
     try {
       const col = bySlug[slug]; let found;
-      if(col.books) {
+      if(window.hadithManagedNumbers(slug).includes(n)) found = n;
+      else if(col.books) {
         const idx = await ensureBookIndex(slug), book = bookForReport(idx,n);
         if(book) { const data = await ensureBookOf(slug,book.book); found = data.hadith.find(h => String(h.n).toLowerCase() === n)?.n; }
       } else if(/^\d+$/.test(n) && Number(n) >= 1 && Number(n) <= col.count) found = Number(n);
