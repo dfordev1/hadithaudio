@@ -196,37 +196,9 @@
 
   async function bootstrap() {
     await script("/cms-content.js");
-    window.fetch = fetchWithOverrides;
     await script("/hadith-reader.js");
     await script("/reader-ui.js?v=arabic-search-snippets");
     await script("/arabic-word-library.js?v=2");
-    void loadCmsEnhancements();
-  }
-
-  async function loadCmsEnhancements() {
-    try {
-      preview = await previewAssets();
-      await readManifest();
-      const streamMap = assetUrl("/cms/streams.json");
-      if (streamMap !== "/cms/streams.json") {
-        const response = await nativeFetch(streamMap,{signal:AbortSignal.timeout(2500)});
-        if (response.ok) {
-          const value = await response.json();
-          if (value && typeof value === "object" && !Array.isArray(value)) streams = value;
-        }
-      }
-      const catalogUrl = assetUrl("/cms/collections.json");
-      if (catalogUrl !== "/cms/collections.json") {
-        const catalog = await nativeFetch(catalogUrl,{signal:AbortSignal.timeout(2500)});
-        if (catalog.ok) window.hadithCmsCatalog = await catalog.json();
-      }
-    } catch (error) {
-      console.warn("Hadith CMS could not load:",error.message);
-    }
-    await loadSite().catch(error => {
-      console.warn("Hadith website content could not load:",error.message);
-    });
-    await loadLibrary();
   }
   bootstrap().catch(error => console.error("Hadith reader could not start:",error));
 })();
