@@ -1973,6 +1973,25 @@ async function prepareAudio(url, navToken = currentNavToken){
   // Stream the shared audiobook rather than fetching its entire MP3 into memory.
   if (state.slug === "umdat-al-ahkam" || state.slug === "ibn-khuzaymah") {
     if (!isCurrentNavigation(navToken)) return;
+    // Khuzaymah: never block or remove the dock while a remote recording loads.
+    // Mobile Safari may defer metadata until the user presses Play.
+    if (state.slug === "ibn-khuzaymah") {
+      audioLogicalUrl = url;
+      audio.src = url;
+      audio.preload = "metadata";
+      audio.load();
+      const segmentStart = umdatAudioSegment?.start ?? 0;
+      const seekToStart = () => {
+        if (!isCurrentNavigation(navToken)) return;
+        if (audio.currentTime < segmentStart || audio.currentTime >= (umdatAudioSegment?.end ?? Infinity)) {
+          try { audio.currentTime = segmentStart; } catch {}
+        }
+        syncPlaybackStatus();
+      };
+      audio.addEventListener("loadedmetadata", seekToStart, {once:true});
+      if (audio.readyState >= 1) seekToStart();
+      return;
+    }
     audioLogicalUrl = url;
     audio.src = url;
     audio.load();
@@ -2687,14 +2706,21 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   updateNavEdges();
   if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
 
-  if (hasSyncedAudio) showDock();
-  else hideDock();
+  if (hasSyncedAudio) {
+    showDock();
+    if (slug === "ibn-khuzaymah") {
+      const w = audioWindow();
+      timeEl.textContent = `0:00 / ${fmt(w.duration)}`;
+      fill.style.width = "0%";
+      refreshTrackA11y();
+    }
+  } else hideDock();
   if (hasSyncedAudio) {
     try {
       await prepareAudio(slug === "ibn-khuzaymah" ? timing.audio : bookAudioUrl(slug, n, timing), navToken);
     } catch {
       audioAvailable = false;
-      hideDock();
+      if (slug !== "ibn-khuzaymah") hideDock();
       trackSiteEvent("audio_unavailable", { collection:slug, report:String(n) });
     }
     if (!isCurrentNavigation(navToken)) return false;
