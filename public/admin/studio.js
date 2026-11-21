@@ -23,17 +23,56 @@ function status(message, error = false) {
   $("status").toggleAttribute("data-error", error);
 }
 
-async function request(action, { method = "GET", body, type = "application/json", query = {} } = {}) {
-  const response = await fetch("/admin/api/" + action + "?" + new URLSearchParams(query), {
-    method,
-    ...(body === undefined ? {} : {
-      headers:{ "Content-Type":type },
-      body:body instanceof Blob ? body : JSON.stringify(body),
-    }),
-  });
+const backend = "https://mfwxdrxjmgetbmhlsqtt.supabase.co";
+const apiKey = "sb_publishable_44R3cxkN9Z5THq9bvukL7A_cxhc6K0M";
+let session;
+let refreshSession;
+
+async function send(path, { method="GET", body, type="application/json", auth=true } = {}) {
+  if (auth && !session) throw new Error("Sign in to continue.");
+  if (auth && session.expires_at <= Date.now()/1000 + 30) {
+    refreshSession ??= send("/auth/v1/token?grant_type=refresh_token", {
+      method:"POST", body:{refresh_token:session.refresh_token},auth:false,
+    }).then(response => response.json()).then(value => { session=value; }).catch(error => {
+      resetSession();
+      throw error;
+    }).finally(() => { refreshSession=null; });
+    await refreshSession;
+  }
+  const response = await fetch(backend+path,{method,headers:{
+    apikey:apiKey,...(auth ? {Authorization:"Bearer "+session.access_token} : {}),
+    ...(body === undefined ? {} : {"Content-Type":type}),
+  },...(body === undefined ? {} : {body:body instanceof Blob ? body : JSON.stringify(body)})});
   if (response.ok) return response;
-  const problem = await response.json().catch(() => ({}));
-  throw new Error(problem.message || "Request failed (" + response.status + ")");
+  const error = await response.json().catch(() => ({}));
+  throw new Error(error.message || error.msg || error.error_description || "Request failed ("+response.status+")");
+}
+
+async function objectKey(id) {
+  const params = new URLSearchParams({select:"object_key",id:"eq."+id});
+  const [row] = await send("/rest/v1/cms_versions?"+params).then(response => response.json());
+  if (!row) throw new Error("Version unavailable.");
+  return row.object_key.split("/").map(encodeURIComponent).join("/");
+}
+
+async function request(action, { method="GET", body, type="application/json", query={} } = {}) {
+  if (action==="asset") return send("/storage/v1/object/authenticated/hadith-cms/"+await objectKey(query.id));
+  if (action==="stage") {
+    const key=session.user.id+"/"+crypto.randomUUID()+"/"+query.path.split("/").at(-1);
+    await send("/storage/v1/object/hadith-cms/"+key,{method,type,body});
+    try {
+      return await send("/rest/v1/rpc/cms_stage",{method,body:{asset_path:query.path,uploaded_key:key}});
+    } catch (error) {
+      await send("/storage/v1/object/hadith-cms",{method:"DELETE",body:{prefixes:[key]}}).catch(() => {});
+      throw error;
+    }
+  }
+  if (action==="publish") return send("/rest/v1/rpc/cms_publish",{method,body});
+  const params = action==="versions"
+    ? {select:"id,path,created_at",order:"created_at.desc,id.desc",limit:query.limit,offset:query.offset,
+       ...(query.filter ? {path:"ilike.*"+query.filter+"*"} : {})}
+    : action==="releases" ? {select:"id,published_at,changes",order:"id.desc",limit:30} : {select:"email,role",limit:1};
+  return send("/rest/v1/cms_"+(action==="session"?"members":action)+"?"+new URLSearchParams(params));
 }
 
 function data(action, options) {
@@ -223,7 +262,7 @@ async function loadVersions(reset) {
 
 async function refresh() {
   const [current, history] = await Promise.all([
-    fetch("/api/cms?view=manifest").then(response => {
+    fetch(backend+"/functions/v1/hadith-cms?view=manifest").then(response => {
       if (!response.ok) throw new Error("Could not read live versions.");
       return response.json();
     }),
@@ -308,9 +347,15 @@ async function showPreview() {
   const address = $("preview-address").value.trim();
   if (!/^[a-z0-9_-]+:[0-9]+[a-z]?$/i.test(address)) throw new Error("Enter a hadith address such as nawawi40:1.");
   if (!selected.size) throw new Error("Select at least one draft version to preview.");
-  preview = Object.fromEntries(Array.from(selected.values(), change => [
-    change.path, change.version ? "/admin/api/asset?" + new URLSearchParams({ id:change.version }) : null,
-  ]));
+  preview = Object.fromEntries(await Promise.all(Array.from(selected.values(), async change => {
+    if (!change.version) return [change.path,null];
+    const key = await objectKey(change.version);
+    const result = await send("/storage/v1/object/sign/hadith-cms/"+key,{
+      method:"POST",body:{expiresIn:900},
+    }).then(response => response.json());
+    if (!result.signedURL?.startsWith("/object/sign/")) throw new Error("Draft preview unavailable.");
+    return [change.path,backend+"/storage/v1"+result.signedURL];
+  })));
   $("preview-panel").hidden = false;
   $("preview-frame").src = "/?cms-preview=1&preview=" + crypto.randomUUID() + "#" + address;
   $("preview-panel").scrollIntoView({ behavior:"smooth" });
@@ -331,10 +376,43 @@ $("filter").onchange = run(() => loadVersions(true));
 $("more").onclick = run(() => loadVersions(false));
 $("publish").onclick = run(() => publish(Array.from(selected.values())));
 
-(async () => {
-  member = await data("session");
-  $("identity").textContent = member.email + " · " + member.role;
-  $("workspace").hidden = false;
-  await refresh();
-  status("Signed in.");
-})().catch(error => status(error.message, true));
+function resetSession() {
+  session=null;
+  member=null;
+  selected.clear();
+  live.clear();
+  versions=[];
+  openDocument=null;
+  reportIndex=-1;
+  $("document").value="";
+  $("path").value="";
+  $("versions").replaceChildren();
+  $("history").replaceChildren();
+  closePreview();
+  $("workspace").hidden=$("logout").hidden=true;
+  $("login-panel").hidden=false;
+}
+
+$("login").onsubmit=run(async event => {
+  const form=event.currentTarget;
+  const details=new FormData(form);
+  session=await send("/auth/v1/token?grant_type=password",{
+    method:"POST",body:{email:details.get("email"),password:details.get("password")},auth:false,
+  }).then(response => response.json());
+  form.reset();
+  try {
+    [member]=await data("session");
+    if (!member) throw new Error("This account is not a Studio member.");
+    await refresh();
+    $("identity").textContent=member.email+" · "+member.role;
+    $("workspace").hidden=$("logout").hidden=false;
+    $("login-panel").hidden=true;
+    status("Signed in.");
+  } catch (error) { resetSession(); throw error; }
+});
+$("logout").onclick=run(async () => {
+  try { await send("/auth/v1/logout?scope=local",{method:"POST"}); }
+  finally { resetSession(); }
+  status("Signed out.");
+});
+status("Sign in to manage Hadith.to.");

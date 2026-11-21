@@ -1,4 +1,5 @@
 (() => {
+  const api = "https://mfwxdrxjmgetbmhlsqtt.supabase.co/functions/v1/hadith-cms?";
   const nativeFetch = window.fetch.bind(window);
   let assets = {};
   let preview = {};
@@ -28,7 +29,7 @@
     if (!managed) return input;
     if (Object.hasOwn(preview, path)) return preview[path] || input;
     if (!Object.hasOwn(assets, path)) return input;
-    return "/api/cms?" + new URLSearchParams({ view: "asset", path, version: assets[path] });
+    return api + new URLSearchParams({ view: "asset", path, version: assets[path] });
   }
   function script(src) {
     return new Promise((resolve, reject) => {
@@ -42,7 +43,7 @@
   window.hadithCmsCatalog = [];
   window.hadithCmsHasAsset = input => assetUrl(input) !== input;
   async function readManifest() {
-    const response = await nativeFetch("/api/cms?view=manifest", { signal:AbortSignal.timeout(2500) });
+    const response = await nativeFetch(api + "view=manifest", { signal:AbortSignal.timeout(2500) });
     if (response.ok) assets = await response.json();
   }
 
@@ -50,7 +51,7 @@
     if (typeof input !== "string" && !(input instanceof URL)) return nativeFetch(input, options);
     const override = assetUrl(input);
     const response = await nativeFetch(override, options);
-    if (response.status !== 404 || typeof override !== "string" || !override.startsWith("/api/cms?")) return response;
+    if (response.status !== 404 || typeof override !== "string" || !override.startsWith(api)) return response;
     // A tab can outlive a release. Recheck the live map before retrying a retired version.
     await readManifest().catch(() => {});
     const current = assetUrl(input);

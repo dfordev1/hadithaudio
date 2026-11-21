@@ -10,9 +10,17 @@
 <script src="/admin/studio.js" defer></script>
 </head>
 <body>
-<header><div><a class="brand" href="/admin/">Hadith.to <span>Studio</span></a></div><nav><a href="/">Open reader ↗</a><a href="/cdn-cgi/access/logout">Sign out</a></nav></header>
+<header><div><a class="brand" href="/admin/">Hadith.to <span>Studio</span></a></div><nav><a href="/">Open reader ↗</a><button id="logout" hidden>Sign out</button></nav></header>
 <main>
 <p id="status" role="status" aria-live="polite">Connecting to the CMS…</p>
+<section id="login-panel">
+<h1>Sign in</h1>
+<form id="login">
+<label>Email <input name="email" type="email" autocomplete="username" required></label>
+<label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+<button class="primary">Sign in</button>
+</form>
+</section>
 <div id="workspace" hidden>
 <h1>Content studio</h1>
 <p id="identity"></p>
