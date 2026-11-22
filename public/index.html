@@ -731,6 +731,7 @@
 :root[data-theme="dark"]{--bg:#171613;--bg-deep:#171613;--ink:#ece2cf;--ink-soft:#d9ccb6;--muted:#a69a86;--faint:#8c8273;--line:#332f28;--rule:#332f28;--soft:#24221e;--gold:#d9b075;--gold-soft:rgba(217,176,117,.23);--dock:rgba(23,22,19,.96)}
 body,:root[data-theme="dark"] body{background:var(--bg);background-attachment:scroll;font-family:var(--ui-font);line-height:1.6}
 .topbar{border-bottom:1px solid var(--rule);background:var(--bg)}
+body[data-view="landing"] .topbar{border-bottom-color:transparent}
 .topbar .in{max-width:46rem;padding-inline:1.25rem}
 .brand .name{font-family:var(--ui-font);font-size:.82rem;letter-spacing:.025em;color:var(--muted)}
 .iconbtn{border-radius:999px;min-width:38px;min-height:38px}
@@ -3012,6 +3013,16 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!isCurrentNavigation(navToken)) return false;
   const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
   const hasSyncedAudio = Boolean(timing);
+  const playbackTokens = effectiveTimingTokens(timing);
+  let writtenBookTokens = null;
+  if (hasSyncedAudio && syncedBookCollections.has(slug) &&
+      h.tokens.some(token => normalizeArabicWord(token.text))) {
+    writtenBookTokens = h.tokens.map(token => ({...token}));
+    matchArabicTokens(writtenBookTokens, playbackTokens, (source, target) => {
+      const {start, end, estimated, gloss} = playbackTokens[target];
+      Object.assign(writtenBookTokens[source], {start, end, estimated, gloss});
+    });
+  }
   let audioAvailable = hasSyncedAudio;
   umdatAudioSegment = (slug === "umdat-al-ahkam" || slug === "ibn-khuzaymah" || slug === "al-ilmam" || slug === "bulugh-al-maram") && timing
     ? {start:timing.segmentStart, end:timing.segmentEnd} : null;
@@ -3046,7 +3057,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
       trackSiteEvent("audio_unavailable", { collection:slug, report:String(n) });
     }
     if (!isCurrentNavigation(navToken)) return false;
-    currentTokens = effectiveTimingTokens(timing);
+    currentTokens = writtenBookTokens || playbackTokens;
   }
   // Arm ended-listener now when we will not auto-continue; continue path arms after play().
   if (!shouldContinue || !hasSyncedAudio || !audioAvailable) armAudioEndedListener(navToken);
@@ -3082,7 +3093,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
-  const tokens = slug === "ibn-khuzaymah" ? (timing?.tokens || h.tokens) : hasSyncedAudio
+  const tokens = writtenBookTokens || (slug === "ibn-khuzaymah" ? (timing?.tokens || h.tokens) : hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
         id: t.id || `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
         text: t.text,
@@ -3091,7 +3102,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
         estimated: t.estimated,
         gloss: t.gloss || null,
       }))
-    : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
+    : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") })));
   const alignedGlosses = hasSyncedAudio ? alignOriginalGlosses(tokens, h.tokens, gloss) : {};
   const syncedGloss = hasSyncedAudio ? {
     ...(gloss || {}),
