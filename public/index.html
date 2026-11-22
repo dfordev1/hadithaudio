@@ -1480,8 +1480,8 @@ async function loadWordGloss(slug, n){
 }
 
 async function loadKhuzaymahGloss(n, tokens){
-  if (String(n) !== "1") return null;
-  const draft = await jopt("/ibn-khuzaymah/word-gloss/1.json");
+  if (!["1", "2"].includes(String(n))) return null;
+  const draft = await jopt(`/ibn-khuzaymah/word-gloss/${n}.json`);
   if (!draft?.glosses) return null;
   const glosses = Object.fromEntries(tokens.flatMap(token => {
     const entry = draft.glosses[token.id];
