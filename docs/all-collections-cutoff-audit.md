@@ -33,3 +33,17 @@ Screened 76,142 stored records across all 18 collections on the homepage using m
 - Muslim's index and stored books both contain 7,357 records. The homepage advertises 7,360. That count difference alone does not identify missing reports.
 
 The companion JSON lists record IDs by signal. This is a screen of stored Arabic, not an edition-by-edition comparison, a translation audit, or a listening pass. Missing passages with normal-looking endings require edition comparison. Packages with one combined text/timing stream offer no independent written baseline for detecting omissions.
+
+## Reference map for the seven missing Arabic bodies
+
+| Site record | Source record | Matching evidence |
+| --- | --- | --- |
+| Musnad Ahmad 11852 | [Hadith Unlocked 11852](https://hadithunlocked.com/ahmad:11852) | Same citation number. Source identifies Abu Sa'id al-Khudri. |
+| Musnad Ahmad 19448 | [Hadith Unlocked 19446](https://hadithunlocked.com/ahmad:19446) | Site citationKey is 19446. Source identifies Amr ibn Abasah. |
+| Shama’il 274 | [Sunnah.com 274](https://sunnah.com/shamail:274) | Worship and devotion chapter. |
+| Shama’il 294 | [Sunnah.com 294](https://sunnah.com/shamail:294) | Duha prayer chapter. |
+| Shama’il 304 | [Sunnah.com 304](https://sunnah.com/shamail:304) | Fasting chapter. |
+| Shama’il 306 | [Sunnah.com fasting chapter](https://sunnah.com/shamail/43) | Match within the fasting chapter and check adjacent reports before copying. |
+| Shama’il 409 | [Sunnah.com 409](https://sunnah.com/shamail:409) | Seeing the Prophet in a dream chapter. |
+
+Cross-check the neighboring records before restoring text. Keep these references with any repair and only attach audio timings when aligned to the restored words.
