@@ -253,7 +253,7 @@
     background:transparent; border:0; border-bottom:1px solid var(--rule);
     overflow-wrap:anywhere;
   }
-  #cards .collection-grid a:hover .en { color:var(--ink); text-decoration:underline; text-underline-offset:.2em; }
+  #cards .collection-grid a:hover .en { color:var(--ink); text-decoration:none; }
   #cards .collection-grid a:focus-visible { outline:2px solid var(--ink); outline-offset:-2px; }
   #cards .collection-grid .side { text-align:right; }
   #cards .collection-grid .ar { font-size:clamp(1.05rem, 4vw, 1.35rem); }
@@ -1226,7 +1226,7 @@ function normalizeArabicWord(text){
     .replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه");
 }
 
-function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
+function matchArabicTokens(originalTokens, syncedTokens, onMatch){
   const source = (originalTokens || [])
     .map((token, index) => ({ token, index, norm: normalizeArabicWord(token.text) }))
     .filter(item => item.norm);
@@ -1243,13 +1243,10 @@ function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
         : Math.max(score[i - 1][j], score[i][j - 1]);
     }
   }
-  const mapped = {};
-  const originalGlosses = gloss?.glosses || {};
   let i = source.length, j = target.length;
   while (i && j) {
     if (source[i - 1].norm === target[j - 1].norm) {
-      const value = originalGlosses[source[i - 1].token.id];
-      if (value) mapped[target[j - 1].token.id] = value;
+      onMatch(source[i - 1].index, target[j - 1].index);
       i--; j--;
     } else if (score[i - 1][j] >= score[i][j - 1]) {
       i--;
@@ -1257,7 +1254,29 @@ function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
       j--;
     }
   }
+}
+
+function alignOriginalGlosses(syncedTokens, originalTokens, gloss){
+  const mapped = {};
+  if (!gloss?.glosses) return mapped;
+  matchArabicTokens(originalTokens, syncedTokens, (source, target) => {
+    const value = gloss.glosses[originalTokens[source].id];
+    if (value) mapped[syncedTokens[target].id] = value;
+  });
   return mapped;
+}
+
+function khuzaymahDisplayTokens(originalTokens, reportWords){
+  const tokens = originalTokens.map(token => ({...token}));
+  const timed = reportWords.map(([text]) => ({text}));
+  matchArabicTokens(tokens, timed, (source, target) => {
+    const [, start, end] = reportWords[target];
+    if (start >= 0 && end >= start) {
+      tokens[source].start = start / 100;
+      tokens[source].end = end / 100;
+    }
+  });
+  return tokens;
 }
 
 function buildMeaningColumn(englishTranslation="", urduTranslation=""){
@@ -2275,7 +2294,7 @@ function mountReportPlayer(box, recitation, words, spans) {
 
 async function loadKhuzaymah(){
   const slug = "ibn-khuzaymah";
-  const response = await fetch("/ibn-khuzaymah/records.gz");
+  const response = await fetch("/ibn-khuzaymah/records.gz", {cache:"no-cache"});
   if (!response.ok) throw new Error("Could not load Ibn Khuzaymah");
   const rows = await new Response(response.body.pipeThrough(new DecompressionStream("gzip"))).json();
   const books = [], reportBook = {}, sections = {};
@@ -2981,7 +3000,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
     slug === "ibn-khuzaymah" && h.recitation
-      ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:reportWords.map((w,i)=>({text:h.tokens[i]?.text||"",start:w[1]>=0?w[1]/100:NaN,end:w[2]>=0?w[2]/100:NaN}))}
+      ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:khuzaymahDisplayTokens(h.tokens, reportWords)}
       : (slug === "umdat-al-ahkam" || slug === "al-ilmam" || slug === "bulugh-al-maram")
       ? (h.src?.f && Array.isArray(h.tokens) ? {
           audio:h.src.f, segmentStart:h.src.s, segmentEnd:h.src.e,
@@ -3063,7 +3082,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
-  const tokens = hasSyncedAudio
+  const tokens = slug === "ibn-khuzaymah" ? (timing?.tokens || h.tokens) : hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
         id: t.id || `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
         text: t.text,
@@ -3072,7 +3091,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
         estimated: t.estimated,
         gloss: t.gloss || null,
       }))
-    : reportWords.length ? reportWords.map(([text], i) => ({id:slug+"-"+n+"-"+i, text})) : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
+    : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") }));
   const alignedGlosses = hasSyncedAudio ? alignOriginalGlosses(tokens, h.tokens, gloss) : {};
   const syncedGloss = hasSyncedAudio ? {
     ...(gloss || {}),
@@ -3088,12 +3107,6 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
   if (hasSyncedAudio) {
     activeSpans = spans;
-    if (slug === "ibn-khuzaymah") reportWords.forEach((w,i)=>{
-      if (w[1] >= 0 && spans[i]) spans[i].onclick = () => {
-        seekAudio(Math.max(umdatAudioSegment?.start ?? 0, w[1]/100));
-        audio.play().catch(()=>{});
-      };
-    });
   }
   arCol.appendChild(arDiv);
   const meaningCol = buildMeaningColumn(officialTranslation.en, officialTranslation.ur);
