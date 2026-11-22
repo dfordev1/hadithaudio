@@ -250,9 +250,11 @@
   #cards .collection-grid a {
     grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
     gap:10px; padding:.65rem .6rem; min-height:52px;
-    background:var(--soft); border:1px solid var(--rule); border-radius:8px;
+    background:transparent; border:0; border-bottom:1px solid var(--rule);
     overflow-wrap:anywhere;
   }
+  #cards .collection-grid a:hover .en { color:var(--ink); text-decoration:underline; text-underline-offset:.2em; }
+  #cards .collection-grid a:focus-visible { outline:2px solid var(--ink); outline-offset:-2px; }
   #cards .collection-grid .side { text-align:right; }
   #cards .collection-grid .ar { font-size:clamp(1.05rem, 4vw, 1.35rem); }
   @media (max-width:760px) {
