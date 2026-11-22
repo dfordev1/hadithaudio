@@ -2997,10 +2997,23 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!h) { h = bookData.hadith[0]; n = h.n; }
   n = h.n;
 
+  let restoredText = false;
+  if (slug === "musnad-ahmad" && (String(n) === "11852" || String(n) === "19448") &&
+      !h.tokens.some(token => normalizeArabicWord(token.text))) {
+    const repair = (await jopt("/musnad-ahmad/written-text-repairs.json"))?.[n];
+    if (!isCurrentNavigation(navToken)) return false;
+    if (repair?.arabic && repair.citation === String(h.citationKey)) {
+      h = {...h, tokens:repair.arabic.split(/\s+/).map((text, i) => ({
+        id:`ahmad-${n}-restored-${i}`, text,
+      }))};
+      restoredText = true;
+    }
+  }
+
   const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
-    slug === "ibn-khuzaymah" && h.recitation
+    restoredText ? null : slug === "ibn-khuzaymah" && h.recitation
       ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:khuzaymahDisplayTokens(h.tokens, reportWords)}
       : (slug === "umdat-al-ahkam" || slug === "al-ilmam" || slug === "bulugh-al-maram")
       ? (h.src?.f && Array.isArray(h.tokens) ? {
