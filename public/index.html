@@ -1462,6 +1462,33 @@ const jgz = async (u) => {
   return new Response(response.body.pipeThrough(new DecompressionStream("gzip"))).json();
 };
 const jopt = async (u) => { try { return await j(u); } catch { return null; } };
+
+const bundledGlossCollections = new Set([
+  "abudawud", "bukhari", "ibnmajah", "malik", "muslim", "nasai",
+  "nawawi40", "qudsi40", "shahwaliullah40", "tirmidhi",
+]);
+
+async function loadWordGloss(slug, n){
+  if (bundledGlossCollections.has(slug)) {
+    try {
+      return await jgz(`/gloss-lazy/${slug}/${n}.json.gz`);
+    } catch {
+      // Older deployments may still serve the original per-report JSON.
+    }
+  }
+  return jopt(`/gloss/${slug}-${n}.json`);
+}
+
+async function loadKhuzaymahGloss(n, tokens){
+  if (String(n) !== "1") return null;
+  const draft = await jopt("/ibn-khuzaymah/word-gloss/1.json");
+  if (!draft?.glosses) return null;
+  const glosses = Object.fromEntries(tokens.flatMap(token => {
+    const entry = draft.glosses[token.id];
+    return entry?.ar === token.text ? [[token.id, entry]] : [];
+  }));
+  return Object.keys(glosses).length ? { status:draft.status, glosses } : null;
+}
 const fmt = s => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 
 /* ---------- settings ---------- */
@@ -2895,7 +2922,7 @@ async function openForty(col, n, navToken = currentNavToken){
   const [{ trans, sun }, rec, gloss] = await Promise.all([
     ensureFortySidecars(col.slug),
     j(`recitation/${col.corpus}.${pad}.json`),
-    jopt(`gloss/${col.slug}-${n}.json`),
+    loadWordGloss(col.slug, n),
   ]);
   if (!isCurrentNavigation(navToken)) return false;
   const en = trans.translations.find(t => t.witness === rec.witness);
@@ -2999,7 +3026,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
 
   const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
   const [gloss, timing, officialTranslation] = await Promise.all([
-    slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
+    slug === "ibn-khuzaymah" ? loadKhuzaymahGloss(n, h.tokens)
+      : slug === "darimi" ? null : loadWordGloss(slug, n),
     slug === "ibn-khuzaymah" && h.recitation
       ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:khuzaymahDisplayTokens(h.tokens, reportWords)}
       : (slug === "umdat-al-ahkam" || slug === "al-ilmam" || slug === "bulugh-al-maram")
@@ -3132,6 +3160,11 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   a.href = slug === "al-ilmam" ? "https://rawy.net/book/12105" : slug === "bulugh-al-maram" ? "https://rawy.net/book/17561" : (slug === "darimi" || slug === "ibn-khuzaymah") ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
   a.textContent = `${slug}:${n}`;
   row.appendChild(a); rb.appendChild(row);
+  if (gloss?.status === "draft") {
+    const notice = document.createElement("div"); notice.className = "refrow";
+    notice.textContent = "English and Urdu word glosses are drafts awaiting review.";
+    rb.appendChild(notice);
+  }
   if (!gloss) {
     const pend = document.createElement("div"); pend.className = "refrow";
     pend.innerHTML = `<span class="lbl">Gloss</span><span style="color:var(--faint);font-style:italic">pending</span>`;
