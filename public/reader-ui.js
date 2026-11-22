@@ -22,7 +22,6 @@
   let searchTimer;
   let toastTimer;
   let focusReturn = null;
-  const six = new Set(["bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah"]);
   const normalize = text => String(text).normalize("NFKC").toLowerCase().replace(/[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed\u0640]/g, "").replace(/[أإآٱ]/g, "ا").replace(/\s+/g, " ").trim();
   function announce(message) {
     const toast = $("uiToast"); toast.textContent = message; toast.hidden = false;
@@ -91,9 +90,8 @@
   document.querySelectorAll("[data-shelf-filter]").forEach(b => { b.onclick = () => {
     const filter = b.dataset.shelfFilter;
     document.querySelectorAll("[data-shelf-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === b)));
-    [...$("cards").children].forEach(a => {
-      const c = bySlug[a.dataset.collection] || {slug:a.dataset.collection, books:true};
-      a.hidden = filter === "six" ? !six.has(c.slug) : filter === "forty" ? !!c.books : filter === "other" ? six.has(c.slug) || !c.books : false;
+    $("cards").querySelectorAll("[data-collection-group]").forEach(section => {
+      section.hidden = filter !== "all" && section.dataset.collectionGroup !== filter;
     });
   }; });
   $("openSearch").innerHTML = svg("search"); $("openSaved").innerHTML = svg("bookmark");
