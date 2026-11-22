@@ -244,6 +244,20 @@
   }
   :root[data-theme="dark"] .hero-calligraphy { background:#414951; }
   :root[data-theme="sepia"] .hero-calligraphy { background:#bfb196; }
+  #cards .collection-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px 12px; }
+  #cards .collection-group + .collection-group { margin-top:1.5rem; }
+  #cards h2 { margin:0 0 .5rem; font-size:.95rem; font-weight:600; }
+  #cards .collection-grid a {
+    grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
+    gap:10px; padding:.65rem .6rem; min-height:52px;
+    background:var(--soft); border:1px solid var(--rule); border-radius:8px;
+    overflow-wrap:anywhere;
+  }
+  #cards .collection-grid .side { text-align:right; }
+  #cards .collection-grid .ar { font-size:clamp(1.05rem, 4vw, 1.35rem); }
+  @media (max-width:760px) {
+    #cards .collection-grid { grid-template-columns:minmax(0,1fr); }
+  }
   .shelf { display:grid; gap:0; margin-top:0.5rem; }
   .shelf a {
     display:grid; grid-template-columns:1fr auto; gap:12px 20px; align-items:center;
@@ -861,7 +875,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
   </div>
   <div class="shelf-filters" id="shelfFilters" role="group" aria-label="Filter collections">
     <button type="button" data-shelf-filter="all" aria-pressed="true">All collections</button>
-    <button type="button" data-shelf-filter="six" aria-pressed="false">The six books</button>
+    <button type="button" data-shelf-filter="nine" aria-pressed="false">The nine books</button>
     <button type="button" data-shelf-filter="forty" aria-pressed="false">The forties</button>
     <button type="button" data-shelf-filter="other" aria-pressed="false">Other collections</button>
   </div>
@@ -1688,23 +1702,42 @@ function renderResume(){
 
 /* ---------- landing ---------- */
 const cards = document.getElementById("cards");
-const shelfCollections = COLLECTIONS;
+const shelfCollections = [...COLLECTIONS];
 shelfCollections.splice(shelfCollections.findIndex(c => c.slug === "riyad") + 1, 0, {
   slug:"shamail", href:"/shamail/", en:"Ash-Shamail al-Muhammadiyah", ar:"الشمائل المحمدية", count:417, chapterCount:56, audio:true
 });
-for (const c of shelfCollections) {
-  const a = document.createElement("a");
-  a.href = c.href || `#${c.slug}:1`;
-  a.dataset.collection = c.slug;
-  a.innerHTML = `
-    <div>
-      <div class="en">${c.en}</div>
-      <div class="meta">${c.count ? c.count.toLocaleString() + " hadith · " + (c.chapterCount ? c.chapterCount + " chapters · " : "") + shelfAudioMeta(c) : "Read collection"}</div>
-    </div>
-    <div class="side">
-      <div class="ar" lang="ar" dir="rtl">${c.ar}</div>
-    </div>`;
-  cards.appendChild(a);
+const collectionGroups = [
+  ["nine", "The Nine Books", ["bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah", "malik", "darimi", "musnad-ahmad"]],
+  ["other", "Other Primary Collections", ["ibn-khuzaymah", "shamail"]],
+  ["other", "Selections", ["riyad", "bulugh-al-maram", "al-ilmam", "umdat-al-ahkam"]],
+  ["forty", "Collections of Forty", ["nawawi40", "qudsi40", "shahwaliullah40"]],
+];
+for (const [filter, title, slugs] of collectionGroups) {
+  const section = document.createElement("section");
+  section.className = "collection-group";
+  section.dataset.collectionGroup = filter;
+  const heading = document.createElement("h2");
+  heading.textContent = title;
+  const grid = document.createElement("div");
+  grid.className = "collection-grid";
+  section.append(heading, grid);
+  cards.append(section);
+  const collections = shelfCollections.filter(c => slugs.includes(c.slug) ||
+    (title === "Selections" && !collectionGroups.some(([, , members]) => members.includes(c.slug))));
+  for (const c of collections) {
+    const a = document.createElement("a");
+    a.href = c.href || `#${c.slug}:1`;
+    a.dataset.collection = c.slug;
+    a.innerHTML = `
+      <div>
+        <div class="en">${c.en}</div>
+        <div class="meta">${c.count ? c.count.toLocaleString() + " hadith · " + (c.chapterCount ? c.chapterCount + " chapters · " : "") + shelfAudioMeta(c) : "Read collection"}</div>
+      </div>
+      <div class="side">
+        <div class="ar" lang="ar" dir="rtl">${c.ar}</div>
+      </div>`;
+    grid.appendChild(a);
+  }
 }
 document.getElementById("home").onclick = () => { location.hash = ""; };
 
@@ -3167,7 +3200,7 @@ addEventListener("hashchange", route);
 route();
 </script>
 <script src="/arabic-word-library.js?v=2" defer></script>
-<script src="/reader-ui.js?v=shamail-shelf"></script>
+<script src="/reader-ui.js?v=collection-grid"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
