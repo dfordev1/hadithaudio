@@ -2089,9 +2089,8 @@ async function prepareAudio(url, navToken = currentNavToken){
   // Stream the shared audiobook rather than fetching its entire MP3 into memory.
   if (state.slug === "umdat-al-ahkam" || state.slug === "ibn-khuzaymah" || state.slug === "al-ilmam" || (state.slug === "bulugh-al-maram" || state.slug === "al-lulu-wal-marjan" || state.slug === "al-muntaqa-ibn-al-jarud")) {
     if (!isCurrentNavigation(navToken)) return;
-    // Khuzaymah: never block or remove the dock while a remote recording loads.
-    // Mobile Safari may defer metadata until the user presses Play.
-    if (state.slug === "ibn-khuzaymah") {
+    // Mobile Safari may defer remote metadata until the user presses Play.
+    if (state.slug === "ibn-khuzaymah" || state.slug === "bulugh-al-maram") {
       audioLogicalUrl = url;
       audio.src = url;
       audio.preload = "metadata";
