@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Read, Listen &amp; Study Hadith</title>
 <meta name="description" content="Read and listen to major hadith collections with synced Arabic recitation, word-level highlighting, and English and Urdu meanings.">
 <meta name="theme-color" content="#eef1f3">
@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://www.hadith.to/social-card.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Amiri+Quran&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#eef1f3; --bg-deep:#e3e8ec; --ink:#10131a; --ink-soft:#2a3038;
@@ -402,13 +402,16 @@
   body[data-wbw="en"] .arabic,
   body[data-wbw="ur"] .arabic,
   body[data-wbw="both"] .arabic {
-    display:flex; flex-wrap:wrap; gap:var(--wbw-gap); line-height:1.7;
+    display:block; word-spacing:var(--wbw-gap); line-height:1.7;
     font-size:inherit;
   }
   body[data-wbw="en"] .arabic span.w,
   body[data-wbw="ur"] .arabic span.w,
   body[data-wbw="both"] .arabic span.w {
-    display:inline-flex; flex-direction:column; align-items:center; padding:calc(var(--word-pad) - 1px) var(--word-pad) var(--word-pad);
+    display:inline-flex; flex-direction:column; align-items:center;
+    max-inline-size:100%; box-sizing:border-box; vertical-align:top;
+    word-spacing:normal; text-align:center;
+    padding:calc(var(--word-pad) - 1px) var(--word-pad) var(--word-pad);
   }
   body[data-wbw="en"] .arabic span.w.active,
   body[data-wbw="ur"] .arabic span.w.active,
@@ -541,11 +544,6 @@
   body[data-silence="1"] .navedge.next:not(:disabled) { opacity:.72; pointer-events:none; }
   #reader .mobile-page-nav button { color:var(--ink-soft); }
 
-  #reader:has(.dock.is-in:not(.hidden))::after {
-    content:""; position:fixed; inset:auto 0 0; z-index:44; pointer-events:none;
-    height:calc(7rem + env(safe-area-inset-bottom));
-    background:linear-gradient(to bottom, transparent, var(--bg-deep) 14px);
-  }
   .dock {
     position:fixed; left:50%; bottom:1.35rem; transform:translateX(-50%);
     z-index:45; width:auto; min-width:min(280px, calc(100% - 24px));
@@ -689,7 +687,7 @@
       bottom:0.95rem; min-width:calc(100% - 20px); max-width:calc(100% - 20px);
       padding:0.4rem 0.55rem calc(0.4rem + env(safe-area-inset-bottom));
     }
-    #reader:has(.dock.is-in:not(.hidden))::after { height:calc(6.75rem + env(safe-area-inset-bottom)); }
+
     .dock .player { gap:0.35rem; }
     .time { font-size:.64rem; min-width:64px; }
     .play { width:44px; height:44px; }
@@ -808,6 +806,40 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
 #musnadJumpError{display:block;min-height:1em;padding-top:3px;color:var(--muted);font-size:.7rem}
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
+<style>
+  html { background:var(--bg); }
+  #dock { background:var(--bg); backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; }
+  @media (orientation:landscape) and (max-height:500px) and (pointer:coarse) {
+    body { padding-inline:env(safe-area-inset-left) env(safe-area-inset-right); }
+    #locator .in { flex-wrap:wrap; }
+    #locator .loc-summary { display:inline-flex !important; }
+    #locator.compact .loc-panel { display:none !important; }
+    #locator.expanded .loc-panel { display:flex; flex-wrap:wrap; flex-basis:100%; }
+    .navedge.prev { left:max(4px,env(safe-area-inset-left)); }
+    .navedge.next { right:max(4px,env(safe-area-inset-right)); }
+    #dock { bottom:env(safe-area-inset-bottom); padding:0 10px; border-radius:10px; }
+    #dock .play { height:44px; width:44px; }
+    #dock .dock-more-panel { max-height:56dvh; overflow-y:auto; }
+  }
+  #dock .player { display:grid; grid-template-columns:minmax(0,1fr) auto auto; }
+  #dockTitle,#dockNext { border:0; background:transparent; color:var(--ink); cursor:pointer; min-height:44px; }
+  #dockTitle { text-align:start; min-width:0; padding-inline:8px; border-inline-start:2px solid var(--gold); }
+  #dockTitle strong,#dockTitle span { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  #dockTitle span { font-size:.76rem; color:var(--muted); }
+  #dockNext { min-width:44px; font-size:1.05rem; }
+  #dockNext:disabled { opacity:.35; }
+  #dock:not(.expanded-player) :is(.track,.time,.dock-more-wrap) { display:none; }
+  #dock.expanded-player .track { grid-row:2; grid-column:1; }
+  #dock.expanded-player .time { grid-row:2; grid-column:2; }
+  #dock.expanded-player .dock-more-wrap { grid-row:2; grid-column:3; }
+  #stage .ar-col { min-inline-size:0; }
+  #stage .arabic {
+    text-align:justify;
+    text-align-last:start;
+    text-justify:inter-word;
+    overflow-wrap:anywhere;
+  }
+</style>
 <meta name="hadith-ui-version" content="sacred-2026-09-05">
 </head>
 <body data-view="landing" data-mode="receive">
@@ -858,7 +890,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
           </section>
         </div>
         <div class="settings-foot">
-          <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="uthmani">Uthmani Naskh</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
+          <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="amiriQuran">Amiri Quran</option><option value="uthmani">Uthmani Naskh (if installed)</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
           <button class="settings-reset" id="settingsReset" type="button">Reset reading style</button>
         </div>
       </div>
@@ -962,11 +994,13 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
 
   <div class="dock hidden" id="dock">
     <div class="player">
+      <button type="button" id="dockTitle" aria-expanded="false" aria-controls="track timeEl dockMoreBtn"><strong id="dockCollection"></strong><span id="dockReport"></span></button>
       <button class="play" id="playBtn" aria-label="Play">
         <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </button>
       <div class="track" id="track" role="slider" tabindex="0" aria-label="Audio progress" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="0:00 / 0:00"><div class="fill" id="fill"></div></div>
       <span class="time" id="timeEl">0:00 / 0:00</span>
+      <button type="button" id="dockNext" aria-label="Next hadith">⏭</button>
       <div class="dock-more-wrap">
         <button type="button" class="dock-more-btn" id="dockMoreBtn" aria-label="More playback options" aria-expanded="false" aria-haspopup="true">⋯</button>
         <div class="dock-more-panel" id="dockMorePanel" role="menu" aria-label="Playback options">
@@ -1480,7 +1514,8 @@ let glossSz = store.get("glosssz", .85);
 let wordPad = store.get("wordpad", 6);
 let arFont = store.get("arfont", "scheherazade");
 const AR_FONTS = {
-  uthmani:'"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif',
+  amiriQuran:'"Amiri Quran",Amiri,"Scheherazade New",serif',
+  uthmani:'"KFGQPC Uthman Taha Naskh","Amiri Quran","Scheherazade New",Scheherazade,serif',
   scheherazade:'"Scheherazade New",Scheherazade,"Traditional Arabic",serif',
   amiri:'Amiri,"Times New Roman",serif',
   notoNaskh:'"Noto Naskh Arabic",serif',
@@ -2639,7 +2674,14 @@ document.getElementById("locSummary").onclick = () => {
   setLocatorExpanded(!loc.classList.contains("expanded"));
 };
 
+document.getElementById("dockTitle").onclick = function(){
+  this.setAttribute("aria-expanded", String(dock.classList.toggle("expanded-player")));
+};
+document.getElementById("dockNext").onclick = () => document.getElementById("nextBtn").click();
 function updateNavEdges(){
+  document.getElementById("dockCollection").textContent = bySlug[state.slug]?.en || "";
+  document.getElementById("dockReport").textContent = "Hadith " + state.n;
+  document.getElementById("dockNext").disabled = state.nav?.next == null;
   const prev = state.nav?.prev ?? null;
   const next = state.nav?.next ?? null;
   document.getElementById("prevBtn").disabled = prev == null;
@@ -2910,7 +2952,7 @@ async function openForty(col, n, navToken = currentNavToken){
   if (!(await fillBookJump(navToken))) return false;
   fillHadithJump();
   updateNavEdges();
-  if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
+  if (matchMedia("(max-width:680px), (orientation:landscape) and (max-height:500px) and (pointer:coarse)").matches) setLocatorExpanded(false);
 
   showDock();
   let audioAvailable = true;
@@ -3039,7 +3081,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!isCurrentNavigation(navToken)) return false;
   fillHadithJump();
   updateNavEdges();
-  if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
+  if (matchMedia("(max-width:680px), (orientation:landscape) and (max-height:500px) and (pointer:coarse)").matches) setLocatorExpanded(false);
 
   if (hasSyncedAudio) {
     showDock();
