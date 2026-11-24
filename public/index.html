@@ -821,17 +821,6 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
     #dock .play { height:44px; width:44px; }
     #dock .dock-more-panel { max-height:56dvh; overflow-y:auto; }
   }
-  #dock .player { display:grid; grid-template-columns:minmax(0,1fr) auto auto; }
-  #dockTitle,#dockNext { border:0; background:transparent; color:var(--ink); cursor:pointer; min-height:44px; }
-  #dockTitle { text-align:start; min-width:0; padding-inline:8px; border-inline-start:2px solid var(--gold); }
-  #dockTitle strong,#dockTitle span { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
-  #dockTitle span { font-size:.76rem; color:var(--muted); }
-  #dockNext { min-width:44px; font-size:1.05rem; }
-  #dockNext:disabled { opacity:.35; }
-  #dock:not(.expanded-player) :is(.track,.time,.dock-more-wrap) { display:none; }
-  #dock.expanded-player .track { grid-row:2; grid-column:1; }
-  #dock.expanded-player .time { grid-row:2; grid-column:2; }
-  #dock.expanded-player .dock-more-wrap { grid-row:2; grid-column:3; }
   #stage .ar-col { min-inline-size:0; }
   #stage .arabic {
     text-align:justify;
@@ -994,13 +983,11 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
 
   <div class="dock hidden" id="dock">
     <div class="player">
-      <button type="button" id="dockTitle" aria-expanded="false" aria-controls="track timeEl dockMoreBtn"><strong id="dockCollection"></strong><span id="dockReport"></span></button>
       <button class="play" id="playBtn" aria-label="Play">
         <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </button>
       <div class="track" id="track" role="slider" tabindex="0" aria-label="Audio progress" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="0:00 / 0:00"><div class="fill" id="fill"></div></div>
       <span class="time" id="timeEl">0:00 / 0:00</span>
-      <button type="button" id="dockNext" aria-label="Next hadith">⏭</button>
       <div class="dock-more-wrap">
         <button type="button" class="dock-more-btn" id="dockMoreBtn" aria-label="More playback options" aria-expanded="false" aria-haspopup="true">⋯</button>
         <div class="dock-more-panel" id="dockMorePanel" role="menu" aria-label="Playback options">
@@ -2674,14 +2661,7 @@ document.getElementById("locSummary").onclick = () => {
   setLocatorExpanded(!loc.classList.contains("expanded"));
 };
 
-document.getElementById("dockTitle").onclick = function(){
-  this.setAttribute("aria-expanded", String(dock.classList.toggle("expanded-player")));
-};
-document.getElementById("dockNext").onclick = () => document.getElementById("nextBtn").click();
 function updateNavEdges(){
-  document.getElementById("dockCollection").textContent = bySlug[state.slug]?.en || "";
-  document.getElementById("dockReport").textContent = "Hadith " + state.n;
-  document.getElementById("dockNext").disabled = state.nav?.next == null;
   const prev = state.nav?.prev ?? null;
   const next = state.nav?.next ?? null;
   document.getElementById("prevBtn").disabled = prev == null;
