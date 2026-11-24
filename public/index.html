@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Read, Listen &amp; Study Hadith</title>
 <meta name="description" content="Read and listen to major hadith collections with synced Arabic recitation, word-level highlighting, and English and Urdu meanings.">
 <meta name="theme-color" content="#eef1f3">
@@ -544,11 +544,6 @@
   body[data-silence="1"] .navedge.next:not(:disabled) { opacity:.72; pointer-events:none; }
   #reader .mobile-page-nav button { color:var(--ink-soft); }
 
-  #reader:has(.dock.is-in:not(.hidden))::after {
-    content:""; position:fixed; inset:auto 0 0; z-index:44; pointer-events:none;
-    height:calc(7rem + env(safe-area-inset-bottom));
-    background:linear-gradient(to bottom, transparent, var(--bg-deep) 14px);
-  }
   .dock {
     position:fixed; left:50%; bottom:1.35rem; transform:translateX(-50%);
     z-index:45; width:auto; min-width:min(280px, calc(100% - 24px));
@@ -692,7 +687,7 @@
       bottom:0.95rem; min-width:calc(100% - 20px); max-width:calc(100% - 20px);
       padding:0.4rem 0.55rem calc(0.4rem + env(safe-area-inset-bottom));
     }
-    #reader:has(.dock.is-in:not(.hidden))::after { height:calc(6.75rem + env(safe-area-inset-bottom)); }
+
     .dock .player { gap:0.35rem; }
     .time { font-size:.64rem; min-width:64px; }
     .play { width:44px; height:44px; }
@@ -812,6 +807,20 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
 <style>
+  html { background:var(--bg); }
+  #dock { background:var(--bg); backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:none; }
+  @media (orientation:landscape) and (max-height:500px) and (pointer:coarse) {
+    body { padding-inline:env(safe-area-inset-left) env(safe-area-inset-right); }
+    #locator .in { flex-wrap:wrap; }
+    #locator .loc-summary { display:inline-flex !important; }
+    #locator.compact .loc-panel { display:none !important; }
+    #locator.expanded .loc-panel { display:flex; flex-wrap:wrap; flex-basis:100%; }
+    .navedge.prev { left:max(4px,env(safe-area-inset-left)); }
+    .navedge.next { right:max(4px,env(safe-area-inset-right)); }
+    #dock { bottom:env(safe-area-inset-bottom); padding:0 10px; border-radius:10px; }
+    #dock .play { height:44px; width:44px; }
+    #dock .dock-more-panel { max-height:56dvh; overflow-y:auto; }
+  }
   #stage .ar-col { min-inline-size:0; }
   #stage .arabic {
     text-align:justify;
@@ -2923,7 +2932,7 @@ async function openForty(col, n, navToken = currentNavToken){
   if (!(await fillBookJump(navToken))) return false;
   fillHadithJump();
   updateNavEdges();
-  if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
+  if (matchMedia("(max-width:680px), (orientation:landscape) and (max-height:500px) and (pointer:coarse)").matches) setLocatorExpanded(false);
 
   showDock();
   let audioAvailable = true;
@@ -3052,7 +3061,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (!isCurrentNavigation(navToken)) return false;
   fillHadithJump();
   updateNavEdges();
-  if (matchMedia("(max-width:680px)").matches) setLocatorExpanded(false);
+  if (matchMedia("(max-width:680px), (orientation:landscape) and (max-height:500px) and (pointer:coarse)").matches) setLocatorExpanded(false);
 
   if (hasSyncedAudio) {
     showDock();
