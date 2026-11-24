@@ -402,13 +402,16 @@
   body[data-wbw="en"] .arabic,
   body[data-wbw="ur"] .arabic,
   body[data-wbw="both"] .arabic {
-    display:flex; flex-wrap:wrap; gap:var(--wbw-gap); line-height:1.7;
+    display:block; word-spacing:var(--wbw-gap); line-height:1.7;
     font-size:inherit;
   }
   body[data-wbw="en"] .arabic span.w,
   body[data-wbw="ur"] .arabic span.w,
   body[data-wbw="both"] .arabic span.w {
-    display:inline-flex; flex-direction:column; align-items:center; padding:calc(var(--word-pad) - 1px) var(--word-pad) var(--word-pad);
+    display:inline-flex; flex-direction:column; align-items:center;
+    max-inline-size:100%; box-sizing:border-box; vertical-align:top;
+    word-spacing:normal; text-align:center;
+    padding:calc(var(--word-pad) - 1px) var(--word-pad) var(--word-pad);
   }
   body[data-wbw="en"] .arabic span.w.active,
   body[data-wbw="ur"] .arabic span.w.active,
@@ -808,6 +811,15 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
 #musnadJumpError{display:block;min-height:1em;padding-top:3px;color:var(--muted);font-size:.7rem}
 </style>
 <link rel="stylesheet" href="/reader-ui.css?v=arabic-search-snippets">
+<style>
+  #stage .ar-col { min-inline-size:0; }
+  #stage .arabic {
+    text-align:justify;
+    text-align-last:start;
+    text-justify:inter-word;
+    overflow-wrap:anywhere;
+  }
+</style>
 <meta name="hadith-ui-version" content="sacred-2026-09-05">
 </head>
 <body data-view="landing" data-mode="receive">
