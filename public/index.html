@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://www.hadith.to/social-card.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Amiri+Quran&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#eef1f3; --bg-deep:#e3e8ec; --ink:#10131a; --ink-soft:#2a3038;
@@ -858,7 +858,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
           </section>
         </div>
         <div class="settings-foot">
-          <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="uthmani">Uthmani Naskh</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
+          <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="amiriQuran">Amiri Quran</option><option value="uthmani">Uthmani Naskh (if installed)</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
           <button class="settings-reset" id="settingsReset" type="button">Reset reading style</button>
         </div>
       </div>
@@ -1480,7 +1480,8 @@ let glossSz = store.get("glosssz", .85);
 let wordPad = store.get("wordpad", 6);
 let arFont = store.get("arfont", "scheherazade");
 const AR_FONTS = {
-  uthmani:'"KFGQPC Uthman Taha Naskh","Scheherazade New",Scheherazade,serif',
+  amiriQuran:'"Amiri Quran",Amiri,"Scheherazade New",serif',
+  uthmani:'"KFGQPC Uthman Taha Naskh","Amiri Quran","Scheherazade New",Scheherazade,serif',
   scheherazade:'"Scheherazade New",Scheherazade,"Traditional Arabic",serif',
   amiri:'Amiri,"Times New Roman",serif',
   notoNaskh:'"Noto Naskh Arabic",serif',
