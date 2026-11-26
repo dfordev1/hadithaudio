@@ -388,7 +388,7 @@
     font-size:var(--ur-size); line-height:var(--ur-lh); color:var(--ink-soft);
   }
   .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:var(--ar-lh); color:var(--ink); }
-  .arabic[lang="ur"] {
+  .arabic[lang="ur"], .arabic[lang="ur"] .t {
     font-family:"Hadith Urdu Nastaliq","Noto Nastaliq Urdu",serif !important;
     font-size:1.05rem !important;
     line-height:1.35 !important;
@@ -396,7 +396,7 @@
     word-spacing:0 !important;
     margin:0;
   }
-  .arabic[lang="ur"] .urdu-unspoken { color:var(--muted); opacity:.58; }
+  .arabic[lang="ur"] .urdu-unspoken .t { color:var(--muted); opacity:.58; }
   .arabic span.w {
     cursor:pointer; border-radius:1px; padding:0 2px;
     transition:background var(--dur-highlight) var(--ease),color var(--dur-highlight) var(--ease),opacity var(--dur-highlight) var(--ease);
