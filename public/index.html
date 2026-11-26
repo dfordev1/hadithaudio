@@ -3042,10 +3042,26 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   if (hasSyncedAudio && syncedBookCollections.has(slug) &&
       h.tokens.some(token => normalizeArabicWord(token.text))) {
     writtenBookTokens = h.tokens.map(token => ({...token}));
+    const firstWord = writtenBookTokens.findIndex(token => normalizeArabicWord(token.text));
+    let opening = 0;
     matchArabicTokens(writtenBookTokens, playbackTokens, (source, target) => {
       const {start, end, estimated, gloss} = playbackTokens[target];
       Object.assign(writtenBookTokens[source], {start, end, estimated, gloss});
+      if (source === firstWord) opening = target;
     });
+    // A book entry can start halfway through the recitation's narrator chain.
+    // Restore its preceding words only when the opening phrase identifies the join.
+    if (opening > 0) {
+      const phrase = tokens => tokens.map(t => normalizeArabicWord(t.text)).filter(Boolean).slice(0, 3);
+      const anchor = phrase(writtenBookTokens);
+      if (anchor.length === 3 && anchor.join(" ") === phrase(playbackTokens.slice(opening)).join(" ")
+          && anchor.join(" ") !== phrase(playbackTokens).join(" ")) {
+        const prefix = playbackTokens.slice(0, opening).map((token, i) => ({
+          ...token, id: `recitation-opening:${slug}:${n}:${i}`,
+        }));
+        writtenBookTokens = prefix.concat(writtenBookTokens);
+      }
+    }
   }
   let audioAvailable = hasSyncedAudio;
   umdatAudioSegment = (slug === "umdat-al-ahkam" || slug === "ibn-khuzaymah" || slug === "al-ilmam" || (slug === "bulugh-al-maram" || slug === "al-lulu-wal-marjan" || slug === "al-muntaqa-ibn-al-jarud" || slug === "al-adab-al-mufrad")) && timing
