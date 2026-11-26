@@ -3057,18 +3057,25 @@ urduMatanToggle.addEventListener("change", () => {
 function applyUrduMatan(tokens,spans){
   const keepVisible = new Set();
   const prophetNameParts = new Set(["آپ","رسول","اللہ","نبی","کریم","اکرم","حضرت","محمد","جناب","حضور","پاک","سیدنا","سرکار","آنحضرت","آنحضور","ابوالقاسم","پیغمبر","النبي","مصطفی","مصطفیٰ","احمد","حبیب"]);
+  let keptUnspokenSalawat = false;
   for (let i=0;i<tokens.length;i++) {
-    const word=(tokens[i].text||"").replace(/[،۔؛,:!?؟"'“”‘’()\[\]{}]/g,"");
+    const word=(tokens[i].text||"").replace(/[،۔؛,:!?؟"'“”‘’()\\[\\]{}]/g,"");
     if (word !== "صلی" && word !== "صلى" && word !== "صلّی") continue;
-    // Keep the Prophet's name/title joined to the salawat when hiding
-    // unaligned text; otherwise only “صلی اللہ علیہ وسلم” can remain visible.
+    const titleIndices=[];
+    for (let j=i-1,count=0;j>=0 && count<4;j--,count++) {
+      const previous=(tokens[j].text||"").replace(/[،۔؛,:!?؟"'“”‘’()\\[\\]{}]/g,"");
+      if (!prophetNameParts.has(previous)) break;
+      titleIndices.push(j);
+    }
+    const phraseIndices=[...titleIndices,i,i+1,i+2,i+3].filter(j=>j>=0 && j<tokens.length);
+    const phraseIsSpoken=phraseIndices.some(j=>Number.isFinite(tokens[j].start) && Number.isFinite(tokens[j].end) && tokens[j].end>tokens[j].start);
+    // Hiding untimed matan can otherwise leave a long run of isolated blessings.
+    // Keep one untimed reference for context, but retain every reference linked to audio.
+    if (!phraseIsSpoken && keptUnspokenSalawat) continue;
+    if (!phraseIsSpoken) keptUnspokenSalawat=true;
     keepVisible.add(i);
     for (let j=i+1;j<Math.min(tokens.length,i+4);j++) keepVisible.add(j);
-    for (let j=i-1,count=0;j>=0 && count<4;j--,count++) {
-      const previous=(tokens[j].text||"").replace(/[،۔؛,:!?؟"'()\[\]{}]/g,"");
-      if (!prophetNameParts.has(previous)) break;
-      keepVisible.add(j);
-    }
+    for (const j of titleIndices) keepVisible.add(j);
   }
   for (let i=0;i<tokens.length;i++) {
     const word=tokens[i],span=spans[i];
