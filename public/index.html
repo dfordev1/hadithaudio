@@ -390,7 +390,7 @@
   .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:var(--ar-lh); color:var(--ink); }
   .arabic[lang="ur"], .arabic[lang="ur"] .t {
     font-family:"Hadith Urdu Nastaliq","Noto Nastaliq Urdu",serif !important;
-    font-size:1.05rem !important;
+    font-size:.9rem !important;
     line-height:2.8 !important;
     letter-spacing:0 !important;
     word-spacing:0 !important;
@@ -869,6 +869,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
         <button type="button" class="rt-item" id="rtWbw">Word gloss<span class="sub" id="rtWbwSub">Off</span></button>
         <button type="button" class="rt-item" id="rtParallel">Translation column<span class="sub" id="rtParallelSub">Hidden</span></button>
         <button type="button" class="rt-item" hidden id="readerLanguage">Urdu mode</button>
+        <button type="button" class="rt-item" hidden id="readerMatanToggle">Show extra Urdu text</button>
         <button type="button" class="rt-item" id="rtAppearance">Appearance…</button>
         <button type="button" class="rt-item" id="rtSaved">Saved passages</button>
         <button type="button" class="rt-item" id="rtFocus">Focused reader</button>
@@ -3060,9 +3061,17 @@ function updateLanguageMenu(slug){
       openHadith("bukhari",state.n,beginNavigation());
     };
   }
+  const matanButton = document.getElementById("readerMatanToggle");
+  matanButton.hidden = slug !== "bukhari" || bukhariLanguage !== "ur";
+  matanButton.textContent = showUrduMatan ? "Hide extra Urdu text" : "Show extra Urdu text";
   const matanSetting = document.getElementById("urduMatanSetting");
   matanSetting.hidden = slug !== "bukhari" || bukhariLanguage !== "ur";
 }
+document.getElementById("readerMatanToggle").addEventListener("click", () => {
+  urduMatanToggle.checked = !urduMatanToggle.checked;
+  urduMatanToggle.dispatchEvent(new Event("change", {bubbles:true}));
+  document.getElementById("readerMatanToggle").textContent = showUrduMatan ? "Hide extra Urdu text" : "Show extra Urdu text";
+});
 async function urduTiming(book,n){
   const [index,data] = await Promise.all([jopt("bukhari/urdu/index.json"),jopt("bukhari/urdu/book-"+book+".json")]);
   const row = data?.hadith?.[n];
