@@ -1922,6 +1922,7 @@ let continuePlayAfterLoad = false;
 let ignoreAudioEnded = false;
 let endSilenceTimer = null;
 let segmentEndTimer = null;
+let muslimSegmentPoll = null;
 const AUTOPLAY_GAP_MS = 1600; // ~1.5–2s stillness before next
 const autoplayBtn = document.getElementById("autoplayBtn");
 const repeatBtn = document.getElementById("repeatBtn");
@@ -2094,6 +2095,29 @@ function syncWordHighlight(t = audio.currentTime){
     if (r.top < 140 || r.bottom > innerHeight - 120) activeSpans[idx].scrollIntoView({ block:"center", behavior:"smooth" });
   }
 }
+function clearMuslimSegmentPoll(){
+  clearInterval(muslimSegmentPoll);
+  muslimSegmentPoll = null;
+}
+audio.addEventListener("play", () => {
+  clearMuslimSegmentPoll();
+  if (state.slug !== "muslim" || !umdatAudioSegment) return;
+  const segment = umdatAudioSegment;
+  muslimSegmentPoll = setInterval(() => {
+    if (audio.paused || state.slug !== "muslim" || umdatAudioSegment !== segment) {
+      clearMuslimSegmentPoll();
+      return;
+    }
+    if (audio.currentTime >= segment.end - 0.08) {
+      clearMuslimSegmentPoll();
+      audio.pause();
+      audio.currentTime = segment.end;
+      syncPlaybackStatus();
+      audio.dispatchEvent(new Event("ended"));
+    }
+  }, 30);
+});
+audio.addEventListener("pause", clearMuslimSegmentPoll);
 audio.addEventListener("timeupdate", () => {
   if (audioSessionToken !== currentNavToken) return;
   stopAtWordEnd();
@@ -3016,6 +3040,10 @@ async function openForty(col, n, navToken = currentNavToken){
 }
 
 let bukhariLanguage = store.get("bukhariLanguage","ar");
+let muslimLanguage = store.get("muslimLanguage","ar");
+function collectionUrduLanguage(slug){
+  return slug === "bukhari" ? bukhariLanguage : slug === "muslim" ? muslimLanguage : "ar";
+}
 let showUrduMatan = store.get("showUrduMatan",false);
 const urduMatanToggle = document.getElementById("urduMatanToggle");
 urduMatanToggle.checked = showUrduMatan;
@@ -3036,38 +3064,60 @@ function applyUrduMatan(tokens,spans){
   }
 }
 function updateLanguageMenu(slug){
+  const supported = slug === "bukhari" || slug === "muslim";
+  const language = collectionUrduLanguage(slug);
   for (const id of ["readerLanguage","dockLanguage"]) {
     const button = document.getElementById(id);
-    button.style.display = slug === "bukhari" ? "flex" : "none";
-    button.hidden = slug !== "bukhari";
-    button.textContent = bukhariLanguage === "ur" ? "Arabic mode · العربية" : "Urdu mode · اردو";
+    button.style.display = supported ? "flex" : "none";
+    button.hidden = !supported;
+    button.textContent = language === "ur" ? "Arabic mode · العربية" : "Urdu mode · اردو";
     button.onclick = () => {
-      bukhariLanguage = bukhariLanguage === "ur" ? "ar" : "ur";
-      store.set("bukhariLanguage",bukhariLanguage);
+      const nextLanguage = language === "ur" ? "ar" : "ur";
+      if (slug === "bukhari") {
+        bukhariLanguage = nextLanguage;
+        store.set("bukhariLanguage",bukhariLanguage);
+      } else {
+        muslimLanguage = nextLanguage;
+        store.set("muslimLanguage",muslimLanguage);
+      }
       setReaderToolsOpen(false);
       dockMorePanel.classList.remove("open");
       dockMoreBtn.setAttribute("aria-expanded","false");
-      openHadith("bukhari",state.n,beginNavigation());
+      openHadith(slug,state.n,beginNavigation());
     };
   }
+  const inUrduMode = supported && language === "ur";
   const matanButton = document.getElementById("readerMatanToggle");
-  matanButton.hidden = slug !== "bukhari" || bukhariLanguage !== "ur";
+  matanButton.hidden = !inUrduMode;
   matanButton.textContent = showUrduMatan ? "Hide extra Urdu text" : "Show extra Urdu text";
   const matanSetting = document.getElementById("urduMatanSetting");
-  matanSetting.hidden = slug !== "bukhari" || bukhariLanguage !== "ur";
+  matanSetting.hidden = !inUrduMode;
 }
 document.getElementById("readerMatanToggle").addEventListener("click", () => {
   urduMatanToggle.checked = !urduMatanToggle.checked;
   urduMatanToggle.dispatchEvent(new Event("change", {bubbles:true}));
   document.getElementById("readerMatanToggle").textContent = showUrduMatan ? "Hide extra Urdu text" : "Show extra Urdu text";
 });
-async function urduTiming(book,n){
-  const [index,data] = await Promise.all([jopt("bukhari/urdu/index.json"),jopt("bukhari/urdu/book-"+book+".json")]);
+async function urduTiming(collection,book,n){
+  const root = collection + "/urdu/";
+  const compressed = collection === "muslim";
+  const [index,data] = await Promise.all([
+    compressed ? jgz(root+"index.json.gz") : jopt(root+"index.json"),
+    compressed ? jgz(root+"book-"+book+".json.gz") : jopt(root+"book-"+book+".json"),
+  ]);
   const row = data?.hadith?.[n];
   if (!index || !row || !(row.e > row.s && row.s >= 0)) return null;
-  const words = (n === "1" && row.w[0]?.[0] === "کو") ? [["ہم"], ...row.w] : row.w;
+  const words = (collection === "bukhari" && n === "1" && row.w[0]?.[0] === "کو") ? [["ہم"], ...row.w] : row.w;
   return {audio:new URL(row.f,index.audioBase).href,segmentStart:row.s,segmentEnd:row.e,
-    tokens:words.map(([text,start,end],i)=>({id:"ur-"+i,text,...(Number.isFinite(start) && Number.isFinite(end) && start>=0 && end>start && end<=row.e-row.s ? {start:start+row.s,end:end+row.s} : Number.isFinite(start) && Number.isFinite(end) && start>=row.s && end>start && end<=row.e ? {start,end} : {})}))};
+    tokens:words.map(([text,start,end],i)=>{
+      let timing = {};
+      if (Number.isFinite(start) && Number.isFinite(end) && start >= 0 && end > start) {
+        if (collection === "muslim" && start >= row.s && end <= row.e) timing = {start,end};
+        else if (collection === "bukhari" && end <= row.e-row.s) timing = {start:start+row.s,end:end+row.s};
+        else if (start >= row.s && end <= row.e) timing = {start,end};
+      }
+      return {id:"ur-"+i,text,...timing};
+    })};
 }
 async function openBookHadith(slug, n, navToken = currentNavToken){
   stopAudio();
@@ -3092,10 +3142,10 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   n = h.n;
 
   const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
-  const urdu = slug === "bukhari" && bukhariLanguage === "ur";
+  const urdu = (slug === "bukhari" || slug === "muslim") && collectionUrduLanguage(slug) === "ur";
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
-    urdu ? urduTiming(bookMeta.book,n) : slug === "ibn-khuzaymah" && h.recitation
+    urdu ? urduTiming(slug,bookMeta.book,n) : slug === "ibn-khuzaymah" && h.recitation
       ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:khuzaymahDisplayTokens(h.tokens, reportWords)}
       : (slug === "umdat-al-ahkam" || slug === "al-ilmam" || (slug === "bulugh-al-maram" || slug === "al-lulu-wal-marjan" || slug === "al-muntaqa-ibn-al-jarud" || slug === "al-adab-al-mufrad"))
       ? (h.src?.f && Array.isArray(h.tokens) ? {
