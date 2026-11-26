@@ -899,6 +899,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
           </section>
         </div>
         <div class="settings-foot">
+          <label id="urduMatanSetting" hidden>Show Urdu matan <input id="urduMatanToggle" type="checkbox"></label>
           <label>Arabic type <select id="arFont"><option value="scheherazade">Scheherazade</option><option value="amiriQuran">Amiri Quran</option><option value="uthmani">Uthmani Naskh (if installed)</option><option value="amiri">Amiri</option><option value="notoNaskh">Noto Naskh</option><option value="arefRuqaa">Aref Ruqaa</option><option value="reemKufi">Reem Kufi</option></select></label>
           <button class="settings-reset" id="settingsReset" type="button">Reset reading style</button>
         </div>
@@ -3024,6 +3025,26 @@ async function openForty(col, n, navToken = currentNavToken){
 }
 
 let bukhariLanguage = store.get("bukhariLanguage","ar");
+let showUrduMatan = store.get("showUrduMatan",false);
+const urduMatanToggle = document.getElementById("urduMatanToggle");
+urduMatanToggle.checked = showUrduMatan;
+urduMatanToggle.addEventListener("change", () => {
+  showUrduMatan = urduMatanToggle.checked;
+  store.set("showUrduMatan",showUrduMatan);
+  document.querySelectorAll(".arabic[lang='ur'] .w").forEach(word =>
+    word.classList.toggle("urdu-unspoken",!showUrduMatan && word._urduSpoken === false)
+  );
+});
+function applyUrduMatan(tokens,spans){
+  for (let i=0;i<tokens.length;i++) {
+    const word=tokens[i],span=spans[i];
+    if (!span) continue;
+    span._urduStart=word.start;
+    const tokenText=(word.text||"").replace(/[،۔؛,:!?؟"'()\[\]{}]/g,"");
+    span._urduSpoken=tokenText === "اور" || Boolean(tokenText && normalizeArabicWord(tokenText));
+    span.classList.toggle("urdu-unspoken",!showUrduMatan && span._urduSpoken === false);
+  }
+}
 function updateLanguageMenu(slug){
   for (const id of ["readerLanguage","dockLanguage"]) {
     const button = document.getElementById(id);
@@ -3039,6 +3060,8 @@ function updateLanguageMenu(slug){
       openHadith("bukhari",state.n,beginNavigation());
     };
   }
+  const matanSetting = document.getElementById("urduMatanSetting");
+  matanSetting.hidden = slug !== "bukhari" || bukhariLanguage !== "ur";
 }
 async function urduTiming(book,n){
   const [index,data] = await Promise.all([jopt("bukhari/urdu/index.json"),jopt("bukhari/urdu/book-"+book+".json")]);
@@ -3046,7 +3069,7 @@ async function urduTiming(book,n){
   if (!index || !row || !(row.e > row.s && row.s >= 0)) return null;
   const words = (n === "1" && row.w[0]?.[0] === "کو") ? [["ہم"], ...row.w] : row.w;
   return {audio:new URL(row.f,index.audioBase).href,segmentStart:row.s,segmentEnd:row.e,
-    tokens:words.map(([text,start,end],i)=>({id:"ur-"+i,text,...(start>=row.s && end>start && start<row.e ? {start,end:Math.min(end,row.e)} : {})}))};
+    tokens:words.map(([text,start,end],i)=>({id:"ur-"+i,text,...(Number.isFinite(start) && Number.isFinite(end) && start>=0 && end>start && end<=row.e-row.s ? {start:start+row.s,end:end+row.s} : Number.isFinite(start) && Number.isFinite(end) && start>=row.s && end>start && end<=row.e ? {start,end} : {})}))};
 }
 async function openBookHadith(slug, n, navToken = currentNavToken){
   stopAudio();
@@ -3206,6 +3229,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     },
   } : gloss;
   const { arDiv, spans } = buildArabic(tokens, urdu ? null : syncedGloss, hasSyncedAudio, urdu ? "ur" : "ar");
+  if (urdu) applyUrduMatan(tokens,spans);
   if (urdu) arCol.firstElementChild.textContent = "اردو";
   if (hasSyncedAudio) {
     activeSpans = spans;
