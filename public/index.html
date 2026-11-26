@@ -378,7 +378,13 @@
     font-size:var(--ur-size); line-height:var(--ur-lh); color:var(--ink-soft);
   }
   .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:var(--ar-lh); color:var(--ink); }
-  .arabic[lang="ur"] { font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-size); line-height:var(--ur-lh); }
+  .arabic[lang="ur"] {
+    font-family:"Noto Nastaliq Urdu",var(--ar-font);
+    font-size:1.35rem;
+    line-height:1.55;
+    letter-spacing:0;
+    word-spacing:0;
+  }
   .arabic[lang="ur"] .urdu-unspoken { color:var(--muted); opacity:.58; }
   .arabic span.w {
     cursor:pointer; border-radius:1px; padding:0 2px;
