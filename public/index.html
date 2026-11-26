@@ -3109,6 +3109,7 @@ async function urduTiming(collection,book,n){
   if (!index || !row || !(row.e > row.s && row.s >= 0)) return null;
   const words = (collection === "bukhari" && n === "1" && row.w[0]?.[0] === "کو") ? [["ہم"], ...row.w] : row.w;
   return {audio:new URL(row.f,index.audioBase).href,segmentStart:row.s,segmentEnd:row.e,
+    sunnah:row.sunnah || null,inbook:Array.isArray(row.inbook) ? row.inbook : null,
     tokens:words.map(([text,start,end],i)=>{
       let timing = {};
       if (Number.isFinite(start) && Number.isFinite(end) && start >= 0 && end > start) {
@@ -3118,6 +3119,11 @@ async function urduTiming(collection,book,n){
       }
       return {id:"ur-"+i,text,...timing};
     })};
+}
+let muslimReferenceMapPromise;
+function muslimReferenceFor(n){
+  muslimReferenceMapPromise ||= jgz("muslim/urdu/references.json.gz").catch(()=>({}));
+  return muslimReferenceMapPromise.then(refs=>refs[String(n)] || null);
 }
 async function openBookHadith(slug, n, navToken = currentNavToken){
   stopAudio();
@@ -3143,7 +3149,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
 
   const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
   const urdu = (slug === "bukhari" || slug === "muslim") && collectionUrduLanguage(slug) === "ur";
-  const [gloss, timing, officialTranslation] = await Promise.all([
+  const [gloss, timing, officialTranslation, muslimReference] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
     urdu ? urduTiming(slug,bookMeta.book,n) : slug === "ibn-khuzaymah" && h.recitation
       ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:khuzaymahDisplayTokens(h.tokens, reportWords)}
@@ -3154,6 +3160,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
         } : null)
       : slug === "darimi" ? (h.clip ? { audio:`darimi/clips/${h.clip}.mp3`, tokens:h.tokens } : null) : getBookTiming(slug, n),
     slug === "ibn-khuzaymah" ? {en:h.en} : (slug === "darimi" || slug === "al-ilmam" || (slug === "bulugh-al-maram" || slug === "al-lulu-wal-marjan" || slug === "al-muntaqa-ibn-al-jarud" || slug === "al-adab-al-mufrad")) ? {} : ensureOfficialTranslations(slug, n),
+    slug === "muslim" ? muslimReferenceFor(n) : null,
   ]);
   if (!isCurrentNavigation(navToken)) return false;
   const isnadPool = timing && slug === "bukhari" ? await getBukhariIsnadPool() : null;
@@ -3293,8 +3300,15 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const row = document.createElement("div"); row.className = "refrow";
   row.innerHTML = `<span class="lbl">Reference</span>`;
   const a = document.createElement("a");
-  a.href = slug === "al-ilmam" ? "https://rawy.net/book/12105" : slug === "al-lulu-wal-marjan" ? "https://archive.org/details/al-lulu-wal-marjan-audio" : slug === "al-adab-al-mufrad" ? "https://archive.org/details/al-adab-al-mufrad-audio" : slug === "al-muntaqa-ibn-al-jarud" ? "https://archive.org/details/al-muntaqa-ibn-al-jarud-audio" : slug === "bulugh-al-maram" ? "https://rawy.net/book/17561" : (slug === "darimi" || slug === "ibn-khuzaymah") ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`; a.target = "_blank"; a.rel = "noopener";
-  a.textContent = `${slug}:${n}`;
+  const muslimRef = slug === "muslim" ? (timing?.sunnah || timing?.inbook ? timing : muslimReference) : null;
+  const muslimInbook = muslimRef?.inbook;
+  a.href = slug === "muslim" && muslimRef?.sunnah ? `https://sunnah.com/muslim:${muslimRef.sunnah}`
+    : slug === "muslim" && Array.isArray(muslimInbook) ? `https://sunnah.com/muslim/${muslimInbook[0]}/${muslimInbook[1]}`
+    : slug === "al-ilmam" ? "https://rawy.net/book/12105" : slug === "al-lulu-wal-marjan" ? "https://archive.org/details/al-lulu-wal-marjan-audio" : slug === "al-adab-al-mufrad" ? "https://archive.org/details/al-adab-al-mufrad-audio" : slug === "al-muntaqa-ibn-al-jarud" ? "https://archive.org/details/al-muntaqa-ibn-al-jarud-audio" : slug === "bulugh-al-maram" ? "https://rawy.net/book/17561" : (slug === "darimi" || slug === "ibn-khuzaymah") ? publicHadithUrl(slug, n) : `https://sunnah.com/${slug}:${n}`;
+  a.target = "_blank"; a.rel = "noopener";
+  a.textContent = slug === "muslim" && muslimRef?.sunnah ? `${slug}:${n} · Sunnah.com ${muslimRef.sunnah}`
+    : slug === "muslim" && Array.isArray(muslimInbook) ? `${slug}:${n} · Book ${muslimInbook[0]}, Hadith ${muslimInbook[1]}`
+    : `${slug}:${n}`;
   row.appendChild(a); rb.appendChild(row);
   if (!gloss) {
     const pend = document.createElement("div"); pend.className = "refrow";
