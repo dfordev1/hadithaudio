@@ -378,6 +378,8 @@
     font-size:var(--ur-size); line-height:var(--ur-lh); color:var(--ink-soft);
   }
   .arabic { direction:rtl; font-family:var(--ar-font); font-size:var(--ar-size); line-height:var(--ar-lh); color:var(--ink); }
+  .arabic[lang="ur"] { font-family:"Noto Nastaliq Urdu",var(--ar-font); font-size:var(--ur-size); line-height:var(--ur-lh); }
+  .arabic[lang="ur"] .urdu-unspoken { color:var(--muted); opacity:.58; }
   .arabic span.w {
     cursor:pointer; border-radius:1px; padding:0 2px;
     transition:background var(--dur-highlight) var(--ease),color var(--dur-highlight) var(--ease),opacity var(--dur-highlight) var(--ease);
@@ -1910,6 +1912,7 @@ let wordPlaybackTimer;
 let continuePlayAfterLoad = false;
 let ignoreAudioEnded = false;
 let endSilenceTimer = null;
+let segmentEndTimer = null;
 const AUTOPLAY_GAP_MS = 1600; // ~1.5–2s stillness before next
 const autoplayBtn = document.getElementById("autoplayBtn");
 const repeatBtn = document.getElementById("repeatBtn");
@@ -1929,6 +1932,8 @@ function stopAtWordEnd(){
 function clearEndSilence(){
   clearTimeout(endSilenceTimer);
   endSilenceTimer = null;
+  clearTimeout(segmentEndTimer);
+  segmentEndTimer = null;
   delete document.body.dataset.silence;
 }
 function beginEndSilence(){
@@ -2783,7 +2788,7 @@ function buildArabic(tokens, gloss, clickable, language="ar"){
       }
     }
     const first = tokens[i];
-    const s = document.createElement("span"); s.className = "w" + (run > 1 ? " w-unit" : "");
+    const s = document.createElement("span"); s.className = "w" + (run > 1 ? " w-unit" : "") + (language === "ur" && !Number.isFinite(first.start) ? " urdu-unspoken" : "");
     s.innerHTML = `<span class="t"></span><span class="g-en"></span><span class="g-ur"></span>`;
     if (first.estimated) s.title = "Approximate word timing";
     s.querySelector(".t").textContent = text;
@@ -3022,8 +3027,9 @@ async function urduTiming(book,n){
   const [index,data] = await Promise.all([jopt("bukhari/urdu/index.json"),jopt("bukhari/urdu/book-"+book+".json")]);
   const row = data?.hadith?.[n];
   if (!index || !row || !(row.e > row.s && row.s >= 0)) return null;
+  const words = (n === "1" && row.w[0]?.[0] === "کو") ? [["ہم"], ...row.w] : row.w;
   return {audio:new URL(row.f,index.audioBase).href,segmentStart:row.s,segmentEnd:row.e,
-    tokens:row.w.map(([text,start,end],i)=>({id:"ur-"+i,text,...(start>=row.s && end>start && start<row.e ? {start,end:Math.min(end,row.e)} : {})}))};
+    tokens:words.map(([text,start,end],i)=>({id:"ur-"+i,text,...(start>=row.s && end>start && start<row.e ? {start,end:Math.min(end,row.e)} : {})}))};
 }
 async function openBookHadith(slug, n, navToken = currentNavToken){
   stopAudio();
@@ -3230,6 +3236,16 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     audio.currentTime=start;
     syncWordHighlight(start);
     const p = audio.play();
+    if (umdatAudioSegment) {
+      clearTimeout(segmentEndTimer);
+      segmentEndTimer = setTimeout(() => {
+        if (isCurrentNavigation(navToken) && !audio.paused) {
+          audio.pause();
+          audio.currentTime = umdatAudioSegment.end;
+          audio.dispatchEvent(new Event("ended"));
+        }
+      }, Math.max(0, (umdatAudioSegment.end - umdatAudioSegment.start) * 1000 + 120));
+    }
     Promise.resolve(p).catch(() => {}).finally(() => armAudioEndedListener(navToken));
   }
   setPublicMetadata(`${shortCollectionName(col)} ${n} — hadith.to`, slug, n);
