@@ -3056,9 +3056,9 @@ urduMatanToggle.addEventListener("change", () => {
 });
 function applyUrduMatan(tokens,spans){
   const keepVisible = new Set();
-  const prophetNameParts = new Set(["آپ","رسول","اللہ","نبی","کریم","حضرت","محمد","جناب","حضور","پاک","سیدنا","سرکار"]);
+  const prophetNameParts = new Set(["آپ","رسول","اللہ","نبی","کریم","اکرم","حضرت","محمد","جناب","حضور","پاک","سیدنا","سرکار","آنحضرت","آنحضور","ابوالقاسم","پیغمبر","النبي","مصطفی","مصطفیٰ","احمد","حبیب"]);
   for (let i=0;i<tokens.length;i++) {
-    const word=(tokens[i].text||"").replace(/[،۔؛,:!?؟"'()\[\]{}]/g,"");
+    const word=(tokens[i].text||"").replace(/[،۔؛,:!?؟"'“”‘’()\[\]{}]/g,"");
     if (word !== "صلی" && word !== "صلى" && word !== "صلّی") continue;
     // Keep the Prophet's name/title joined to the salawat when hiding
     // unaligned text; otherwise only “صلی اللہ علیہ وسلم” can remain visible.
