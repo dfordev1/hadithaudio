@@ -386,7 +386,7 @@
     word-spacing:0 !important;
     margin:0;
   }
-  .arabic[lang="ur"] .urdu-unspoken .t { color:var(--muted); opacity:.58; }
+  .arabic[lang="ur"] .w.urdu-unspoken { display:none !important; }
   .arabic span.w {
     cursor:pointer; border-radius:1px; padding:0 2px;
     transition:background var(--dur-highlight) var(--ease),color var(--dur-highlight) var(--ease),opacity var(--dur-highlight) var(--ease);
@@ -3031,8 +3031,7 @@ function applyUrduMatan(tokens,spans){
     const word=tokens[i],span=spans[i];
     if (!span) continue;
     span._urduStart=word.start;
-    const tokenText=(word.text||"").replace(/[،۔؛,:!?؟"'()\[\]{}]/g,"");
-    span._urduSpoken=tokenText === "اور" || Boolean(tokenText && normalizeArabicWord(tokenText));
+    span._urduSpoken=Number.isFinite(word.start) && Number.isFinite(word.end) && word.end > word.start;
     span.classList.toggle("urdu-unspoken",!showUrduMatan && span._urduSpoken === false);
   }
 }
