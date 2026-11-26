@@ -849,6 +849,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
       <div class="reader-tools-panel" id="readerToolsPanel" role="menu" aria-label="Reading options">
         <button type="button" class="rt-item" id="rtWbw">Word gloss<span class="sub" id="rtWbwSub">Off</span></button>
         <button type="button" class="rt-item" id="rtParallel">Translation column<span class="sub" id="rtParallelSub">Hidden</span></button>
+        <button type="button" class="rt-item" hidden id="readerLanguage">Urdu mode</button>
         <button type="button" class="rt-item" id="rtAppearance">Appearance…</button>
         <button type="button" class="rt-item" id="rtSaved">Saved passages</button>
         <button type="button" class="rt-item" id="rtFocus">Focused reader</button>
@@ -991,6 +992,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{ou
       <div class="dock-more-wrap">
         <button type="button" class="dock-more-btn" id="dockMoreBtn" aria-label="More playback options" aria-expanded="false" aria-haspopup="true">⋯</button>
         <div class="dock-more-panel" id="dockMorePanel" role="menu" aria-label="Playback options">
+          <button type="button" class="rt-item" hidden id="dockLanguage">Urdu mode</button>
           <div class="dock-more-section">
             <span class="dock-more-label">Skip</span>
             <div class="dock-skips">
@@ -1820,7 +1822,7 @@ function isTimedToken(token){
   return Number.isFinite(token?.start) && Number.isFinite(token?.end);
 }
 function audioWindow(){
- const s=(state.slug==="umdat-al-ahkam"||state.slug==="ibn-khuzaymah"||state.slug==="al-ilmam"||(state.slug === "bulugh-al-maram" || state.slug === "al-lulu-wal-marjan" || state.slug === "al-muntaqa-ibn-al-jarud" || state.slug === "al-adab-al-mufrad"))?umdatAudioSegment:null;
+ const s=umdatAudioSegment;
  if(s&&Number.isFinite(s.start)&&Number.isFinite(s.end)&&s.end>s.start)return {start:s.start,end:s.end,duration:s.end-s.start};
  const d=Number.isFinite(audio.duration)&&audio.duration>0?audio.duration:0;
  return {start:0,end:d,duration:d};
@@ -2104,16 +2106,16 @@ async function prepareAudio(url, navToken = currentNavToken){
   // which Autoplay was treating as a finished track (looked like Repeat).
   ignoreAudioEnded = true;
   if (audioLogicalUrl === url && audio.src) {
-    try { audio.currentTime = 0; } catch {}
+    try { audio.currentTime = umdatAudioSegment?.start ?? 0; } catch {}
     if (isCurrentNavigation(navToken)) syncPlaybackStatus();
     return;
   }
   audio.pause();
   // Stream the shared audiobook rather than fetching its entire MP3 into memory.
-  if (state.slug === "umdat-al-ahkam" || state.slug === "ibn-khuzaymah" || state.slug === "al-ilmam" || (state.slug === "bulugh-al-maram" || state.slug === "al-lulu-wal-marjan" || state.slug === "al-muntaqa-ibn-al-jarud" || state.slug === "al-adab-al-mufrad")) {
+  if (umdatAudioSegment) {
     if (!isCurrentNavigation(navToken)) return;
     // Mobile Safari may defer remote metadata until the user presses Play.
-    if (state.slug === "ibn-khuzaymah" || state.slug === "bulugh-al-maram") {
+    if (state.slug === "bukhari" || state.slug === "ibn-khuzaymah" || state.slug === "bulugh-al-maram") {
       audioLogicalUrl = url;
       audio.src = url;
       audio.preload = "metadata";
@@ -2747,9 +2749,9 @@ const stripKunyaPrefix = (en) =>
     .replace(/^((and )?(Abu|Abi|Aba|Umm|Ibn|Bin|Bint)\s+)+/i, "")   // drop leading kunya word(s)
     .replace(/\s*\((name|proper name|proper noun|tribal nisba|tribal\/nisba name)\)\s*$/i, ""); // drop noise suffix
 
-function buildArabic(tokens, gloss, clickable){
+function buildArabic(tokens, gloss, clickable, language="ar"){
   const arDiv = document.createElement("div"); arDiv.className = "arabic";
-  arDiv.lang = "ar";
+  arDiv.lang = language;
   arDiv.dir = "rtl";
   const G = gloss && gloss.glosses ? gloss.glosses : {};
   const spans = []; // index-aligned with tokens (merged runs share one span across their token slots)
@@ -2791,7 +2793,7 @@ function buildArabic(tokens, gloss, clickable){
       const last = tokens[i + run - 1];
       s.onclick = () => playFrom(first.start, last.end);
     }
-    attachLongPressGrammar(s, text, g);
+    if (language === "ar") attachLongPressGrammar(s, text, g);
     arDiv.append(s, document.createTextNode(" "));
     for (let k = 0; k < run; k++) spans.push(s); // keep index alignment for audio highlight
     i += run;
@@ -2999,6 +3001,30 @@ async function openForty(col, n, navToken = currentNavToken){
   }
 }
 
+let bukhariLanguage = store.get("bukhariLanguage","ar");
+function updateLanguageMenu(slug){
+  for (const id of ["readerLanguage","dockLanguage"]) {
+    const button = document.getElementById(id);
+    button.style.display = slug === "bukhari" ? "flex" : "none";
+    button.hidden = slug !== "bukhari";
+    button.textContent = bukhariLanguage === "ur" ? "Arabic mode · العربية" : "Urdu mode · اردو";
+    button.onclick = () => {
+      bukhariLanguage = bukhariLanguage === "ur" ? "ar" : "ur";
+      store.set("bukhariLanguage",bukhariLanguage);
+      setReaderToolsOpen(false);
+      dockMorePanel.classList.remove("open");
+      dockMoreBtn.setAttribute("aria-expanded","false");
+      openHadith("bukhari",state.n,beginNavigation());
+    };
+  }
+}
+async function urduTiming(book,n){
+  const [index,data] = await Promise.all([jopt("bukhari/urdu/index.json"),jopt("bukhari/urdu/book-"+book+".json")]);
+  const row = data?.hadith?.[n];
+  if (!index || !row || !(row.e > row.s && row.s >= 0)) return null;
+  return {audio:new URL(row.f,index.audioBase).href,segmentStart:row.s,segmentEnd:row.e,
+    tokens:row.w.map(([text,start,end],i)=>({id:"ur-"+i,text,...(start>=row.s && end>start && start<row.e ? {start,end:Math.min(end,row.e)} : {})}))};
+}
 async function openBookHadith(slug, n, navToken = currentNavToken){
   stopAudio();
   await fadeStageOut();
@@ -3022,9 +3048,10 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   n = h.n;
 
   const reportWords = slug === "ibn-khuzaymah" && h.recitation ? await khuzaymahWords(n) : [];
+  const urdu = slug === "bukhari" && bukhariLanguage === "ur";
   const [gloss, timing, officialTranslation] = await Promise.all([
     slug === "darimi" || slug === "ibn-khuzaymah" ? null : jopt(`gloss/${slug}-${n}.json`),
-    slug === "ibn-khuzaymah" && h.recitation
+    urdu ? urduTiming(bookMeta.book,n) : slug === "ibn-khuzaymah" && h.recitation
       ? {audio:h.recitation[0],segmentStart:Number(h.recitation[1]),segmentEnd:Number(h.recitation[2]),tokens:khuzaymahDisplayTokens(h.tokens, reportWords)}
       : (slug === "umdat-al-ahkam" || slug === "al-ilmam" || (slug === "bulugh-al-maram" || slug === "al-lulu-wal-marjan" || slug === "al-muntaqa-ibn-al-jarud" || slug === "al-adab-al-mufrad"))
       ? (h.src?.f && Array.isArray(h.tokens) ? {
@@ -3039,7 +3066,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   const hasSyncedAudio = Boolean(timing);
   const playbackTokens = effectiveTimingTokens(timing);
   let writtenBookTokens = null;
-  if (hasSyncedAudio && syncedBookCollections.has(slug) &&
+  if (!urdu && hasSyncedAudio && syncedBookCollections.has(slug) &&
       h.tokens.some(token => normalizeArabicWord(token.text))) {
     writtenBookTokens = h.tokens.map(token => ({...token}));
     const firstWord = writtenBookTokens.findIndex(token => normalizeArabicWord(token.text));
@@ -3064,7 +3091,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
     }
   }
   let audioAvailable = hasSyncedAudio;
-  umdatAudioSegment = (slug === "umdat-al-ahkam" || slug === "ibn-khuzaymah" || slug === "al-ilmam" || (slug === "bulugh-al-maram" || slug === "al-lulu-wal-marjan" || slug === "al-muntaqa-ibn-al-jarud" || slug === "al-adab-al-mufrad")) && timing
+  umdatAudioSegment = (urdu || slug === "umdat-al-ahkam" || slug === "ibn-khuzaymah" || slug === "al-ilmam" || (slug === "bulugh-al-maram" || slug === "al-lulu-wal-marjan" || slug === "al-muntaqa-ibn-al-jarud" || slug === "al-adab-al-mufrad")) && timing
     ? {start:timing.segmentStart, end:timing.segmentEnd} : null;
   const shouldContinue = continuePlayAfterLoad;
   continuePlayAfterLoad = false;
@@ -3090,7 +3117,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   } else hideDock();
   if (hasSyncedAudio) {
     try {
-      await prepareAudio(slug === "ibn-khuzaymah" ? timing.audio : bookAudioUrl(slug, n, timing), navToken);
+      await prepareAudio(urdu || slug === "ibn-khuzaymah" ? timing.audio : bookAudioUrl(slug, n, timing), navToken);
     } catch {
       audioAvailable = false;
       if (slug !== "ibn-khuzaymah") hideDock();
@@ -3117,7 +3144,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   } else if (!hasSyncedAudio) {
     const notice = document.createElement("div");
     notice.className = "availability";
-    notice.textContent = slug === "umdat-al-ahkam"
+    notice.textContent = urdu ? "No Urdu audio for this hadith." : slug === "umdat-al-ahkam"
       ? "Word-level timestamps are included in this collection, but audio playback is unavailable until the referenced recording is hosted."
       : "Audio and word timestamps are not available for this report yet.";
     wrap.appendChild(notice);
@@ -3133,7 +3160,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   par.className = "parallel single"; // Muwatta has no sentence translation sidecar
   const arCol = document.createElement("div"); arCol.className = "ar-col";
   arCol.innerHTML = `<div class="col-label" style="text-align:right">العربية</div>`;
-  const tokens = writtenBookTokens || (slug === "ibn-khuzaymah" ? (timing?.tokens || h.tokens) : hasSyncedAudio
+  const tokens = urdu ? (timing?.tokens || (officialTranslation.ur || "").split(/\s+/).filter(Boolean).map(text=>({text}))) : writtenBookTokens || (slug === "ibn-khuzaymah" ? (timing?.tokens || h.tokens) : hasSyncedAudio
     ? effectiveTimingTokens(timing).map((t, i) => ({
         id: t.id || `uh:token:${slug}.${String(n).padStart(4, "0")}:asr:${String(i + 1).padStart(4, "0")}`,
         text: t.text,
@@ -3143,7 +3170,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
         gloss: t.gloss || null,
       }))
     : h.tokens.map(t => ({ id:t.id, text:t.text.replace(/[،:]/g, "") })));
-  const alignedGlosses = hasSyncedAudio ? alignOriginalGlosses(tokens, h.tokens, gloss) : {};
+  const alignedGlosses = !urdu && hasSyncedAudio ? alignOriginalGlosses(tokens, h.tokens, gloss) : {};
   const syncedGloss = hasSyncedAudio ? {
     ...(gloss || {}),
     glosses: {
@@ -3155,7 +3182,8 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
       }).filter(([, value]) => value)),
     },
   } : gloss;
-  const { arDiv, spans } = buildArabic(tokens, syncedGloss, hasSyncedAudio);
+  const { arDiv, spans } = buildArabic(tokens, urdu ? null : syncedGloss, hasSyncedAudio, urdu ? "ur" : "ar");
+  if (urdu) arCol.firstElementChild.textContent = "اردو";
   if (hasSyncedAudio) {
     activeSpans = spans;
   }
@@ -3164,12 +3192,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   par.className = "parallel" + (single ? " single" : "");
   par.append(meaningCol, arCol);
   wrap.appendChild(par);
-  if (slug === "bukhari") {
-    const player = document.createElement("bukhari-urdu");
-    player.dataset.book = bookMeta.book;
-    player.dataset.report = n;
-    wrap.appendChild(player);
-  }
+
 
   const rb = document.createElement("div"); rb.className = "refblock";
   const row = document.createElement("div"); row.className = "refrow";
@@ -3203,7 +3226,7 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   stage.innerHTML = ""; stage.appendChild(wrap);
   revealStage();
   if (shouldContinue && hasSyncedAudio && audioAvailable) {
-    const start=(slug==="umdat-al-ahkam"||slug==="al-ilmam"||(slug === "bulugh-al-maram" || slug === "al-lulu-wal-marjan" || slug === "al-muntaqa-ibn-al-jarud" || slug === "al-adab-al-mufrad"))?(umdatAudioSegment?.start??0):0;
+    const start=umdatAudioSegment?.start ?? 0;
     audio.currentTime=start;
     syncWordHighlight(start);
     const p = audio.play();
@@ -3222,6 +3245,7 @@ async function openHadith(slug, n, navToken = currentNavToken){
   reader.classList.add("is-in");
   syncReaderToolsUI();
   try {
+    updateLanguageMenu(slug);
     if (col.books) await openBookHadith(slug, String(n || 1).toLowerCase(), navToken);
     else {
       n = Number(n) || 1;
@@ -3272,7 +3296,7 @@ addEventListener("hashchange", route);
 route();
 </script>
 <script src="/arabic-word-library.js?v=2" defer></script>
-<script src="/bukhari-urdu.js"></script>
+
 <script src="/reader-ui.js?v=collection-grid"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
