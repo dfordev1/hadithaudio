@@ -3164,6 +3164,12 @@ async function openBookHadith(slug, n, navToken = currentNavToken){
   par.className = "parallel" + (single ? " single" : "");
   par.append(meaningCol, arCol);
   wrap.appendChild(par);
+  if (slug === "bukhari") {
+    const player = document.createElement("bukhari-urdu");
+    player.dataset.book = bookMeta.book;
+    player.dataset.report = n;
+    wrap.appendChild(player);
+  }
 
   const rb = document.createElement("div"); rb.className = "refblock";
   const row = document.createElement("div"); row.className = "refrow";
@@ -3266,6 +3272,7 @@ addEventListener("hashchange", route);
 route();
 </script>
 <script src="/arabic-word-library.js?v=2" defer></script>
+<script src="/bukhari-urdu.js"></script>
 <script src="/reader-ui.js?v=collection-grid"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
