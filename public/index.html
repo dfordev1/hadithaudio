@@ -3051,16 +3051,33 @@ urduMatanToggle.addEventListener("change", () => {
   showUrduMatan = urduMatanToggle.checked;
   store.set("showUrduMatan",showUrduMatan);
   document.querySelectorAll(".arabic[lang='ur'] .w").forEach(word =>
-    word.classList.toggle("urdu-unspoken",!showUrduMatan && word._urduSpoken === false)
+    word.classList.toggle("urdu-unspoken",!showUrduMatan && word._urduExtra === true)
   );
 });
 function applyUrduMatan(tokens,spans){
+  const keepVisible = new Set();
+  const prophetNameParts = new Set(["آپ","رسول","اللہ","نبی","کریم","حضرت","محمد","جناب","حضور","پاک","سیدنا","سرکار"]);
+  for (let i=0;i<tokens.length;i++) {
+    const word=(tokens[i].text||"").replace(/[،۔؛,:!?؟"'()\[\]{}]/g,"");
+    if (word !== "صلی" && word !== "صلى" && word !== "صلّی") continue;
+    // Keep the Prophet's name/title joined to the salawat when hiding
+    // unaligned text; otherwise only “صلی اللہ علیہ وسلم” can remain visible.
+    keepVisible.add(i);
+    for (let j=i+1;j<Math.min(tokens.length,i+4);j++) keepVisible.add(j);
+    for (let j=i-1,count=0;j>=0 && count<4;j--,count++) {
+      const previous=(tokens[j].text||"").replace(/[،۔؛,:!?؟"'()\[\]{}]/g,"");
+      if (!prophetNameParts.has(previous)) break;
+      keepVisible.add(j);
+    }
+  }
   for (let i=0;i<tokens.length;i++) {
     const word=tokens[i],span=spans[i];
     if (!span) continue;
     span._urduStart=word.start;
     span._urduSpoken=Number.isFinite(word.start) && Number.isFinite(word.end) && word.end > word.start;
-    span.classList.toggle("urdu-unspoken",!showUrduMatan && span._urduSpoken === false);
+    span._urduKeepVisible=keepVisible.has(i);
+    span._urduExtra=!span._urduSpoken && !span._urduKeepVisible;
+    span.classList.toggle("urdu-unspoken",!showUrduMatan && span._urduExtra);
   }
 }
 function updateLanguageMenu(slug){
@@ -3107,6 +3124,13 @@ async function urduTiming(collection,book,n){
   ]);
   const row = data?.hadith?.[n];
   if (!index || !row || !(row.e > row.s && row.s >= 0)) return null;
+  const duration = row.e-row.s;
+  // Bukhari rows may store timestamps against the full recording or the
+  // hadith segment. Determine the format once per row so early absolute times
+  // are not mistaken for segment-relative offsets.
+  const bukhariAbsoluteTimes = collection === "bukhari" && row.w.some(([,start,end]) =>
+    Number.isFinite(start) && Number.isFinite(end) && end > duration
+  );
   const words = (collection === "bukhari" && n === "1" && row.w[0]?.[0] === "کو") ? [["ہم"], ...row.w] : row.w;
   return {audio:new URL(row.f,index.audioBase).href,segmentStart:row.s,segmentEnd:row.e,
     sunnah:row.sunnah || null,inbook:Array.isArray(row.inbook) ? row.inbook : null,
@@ -3114,7 +3138,8 @@ async function urduTiming(collection,book,n){
       let timing = {};
       if (Number.isFinite(start) && Number.isFinite(end) && start >= 0 && end > start) {
         if (collection === "muslim" && start >= row.s && end <= row.e) timing = {start,end};
-        else if (collection === "bukhari" && end <= row.e-row.s) timing = {start:start+row.s,end:end+row.s};
+        else if (collection === "bukhari" && bukhariAbsoluteTimes && start >= row.s && end <= row.e) timing = {start,end};
+        else if (collection === "bukhari" && !bukhariAbsoluteTimes && end <= duration) timing = {start:start+row.s,end:end+row.s};
         else if (start >= row.s && end <= row.e) timing = {start,end};
       }
       return {id:"ur-"+i,text,...timing};
