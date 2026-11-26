@@ -66,9 +66,12 @@ customElements.define("bukhari-urdu", class extends HTMLElement {
         audio.addEventListener("play",this.stopUrdu);
         sound.onplay = () => { button.textContent = "Pause Urdu"; this.timer = setInterval(tick,30); };
         sound.onpause = () => { clearInterval(this.timer); button.textContent = "Play Urdu"; };
-        const credit = document.createElement("small");
-        credit.textContent = [row.tags?.includes("text-from-recording") && "Urdu text from the recording", index.credits.audio, index.credits.text].filter(Boolean).join(" · ");
-        box.replaceChildren(button,words,credit);
+        box.replaceChildren(button,words);
+        if (row.tags?.includes("text-from-recording")) {
+          const note = document.createElement("small");
+          note.textContent = "Urdu text from the recording";
+          box.append(note);
+        }
       } catch {
         box.textContent = "Could not load Urdu audio. Close and reopen to retry.";
         this.loaded = false;
